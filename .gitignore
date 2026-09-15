@@ -1,0 +1,12 @@
+.DS_Store
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.jupyter/
+.cache/
+lecture_01/outputs/*.mp4
+lecture_01/outputs/*.gif
+data/
+*.pth
+*.pt
