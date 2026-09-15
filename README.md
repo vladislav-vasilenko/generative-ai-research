@@ -16,7 +16,7 @@
 
 ## Установка
 
-Рекомендуется Python **3.11 или 3.12**. Из корня репозитория:
+Python **3.11 или 3.12**. Выполните из корня репозитория:
 
 ```bash
 python3.12 -m venv .venv
@@ -25,11 +25,7 @@ python -m pip install -r requirements.txt
 python -m jupyterlab
 ```
 
-В Windows активация: `.venv\Scripts\activate`. Для одной Lab One достаточно `lecture_01/requirements.txt`. Для CUDA выбирайте совместимую пару PyTorch/torchvision по [официальной инструкции](https://pytorch.org/get-started/locally/).
-
-В Jupyter выберите Python из `.venv` и выполняйте ячейки сверху вниз через **Shift+Enter**. Полная проверка: **Kernel → Restart Kernel and Run All Cells**. Тренировочные ячейки DDPM действительно обучают модели; для чтения теории выполнять их не нужно.
-
-Ноутбуки можно загрузить в [Google Colab](https://colab.research.google.com/) через **File → Upload notebook**. Lab One не требует датасета. DDPM скачивает CIFAR-10 в `data/` при первом выполнении ячейки данных и сохраняет веса в текущем каталоге. Эти файлы исключены из Git.
+Также можно открыть ноутбуки в [Google Colab](https://colab.research.google.com/).
 
 ## Lecture 1 / Lab One
 
