@@ -29,15 +29,15 @@ def main():
     path = ROOT / 'lab_one_ru.ipynb'
     notebook = nbformat.read(path, as_version=4)
     nbformat.validate(notebook)
+    setup = next(c for c in notebook.cells if c.get('id') == 'original-02')
+    # Флаг команды определяет запуск независимо от настроек прошлого сохранения.
+    setup.source = setup.source.replace('RUN_ANIMATION = True', 'RUN_ANIMATION = False')
     if args.animation:
-        setup = next(c for c in notebook.cells if c.get('id') == 'original-02')
         setup.source = setup.source.replace('RUN_ANIMATION = False', 'RUN_ANIMATION = True')
     client = NotebookClient(notebook, timeout=300, kernel_name='python3',
                             resources={'metadata': {'path': str(ROOT)}}, allow_errors=False)
     client.execute()
-    if args.animation:
-        # Сохраняем безопасное для обычного Run All значение; полученная анимация остаётся в выводе.
-        setup.source = setup.source.replace('RUN_ANIMATION = True', 'RUN_ANIMATION = False')
+    # Сохраняем именно выполненный код: флаг и вывод анимации должны соответствовать друг другу.
     nbformat.write(notebook, path)
     output_dir = ROOT / 'outputs'
     output_dir.mkdir(exist_ok=True)
