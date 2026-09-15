@@ -4,8 +4,8 @@
 
 ## Что открыть
 
-- [Полный разбор](lab_one_ru.ipynb) — перевод, реализованные методы, ответы, графики и проверки.
-- [Самостоятельная работа](lab_one_ru_exercises.ipynb) — тот же перевод: восемь методов и текстовые ответы нужно заполнить.
+- [Полный разбор](lab_one_ru.ipynb) — перевод, реализованные методы, ответы, графики и проверки. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru.ipynb)
+- [Самостоятельная работа](lab_one_ru_exercises.ipynb) — тот же перевод: восемь методов и текстовые ответы нужно заполнить. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru_exercises.ipynb)
 - [HTML для чтения](outputs/lab_one_ru.html) — выполненная лабораторная с графиками.
 - [Конспект Lecture 1](LECTURE_01_RU.md) — основные идеи и формулы.
 - [Происхождение материалов](references/README.md) — оригинал, атрибуция и изменения.
@@ -27,10 +27,7 @@ python -m jupyterlab lecture_01/lab_one_ru.ipynb
 
 ## Google Colab
 
-1. Откройте [Google Colab](https://colab.research.google.com/).
-2. Через **File → Upload notebook** загрузите `lab_one_ru.ipynb`.
-3. При отсутствующих библиотеках добавьте `%pip install torch numpy matplotlib seaborn scipy tqdm` в отдельную ячейку и перезапустите сеанс.
-4. Выполните ячейки по порядку. Ноутбук самодостаточен: английский исходник и локальные модули для выполнения не нужны.
+Нажмите **Open in Colab** рядом с нужным ноутбуком выше и выполняйте ячейки по порядку. При отсутствии библиотек выполните `%pip install torch numpy matplotlib seaborn scipy tqdm` в отдельной ячейке.
 
 ## Маршрут по этапам
 

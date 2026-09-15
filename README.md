@@ -4,13 +4,14 @@
 
 ## С чего начать
 
-| Материал | Содержание | Подготовка |
+| Материал | Содержание | Colab |
 |---|---|---|
-| [Конспект Lecture 1](lecture_01/LECTURE_01_RU.md) | Выборки, векторные поля, Эйлер, броуновское движение | Вероятность и производные |
-| [Lab One: полный разбор](lecture_01/lab_one_ru.ipynb) | Перевод всех 49 исходных ячеек, решения, графики и проверки | Python, базовый PyTorch; достаточно CPU |
-| [Lab One: упражнения](lecture_01/lab_one_ru_exercises.ipynb) | Самостоятельная реализация тех же методов | После условий и конспекта |
-| [Lab One: HTML](lecture_01/outputs/lab_one_ru.html) | Выполненная работа без запуска Python | Браузер; для формул может требоваться интернет |
-| [DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb) | Добавление шума, MLP, простая CNN и обратная генерация | Для полноценного обучения желательно CUDA GPU |
+| [Конспект Lecture 1](lecture_01/LECTURE_01_RU.md) | Выборки, векторные поля, Эйлер, броуновское движение | — |
+| [Lab One: полный разбор](lecture_01/lab_one_ru.ipynb) | Перевод всех 49 исходных ячеек, решения, графики и проверки | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru.ipynb) |
+| [Lab One: упражнения](lecture_01/lab_one_ru_exercises.ipynb) | Самостоятельная реализация тех же методов | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru_exercises.ipynb) |
+| [Lab One: оригинал (EN)](lecture_01/references/lab_one_original.ipynb) | Исходная лабораторная MIT | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/references/lab_one_original.ipynb) |
+| [Lab One: HTML](lecture_01/outputs/lab_one_ru.html) | Выполненная работа без запуска Python | — |
+| [DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb) | Добавление шума, MLP, простая CNN и обратная генерация | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/Diffusion_DDPM_Research.ipynb) |
 
 Порядок: **конспект → Lab One с пояснениями → упражнения → DDPM**. Lecture 1 посвящена механике потоков и диффузий. Обучение DDPM идёт дальше первой лекции и служит отдельным продолжением.
 

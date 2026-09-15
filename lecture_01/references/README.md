@@ -2,6 +2,8 @@
 
 `lab_one_original.ipynb` — побайтовая копия предоставленного пользователем `lab_one.ipynb`: 49 ячеек, английский текст и заготовки методов сохранены.
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/references/lab_one_original.ipynb)
+
 [MIT 6.S184, 2026](https://diffusion.csail.mit.edu/2026/) связывает Lab 1 с ОДУ и СДУ. Авторы и преподаватели на сайте: Peter Holderrieth, Ron Shprints и Ezra Erives. Переведена именно предоставленная версия; её побайтовое совпадение с текущей онлайн-версией не утверждается.
 
 - [Страница курса](https://diffusion.csail.mit.edu/2026/).
