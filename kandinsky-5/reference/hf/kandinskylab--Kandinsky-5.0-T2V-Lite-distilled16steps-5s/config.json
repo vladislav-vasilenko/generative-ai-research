@@ -1,0 +1,6 @@
+{
+"architectures": [
+    "DiffusionTransformer3D" 
+  ],
+  "model_type": "kandinsky5"
+}

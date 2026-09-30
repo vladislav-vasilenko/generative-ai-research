@@ -1,0 +1,15 @@
+{
+  "bottleneck": null,
+  "ch_mult": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "channels": 128,
+  "double_z": true,
+  "in_channels": 3,
+  "num_dec_blocks": 2,
+  "num_enc_blocks": 2,
+  "z_channels": 16
+}

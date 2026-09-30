@@ -1,0 +1,72 @@
+[
+  {
+    "notebook": "00_start_and_training_map.ipynb",
+    "status": "passed",
+    "seconds": 1.8
+  },
+  {
+    "notebook": "01_text_embedders.ipynb",
+    "status": "passed",
+    "seconds": 1.39
+  },
+  {
+    "notebook": "02_vae.ipynb",
+    "status": "passed",
+    "seconds": 4.39
+  },
+  {
+    "notebook": "03_nn_building_blocks.ipynb",
+    "status": "passed",
+    "seconds": 1.23
+  },
+  {
+    "notebook": "04_attention.ipynb",
+    "status": "passed",
+    "seconds": 1.25
+  },
+  {
+    "notebook": "05_utils_and_nabla.ipynb",
+    "status": "passed",
+    "seconds": 1.45
+  },
+  {
+    "notebook": "06_dit_and_flow_matching.ipynb",
+    "status": "passed",
+    "seconds": 3.34
+  },
+  {
+    "notebook": "07_sampling.ipynb",
+    "status": "passed",
+    "seconds": 1.56
+  },
+  {
+    "notebook": "08_parallelize.ipynb",
+    "status": "passed",
+    "seconds": 1.3
+  },
+  {
+    "notebook": "09_local_m3_max.ipynb",
+    "status": "passed",
+    "seconds": 1.52
+  },
+  {
+    "notebook": "10_colab_cuda_distill.ipynb",
+    "status": "passed",
+    "seconds": 1.25
+  },
+  {
+    "notebook": "11_kvae_separate.ipynb",
+    "status": "passed",
+    "seconds": 2.64
+  },
+  {
+    "notebook": "12_generation_utils.ipynb",
+    "status": "passed",
+    "seconds": 3.87
+  },
+  {
+    "notebook": "13_normalization_and_vae_contract_audit.ipynb",
+    "status": "passed",
+    "seconds": 3.64
+  }
+]

@@ -1,0 +1,216 @@
+{
+  "_id": "6767f58f16f9c4f371fe7551",
+  "id": "hunyuanvideo-community/HunyuanVideo",
+  "private": false,
+  "library_name": "diffusers",
+  "tags": [
+    "diffusers",
+    "safetensors",
+    "base_model:tencent/HunyuanVideo",
+    "base_model:finetune:tencent/HunyuanVideo",
+    "diffusers:HunyuanVideoPipeline",
+    "region:us"
+  ],
+  "downloads": 21658,
+  "likes": 58,
+  "modelId": "hunyuanvideo-community/HunyuanVideo",
+  "author": "hunyuanvideo-community",
+  "sha": "e8c2aaa66fe3742a32c11a6766aecbf07c56e773",
+  "lastModified": "2024-12-22T11:24:42.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {
+    "diffusers": {
+      "_class_name": "HunyuanVideoPipeline"
+    }
+  },
+  "cardData": {
+    "base_model": [
+      "tencent/HunyuanVideo"
+    ],
+    "library_name": "diffusers"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes"
+    },
+    {
+      "rfilename": "README.md"
+    },
+    {
+      "rfilename": "config.json"
+    },
+    {
+      "rfilename": "model_index.json"
+    },
+    {
+      "rfilename": "scheduler/scheduler_config.json"
+    },
+    {
+      "rfilename": "text_encoder/config.json"
+    },
+    {
+      "rfilename": "text_encoder/model-00001-of-00004.safetensors"
+    },
+    {
+      "rfilename": "text_encoder/model-00002-of-00004.safetensors"
+    },
+    {
+      "rfilename": "text_encoder/model-00003-of-00004.safetensors"
+    },
+    {
+      "rfilename": "text_encoder/model-00004-of-00004.safetensors"
+    },
+    {
+      "rfilename": "text_encoder/model.safetensors.index.json"
+    },
+    {
+      "rfilename": "text_encoder_2/config.json"
+    },
+    {
+      "rfilename": "text_encoder_2/model.safetensors"
+    },
+    {
+      "rfilename": "tokenizer/special_tokens_map.json"
+    },
+    {
+      "rfilename": "tokenizer/tokenizer.json"
+    },
+    {
+      "rfilename": "tokenizer/tokenizer_config.json"
+    },
+    {
+      "rfilename": "tokenizer_2/merges.txt"
+    },
+    {
+      "rfilename": "tokenizer_2/special_tokens_map.json"
+    },
+    {
+      "rfilename": "tokenizer_2/tokenizer_config.json"
+    },
+    {
+      "rfilename": "tokenizer_2/vocab.json"
+    },
+    {
+      "rfilename": "transformer/config.json"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model-00001-of-00006.safetensors"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model-00002-of-00006.safetensors"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model-00003-of-00006.safetensors"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model-00004-of-00006.safetensors"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model-00005-of-00006.safetensors"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model-00006-of-00006.safetensors"
+    },
+    {
+      "rfilename": "transformer/diffusion_pytorch_model.safetensors.index.json"
+    },
+    {
+      "rfilename": "vae/config.json"
+    },
+    {
+      "rfilename": "vae/diffusion_pytorch_model.safetensors"
+    }
+  ],
+  "spaces": [
+    "linoyts/FramePack-F1",
+    "lisonallen/framepack-i2v",
+    "openfree/DreamO-video",
+    "ginigen/framepack-i2v",
+    "multimodalart/civitai-to-hf",
+    "jbilcke-hf/VideoModelStudio",
+    "VIDraft/FramePack_rotate_landscape",
+    "KwabsHug/GameConfigIdea",
+    "LPX55/HunYuan-Keyframe2VID-Control-Lora",
+    "rahul7star/Kandinsky",
+    "ovi054/Hunyuan-Image",
+    "makululinux/FramePack-F1",
+    "ObiJuanCodenobi/VidGen-Emilio",
+    "Sergidev/Illustration-Text-To-Video",
+    "ghostai1/GhostPack",
+    "bep40/FramePack-F1",
+    "ghostai1/ghostvidspace",
+    "AiAF/Civ-2-HF",
+    "Maximofn/HunyuanVideo",
+    "svjack/VideoModelStudio",
+    "Sergidev/Huanyan-Studio",
+    "1inkusFace/SkyReels_L",
+    "vimalvskl7/VideoModelStudio",
+    "YuliyaAether/FramePack-Demo",
+    "bep40/FramePack_rotate_landscape",
+    "ahmed9541/FramePack_rotate_landscape2",
+    "Ronliner/framepack-i2v",
+    "TheoreticallyTim/FramePack",
+    "faisalbsl21/VideoModelStudio",
+    "moralec/FramePack_rotate_landscape",
+    "jameschen414/FramePack",
+    "HaawkeNeural/framepack-i2v",
+    "opppSyu/FramePack-F1",
+    "svjack/FramePack-F1",
+    "alihfg/FramePack",
+    "rajux75/FramePack",
+    "Sandeshsandy/Text-Video-JSR",
+    "giorgoskyriacou2009tv/FramePack-F1",
+    "dalynbutler/framepack-i2v",
+    "amkt/framepack-i2v",
+    "Thefutureseer/FramePack-F1-v2v",
+    "Ticomantilla/FramePack-F1_ok",
+    "zOwOs/1fl",
+    "Sebestianmek/SebAI-Video",
+    "A24005179/aaa",
+    "jibrito/anomaly",
+    "m07ey/HunYuan-Keyframe2VID-Control-Lora",
+    "Dzlll/FramePackF1",
+    "rahul7star/fps-gaon",
+    "bep40/Framepacks",
+    "wistlercopy/SUPIR",
+    "ovi054/fast-Hunyuan-Image",
+    "inoculatemedia/Framepacks",
+    "rahul7star/FPS-Studio",
+    "Obunr/FramePack-F11111",
+    "Iceypole69/FramePack",
+    "yar0slavm/framepack-demo",
+    "Aliolidelali/FramePack-F1",
+    "s72329038/FramePack-F1",
+    "ACC666/framepack-i2v",
+    "Tony195/framepack-i2v",
+    "iKiyo7/DreamO-video",
+    "PolygonStew/VideoModelStudio",
+    "Vannybardot1993/FramePack_rotate_landscape",
+    "MARLLY/FramePack-F1",
+    "Outlook2026/framepack-i2v",
+    "pbmva18/VideoModelStudio",
+    "narohog740/framepack-i2v",
+    "Dormid/FramePack_rotate_landscape",
+    "Manikafap1/DreamO-video",
+    "nm05/neuroadgen",
+    "Fherdinand/DreamO-video",
+    "tjdavies/video-gen-playground",
+    "PerformanceTherapist/cloud-render-engine",
+    "enlguy/FramePack-F1",
+    "ssothy1993/hunyuanvideo-demo",
+    "rallymonkey4/aethurn-loom-intro",
+    "bahrammillad/geminiguide",
+    "LeTribe/hunyuanvideo-studio",
+    "Sladlavka/kandinsky5-image-lite"
+  ],
+  "createdAt": "2024-12-22T11:18:39.000Z",
+  "safetensors": {
+    "parameters": {
+      "BF16": 12821012544
+    },
+    "total": 12821012544
+  },
+  "usedStorage": 41901879014
+}
