@@ -2,7 +2,6 @@
 from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
-REPO='vladislav-vasilenko/generative-ai-research'
 bootstrap='''# Этот шаг нужен только в Google Colab; локально используется установленное окружение.
 from pathlib import Path
 import sys, subprocess
@@ -30,8 +29,7 @@ else:
 for path in sorted((ROOT/'notebooks').glob('*.ipynb')):
     nb=json.loads(path.read_text())
     if any(c.get('metadata',{}).get('kandinsky_colab_setup') for c in nb['cells']): continue
-    badge=f'[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/{REPO}/blob/main/kandinsky-5/notebooks/{path.name})'
-    nb['cells'].insert(1,{'cell_type':'markdown','metadata':{'kandinsky_colab_setup':True},'source':badge+'\n\n### Подготовка Google Colab\n\nПервая ячейка загружает код курса и устанавливает зависимости. Большие веса моделей она не скачивает. Для учебных опытов достаточно CPU; полная генерация в notebook 10 требует NVIDIA GPU. Если Colab попросит перезапуск сессии после установки, перезапустите и снова выполните ячейки сверху вниз.\n'})
+    nb['cells'].insert(1,{'cell_type':'markdown','metadata':{'kandinsky_colab_setup':True},'source':'### Подготовка Google Colab\n\nПервая ячейка загружает код курса и устанавливает зависимости. Большие веса моделей она не скачивает. Для учебных опытов достаточно CPU; полная генерация в notebook 10 требует NVIDIA GPU. Если Colab попросит перезапуск сессии после установки, перезапустите и снова выполните ячейки сверху вниз.\n'})
     nb['cells'].insert(2,{'cell_type':'code','metadata':{'kandinsky_colab_setup':True},'execution_count':None,'outputs':[],'source':bootstrap})
     for c in nb['cells']:
         if c['cell_type']=='code' and 'candidates=[Path.cwd()' in ''.join(c['source']):
