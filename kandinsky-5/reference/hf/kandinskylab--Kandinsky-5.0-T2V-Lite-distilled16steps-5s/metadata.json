@@ -1,0 +1,84 @@
+{
+  "_id": "68d71accba6de60357ec159a",
+  "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-distilled16steps-5s",
+  "private": false,
+  "tags": [
+    "kandinsky5",
+    "arxiv:2507.13546",
+    "license:mit",
+    "region:us"
+  ],
+  "downloads": 26,
+  "likes": 3,
+  "modelId": "kandinskylab/Kandinsky-5.0-T2V-Lite-distilled16steps-5s",
+  "author": "kandinskylab",
+  "sha": "eef30b217d5f61b85b16cc57b2cbcb53dc11dd2a",
+  "lastModified": "2025-11-20T16:30:19.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {
+    "architectures": [
+      "DiffusionTransformer3D"
+    ],
+    "model_type": "kandinsky5"
+  },
+  "cardData": {
+    "license": "mit"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes"
+    },
+    {
+      "rfilename": "README.md"
+    },
+    {
+      "rfilename": "assets/KANDINSKY_LOGO_1_BLACK.png"
+    },
+    {
+      "rfilename": "assets/KANDINSKY_LOGO_1_WHITE.png"
+    },
+    {
+      "rfilename": "assets/comfyui_kandinsky5.png"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_10s_vs_kandinsky_5_video_lite_distill_10s.jpg"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_5s_vs_kandinsky_5_video_lite_distill_5s.jpg"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_vs_sora.jpg"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_vs_wan_2.1_1.3B.jpg"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_vs_wan_2.1_14B.jpg"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_vs_wan_2.2_5B.jpg"
+    },
+    {
+      "rfilename": "assets/sbs/kandinsky_5_video_lite_vs_wan_2.2_A14B.jpg"
+    },
+    {
+      "rfilename": "assets/vbench.png"
+    },
+    {
+      "rfilename": "config.json"
+    },
+    {
+      "rfilename": "model/config.json"
+    },
+    {
+      "rfilename": "model/kandinsky5lite_t2v_distilled16steps_5s.safetensors"
+    }
+  ],
+  "spaces": [
+    "rahul7star/Kandinsky"
+  ],
+  "createdAt": "2025-09-26T22:59:24.000Z",
+  "usedStorage": 4678586380
+}

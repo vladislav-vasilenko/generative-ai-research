@@ -1,0 +1,286 @@
+[
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2I-Lite",
+    "sha": "d6414890042e02db49d9822b995eb36b475fd127"
+  },
+  {
+    "id": "kandinskylab/tiny-kandinsky-s2v-modular-pipe",
+    "sha": "e7afbda5865e1fc24284c3c86d8b308a213f961b"
+  },
+  {
+    "id": "kandinskylab/tiny-kandinsky-s2v-distilled-modular-pipe",
+    "sha": "ce1c304104ee05d23a1781959f3235aaccff06f8"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-pretrain-5s",
+    "sha": "bbf0a017240466dfb56a384c50f467c551d7c1f6"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-pretrain-10s",
+    "sha": "cc9076b562510b33200c11aa0b11fabc9d936c98"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-sft-5s",
+    "sha": "0af037be85ccb8d24b7dbdcd612d3e0cc9e32cc2"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-sft-10s",
+    "sha": "f148819b66b74db7650d6dd7118b619fe451606d"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-distilled16steps-5s",
+    "sha": "eef30b217d5f61b85b16cc57b2cbcb53dc11dd2a"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-nocfg-5s",
+    "sha": "648aa1e79492095e08d7ce35ea464c4d872ceb18"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-nocfg-10s",
+    "sha": "45ef12ba408525747ee355eb13fecdb27d10c050"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-distilled16steps-10s",
+    "sha": "162032fa79214c28c6d8913b3d8a9d624e355c13"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-sft-5s-Diffusers",
+    "sha": "5c74c11b3ecfb96249b588d17aebd59f3fd9a080"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-nocfg-5s-Diffusers",
+    "sha": "b6b4f88e63b996e0c363c073f5f85aa33169c6f5"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-distilled16steps-5s-Diffusers",
+    "sha": "06d0f76a70be2f8d88b7db89c19c358d2f3abab6"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-pretrain-5s-Diffusers",
+    "sha": "c4f6376f0b38a57710d011bbdbab82b478577803"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-sft-10s-Diffusers",
+    "sha": "141af8190a6b5195faf339b37dc08186532dfea4"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-pretrain-10s-Diffusers",
+    "sha": "82d79dd0bfc1db670af6797914e517a5b6acb222"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-nocfg-10s-Diffusers",
+    "sha": "c8ee79389d34c7e0fda3b6e589a7ef748b368a23"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-distilled16steps-10s-Diffusers",
+    "sha": "eabff395f1b142316511ed39c564b720876313d9"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-5s",
+    "sha": "643478c4b4c3bebca52f9d9b9b79e05a6aae2302"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-sft-5s-Diffusers",
+    "sha": "e6ba8ead850da18b9cfcd698e9749c12d24794aa"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-sft-5s-Diffusers",
+    "sha": "a2bfb839b757f60f46c1beeeff24f4ee72d3d453"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-sft-5s",
+    "sha": "02ea4542a6ee3e49170f86da2940781864436f5c"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-sft-10s",
+    "sha": "dbb46f4547786cf730eba9ca89ae0f26c1e3aa08"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-5s-Diffusers",
+    "sha": "8d965626ab76734922b00e359ca2d8faab2e0417"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2I-Lite",
+    "sha": "0d53b75b9f672746be4567a86b070aa658ac069f"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2I-Lite-pretrain",
+    "sha": "e454269a20892e765bc6a087e8f37be52bdb2cfa"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2I-Lite-pretrain",
+    "sha": "3ad2c6caf97a36059b62d160ef5bea27d871b238"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2I-Lite-sft-Diffusers",
+    "sha": "7184d02c52e886f31e26f17951fed501433db208"
+  },
+  {
+    "id": "kandinskylab/KVAE-3D-1.0",
+    "sha": "35a46b7ef1a812ae48c173765150086342cbc73d"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Arc-left",
+    "sha": "ed0325710385b497f519796a035b6c15e2ffb6b3"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Microwave-left",
+    "sha": "b148e5343d0d4b2adbb240d96fdc07c2e31d1bda"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Microwave-right",
+    "sha": "579233872b6a44ca1dc19dc3e1d0e8a168b5ca97"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Arc-right",
+    "sha": "d47a98acc9b5900040c81f8642864ab3a9fe2032"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Truck-left",
+    "sha": "6d122ed9cc624059dbed95a0b26ea89ca5126ea9"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Truck-right",
+    "sha": "bf69c8ce4aeb24bf9ff121d9c397bc97d4bfd08f"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Dolly-in",
+    "sha": "41d798dc21ae6b8a158f2d3920a281e5477a7019"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Lite-LoRa-Dolly-out",
+    "sha": "84b1fe495f0811f35bc6600cd9c169d3fada6cbb"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Dolly-in",
+    "sha": "a5d353755b731d5c9a59932c69f60be397eddacc"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Dolly-out",
+    "sha": "9b96ad5faa6b3c5a24411cac04489234c6371917"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Truck-left",
+    "sha": "746078e997f85069047a95185a3f9f60a30031cb"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Truck-right",
+    "sha": "991385866c5aeccc982efcb8b88392f82f1daba1"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Microwave-left",
+    "sha": "fc0097aefb3f25b0098c61a679b410972b4738f6"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Microwave-right",
+    "sha": "a95f848d86c2c4e51a3103650f9d9dab8ab1d707"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Arc-left",
+    "sha": "a4e7bdb47130ef24e335f6f488ffebc1ba7ee2e4"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Lite-LoRa-Arc-right",
+    "sha": "73e83c5af5e131696de82fff7ff2dd405930cdc1"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2I-Lite-sft-Diffusers",
+    "sha": "25da1e82e6adefdbc83c02a71f762287c5e471a4"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2I-Lite-pretrain-Diffusers",
+    "sha": "5e95f94e7625c6dae7ea848c4eee62b72cab0f6f"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-sft-5s",
+    "sha": "d65871b5be58f5fd436598ed30a4264922022e0b"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-LoRa-Arc-left",
+    "sha": "69ed32f9bbfaf2145f2b2ea6ea9f6e1cfac174b1"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-LoRa-Arc-right",
+    "sha": "f576ef57f33ae716769ce13051f8446ecf382e27"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-LoRa-Microwave-left",
+    "sha": "e1e6d9a391f7470a619103e9817028728626b521"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-LoRa-Microwave-right",
+    "sha": "b9c35dc264b2b6b1795bbeb9d5bc3c5a2ee5f59e"
+  },
+  {
+    "id": "kandinskylab/KVAE-2D-1.0",
+    "sha": "45da99ef5c7c57ae720200319cc0d43e4df670c2"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2I-Lite-pretrain-Diffusers",
+    "sha": "c3dc30da60e45964ff003f66727d8ec862123637"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-pretrain-5s",
+    "sha": "0357d2bc81469348d384f4085e329873db9320ec"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-LoRa-Arc-left",
+    "sha": "3ab2c31a0d7f11fab0c90de147e6d1d0fee980ab"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-LoRa-Arc-right",
+    "sha": "d9a88c255cef833cf8ddd7c6b1a7c24ee98a62d4"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-LoRa-Microwave-left",
+    "sha": "a62abb5b5d3c1f8825673f376f40f92a422cf422"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-LoRa-Microwave-right",
+    "sha": "933e5ca401cba3bf34c6bcfe2e953d8e7e967730"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-pretrain-10s",
+    "sha": "09f35a1c02e0e132625428ee5249b1d22c740631"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-I2V-Pro-distilled-5s-Diffusers",
+    "sha": "a17ed5a8bbdbb89224b537c90db5deff5ffed92d"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-5.0-T2V-Pro-distilled-5s-Diffusers",
+    "sha": "30b04a28d57692f1c945f3652404e3419fb00d57"
+  },
+  {
+    "id": "kandinskylab/KVAE-3D-2.0-t4s16",
+    "sha": "9a04d0afc73bd46e0753b7f46c33830f392f3f8b"
+  },
+  {
+    "id": "kandinskylab/KVAE-3D-2.0-t4s8",
+    "sha": "a9f4c53420a7da936cde18826bccc2212d849dde"
+  },
+  {
+    "id": "kandinskylab/KVAE-Audio",
+    "sha": "80edd2bccefecf0c69b90163da693adba8fa449d"
+  },
+  {
+    "id": "kandinskylab/Time-Adapter",
+    "sha": "8e9ba983c0df15ba91fa15e950a02646135b5dbe"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-WM-1.0-I2V-5s-AV",
+    "sha": "8b5aca8ba26f805b9843c2b755e12f198f82cb2f"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-WM-1.0-I2V-5s-RO",
+    "sha": "e9346edaebfca5386d0b69e2200d2d7834dc438d"
+  },
+  {
+    "id": "kandinskylab/Kandinsky-WM-1.0-I2V-5s-PH",
+    "sha": "c3151ee2ac1709a6148f9874f39e19c24b85c3e2"
+  },
+  {
+    "id": "kandinskylab/KVAE-2D-2.0",
+    "sha": "a62a38531aed26a643e22aa7197ea62578c134a3"
+  }
+]
