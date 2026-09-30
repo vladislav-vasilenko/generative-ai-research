@@ -63,5 +63,10 @@
     "notebook": "12_generation_utils.ipynb",
     "status": "passed",
     "seconds": 3.87
+  },
+  {
+    "notebook": "13_normalization_and_vae_contract_audit.ipynb",
+    "status": "passed",
+    "seconds": 3.64
   }
 ]

@@ -1,11 +1,11 @@
 # Статус проверки KandinskyLab
 
-Проверка выполнена 30 сентября 2026 года. Оборудование: Apple M3 Max / 48 ГБ RAM; Python 3.12.14, PyTorch 2.8.0. Полная среда сохранена в `environment-macos.txt`.
+Проверки выполнены 30 сентября — 1 октября 2026 года. Оборудование: Apple M3 Max / 48 ГБ RAM; Python 3.12.14, PyTorch 2.8.0. Полная среда сохранена в `environment-macos.txt`.
 
 | Проверка | Результат | Что подтверждает |
 |---|---|---|
-| nbformat и Python syntax | 13/13 notebooks прошли | Корректные Jupyter-файлы и синтаксис ячеек |
-| Последовательное выполнение в свежих kernels | 13/13 прошли | Учебные ячейки не требуют скрытых переменных других notebook |
+| nbformat и Python syntax | 14/14 notebooks прошли | Корректные Jupyter-файлы и синтаксис ячеек |
+| Последовательное выполнение в свежих kernels | 14/14 прошли | Учебные ячейки не требуют скрытых переменных других notebook |
 | Уменьшенный официальный DiT CPU forward/backward | Прошёл | Контракт 33→16 channels, конечные значения, градиенты |
 | DiT checkpoint round-trip через meta loading | Прошёл | Strict state_dict и восстановление nonpersistent RoPE/frequency buffers |
 | BF16 eager DiT + FP32 position buffers | Прошёл | Рабочий dtype без разрушения позиционных частот |
@@ -67,7 +67,7 @@ codec; маршруты text/VAE; offload call order; воспроизводим
 wrapper-функции выполняются с записывающими заглушками компонентов: они проверяют
 контракты и управляющую логику, но не качество pretrained generation и не расход памяти.
 
-Ожидаемые ошибки исходника воспроизведены и объяснены: normalize_first_frame с T=1
+Граничные случаи helper-функций воспроизведены и объяснены: normalize_first_frame с T=1
 возвращает tuple, T=2…4 даёт пустую reference-группу; нулевая std требует отдельной
 политики; generate с num_steps=0 не определяет pred; encode_video video-ветка
 несовместима с posterior-returning Hunyuan API данной ревизии. Tensor parallel
@@ -75,3 +75,15 @@ wrapper-функции выполняются с записывающими за
 
 Семь графиков просмотрены. Полная пересборка курса воспроизводит lab 12.
 Полный pretrained-инференс и установка в настоящей Colab runtime остаются непроверенными.
+
+## Отдельный аудит normalize_first_frame и encode_video
+
+Лабораторная 13 (45 ячеек) выполнена целиком в свежем CPU kernel. GitHub API main на момент проверки совпал с SOURCE_REVISION; девять исходных файлов побайтово подтверждены по Git blob SHA-1/размеру, дополнительно записаны SHA-256. Manifest: reference/audits/normalization-main-2026-10-01.json.
+
+Пройдены 160 matrix cases + 24 special cases; математические affine moment identities и decomposition глобальной reference variance; позитивные контроли T=5/9/31 и negative short/constant/singleton/layout cases; FP32/BF16 precision и constructed quantization collapse; I2V wrapper T=1/2/4/7/31 с записью decoder input. При T=1 получен точный AttributeError tuple/reshape, при T=7/31 decoder inputs конечны. Все wrapper-компоненты — записывающие заглушки; это не результат качества pretrained модели.
+
+Настоящий уменьшенный upstream Hunyuan encode(opt_tiling=False) вернул AutoencoderKLOutput/DiagonalGaussianDistribution; исходный encode_video воспроизвёл TypeError на posterior multiplication, в том числе при return_dict=False. Явный mode adapter дал правильный scaled BTHWC Tensor. Настоящий малый diffusers AutoencoderKL подтвердил успешную image branch. CPU planner override явно указан; полноценные CUDA/tiling не проверены.
+
+Важное уточнение: nFr=4 само по себе не объявляется ошибкой. T2V Distill не вызывает эти helpers; обычный I2V 5s T=31 не имеет empty reference; обычный I2V/I2I обходят несовместимую video encode branch. Source image-mode branch time_length=0 существует, но её полноценная pretrained поддержка не доказана. В notebook исследована отдельная skip/reject/FP32 policy с проверкой совпадения upstream на хорошо обусловленных FP32 входах. Она не подменяет оригинал.
+
+Три графика просмотрены. Детальные результаты: reports/normalization-audit.json. Полный pretrained-инференс не запускался.

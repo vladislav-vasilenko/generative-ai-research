@@ -124,7 +124,9 @@ print('Constant source produces nonfinite values:',not torch.isfinite(constant_o
 
 Это postprocessing latent перед decoder в I2V; четыре latent frames не равны четырём RGB кадрам из-за temporal compression. Название singular first_frame скрывает изменение четырёх кадров.
 
-**Граничные случаи исходника:** T=1 возвращает tuple `(latents, message)`, хотя обычная ветка возвращает Tensor. При T=2…4 reference пуст и возникают NaNs; с clump_values=True min/max пустого tensor вызывает ошибку. Для обычной ветки нужны T≥5, непустой reference и ненулевые std. Показываем это как исследование контракта, не исправляем vendored source.'''),code('''source_excerpt('kandinsky/generation_utils.py','def normalize_first_frame',23)
+**Граничные случаи исходника:** T=1 возвращает tuple `(latents, message)`, хотя обычная ветка возвращает Tensor. При T=2…4 reference пуст и возникают NaNs; с clump_values=True min/max пустого tensor вызывает ошибку. Для обычной ветки нужны T≥5, достаточный sample count, конечные statistics и ненулевая source std. Reference std может быть равна нулю. Показываем это как исследование контракта, не исправляем vendored source.
+
+Число четыре само по себе не является доказанной ошибкой: это явное поведение исходника, намерение автора не документировано. Обычный Python I2V 5s имеет T=31; T2V Distill эту функцию вообще не вызывает. Подробный аудит main, достижимости edge cases и return-type conflict находится в [лабораторной 13](13_normalization_and_vae_contract_audit.ipynb).'''),code('''source_excerpt('kandinsky/generation_utils.py','def normalize_first_frame',23)
 frames=torch.randn(8,4,4,2,generator=norm_rng)
 frames[:4]+=0.4
 frames_before=frames.clone()
@@ -291,7 +293,7 @@ plt.tight_layout(); plt.show()
 
 Input B,C,T,H,W → output B,T,h,w,Cz. Image branch требует T=1: удаляет time axis, берёт `.latent_dist.sample()` и возвращает time axis. Video branch берёт `vae.encode(data)[0]`, предполагая Tensor. Затем latent умножается inplace на scaling_factor и permute переносит channels в конец. Return может быть non-contiguous view.
 
-**Проверенная несовместимость:** Hunyuan vae.py этой ревизии возвращает AutoencoderKLOutput с DiagonalGaussianDistribution. Поэтому `[0]` — posterior object, а не latent Tensor, и video branch падает на умножении. I2V caller обходит этот helper: отдельный get_first_frame_from_image использует `.latent_dist.sample()`, что соответствует posterior API.
+**Проверенная несовместимость:** Hunyuan vae.py этой ревизии возвращает AutoencoderKLOutput с DiagonalGaussianDistribution. Поэтому `[0]` — posterior object, а не latent Tensor, и video branch падает на умножении, если encode успешно завершился. I2V caller обходит этот helper: отдельный get_first_frame_from_image использует `.latent_dist.sample()`, что соответствует posterior API. Обычный I2I caller выбирает image_vae=True; T2V не вызывает encode_video. Это helper/API mismatch, не доказательство отказа этих стандартных маршрутов. [Лабораторная 13](13_normalization_and_vae_contract_audit.ipynb) воспроизводит проблему на настоящем уменьшенном VAE encode и отделяет её от CPU CUDA-memory-planner ограничения.
 
 Первый опыт ниже исследует ожидаемый Tensor-returning contract заглушки. Второй воспроизводит несовместимость на настоящих diffusers posterior/output classes без загрузки VAE weights. Явная формула исправленного caller — `posterior.sample()` или `posterior.mode()` до scaling; выбор должен соответствовать training/conditioning контракту. Vendored helper не меняем.'''),code('''source_excerpt('kandinsky/generation_utils.py','def encode_video',10)
 codec_input=torch.randn(1,3,9,16,16)
@@ -327,7 +329,7 @@ Defaults helper и выбранная модель различаются: gener
 | Функция | Самая важная проверка |
 |---|---|
 | get_sparse_params | Spatial block dimensions и temporal patch=1 |
-| adaptive_mean_std_normalization | std не нулевой, reference не пуст |
+| adaptive_mean_std_normalization | source std не нулевой, reference/statistics определены |
 | normalize_first_frame | T≥5 для обычной ветки, Tensor return, первые4frames |
 | get_velocity | t×1000 и CFG branch count |
 | generate | Inplace img, negative dt, extra channels, seed вне sampler |

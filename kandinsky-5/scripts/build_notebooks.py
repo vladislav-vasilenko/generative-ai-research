@@ -166,3 +166,5 @@ runpy.run_path(str(ROOT/"scripts/add_colab_launch.py"))
 runpy.run_path(str(ROOT/"scripts/extend_from_materials.py"))
 
 runpy.run_path(str(ROOT/"scripts/build_generation_lab.py"))
+
+runpy.run_path(str(ROOT/"scripts/build_normalization_audit.py"))
