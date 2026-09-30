@@ -1,5 +1,6 @@
 # Python 3.11/3.12; macOS arm64 or Colab Linux
 torch==2.8.0
+torchvision==0.23.0
 transformers==4.56.2
 diffusers==0.35.1
 accelerate>=1.10,<2

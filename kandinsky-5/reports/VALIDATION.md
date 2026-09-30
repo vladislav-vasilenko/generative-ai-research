@@ -4,8 +4,8 @@
 
 | Проверка | Результат | Что подтверждает |
 |---|---|---|
-| nbformat и Python syntax | 12/12 notebooks прошли | Корректные Jupyter-файлы и синтаксис ячеек |
-| Последовательное выполнение в свежих kernels | 12/12 прошли | Учебные ячейки не требуют скрытых переменных других notebook |
+| nbformat и Python syntax | 13/13 notebooks прошли | Корректные Jupyter-файлы и синтаксис ячеек |
+| Последовательное выполнение в свежих kernels | 13/13 прошли | Учебные ячейки не требуют скрытых переменных других notebook |
 | Уменьшенный официальный DiT CPU forward/backward | Прошёл | Контракт 33→16 channels, конечные значения, градиенты |
 | DiT checkpoint round-trip через meta loading | Прошёл | Strict state_dict и восстановление nonpersistent RoPE/frequency buffers |
 | BF16 eager DiT + FP32 position buffers | Прошёл | Рабочий dtype без разрушения позиционных частот |
@@ -52,3 +52,26 @@ JSON отчёты: `notebook-validation.json`, `native-port-validation.json`. И
 В FM опытах continuity residual около 4.34e-5; posterior average совпадает с аналитическим velocity до 1e-15; Euler endpoint error уменьшается с 0.54 при 4 шагах до 0.019 при 128 шагах. Corrected SDE variance около 0.358 при target 0.36; naive noise injection даёт около 0.816. Это небольшие синтетические задачи, а не оценка качества pretrained Kandinsky.
 
 Графики новых блоков просмотрены. Полная пересборка курса воспроизводит содержание обоих расширенных notebooks; новые ячейки сохранены в генераторе. Источники/страницы/исправленные опечатки и SHA256 вложений указаны в `reference/course_materials/`. Файлы вложений целиком не включены в репозиторий.
+
+## Лабораторная generation_utils.py
+
+Notebook 12 (45 ячеек) целиком выполнен в свежем CPU kernel. Покрыты все 10 функций
+закреплённого модуля: извлекаются их настоящие AST function bodies/decorators;
+для wrapper-функций используется явный локальный CUDA→CPU facade, без глобальных
+изменений PyTorch. Настоящие torchvision resize/crop и fast_sta_nabla выполнены;
+уменьшенный официальный DiT подключён к настоящему generate (два forward).
+
+Проверены CFG и число forward; направление/shift временной сетки Euler; inplace
+обновление только velocity channels; visual/edit conditioning и маски; scaling/layout
+codec; маршруты text/VAE; offload call order; воспроизводимость seed на CPU. Три
+wrapper-функции выполняются с записывающими заглушками компонентов: они проверяют
+контракты и управляющую логику, но не качество pretrained generation и не расход памяти.
+
+Ожидаемые ошибки исходника воспроизведены и объяснены: normalize_first_frame с T=1
+возвращает tuple, T=2…4 даёт пустую reference-группу; нулевая std требует отдельной
+политики; generate с num_steps=0 не определяет pred; encode_video video-ветка
+несовместима с posterior-returning Hunyuan API данной ревизии. Tensor parallel
+разбиение показано на локальных shards; настоящие collectives не запускались.
+
+Семь графиков просмотрены. Полная пересборка курса воспроизводит lab 12.
+Полный pretrained-инференс и установка в настоящей Colab runtime остаются непроверенными.

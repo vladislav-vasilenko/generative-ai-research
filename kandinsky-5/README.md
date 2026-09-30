@@ -22,6 +22,7 @@
 | [09_local_m3_max](notebooks/09_local_m3_max.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/09_local_m3_max.ipynb) |
 | [10_colab_cuda_distill](notebooks/10_colab_cuda_distill.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/10_colab_cuda_distill.ipynb) |
 | [11_kvae_separate](notebooks/11_kvae_separate.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/11_kvae_separate.ipynb) |
+| [12_generation_utils](notebooks/12_generation_utils.ipynb) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/12_generation_utils.ipynb) |
 
 Учебные лабораторные работают на CPU. Для полной генерации в лабораторной 10 нужен CUDA GPU с BF16 и достаточной RAM; рекомендуемый первый опыт — A100. Запуск pretrained-модели на NVIDIA ещё не проверен.
 
@@ -71,6 +72,7 @@ python -m ipykernel install --user --name kandinsky-labs --display-name "Python 
 | 09 | [M3 Max inference](notebooks/09_local_m3_max.ipynb) | Последовательный experimental MPS путь до MP4 | Smoke tests; большие weights выключены |
 | 10 | [Colab CUDA inference](notebooks/10_colab_cuda_distill.ipynb) | Официальный pipeline с distill checkpoint, offload и замерами | Подготовка; generation выключена |
 | 11 | [KVAE отдельно](notebooks/11_kvae_separate.ipynb) | KVAE 2D/3D, reconstruction, streaming cache, latent compatibility | Без весов; pinned standalone KVAE modules |
+| 12 | [generation_utils.py](notebooks/12_generation_utils.ipynb) | Все 10 функций: CFG, Euler, sparse mask, resizing/codec, T2V/TI2I/I2V и граничные случаи | CPU; настоящие тела функций + явные CUDA facades/заглушки |
 
 Минимальный маршрут до понимания инференса: **00 → 01 → 02 → 03 → 04 → 06 → 07 → 09 или 10**. Файлы utils и parallelize изучайте затем для optimizations. KVAE — самостоятельное исследование visual tokenizer.
 
@@ -361,7 +363,7 @@ python scripts/check_native_port.py
 ## Структура папки
 
 ```text
-notebooks/                 12 последовательных учебных лабораторных
+notebooks/                 13 последовательных учебных лабораторных
 labkit/                    common helpers, eager DiT adapter, staged inference, KVAE loader
 reference/kandinsky-5/     pinned официальный source + configs + license
 reference/hf/             cards/configs/metadata без weights
@@ -398,3 +400,9 @@ requirements-labs.txt      среда Python 3.11/3.12
 4. Если ошибка остаётся, проверьте в другом браузере или сети; расширения, VPN и настройки браузера могут мешать соединению. Конкретную причину по одному stack trace определить нельзя.
 
 [Официальный FAQ Colab: сброс нездоровой среды и подключение](https://research.google.com/colaboratory/faq.html). Подготовительная ячейка и полная генерация пока не проверены в настоящей сессии Colab.
+
+## generation_utils.py: отдельная лабораторная 12
+
+[Полный разбор всех 10 функций](notebooks/12_generation_utils.ipynb) исследует исходные тела functions, а не только пересказ алгоритма. get_velocity и generate выполняются на CPU, в том числе с настоящим tiny DiT. T2V/TI2I/I2V orchestrators выполняются с инструментированными компонентами и изолированным CUDA facade; примеры проверяют channel/layout/scale и offload order. Это не проверка pretrained quality или MPS совместимости полного pipeline.
+
+Исполняемые граничные случаи закреплённой версии: normalization первых четырёх latent frames, tuple при T=1, NaNs при T=2–4 и constant source, video encode posterior mismatch, неиспользуемые seed/progress/text_embedder_device. Vendored исходник сохраняется неизменным. Torchvision 0.23.0 добавлен как зависимость для настоящего resize/crop и соответствует torch 2.8.0.

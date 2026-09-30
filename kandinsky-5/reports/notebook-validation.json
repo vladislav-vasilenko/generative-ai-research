@@ -58,5 +58,10 @@
     "notebook": "11_kvae_separate.ipynb",
     "status": "passed",
     "seconds": 2.64
+  },
+  {
+    "notebook": "12_generation_utils.ipynb",
+    "status": "passed",
+    "seconds": 3.87
   }
 ]
