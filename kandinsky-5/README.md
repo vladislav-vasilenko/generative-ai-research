@@ -181,7 +181,7 @@ flowchart TB
     FV --> X0[Data latent x0]
     P[Caption] --> FE[Frozen Qwen + CLIP]
     FE --> C[Conditioning]
-    X0 --> MIX[xt = (1-t)x0 + t noise]
+    X0 --> MIX["xt = (1-t)x0 + t noise"]
     N[Gaussian noise] --> MIX
     MIX --> D[Trainable DiT: projections + LTF + CrossDiT + OutLayer]
     C --> D
