@@ -44,3 +44,11 @@ JSON отчёты: `notebook-validation.json`, `native-port-validation.json`. И
 ## GitHub / Colab entry points
 
 После добавления Colab setup и кнопок все 12 notebooks повторно успешно выполнены в свежих локальных kernels. Локальная ветвь setup не меняет окружение. Установка пакетов и полный CUDA-инференс в настоящем Colab runtime не проверены.
+
+## Расширения по приложенным материалам MIT
+
+В лабораторную 02 добавлено 11 ячеек, в 06 — 15 (теория, CPU код, карта источников и упражнения). Обе выполнены целиком в свежих kernels. Новые Gaussian NLL, joint KL/ELBO и aggregate posterior / mutual information тождества проверены вычислениями; residual/attention encoder выдаёт правильные 2C moments. Диагностика и интерполяция используют уже обученные mini-VAE.
+
+В FM опытах continuity residual около 4.34e-5; posterior average совпадает с аналитическим velocity до 1e-15; Euler endpoint error уменьшается с 0.54 при 4 шагах до 0.019 при 128 шагах. Corrected SDE variance около 0.358 при target 0.36; naive noise injection даёт около 0.816. Это небольшие синтетические задачи, а не оценка качества pretrained Kandinsky.
+
+Графики новых блоков просмотрены. Полная пересборка курса воспроизводит содержание обоих расширенных notebooks; новые ячейки сохранены в генераторе. Источники/страницы/исправленные опечатки и SHA256 вложений указаны в `reference/course_materials/`. Файлы вложений целиком не включены в репозиторий.

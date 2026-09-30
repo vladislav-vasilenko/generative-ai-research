@@ -12,7 +12,7 @@
   {
     "notebook": "02_vae.ipynb",
     "status": "passed",
-    "seconds": 3.93
+    "seconds": 4.39
   },
   {
     "notebook": "03_nn_building_blocks.ipynb",
@@ -32,7 +32,7 @@
   {
     "notebook": "06_dit_and_flow_matching.ipynb",
     "status": "passed",
-    "seconds": 2.62
+    "seconds": 3.34
   },
   {
     "notebook": "07_sampling.ipynb",

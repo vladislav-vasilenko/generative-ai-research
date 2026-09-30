@@ -162,3 +162,5 @@ runpy.run_path(str(ROOT/"scripts/deepen_labs.py"))
 runpy.run_path(str(ROOT/"scripts/add_inference_example.py"))
 
 runpy.run_path(str(ROOT/"scripts/add_colab_launch.py"))
+
+runpy.run_path(str(ROOT/"scripts/extend_from_materials.py"))

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "lab_one.ipynb",
+    "sha256": "7f2cbaa8edc229f241cc74061f4fc7d0fbf4e554184175f49578d38ea24d5730",
+    "bytes": 48604
+  },
+  {
+    "file": "lab_two.ipynb",
+    "sha256": "37e38db2c1dede124dda3ed0ac053c6f7c72ef3b53483a224cf2cd77e47c23e6",
+    "bytes": 110393
+  },
+  {
+    "file": "lab_three.ipynb",
+    "sha256": "cdb50ba680593181b2880f63eb9fcdb7e9faedc293286ca95775d87fc9e245a4",
+    "bytes": 471330
+  },
+  {
+    "file": "lecture_notes.pdf",
+    "sha256": "d61ddac4329c49043c633c47fadd5293204bce4c9ab28e994a04c79e7251e622",
+    "bytes": 12990436
+  }
+]

@@ -51,6 +51,10 @@ python -m ipykernel install --user --name kandinsky-labs --display-name "Python 
 
 Открывайте `00_start_and_training_map.ipynb`, выполняйте ячейки сверху вниз. Все notebooks самостоятельны: не требуют переменных из предыдущего kernel. `LAB_DEVICE='cpu'` — базовый учебный режим. CPU выбран для воспроизводимости и небольших задач; notebook 09 отдельно проверяет MPS. Не включайте одновременно несколько тяжёлых notebook kernels.
 
+## Дополнения по материалам MIT 6.S184
+
+Лабораторные 02 и 06 используют предоставленные конспект и lab_one/lab_two/lab_three курса MIT (2026). В 02 добавлены Gaussian likelihood, joint KL и aggregate posterior, mutual information, spatial encoder, диагностика латентов и интерполяция. В 06 общие probability paths, continuity и score связываются с velocity и sampler Kandinsky. [Точная карта источников и исправления при адаптации](reference/course_materials/README.md).
+
 ## Учебный маршрут
 
 | № | Notebook | Что научимся воспроизводить | Режим по умолчанию |
