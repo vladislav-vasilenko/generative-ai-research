@@ -7979,8 +7979,8 @@ $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t,\qquad X_0=x_0.$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">Дополнение проекта: как читать интерфейсы<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">¶</a></h3><p><code>xt</code> — пачка точек формы <code>(batch_size, dim)</code>. Например, <code>(500, 1)</code> — 500 частиц на прямой, <code>(1000, 2)</code> — 1000 частиц на плоскости. <code>t</code> и <code>h</code> — скаляры (тензоры формы <code>()</code>).</p>
-<p><code>drift_coefficient</code> возвращает скорость для каждой точки. <code>diffusion_coefficient</code> в этой работе возвращает коэффициенты независимого шума по координатам той же формы, что <code>xt</code>; это диагональный шум, а не произвольная матрица диффузии. <code>ABC</code> задаёт интерфейс, <code>@abstractmethod</code> требует реализацию в потомке.</p>
+<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">Дополнение проекта: как читать интерфейсы<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">¶</a></h3><p><code>xt</code> — пачка точек формы <code>(batch_size, dim)</code>. Например, <code>(500, 1)</code> — 500 частиц на прямой, <code>(1000, 2)</code> — 1000 частиц на плоскости. <code>t</code> и <code>h</code> — скаляры (тензоры формы <code>()</code>). Форма <code>()</code> означает ноль осей, а не отсутствие значения: <code>torch.tensor(0.5)</code> — скаляр формы <code>()</code>, а <code>torch.tensor([0.5])</code> — вектор формы <code>(1,)</code>. Время <code>t</code> и длительность шага <code>h</code> общие для всех точек пачки.</p>
+<p><code>drift_coefficient(xt, t)</code> вычисляет $u_t(x)$ для каждой точки: скорость для ОДУ и снос (направленную составляющую движения) для СДУ. <code>diffusion_coefficient</code> в этой работе возвращает коэффициенты независимого шума по координатам той же формы, что <code>xt</code>; это диагональный шум, а не произвольная матрица диффузии. Наследование от <code>ABC</code> позволяет определить абстрактный базовый класс, который здесь выполняет роль интерфейса. <code>@abstractmethod</code> требует реализации метода в конкретном наследнике; поэтому создать экземпляр <code>ODE()</code> без реализации сноса нельзя.</p>
 <p>Интервал $[0,1]$ в определении можно заменить на $[0,T]$; поэтому далее встречаются $T=5,10,15$. Слово «скорость» для броуновской части лишь интуиция: обычной производной у её траекторий почти наверное нет.</p>
 </div>
 </div>
@@ -7996,18 +7996,57 @@ $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t,\qquad X_0=x_0.$$
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ODE</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">drift_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xt</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Снос ОДУ: состояние xt (batch_size, dim), время t (); результат той же формы, что xt."""</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Вычисляет снос ОДУ — вектор скорости u_t(x) для каждой точки.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">            xt: положения точек в момент t, форма (batch_size, dim).</span>
+<span class="sd">                Каждая строка — одна точка в пространстве размерности dim.</span>
+<span class="sd">            t: текущее время, общее для всех точек; скалярный тензор формы ().</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">            Тензор скоростей формы (batch_size, dim), той же формы, что xt.</span>
+<span class="sd">            Строка результата — скорость соответствующей точки.</span>
+<span class="sd">            Для шага Эйлера эту скорость умножают на h и прибавляют к xt.</span>
+<span class="sd">        """</span>
         <span class="k">pass</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SDE</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">drift_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xt</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Снос СДУ: состояние xt (batch_size, dim), время t (); результат (batch_size, dim)."""</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Вычисляет снос СДУ u_t(x) — направленную составляющую движения.</span>
+<span class="sd">        Это коэффициент при dt; случайное приращение вычисляется отдельно.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">            xt: положения точек в момент t, форма (batch_size, dim).</span>
+<span class="sd">                Каждая строка — одна точка в пространстве размерности dim.</span>
+<span class="sd">            t: текущее время, общее для всех точек; скалярный тензор формы ().</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">            Тензор коэффициентов сноса формы (batch_size, dim).</span>
+<span class="sd">            Строка результата — снос для соответствующей точки.</span>
+<span class="sd">            Симулятор умножает результат на длительность шага h.</span>
+<span class="sd">        """</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">diffusion_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xt</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Коэффициенты независимого шума по координатам; результат (batch_size, dim)."""</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Вычисляет коэффициенты диффузии — масштаб шума по координатам.</span>
+<span class="sd">        В этой лабораторной шум диагональный: каждой координате соответствует</span>
+<span class="sd">        свой коэффициент и независимое стандартное нормальное приращение.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">            xt: положения точек в момент t, форма (batch_size, dim).</span>
+<span class="sd">                Интерфейс допускает зависимость коэффициентов от положения.</span>
+<span class="sd">            t: текущее время, общее для всех точек; скалярный тензор формы ().</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">            Тензор коэффициентов диффузии формы (batch_size, dim).</span>
+<span class="sd">            Для скалярного sigma_t все элементы равны этому коэффициенту.</span>
+<span class="sd">            Симулятор отдельно умножает результат на sqrt(h) и случайный шум.</span>
+<span class="sd">        """</span>
         <span class="k">pass</span>
 </pre></div>
 </div>
@@ -8021,7 +8060,7 @@ $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t,\qquad X_0=x_0.$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Примечание.</strong> ОДУ можно считать частным случаем СДУ с нулевым коэффициентом диффузии. Эта интуиция верна, но в лабораторной мы рассматриваем их отдельно ради наглядности и производительности.</p>
+<p><strong>Примечание.</strong> ОДУ является частным случаем СДУ с нулевым коэффициентом диффузии: при $\sigma_t=0$ случайное слагаемое $\sigma_t\,dW_t$ исчезает, и остаётся $dX_t=u_t(X_t)\,dt$. Однако в этой лабораторной мы используем отдельные классы <code>ODE</code> и <code>SDE</code> ради наглядности и производительности: для ОДУ достаточно вычислять снос, а симулятор Эйлера не генерирует случайный шум.</p>
 </div>
 </div>
 </div>
