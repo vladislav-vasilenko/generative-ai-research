@@ -1,3 +1,0 @@
-# Общее окружение для Lab One и DDPM.
--r lecture_01/requirements.txt
-torchvision>=0.19,<1
