@@ -29,26 +29,18 @@
 
 ## Быстрый старт на Mac
 
-Нужен **Python 3.11 или 3.12**, а не системный Python 3.14: для зафиксированного PyTorch 2.8 отсутствуют соответствующие Python 3.14 wheels. Из папки `kandinsky-5` после создания окружения запустите:
+Установите [uv](https://docs.astral.sh/uv/getting-started/installation/). Из корня репозитория:
 
 ```bash
-source .venv-labs/bin/activate
-python -m jupyter lab notebooks
+cd kandinsky-5
+uv sync --locked
+uv run --locked jupyter lab notebooks
 ```
 
-Для новой машины:
+Python 3.12 выбирается через `.python-version`. Это отдельное окружение `kandinsky-5/.venv`: версии PyTorch 2.8, torchvision 0.23, transformers и diffusers закреплены в `uv.lock`. В VS Code выберите **Select Kernel → Python Environments → `kandinsky-5/.venv`**. Для регистрации ядра в другом Jupyter:
 
 ```bash
-python3.12 -m venv .venv-labs
-source .venv-labs/bin/activate
-python -m pip install -r requirements-labs.txt
-python -m jupyter lab notebooks
-```
-
-В Jupyter выберите kernel этого окружения. Чтобы добавить его в уже установленный Jupyter:
-
-```bash
-python -m ipykernel install --user --name kandinsky-labs --display-name "Python 3.12 (KandinskyLab)"
+uv run --locked python -m ipykernel install --user --name kandinsky-labs --display-name "Python 3.12 (KandinskyLab)"
 ```
 
 Открывайте `00_start_and_training_map.ipynb`, выполняйте ячейки сверху вниз. Все notebooks самостоятельны: не требуют переменных из предыдущего kernel. `LAB_DEVICE='cpu'` — базовый учебный режим. CPU выбран для воспроизводимости и небольших задач; notebook 09 отдельно проверяет MPS. Не включайте одновременно несколько тяжёлых notebook kernels.
@@ -82,7 +74,7 @@ python -m ipykernel install --user --name kandinsky-labs --display-name "Python 
 
 ## Google Colab
 
-Архив [KandinskyLab-colab.zip](KandinskyLab-colab.zip) содержит notebooks, `labkit`, requirements и зафиксированные исходники; в нём **нет весов и virtualenv**.
+Архив [KandinskyLab-colab.zip](KandinskyLab-colab.zip) содержит notebooks, `labkit`, `pyproject.toml`, `uv.lock`, экспорт зависимостей для Colab и зафиксированные исходники; в нём **нет весов и virtualenv**.
 
 1. Откройте [Google Colab](https://colab.research.google.com/), выберите Upload notebook и загрузите нужный `.ipynb` из `notebooks/`.
 2. Через панель Files загрузите `KandinskyLab-colab.zip` в `/content`.
@@ -102,6 +94,14 @@ with zipfile.ZipFile('/content/KandinskyLab-colab.zip') as archive:
 ```
 
 После смены версии PyTorch перезапустите runtime и затем выполняйте notebook. Colab использует собственную CUDA-среду: соответствие версий Torch/Torchvision обязательно. Для CPU-лаб GPU не требуется. Для notebook 10 выберите GPU runtime, установите дополнительные зависимости отдельной предусмотренной ячейкой.
+
+`requirements-labs.txt` — автоматически созданный экспорт `uv.lock` для Colab; вручную его не редактируют. После изменения зависимостей в `pyproject.toml` обновите lock и экспорт из папки `kandinsky-5`:
+
+```bash
+uv lock
+uv export --locked --no-dev --no-hashes --no-emit-project --output-file requirements-labs.txt
+uv run --locked python scripts/package_colab.py
+```
 
 Бесплатная GPU-сессия не гарантирует полный запуск. Официальный BF16 маршрут notebook 10 требует BF16-capable GPU; T4 не удовлетворяет этой проверке. На A100/L4 остаются ограничения VRAM, RAM и доступности runtime. Уроки 00–08 можно пройти независимо от этого. Шарды Qwen занимают существенную часть RAM при загрузке; CPU offload экономит VRAM, но не системную память.
 
@@ -374,7 +374,10 @@ scripts/                   генерация и проверка курса
 reports/                   отчёты; executed notebooks локально
 artifacts/                 результаты экспериментов (не weights)
 weights/                   появляется только при включении downloads
-requirements-labs.txt      среда Python 3.11/3.12
+pyproject.toml            зависимости отдельного курса
+uv.lock                   зафиксированные версии
+.python-version           Python 3.12
+requirements-labs.txt      экспорт uv.lock для Colab
 ```
 
 ## Источники
