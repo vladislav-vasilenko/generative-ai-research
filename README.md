@@ -84,6 +84,15 @@ uv run --locked python lecture_01/scripts/execute_notebook.py --animation
 ## Структура
 
 ```text
+kandinsky-5/                  Курс K5: 14 labs, свой uv environment
+kandinsky-6/
+  notebooks/                  Пошаговый manual experiment notebook
+  workflows/                  ComfyUI Lite Smoke и Baseline
+  labkit/                     PyTorch reference и MLX audio prototype
+  scripts/                    Проверки, данные, установка templates
+  reference/                  Закреплённые официальные исходники/configs
+  reports/                    Проверки и шаблоны измерений
+  artifacts/                  Локальные данные и результаты; ignored Git
 Diffusion_DDPM_Research.ipynb    DDPM: комментарии и формулы
 pyproject.toml                 Зависимости; DDPM — extra ddpm
 uv.lock                        Зафиксированные версии зависимостей
@@ -100,6 +109,8 @@ lecture_01/
   tests/                       Проверки численных методов
   outputs/                     HTML
 ```
+
+Основной код, notebooks и workflow хранятся в этих каталогах, не в `tmp/`. Большие веса ComfyUI остаются в настроенной библиотеке моделей; VCTK/cache/промежуточные результаты — локально в `kandinsky-6/artifacts/`, без коммита в Git.
 
 ## Статьи, книги и дополнительные разборы
 
