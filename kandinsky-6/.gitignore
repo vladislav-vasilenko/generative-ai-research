@@ -1,0 +1,16 @@
+.venv*/
+__pycache__/
+artifacts/**
+!artifacts/.gitkeep
+reports/executed/
+*.safetensors
+*.gguf
+*.pth
+*.pt
+*.flac
+*.wav
+*.mp4
+
+# Upstream KVAE uses data/ for Python source, not downloaded corpus files.
+!reference/kvae/data/
+!reference/kvae/data/*.py

@@ -1,0 +1,1 @@
+variant,seed,speaker_id,utterance_id,split,reference_id,output_file,secs_encoder,secs_vs_reference,secs_vs_centroid,asr_model,word_errors,reference_words,char_errors,reference_characters,naturalness_model,naturalness_score,notes

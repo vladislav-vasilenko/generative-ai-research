@@ -1,0 +1,112 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kandinsky-6-video"
+version = "6.0.0"
+description = "Kandinsky 6 Video inference pipeline"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Kandinsky Lab" },
+]
+keywords = [
+    "video generation",
+    "text-to-video",
+    "image-to-video",
+    "audio generation",
+    "diffusion",
+    "diffusion transformer",
+    "dit",
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Intended Audience :: Science/Research",
+]
+requires-python = ">=3.13,<3.15"
+dependencies = [
+    "accelerate>=1.13.0",
+    "av>=18.0.0",
+    "bitsandbytes>=0.49.0",
+    "cyclopts>=4.22.0",
+    "diffusers>=0.42.0",
+    "huggingface-hub>=1.0",
+    "kandinsky-6-sr>=1.1.0",
+    "librosa>=0.11.0",
+    "pydantic>=2.11.0",
+    "pyyaml>=6.0.2",
+    "safetensors>=0.8.0",
+    "tqdm>=4.67.0",
+    "transformers>=5.14.1",
+]
+
+[project.urls]
+Homepage = "https://kandinskylab.ai/models/video/"
+Repository = "https://github.com/kandinskylab/kandinsky-6"
+
+# `just setup` (scripts/setup-gpu.sh) selects one profile from the GPU compute capability.
+# hopper: SM 9.0, CUDA 13.0, FA3.
+# consumer: SM 8.0 / 8.6 / 8.9 / 12.0 / 12.1, CUDA 13.0. Sage is compiled afterwards.
+[project.optional-dependencies]
+hopper = [
+    "torch==2.14.1",
+    "torchvision==0.29.1",
+    "flash-attn-3==3.0.0",
+]
+consumer = [
+    "torch==2.14.1",
+    "torchvision==0.29.1",
+]
+
+[project.scripts]
+kandy = "kandinsky.cli:main"
+
+[tool.uv]
+conflicts = [
+    [
+        { extra = "hopper" },
+        { extra = "consumer" },
+    ],
+]
+
+[tool.uv.sources]
+kandinsky-6-sr = { git = "https://github.com/kandinskylab/kandinsky-6-sr", tag = "v1.1.0" }
+flash-attn-3 = { index = "pytorch-cu130" }
+torch = [
+    { index = "pytorch-cu130", extra = "hopper" },
+    { index = "pytorch-cu130", extra = "consumer" },
+]
+torchvision = [
+    { index = "pytorch-cu130", extra = "hopper" },
+    { index = "pytorch-cu130", extra = "consumer" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["kandinsky"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "kandinsky",
+    "README.md",
+    "assets",
+    "LICENSE",
+    "JUSTFILE",
+    "docs/just.md",
+    "docs/generation_modes.md",
+    "scripts/setup-gpu.sh",
+    "scripts/setup-framework.sh",
+    "scripts/generate-framework.sh",
+    "examples/fastvideo_ti2va.py",
+    "pyproject.toml",
+]

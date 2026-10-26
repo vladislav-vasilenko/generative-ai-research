@@ -1,6 +1,6 @@
 # Generative AI Research
 
-Учебный репозиторий по генеративным моделям: от численного решения ОДУ и СДУ до обучения DDPM на изображениях и исследования текстовой генерации видео Kandinsky 5 Lite. Материалы снабжены русскими пояснениями, формулами и экспериментами.
+Учебный репозиторий по генеративным моделям: от численного решения ОДУ и СДУ до обучения DDPM на изображениях и исследования Kandinsky 5 Lite и Kandinsky 6 Lite с видео и аудио. Материалы снабжены русскими пояснениями, формулами и экспериментами.
 
 ## С чего начать
 
@@ -28,6 +28,12 @@
 Учебные эксперименты выполняются на CPU; MPS проверен на уменьшенных моделях. Цель полного инференса — Kandinsky 5.0 T2V Lite distilled16steps 5s на CUDA. Полная генерация с pretrained-весами пока не проверена. [Отчёт о проверке](kandinsky-5/reports/VALIDATION.md), [сторонние исходники и лицензии](kandinsky-5/THIRD_PARTY.md).
 
 Colab notebooks автоматически загружают вспомогательный код и устанавливают зависимости. У Kandinsky отдельные `pyproject.toml`, `uv.lock` и `.venv`: запуск описан в его README.
+
+## Kandinsky 6 Lite: ComfyUI и эксперимент с голосом
+
+[Пошаговый notebook](kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb) объясняет проверку моделей и SSD, Lite Smoke/Baseline, протокол замеров, FiLM, reference attention, Flow Matching, VCTK и проверку audio-forward на MLX. Все 33 ячейки учебного маршрута выполнены без больших весов.
+
+[Два Lite workflow и инструкция](kandinsky-6/README.md) позволяют подготовить ComfyUI без Pro, SR и улучшателя промпта. Полная генерация отложена до освобождения **50 GB+** на SSD. Голосовой адаптер пока не обучен; полный MLX/PiFlow и сквозной training/sampling pipeline ещё не проверены. [Точные результаты и ограничения](kandinsky-6/reports/VALIDATION.md).
 
 ## Установка
 

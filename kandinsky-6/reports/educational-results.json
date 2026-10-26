@@ -1,0 +1,19 @@
+{
+  "client_date": "2026-10-27",
+  "notebook_cells": 33,
+  "code_cells": 14,
+  "default_route_executed": true,
+  "zero_film_max_error": 0.0,
+  "reference_context_max_change": 1.1871654896013173,
+  "synthetic_film": {
+    "scope": "synthetic features only; not voice cloning",
+    "initial_validation_mse": 0.04277731000704204,
+    "final_validation_mse": 1.5551532593580053e-07,
+    "initial_weight_gradient_norm": 0.17449204138863283
+  },
+  "pretrained_generation": "not_run",
+  "voice_training": "not_run",
+  "mlx_parity": "not_run",
+  "source_manifest_files_verified": 243,
+  "scope": "read-only local preflight and small educational examples only"
+}

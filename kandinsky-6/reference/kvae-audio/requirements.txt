@@ -1,0 +1,9 @@
+argbind>=0.3.7
+descript-audiotools>=0.7.2
+einops
+numpy
+soundfile
+torch
+torchaudio
+tqdm
+pesq
