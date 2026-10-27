@@ -1,129 +1,92 @@
 # Generative AI Research
 
-Учебный репозиторий по генеративным моделям: от численного решения ОДУ и СДУ до обучения DDPM на изображениях и исследования Kandinsky 5 Lite и Kandinsky 6 Lite с видео и аудио. Материалы снабжены русскими пояснениями, формулами и экспериментами.
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](curriculum/README.md).
+<!-- study-navigation:end -->
 
-## С чего начать
+Учебный и исследовательский стенд по генеративным моделям: **многомерные вероятности → ODE/SDE → Flow Matching и score → CFG → DiT/VAE → видео и аудио**. Материалы на русском; исходные MIT labs и официальный код моделей сохранены отдельно.
 
-| Материал | Содержание | Colab |
-|---|---|---|
-| [Конспект Lecture 1](lecture_01/LECTURE_01_RU.md) | Выборки, векторные поля, Эйлер, броуновское движение | — |
-| [Lab One: полный разбор](lecture_01/lab_one_ru.ipynb) | Перевод всех 49 исходных ячеек, решения, графики и проверки | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru.ipynb) |
-| [Lab One: упражнения](lecture_01/lab_one_ru_exercises.ipynb) | Самостоятельная реализация тех же методов | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru_exercises.ipynb) |
-| [Lab One: оригинал (EN)](lecture_01/references/lab_one_original.ipynb) | Исходная лабораторная MIT | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/references/lab_one_original.ipynb) |
-| [Lab One: HTML](lecture_01/outputs/lab_one_ru.html) | Выполненная работа без запуска Python | — |
-| [DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb) | Добавление шума, MLP, простая CNN и обратная генерация | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/Diffusion_DDPM_Research.ipynb) |
-| [Kandinsky: карта архитектуры](kandinsky-5/notebooks/00_start_and_training_map.ipynb) | Training map, frozen weights, маршрут из 14 лабораторных | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/00_start_and_training_map.ipynb) |
-| [Kandinsky: теория VAE](kandinsky-5/notebooks/02_vae.ipynb) | ELBO, reparameterization, обучение mini-VAE и видео latent | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/02_vae.ipynb) |
-| [Kandinsky: DiT и Flow Matching](kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb) | Velocity field, обучение и настоящий уменьшенный DiT | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb) |
-| [Kandinsky: Distill 5s CUDA](kandinsky-5/notebooks/10_colab_cuda_distill.ipynb) | Официальный T2V pipeline; полный pretrained запуск пока не проверен | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/10_colab_cuda_distill.ipynb) |
-| [Kandinsky: функции генерации](kandinsky-5/notebooks/12_generation_utils.ipynb) | Все 10 функций generation_utils.py: tensor contracts, CFG, sampling, conditioning и offload | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/12_generation_utils.ipynb) |
-| [Kandinsky: аудит normalization и VAE](kandinsky-5/notebooks/13_normalization_and_vae_contract_audit.ipynb) | Проверка main, численных граничных случаев и достижимости через реальные callers | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/13_normalization_and_vae_contract_audit.ipynb) |
+**Начните с [учебной карты](curriculum/README.md).** Она указывает страницы лекций, задания, эксперименты и критерии готовности. Для внешнего review сначала прочитайте этот README, затем [результаты проверок](curriculum/reports/VALIDATION.md) и [границы K6-эксперимента](kandinsky-6/STATUS.md).
 
-Порядок: **конспект → Lab One с пояснениями → упражнения → DDPM**. Lecture 1 посвящена механике потоков и диффузий. Обучение DDPM идёт дальше первой лекции и служит отдельным продолжением.
+## Быстрый запуск без больших весов
 
-## Kandinsky 5 Lite: устройство и инференс
-
-[Полный курс и все 14 кнопок Open in Colab](kandinsky-5/README.md) продолжает темы потоков и диффузий: Qwen/CLIP conditioning, теория VAE, attention, CrossDiT, Flow Matching, sampling и отдельный KVAE. Каждая лабораторная объясняет шаги на небольшом примере и связывает их с закреплённой версией официального кода.
-
-Учебные эксперименты выполняются на CPU; MPS проверен на уменьшенных моделях. Цель полного инференса — Kandinsky 5.0 T2V Lite distilled16steps 5s на CUDA. Полная генерация с pretrained-весами пока не проверена. [Отчёт о проверке](kandinsky-5/reports/VALIDATION.md), [сторонние исходники и лицензии](kandinsky-5/THIRD_PARTY.md).
-
-Colab notebooks автоматически загружают вспомогательный код и устанавливают зависимости. У Kandinsky отдельные `pyproject.toml`, `uv.lock` и `.venv`: запуск описан в его README.
-
-## Kandinsky 6 Lite: ComfyUI и эксперимент с голосом
-
-[Пошаговый notebook](kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb) объясняет проверку моделей и SSD, Lite Smoke/Baseline, протокол замеров, FiLM, reference attention, Flow Matching, VCTK и проверку audio-forward на MLX. Все 33 ячейки учебного маршрута выполнены без больших весов.
-
-[Два Lite workflow и инструкция](kandinsky-6/README.md) позволяют подготовить ComfyUI без Pro, SR и улучшателя промпта. Полная генерация отложена до освобождения **50 GB+** на SSD. Голосовой адаптер пока не обучен; полный MLX/PiFlow и сквозной training/sampling pipeline ещё не проверены. [Точные результаты и ограничения](kandinsky-6/reports/VALIDATION.md).
-
-## Установка
-
-Установите [uv](https://docs.astral.sh/uv/getting-started/installation/) и выполните из корня репозитория. Python **3.12** выбирается через `.python-version`, зависимости — через `uv.lock`:
+Нужны Python 3.12 и [uv](https://docs.astral.sh/uv/getting-started/installation/). Команды выполняются из корня checkout, содержащего `curriculum/`:
 
 ```bash
 uv sync --locked
-uv run --locked jupyter lab
+uv run --locked jupyter lab curriculum/notebooks/00_probability_and_model_contracts.ipynb
 ```
 
-Для DDPM: `uv sync --locked --extra ddpm`, затем `uv run --locked --extra ddpm jupyter lab`. В VS Code выберите kernel **Python Environments → `.venv`** из корня репозитория. Активация окружения не нужна. Также можно открыть ноутбуки в [Google Colab](https://colab.research.google.com/).
+`uv sync` устанавливает Python-зависимости. Сам стартовый notebook работает на CPU, не скачивает датасеты/веса и не отправляет задания в ComfyUI. В Jupyter/VS Code выберите kernel из корневой `.venv`.
 
-## Lecture 1 / Lab One
-
-[Инструкция по каждому этапу](lecture_01/README.md) описывает запуск, параметры и ожидаемые результаты:
-
-1. Интерфейсы ОДУ и СДУ, формы тензоров.
-2. Эйлер и Эйлер—Маруяма; почему используется `sqrt(h)`.
-3. Броуновское движение: рост дисперсии.
-4. OU: возврат к нулю и стационарность.
-5. Плотности, выборки и скор-функции.
-6. Ланжевен: преобразование распределения и анимация.
-7. Вывод OU из Ланжевена и количественный контроль.
-
-Основная версия содержит решения. `_exercises` намеренно останавливается на `NotImplementedError`, пока методы не реализованы. [Оригинал и атрибуция](lecture_01/references/README.md) позволяют свериться с предоставленной лабораторной MIT.
-
-## DDPM: что реализовано
-
-[Ноутбук](Diffusion_DDPM_Research.ipynb) разбирает нормализацию, расписание дисперсий, зашумление за один вызов, обучение предсказателя шума и обратную цепочку.
-
-- **MLP** разворачивает изображение в 3072 числа.
-- **ConvDiffusion** — простая CNN без уменьшающей/увеличивающей ветвей и skip-связей; это не полноценная U-Net.
-- Метки классов не используются: генерация безусловная.
-- Цель обучения — среднеквадратичная ошибка предсказания шума.
-- Обратный шаг использует фиксированную дисперсию `beta_t`; отличие от апостериорной дисперсии объясняется в тексте.
-
-Читайте пояснения над каждой ячейкой. Начните с небольшого запуска, затем увеличивайте число эпох. Снижение тренировочной ошибки само по себе не гарантирует качественные изображения. Малые модели здесь служат пониманию алгоритма.
-
-## Проверка
+Проверка учебных примеров в свежих ядрах:
 
 ```bash
-uv run --locked --extra ddpm pytest lecture_01/tests tests -q
-uv run --locked python lecture_01/scripts/execute_notebook.py --animation
+uv run --locked python curriculum/scripts/validate_curriculum.py --execute
+uv run --locked python curriculum/scripts/check_markdown_math.py
+uv run --locked python curriculum/scripts/sync_study_navigation.py --check
 ```
 
-Тесты используют аналитические формулы и синтетические данные, без полноценного обучения на CIFAR-10. Вторая команда выполняет Lab One в чистом ядре и обновляет результаты и HTML. [Отчёт о проверке](VALIDATION.md) описывает проверенную функциональность и ограничения.
+## Последовательность изучения
 
-## Структура
+| Этап | Материалы | Что должно получиться |
+|---|---|---|
+| 0. Вероятности и shapes | [Вводный notebook](curriculum/notebooks/00_probability_and_model_contracts.ipynb) | Совместная Gaussian, score, marginalization, соглашения о времени |
+| 1. ODE/SDE | [Lecture 1 / Lab 1](lecture_01/README.md) | Численные траектории и проверки моментов |
+| 2. Flow Matching | [Lecture 2 / Lab 2](lecture_02/README.md) | Probability paths, velocity target и обучение поля |
+| 3. Score и CFG | [Lecture 3 / Lab 2–3](lecture_03/README.md) | Score conversion, stochastic sampling, conditional generation |
+| 4. Архитектуры и latents | [Lecture 4 / Lab 3](lecture_04/README.md) | DiT, VAE и latent generative model |
+| 5. Дискретная ветвь | [Lecture 5 / CTMC](lecture_05/README.md) | Jump processes, rate matrix и categorical denoising |
+| 6. Промышленные модели | [Карта промышленных моделей](curriculum/INDUSTRY_BRIDGE.md) | Найти те же контракты в официальном коде |
+| 7. Исследование | [Протокол эксперимента](curriculum/RESEARCH_PROTOCOL.md) | Baseline, один фактор, измерения и ограниченный вывод |
+
+Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отдельная ветвь, не обязательная предпосылка непрерывных видеомоделей. **Формула → предсказание → код → измерение → объяснение** повторяются на каждом этапе. [Самопроверка](curriculum/PROGRESS.md) отделяет исполнение кода от освоения темы.
+
+## Практические маршруты
+
+- **[ComfyUI](curriculum/COMFYUI_LABS.md):** визуальные опыты, image IO без модели, отдельный VAE reconstruction, затем sampler/CFG/ресурсные эксперименты. JSON лежат в `curriculum/workflows/`.
+- **[Kandinsky 5 Lite](kandinsky-5/README.md):** 14 лабораторных по компонентам, Flow Matching и inference. У курса отдельные `pyproject.toml`, `uv.lock` и окружение.
+- **[Kandinsky 6 Lite](kandinsky-6/README.md):** ручной notebook, Smoke/Baseline workflow, подготовка VCTK и постановка будущего voice-conditioning эксперимента.
+- **[DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb):** дополнительный пример noise prediction. Для него: `uv sync --locked --extra ddpm`.
+
+## Что проверено, а что остаётся экспериментальным
+
+| Компонент | Статус | Доказательства |
+|---|---|---|
+| Вводный и CTMC notebooks | Выполнены на CPU; оригинальные Lab 2/3 остаются заданиями | [Отчёт](curriculum/reports/VALIDATION.md) |
+| K6 manual notebook | Лёгкий маршрут выполнен без pretrained weights | [Отчёт K6](kandinsky-6/reports/VALIDATION.md) |
+| ComfyUI graphs | Статические проверки связей/типов; runtime не заявлен | [Инструкция](curriculum/COMFYUI_LABS.md) |
+| MLX audio prototype | Подготовлен код; numerical/pretrained parity пока не пройден | [Статус K6](kandinsky-6/STATUS.md) |
+| Voice adapter / полный AV inference | План и проверки подготовлены; сквозной результат не получен | [Ручной протокол](kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md) |
+
+Синтетические loss/score проверки не являются результатом клонирования голоса. Скорость и память H100 не переносятся на Mac без измерения. Полный запуск на текущей M3 Max станции отложен до освобождения 50 GB+ на SSD; это локальное ограничение, не универсальное требование моделей.
+
+## Структура проекта
 
 ```text
-kandinsky-5/                  Курс K5: 14 labs, свой uv environment
-kandinsky-6/
-  notebooks/                  Пошаговый manual experiment notebook
-  workflows/                  ComfyUI Lite Smoke и Baseline
-  labkit/                     PyTorch reference и MLX audio prototype
-  scripts/                    Проверки, данные, установка templates
-  reference/                  Закреплённые официальные исходники/configs
-  reports/                    Проверки и шаблоны измерений
-  artifacts/                  Локальные данные и результаты; ignored Git
-Diffusion_DDPM_Research.ipynb    DDPM: комментарии и формулы
-pyproject.toml                 Зависимости; DDPM — extra ddpm
-uv.lock                        Зафиксированные версии зависимостей
-.python-version                Python 3.12
-VALIDATION.md                  Результаты проверки
-tests/                         Проверки DDPM
-lecture_01/
-  README.md                    Инструкция
-  LECTURE_01_RU.md              Конспект
-  lab_one_ru.ipynb              Выполненный разбор
-  lab_one_ru_exercises.ipynb    Самостоятельная работа
-  references/                  Оригинал и атрибуция
-  scripts/                     Сборка перевода и выполнение
-  tests/                       Проверки численных методов
-  outputs/                     HTML
+curriculum/       Общая учебная карта, протоколы и малые опыты
+  notebooks/      Вводная исполняемая лабораторная
+  workflows/      Учебные ComfyUI JSON
+  scripts/        Проверки, подготовка источников и опыты
+  references/     Происхождение, revisions, hashes
+  reports/        Измеренные результаты и графики
+lecture_01/       ODE/SDE: разбор, упражнения, конспект
+lecture_02/       Flow Matching и канонический original Lab 2
+lecture_03/       Score/CFG и связи Lab 2–3
+lecture_04/       DiT/VAE/LDM и канонический original Lab 3
+lecture_05/       Дополнительная CTMC-лабораторная
+kandinsky-5/      Курс K5 с отдельным окружением
+kandinsky-6/      Экспериментальный K6 стенд
+pyproject.toml    Зависимости основного курса
+uv.lock          Зафиксированные версии
 ```
 
-Основной код, notebooks и workflow хранятся в этих каталогах, не в `tmp/`. Большие веса ComfyUI остаются в настроенной библиотеке моделей; VCTK/cache/промежуточные результаты — локально в `kandinsky-6/artifacts/`, без коммита в Git.
+`reference/` в курсах содержит закреплённые сторонние исходники/configs, а не новую авторскую реализацию. Активный исследовательский код лежит в `labkit/` и `scripts/`. Большие веса, datasets, virtualenv, извлечённые тексты и выполненные рабочие копии notebooks исключены из Git; локальные результаты сохраняются в соответствующем `artifacts/`. Временные каталоги не нужны для запуска checkout.
 
-## Статьи, книги и дополнительные разборы
+## Источники и атрибуция
 
-| Источник | Когда читать |
-|---|---|
-| [MIT, 2026](https://diffusion.csail.mit.edu/2026/) и [Lecture 1](https://diffusion.csail.mit.edu/2026/docs/20260120_Lecture_01.pdf) | Основной маршрут курса |
-| [Ho, Jain, Abbeel — DDPM, 2020](https://arxiv.org/abs/2006.11239) | Уравнения (2), (4), (7), (11), (14), алгоритмы 1–2 |
-| [Song et al. — Score-Based Generative Modeling through SDEs](https://arxiv.org/abs/2011.13456) | Связь DDPM, score и непрерывных СДУ |
-| [Lilian Weng — What are Diffusion Models?](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) | Дополнительный разбор прямого/обратного процесса и потерь |
-| [Блог Lilian Weng](https://lilianweng.github.io/) | Дальнейшее чтение о генеративных моделях |
-| [Higham — Numerical Simulation of SDEs, 2001](https://epubs.siam.org/doi/10.1137/S0036144500378302) | После численных схем Lab One |
-| [Øksendal — Stochastic Differential Equations](https://link.springer.com/book/10.1007/978-3-642-14394-6) | Строгая теория СДУ |
-| [Goodfellow, Bengio, Courville — Deep Learning](https://www.deeplearningbook.org/) | Главы 3, 6, 8, 20: вероятность, сети, оптимизация, генеративные модели |
-| [torchvision: CIFAR10](https://docs.pytorch.org/vision/stable/generated/torchvision.datasets.CIFAR10.html) | Загрузка и параметры датасета |
+Основной теоретический маршрут — [MIT 6.S184, 2026](https://diffusion.csail.mit.edu/2026/index.html). [Индекс предоставленных материалов](curriculum/references/README.md) объясняет происхождение originals и адаптаций. Это независимый учебный проект, не официальный курс MIT и не официальный релиз Kandinsky/Hunyuan/Wan.
 
-Внешние материалы остаются работами их авторов. Адаптация Lab One обозначена отдельно и не является официальным переводом MIT.
+Для архитектур используются ссылки на конкретные official repository revisions; лицензии стороннего кода сохраняются. Поясняющие обзоры дополняют первичные статьи и код, не заменяя их.
+
+[Дополнительные чтения по месту в курсе](curriculum/SUPPLEMENTARY_READING.md): Rectified Flow, обзоры diffusion/video и небольшие CPU-контроли.

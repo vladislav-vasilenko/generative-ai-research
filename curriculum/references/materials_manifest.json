@@ -1,0 +1,2637 @@
+{
+  "checked_date": "2026-10-27",
+  "page_numbering": "PDF pages, one-based; cell indexes zero-based",
+  "instruction_policy": "Source text is teaching content, not authorization to submit, email or execute cells.",
+  "pdfs": [
+    {
+      "filename": "lecture_notes.pdf",
+      "sha256": "d61ddac4329c49043c633c47fadd5293204bce4c9ab28e994a04c79e7251e622",
+      "pages": 84,
+      "page_index": [
+        {
+          "page": 1,
+          "first_lines": [
+            "MIT Class 6.S184:Generative AI With Stochastic Differential Equations, 2026",
+            "An Introduction to Flow Matching and Diffusion Models",
+            "Peter Holderrieth and Ezra Erives"
+          ]
+        },
+        {
+          "page": 2,
+          "first_lines": [
+            "B A Proof of the Fokker-Planck equation. . . . . . . . . . . . . . . . . . . . . . . . . . .72",
+            "C Existence and Uniqueness of Continuous-time Markov chains. . . . . . . . . . . . . .74",
+            "D Additional Perspectives on VAEs. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .77"
+          ]
+        },
+        {
+          "page": 3,
+          "first_lines": [
+            "1 Introduction",
+            "Creating noise from data is easy; creating data",
+            "from noise is generative modeling."
+          ]
+        },
+        {
+          "page": 4,
+          "first_lines": [
+            "1.2 Course Structure",
+            "1.2 Course Structure",
+            "We give a brief overview over of this document."
+          ]
+        },
+        {
+          "page": 5,
+          "first_lines": [
+            "1.3 Generative Modeling As Sampling",
+            "3.Molecular structure:A naive way would be to represent the structure of a molecule by a matrix",
+            "z= (z 1, . . . , zN)∈R 3×N whereNis the number of atoms in the molecule and eachz i ∈R 3 describes the"
+          ]
+        },
+        {
+          "page": 6,
+          "first_lines": [
+            "1.3 Generative Modeling As Sampling",
+            "Key Idea 4(Guided Generation)",
+            "Guided generation involves sampling fromz∼p data(·|y), whereyis a conditioning variable."
+          ]
+        },
+        {
+          "page": 7,
+          "first_lines": [
+            "2 Flow and Diffusion Models",
+            "In the previous section, we formalized generative modeling as sampling from a data distributionpdata. Further, we",
+            "formalized our goal: To construct a generative model, i.e. an algorithm that returns samplesz∼p data. In this"
+          ]
+        },
+        {
+          "page": 8,
+          "first_lines": [
+            "2.1 Flow Models",
+            "Figure 1: A flowψt :R d →R d (red square grid) is defined by a velocity fieldut :R d →R d (visualized with blue",
+            "arrows) that prescribes its instantaneous movements at all locations (here,d= 2). We show three different times"
+          ]
+        },
+        {
+          "page": 9,
+          "first_lines": [
+            "2.1 Flow Models",
+            "and most intuitive methods is theEuler method. In the Euler method, we initialize withX0 =x 0 and update via",
+            "Xt+h =X t +hu t(Xt) (t= 0, h,2h,3h, . . . ,1−h)(4)"
+          ]
+        },
+        {
+          "page": 10,
+          "first_lines": [
+            "2.2 Diffusion Models",
+            "2.2 Diffusion Models",
+            "Stochastic differential equations (SDEs) extend the deterministic trajectories from ODEs withstochastictrajecto-"
+          ]
+        },
+        {
+          "page": 11,
+          "first_lines": [
+            "2.2 Diffusion Models",
+            "Figure 3: Illustration of Ornstein-Uhlenbeck processes (Equation (8)) in dimensiond= 1forθ= 0.25and various",
+            "choices ofσ(increasing from left to right). Forσ= 0, we recover a flow (smooth, deterministic trajectories) that"
+          ]
+        },
+        {
+          "page": 12,
+          "first_lines": [
+            "2.2 Diffusion Models",
+            "Theorem 5(SDE Solution Existence and Uniqueness)",
+            "Ifu:R d ×[0,1]→R d is continuously differentiable with a bounded derivative andσt is continuous, then the"
+          ]
+        },
+        {
+          "page": 13,
+          "first_lines": [
+            "2.2 Diffusion Models",
+            "Algorithm 2Sampling from a Diffusion Model (Euler-Maruyama method)",
+            "Require:Neural networku θ"
+          ]
+        },
+        {
+          "page": 14,
+          "first_lines": [
+            "3 Flow Matching",
+            "In the previous section, we constructed flow and diffusion models as generative models parameterized by a neural",
+            "network vector fielduθ"
+          ]
+        },
+        {
+          "page": 15,
+          "first_lines": [
+            "3.1 Conditional and Marginal Probability Path",
+            "Figure 5: Illustration of a conditional (top) and marginal (bottom) probability path. Here, we plot a Gaussian",
+            "probability path withαt =t, β t = 1−t. The conditional probability path interpolates a Gaussianpinit =N(0, I d)"
+          ]
+        },
+        {
+          "page": 16,
+          "first_lines": [
+            "3.2 Conditional and Marginal Vector Fields",
+            "which, by the conditions we imposed onαt andβ t, fulfills",
+            "p0(·|z) =N(α 0z, β2"
+          ]
+        },
+        {
+          "page": 17,
+          "first_lines": [
+            "3.2 Conditional and Marginal Vector Fields",
+            "Figure 6: Illustration of Theorem 9. Simulating a probability path with ODEs. Data distributionpdata in blue",
+            "background. Gaussianp init in red background. Top row: Conditional probability path. Left: Ground truth"
+          ]
+        },
+        {
+          "page": 18,
+          "first_lines": [
+            "3.2 Conditional and Marginal Vector Fields",
+            "Proof.Let us construct a conditional flow modelψtarget",
+            "t (x|z)first by defining"
+          ]
+        },
+        {
+          "page": 19,
+          "first_lines": [
+            "3.3 Learning the Marginal Vector Field",
+            "Theorem 11(Continuity Equation)",
+            "Let us consider an flow model with vector fieldutarget"
+          ]
+        },
+        {
+          "page": 20,
+          "first_lines": [
+            "3.3 Learning the Marginal Vector Field",
+            "use a mean-squared error, i.e. to use theflow matching lossdefined as",
+            "LFM(θ) =E t∼Unif,x∼pt[∥uθ"
+          ]
+        },
+        {
+          "page": 21,
+          "first_lines": [
+            "3.3 Learning the Marginal Vector Field",
+            "where(i)holds by definition, in(ii)we used the formula∥a−b∥ 2 =∥a∥ 2 −2a T b+∥b∥ 2, in(iii)we define a constant",
+            "C1 and in(iv)we used the sampling procedure ofpt given by Equation (12). Let us reexpress the second summand:"
+          ]
+        },
+        {
+          "page": 22,
+          "first_lines": [
+            "3.3 Learning the Marginal Vector Field",
+            "Algorithm 3Flow Matching Training Procedure (for Gaussian CondOT pathpt(x|z) =N(tz,(1−t) 2))",
+            "Require:A dataset of samplesz∼p data, neural networkuθ"
+          ]
+        },
+        {
+          "page": 23,
+          "first_lines": [
+            "3.3 Learning the Marginal Vector Field",
+            "Figure 7: Illustration of Theorem 12 with a Gaussian CondOT probability path: simulating an ODE from a",
+            "trained flow matching model. The data distribution is the chess board pattern (top right). Top row: Histogram"
+          ]
+        },
+        {
+          "page": 24,
+          "first_lines": [
+            "3.3 Learning the Marginal Vector Field",
+            "The most widely used example is theGaussian probability path. For this case, the formulas become:",
+            "pt(x|z) =N(x;α tz, β2"
+          ]
+        },
+        {
+          "page": 25,
+          "first_lines": [
+            "4 Score Functions and Score Matching",
+            "In the last section, we showed how to train a flow model with flow matching. In this section, we discuss diffusion",
+            "models and demonstrate how to train them usingscore matching."
+          ]
+        },
+        {
+          "page": 26,
+          "first_lines": [
+            "4.1 Conditional and Marginal Score Functions",
+            "Note that the score function for a Gaussian probability path is a linear function ofxand z. The same is true",
+            "for the conditional vector fieldut(x|z)(see Equation (20)). It is thus possible to convert between the two, as the"
+          ]
+        },
+        {
+          "page": 27,
+          "first_lines": [
+            "4.2 Sampling with SDEs",
+            "Figure 9: Illustration of Theorem 17. Simulating a probability path with SDEs. This repeats the plots from",
+            "Figure 6 with SDE sampling using Equation (44). Data distributionpdata in blue background. Gaussianp init in"
+          ]
+        },
+        {
+          "page": 28,
+          "first_lines": [
+            "4.2 Sampling with SDEs",
+            "coefficientσ t ≥0, we may construct an SDE by adding stochastic dynamics to the dynamics of the original",
+            "ODE as follows:"
+          ]
+        },
+        {
+          "page": 29,
+          "first_lines": [
+            "4.2 Sampling with SDEs",
+            "Theorem 19(Fokker-Planck Equation)",
+            "Letp t be a probability path and let us consider the SDE"
+          ]
+        },
+        {
+          "page": 30,
+          "first_lines": [
+            "4.2 Sampling with SDEs",
+            "Figure 10: Top row: Particles evolving under the Langevin dynamics given by Equation (50), withp(x)taken to",
+            "be a Gaussian mixture with 5 modes. Bottom row: A kernel density estimate of the same samples shown in the"
+          ]
+        },
+        {
+          "page": 31,
+          "first_lines": [
+            "4.3 Score Matching",
+            "4.3 Score Matching",
+            "It remains to show how we can learn the marginal score function∇logpt(x). Of course, for Gaussian probability"
+          ]
+        },
+        {
+          "page": 32,
+          "first_lines": [
+            "4.3 Score Matching",
+            "Plugging in this formula, the conditional score matching loss becomes:",
+            "LCSM(θ) =E t∼Unif, z∼pdata, x∼pt(·|z)"
+          ]
+        },
+        {
+          "page": 33,
+          "first_lines": [
+            "4.3 Score Matching",
+            "the trajectories of the following SDE follow the probability path:",
+            "X0 ∼pinit,dX t ="
+          ]
+        },
+        {
+          "page": 34,
+          "first_lines": [
+            "5 Guidance: How To Condition on a Prompt",
+            "So far, the generative models we considered wereunguided, e.g. an image model would simply generatesomeimage.",
+            "Mathematically speaking, this meant that our model returned samples from anunconditionaldata distribution"
+          ]
+        },
+        {
+          "page": 35,
+          "first_lines": [
+            "5.2 Classifer-Free Guidance",
+            "Figure 11: Image generation with prompt/classy=“corgi dog”. Left: samples generated with vanilla guidance -",
+            "the images do not fit well to the prompt. Right: samples generated with classifier guidance andw= 4. As shown,"
+          ]
+        },
+        {
+          "page": 36,
+          "first_lines": [
+            "5.2 Classifer-Free Guidance",
+            "prompt-dependent",
+            "Scale up prompt-dependent part"
+          ]
+        },
+        {
+          "page": 37,
+          "first_lines": [
+            "5.2 Classifer-Free Guidance",
+            "xdid not fit their promptywell enough, it was a natural idea to scale up the contribution of the∇logp t(y|x)",
+            "term, yielding"
+          ]
+        },
+        {
+          "page": 38,
+          "first_lines": [
+            "5.2 Classifer-Free Guidance",
+            "Note that the construction",
+            "˜ut(x|y) = (1−w)u target"
+          ]
+        },
+        {
+          "page": 39,
+          "first_lines": [
+            "5.2 Classifer-Free Guidance",
+            "Figure 13: The effect of classifier-free guidance applied at various guidance scales for the MNIST dataset of hand-",
+            "written digits. Left: Guidance scale set tow= 1.0. Middle: Guidance scale set tow= 2.0. Right: Guidance scale"
+          ]
+        },
+        {
+          "page": 40,
+          "first_lines": [
+            "5.2 Classifer-Free Guidance",
+            "Remark 28(Guidance for Diffusion Models)",
+            "It is straight-forward to extend the discussion from flow models to diffusion models. One simply replacesuθ"
+          ]
+        },
+        {
+          "page": 41,
+          "first_lines": [
+            "6 Building Large-Scale Image or Video Generators",
+            "In the previous sections, we learned how to train a flow matching or diffusion model to sample from a distribution",
+            "pdata(x|y). This recipe is general and can be applied to a variety of different data types and applications. In"
+          ]
+        },
+        {
+          "page": 42,
+          "first_lines": [
+            "6.1 Neural Network Architectures",
+            "the featurization is given by",
+            "TimeEmb(t) ="
+          ]
+        },
+        {
+          "page": 43,
+          "first_lines": [
+            "6.1 Neural Network Architectures",
+            "Figure 14: Left: An overview of the diffusion transformer architecture, taken from [30]. Right: A schematic of the",
+            "contrastive CLIP loss, in which a shared image-text embedding space is learned, taken from [34]."
+          ]
+        },
+        {
+          "page": 44,
+          "first_lines": [
+            "6.1 Neural Network Architectures",
+            "whereNis the number of layers. Finally, a final operation applies a depatchification operation which maps the",
+            "DiT output back to the desired output shape:"
+          ]
+        },
+        {
+          "page": 45,
+          "first_lines": [
+            "6.1 Neural Network Architectures",
+            "define the modulated normalization",
+            "AdaNorm˜t(x) ="
+          ]
+        },
+        {
+          "page": 46,
+          "first_lines": [
+            "6.2 Working in Latent Space: (Variational) Autoencoders",
+            "Figure 15: A simplified U-Net architecture (an architecture like this was used in lab 03 of the 2025 version of this",
+            "course)."
+          ]
+        },
+        {
+          "page": 47,
+          "first_lines": [
+            "6.2 Working in Latent Space: (Variational) Autoencoders",
+            "which, for example,d= 3×1024×1024, it is not uncommon to downsample to obtain e.g.,k= 3× 1024",
+            "16 × 1024"
+          ]
+        },
+        {
+          "page": 48,
+          "first_lines": [
+            "6.2 Working in Latent Space: (Variational) Autoencoders",
+            "random now. For the Gaussian case, this reconstruction loss becomes:",
+            "LVAE-Recon(ϕ, θ) =Ex∼pdata(x),z∼qϕ(z|x)"
+          ]
+        },
+        {
+          "page": 49,
+          "first_lines": [
+            "6.2 Working in Latent Space: (Variational) Autoencoders",
+            "To define the loss function for a variational autoencoder, we can now combine both the reconstruction and the",
+            "prior loss with a parameter weightβ≥0toVAE training objectivegiven by"
+          ]
+        },
+        {
+          "page": 50,
+          "first_lines": [
+            "6.2 Working in Latent Space: (Variational) Autoencoders",
+            "being different from1. As a total loss for the VAE, we obtain",
+            "LVAE(ϕ, θ)"
+          ]
+        },
+        {
+          "page": 51,
+          "first_lines": [
+            "6.2 Working in Latent Space: (Variational) Autoencoders",
+            "Algorithm 6β-VAE Training Procedure (Gaussian decoder with fixed variancepθ(x|z) =N(x;µ θ(z),˜σ2Id))",
+            "Require:Dataset of samplesx∼p data, encoder networks(µϕ(x),logσ 2"
+          ]
+        },
+        {
+          "page": 52,
+          "first_lines": [
+            "6.3 Case Study: Stable Diffusion 3 and Meta Movie Gen",
+            "performance now depends also on how good the autoencoder compresses images into latent space and recovers",
+            "aesthetically pleasing images."
+          ]
+        },
+        {
+          "page": 53,
+          "first_lines": [
+            "6.3 Case Study: Stable Diffusion 3 and Meta Movie Gen",
+            "Figure 16: The architecture of the multi-modal diffusion transformer (MM-DiT) proposed in [14]. Figure also taken",
+            "from [14]."
+          ]
+        },
+        {
+          "page": 54,
+          "first_lines": [
+            "7 Discrete Diffusion Models: Building Language Models with Diffusion",
+            "In previous sections, we explored flow and diffusion models as generative models overEuclidean spaceRd that",
+            "allow us to generate data points represented byvectorsz∈R d. However, not all data is naturally modeled as a"
+          ]
+        },
+        {
+          "page": 55,
+          "first_lines": [
+            "7.1 Continuous-Time Markov chain (CTMC) models",
+            "the initial distributionX 0 ∼p 0 of the Markov chain. Therefore, when we say CTMC, you can also just think of",
+            "transition probabilitiesp t+h|t(Xt+h|Xt)."
+          ]
+        },
+        {
+          "page": 56,
+          "first_lines": [
+            "7.1 Continuous-Time Markov chain (CTMC) models",
+            "Theorem 33(CTMC existence and uniqueness)",
+            "For any rate matrixQt (bounded and continuous in timet), there is a unique Markov chainXt (i.e. a unique"
+          ]
+        },
+        {
+          "page": 57,
+          "first_lines": [
+            "7.1 Continuous-Time Markov chain (CTMC) models",
+            "One can check that˜pt+h|t(y|x)is indeed a valid probability distribution for smallhby the conditions we imposed",
+            "on the rate matrix. Therefore, we can approximately sample the next point via"
+          ]
+        },
+        {
+          "page": 58,
+          "first_lines": [
+            "7.1 Continuous-Time Markov chain (CTMC) models",
+            "General Rate Matrix Factorized Rate Matrix",
+            "Figure 18: Illustration of a factorized CTMC model. Factorized CTMCs have only non-zero rates (Qt(y|x)̸= 0) if"
+          ]
+        },
+        {
+          "page": 59,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "7.2 Training CTMC models",
+            "We next discuss how to learn CTMC models. The principles are the same as for flow matching: (1) We construct"
+          ]
+        },
+        {
+          "page": 60,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "Equivalently, one can samplex∼p t(· |z)by drawing i.i.d. masksm j = 0,1and noiseξ j ∼p (j)",
+            "init, then setting"
+          ]
+        },
+        {
+          "page": 61,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "In other words, the conditional rate matrix is such that its CTMC “follows” the conditional probability path. The",
+            "conditional rate matrix serves as a building block to construct the marginal rate matrix that follows the marginal"
+          ]
+        },
+        {
+          "page": 62,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "if any other set of marginalsqt fulfills this equation, we know that by the uniqueness of ODEs (see Theorem 3)",
+            "that we can conclude thatqt =p t. This shows that the KFE is also sufficient."
+          ]
+        },
+        {
+          "page": 63,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "we just do the calculation per dimension. Then, we can derive:",
+            "d"
+          ]
+        },
+        {
+          "page": 64,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "Now, wheneveryandxare not neighbors (differ by more than one token),Qz",
+            "t (y|x) = 0for everyz. Therefore, also"
+          ]
+        },
+        {
+          "page": 65,
+          "first_lines": [
+            "7.2 Training CTMC models",
+            "Algorithm 8Training factorized CTMC Model (Discrete Diffusion)",
+            "Require:Dataset of sequencesz∼p data withz= (z 1, . . . , zd)∈ V d;"
+          ]
+        },
+        {
+          "page": 66,
+          "first_lines": [
+            "Remark 40(Generator Matching)",
+            "You may wonder why the principles of flow/diffusion models could be translated so seamlessly to discrete state",
+            "spaces. As it turns out, the principles of flow matching are not unique to flows or even CTMCs. Rather, these"
+          ]
+        },
+        {
+          "page": 67,
+          "first_lines": [
+            "[14] Patrick Esser et al.Scaling Rectified Flow Transformers for High-Resolution Image Synthesis. 2024. arXiv:",
+            "2403.03206[cs.CV].url: https://arxiv.org/abs/2403.03206.",
+            "[15] Lawrence C Evans.Partial differential equations. Vol. 19. American Mathematical Society, 2022."
+          ]
+        },
+        {
+          "page": 68,
+          "first_lines": [
+            "[34] Alec Radford et al.Learning Transferable Visual Models From Natural Language Supervision. 2021. arXiv:",
+            "2103.00020[cs.CV].url: https://arxiv.org/abs/2103.00020.",
+            "[35] Colin Raffel et al.Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer. 2023."
+          ]
+        },
+        {
+          "page": 69,
+          "first_lines": [
+            "[51] Jingfeng Yao, Bin Yang, and Xinggang Wang. “Reconstruction vs. generation: Taming optimization dilemma",
+            "in latent diffusion models”. In:Proceedings of the Computer Vision and Pattern Recognition Conference. 2025,",
+            "pp. 15703–15712."
+          ]
+        },
+        {
+          "page": 70,
+          "first_lines": [
+            "A A Reminder on Probability Theory",
+            "We present a brief overview of basic concepts from probability theory. This section was partially taken from [26].",
+            "A.1 Random vectors"
+          ]
+        },
+        {
+          "page": 71,
+          "first_lines": [
+            "A.2 Conditional densities and expectations",
+            "and similarly for the conditional PDFpY|X . Bayes’ rule expresses the conditional",
+            "PDFp Y|X withp X|Y by"
+          ]
+        },
+        {
+          "page": 72,
+          "first_lines": [
+            "B A Proof of the Fokker-Planck equation",
+            "In this section, we give here a self-contained proof of the Fokker-Planck equation which includes the continuity",
+            "equation as a special case (Theorem 11). We stress thatthis section is not necessary to understand the remain-"
+          ]
+        },
+        {
+          "page": 73,
+          "first_lines": [
+            "make the following calculation:",
+            "f(X t+h)−f(X t)",
+            "(114)"
+          ]
+        },
+        {
+          "page": 74,
+          "first_lines": [
+            "Note that this condition almost always holds in machine learning (bounded data and functions because of numerical",
+            "precision limits). Therefore, it holds that",
+            "∂tE[f(X t)] ="
+          ]
+        },
+        {
+          "page": 75,
+          "first_lines": [
+            "Existence:Conversely, any linear ODE has a solution, i.e. we know that for everyx, tthere is ap t′|t(Xt′ =",
+            "y|Xt =x)such that",
+            "pt|t(Xt =y|X t =x) =δ y(x)(123)"
+          ]
+        },
+        {
+          "page": 76,
+          "first_lines": [
+            "Then we know that",
+            "qt2=t1|t0(y|x) =",
+            "X"
+          ]
+        },
+        {
+          "page": 77,
+          "first_lines": [
+            "D Additional Perspectives on VAEs",
+            "In this section, we expand on the treatment of VAEs presented in the main text and provide a variational derivation",
+            "of the total VAE loss from Equation (83). As a first step, notice that both the encoder and decoder give rise to a"
+          ]
+        },
+        {
+          "page": 78,
+          "first_lines": [
+            "distribution that we would get is given by:",
+            "pθ(x) =",
+            "Z"
+          ]
+        },
+        {
+          "page": 79,
+          "first_lines": [
+            "a Gaussian into the desired data distribution. Samples could then be obtained by samplingz∼pprior and then",
+            "x∼p θ(x|z). Why then, we do insist on training a separate generative model within the learned latent space? The",
+            "answer has to do with the so-calledamortization gapbetween the left and right hand sides of both Equation (139)"
+          ]
+        },
+        {
+          "page": 80,
+          "first_lines": [
+            "The left-hand side is therefore commonly referred to as the evidence lower bound, or ELBO. We may now rewrite",
+            "LVAE from Equation (136) in terms of the ELBO via",
+            "LVAE =D KL(qϕ(x, z)∥p θ(x, z)) +const"
+          ]
+        },
+        {
+          "page": 81,
+          "first_lines": [
+            "Reconstruction vs Generation.Given an encoderq ϕ(z|x), decoderp θ(x|z), and latent generative modelrψ trained",
+            "to sample fromqϕ(z), we may consider the following two generative models",
+            "rrecon"
+          ]
+        },
+        {
+          "page": 82,
+          "first_lines": [
+            "Figure 22: Right: The tradeoff between between gFID and rFID, figure taken from [51]. Here,fdenotes the",
+            "downsampling factor, andddenotes the latent channel dimension. Right: Distortion (reconstruction quality) vs",
+            "rate, taken from [17, 37]. We remark that this particular curve was generated using a DDPM (itself a type of VAE)."
+          ]
+        },
+        {
+          "page": 83,
+          "first_lines": [
+            "The idea is that after drawing a data pointz∼p data one simulates the forward process and thereby corrupts or",
+            "\"noises\" the data. The forward process is designed such that fort→ ∞its distribution converges to a Gaussian",
+            "N(0, I d). In other words, forT≫0it holds that ¯XT ∼ N(0, I d)approximately. Note that this essentially"
+          ]
+        },
+        {
+          "page": 84,
+          "first_lines": [
+            "Fokker-Planck equation - as pioneered by [25, 27, 1] and done in this class.",
+            "Flow Matching [25] and Stochastic Interpolants [1].The framework that we present is most closely related to",
+            "the frameworks of flow matching andstochastic interpolants (SIs). As we learnt, flow matching restricts itself to"
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "20260120_Lecture_01.pdf",
+      "sha256": "6bfa008201cb0d14c014b92ddc7a3b50da2b868758af4975bd5bcc801bb77e86",
+      "pages": 36,
+      "page_index": [
+        {
+          "page": 1,
+          "first_lines": [
+            "Generative AI with Stochastic",
+            "Differential Equations",
+            "An introduction to flow and diffusion models"
+          ]
+        },
+        {
+          "page": 2,
+          "first_lines": [
+            "Welcome to class 6.S184!",
+            "Course Instructors Sponsor",
+            "Peter Ron"
+          ]
+        },
+        {
+          "page": 3,
+          "first_lines": [
+            "Generative AI - A new generation of AI systems",
+            "These systems are “creative”: they generate new objects.",
+            "Draft TextsArtistic Images Realistic Videos"
+          ]
+        },
+        {
+          "page": 4,
+          "first_lines": [
+            "Flow and Diffusion Models: state-of-the-art models for",
+            "generating images, videos, proteins!",
+            "Stable Diffusion"
+          ]
+        },
+        {
+          "page": 5,
+          "first_lines": [
+            "This Class: Theory and Practice of Flow/Diffusion Models",
+            "Flow and Diffusion",
+            "Models"
+          ]
+        },
+        {
+          "page": 6,
+          "first_lines": [
+            "Class Overview",
+            "● Lecture 1 (today):",
+            "○ From Generation to Sampling: Formalize “generating an image/etc.”"
+          ]
+        },
+        {
+          "page": 7,
+          "first_lines": [
+            "Section 1:",
+            "From Generation to Sampling",
+            "Goal: Formalize what it means to “generate” something."
+          ]
+        },
+        {
+          "page": 8,
+          "first_lines": [
+            "We represent images/videos/protein as vectors",
+            "Images:",
+            "- Height H and Width W"
+          ]
+        },
+        {
+          "page": 9,
+          "first_lines": [
+            "What does it mean to successfully generate something?",
+            "Prompt: “A picture of a dog”",
+            "Useless Bad Wrong animal Great!< < <"
+          ]
+        },
+        {
+          "page": 10,
+          "first_lines": [
+            "Data Distribution: How “likely” are we to find this picture in",
+            "the internet? Prompt: “A picture of a dog”",
+            "Impossible Rare Unlikely Very likely< < <"
+          ]
+        },
+        {
+          "page": 11,
+          "first_lines": [
+            "Generation means sampling the data distribution:",
+            "Generation as sampling from the data distribution",
+            "Data distribution: Distribution of objects that we want to generate:"
+          ]
+        },
+        {
+          "page": 12,
+          "first_lines": [
+            "A Dataset consists of samples from the data distribution",
+            "Training requires datasets: To train our algorithms, we need a dataset.",
+            "Examples:"
+          ]
+        },
+        {
+          "page": 13,
+          "first_lines": [
+            "Conditional Generation allows us to condition on prompts",
+            "Fixed prompt",
+            "Conditional data distribution"
+          ]
+        },
+        {
+          "page": 14,
+          "first_lines": [
+            "A generative model converts samples from a initial distribution (e.g.",
+            "Gaussian) into samples from the data distribution:",
+            "Generative Models generate samples from data distribution"
+          ]
+        },
+        {
+          "page": 15,
+          "first_lines": [
+            "Summary",
+            "● Objects to Generate: We focus on vectors z representing data objects (e.g., images, videos)",
+            "● Data distribution: Distribution that places higher probability to objects that we consider"
+          ]
+        },
+        {
+          "page": 16,
+          "first_lines": [
+            "Section 2:",
+            "Flow and Diffusion Models",
+            "Goal: Understand differential equations and how we can build"
+          ]
+        },
+        {
+          "page": 17,
+          "first_lines": [
+            "ODE Trajectory",
+            "- Example",
+            "Source: https://mariogemoll.com/flow-matching"
+          ]
+        },
+        {
+          "page": 18,
+          "first_lines": [
+            "Flow - Example"
+          ]
+        },
+        {
+          "page": 19,
+          "first_lines": [
+            "Theorem (Picard–Lindelöf theorem): If the vector field , is",
+            "continuously differentiable with bounded derivatives, then a unique",
+            "solution to the ODE"
+          ]
+        },
+        {
+          "page": 20,
+          "first_lines": [
+            "Example: Linear ODE",
+            "Simple vector field:",
+            "Claim: Flow is given by"
+          ]
+        },
+        {
+          "page": 21,
+          "first_lines": [
+            "Numerical ODE simulation - Euler method",
+            "Small step into direction of vector field",
+            "Return trajectory"
+          ]
+        },
+        {
+          "page": 22,
+          "first_lines": [
+            "Euler Method - Example",
+            "Source: https://mariogemoll.com/flow-matching",
+            "Small step sizeLarge step size"
+          ]
+        },
+        {
+          "page": 23,
+          "first_lines": [
+            "Toy example",
+            "Figure credit:",
+            "Yaron Lipman"
+          ]
+        },
+        {
+          "page": 24,
+          "first_lines": [
+            "Toy Flow",
+            "Model",
+            "Figure credit:"
+          ]
+        },
+        {
+          "page": 25,
+          "first_lines": [
+            "Return final point",
+            "How to generate objects with a Flow Model",
+            "Random initialization!"
+          ]
+        },
+        {
+          "page": 26,
+          "first_lines": [
+            "Example - Videos Generated via Flow Model Sampling"
+          ]
+        },
+        {
+          "page": 27,
+          "first_lines": [
+            "Stochastic Process: Random Trajectories",
+            "Sample 2Sample 1 Sample 3",
+            "Note: A single stochastic process can give rise to many trajectories as"
+          ]
+        },
+        {
+          "page": 28,
+          "first_lines": [
+            "Brownian Motion: Random Trajectories",
+            "Sample 2Sample 1 Sample 3",
+            "A Brownian motion behaves like a continuous random walk."
+          ]
+        },
+        {
+          "page": 29,
+          "first_lines": [
+            "Brownian Motion"
+          ]
+        },
+        {
+          "page": 30,
+          "first_lines": [
+            "Existence and Uniqueness Theorem SDEs",
+            "Theorem: If the vector field , is continuously differentiable with bounded",
+            "derivatives and the diffusion coeff. is continuous, then a unique solution (in"
+          ]
+        },
+        {
+          "page": 31,
+          "first_lines": [
+            "Numerical SDE simulation (Euler-Maruyama method)",
+            "Add additional noise with var=h",
+            "scaled by diffusion coefficient"
+          ]
+        },
+        {
+          "page": 32,
+          "first_lines": [
+            "Ornstein-Uhlenbeck Process",
+            "Increasing diffusion coefficient"
+          ]
+        },
+        {
+          "page": 33,
+          "first_lines": []
+        },
+        {
+          "page": 34,
+          "first_lines": [
+            "ODE Sampling",
+            "SDE Sampling"
+          ]
+        },
+        {
+          "page": 35,
+          "first_lines": [
+            "Logistics",
+            "How to pass this class:",
+            "1. Come to lecture"
+          ]
+        },
+        {
+          "page": 36,
+          "first_lines": [
+            "Next class:",
+            "Thursday (Day after tomorrow),",
+            "11am-12:30pm"
+          ]
+        }
+      ],
+      "official_url": "https://diffusion.csail.mit.edu/2026/docs/20260120_Lecture_01.pdf"
+    },
+    {
+      "filename": "20260122_Lecture_02.pdf",
+      "sha256": "bed3ccc626101cc06df94004b50d539337c04fa929feee42162e4f917edccf89",
+      "pages": 35,
+      "page_index": [
+        {
+          "page": 1,
+          "first_lines": [
+            "Lecture 2",
+            "Flow Matching",
+            "MIT IAP 2026 | Jan 22, 2025"
+          ]
+        },
+        {
+          "page": 2,
+          "first_lines": [
+            "Reminder: Flow and Diffusion Models",
+            "Neural network",
+            "vector field"
+          ]
+        },
+        {
+          "page": 3,
+          "first_lines": [
+            "Next step: Training a flow model",
+            "Without training, the model produces “non-sense”→ We need to train",
+            "Goal of lecture 2 (today):"
+          ]
+        },
+        {
+          "page": 4,
+          "first_lines": [
+            "Section 2:",
+            "Flow Matching",
+            "Goal: Derive a training algorithm for flow models"
+          ]
+        },
+        {
+          "page": 5,
+          "first_lines": [
+            "The Flow Matching Matrix",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 6,
+          "first_lines": [
+            "Probability Paths: The Path from Noise to Data"
+          ]
+        },
+        {
+          "page": 7,
+          "first_lines": [
+            "Conditional Probability Path",
+            "Marginal Probability Path",
+            "t=0 t=1"
+          ]
+        },
+        {
+          "page": 8,
+          "first_lines": [
+            "Plotting samples from a conditional probability path over",
+            "time",
+            "Note: A probability path only specifies the marginals (each snapshot). It says"
+          ]
+        },
+        {
+          "page": 9,
+          "first_lines": [
+            "Conditional Probability Path",
+            "Marginal Probability Path"
+          ]
+        },
+        {
+          "page": 10,
+          "first_lines": [
+            "Conditional Probability Path",
+            "Marginal Probability Path"
+          ]
+        },
+        {
+          "page": 11,
+          "first_lines": [
+            "Conditional Prob. Path",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 12,
+          "first_lines": [
+            "Marginal Prob. Path",
+            "Marginal",
+            "Probability"
+          ]
+        },
+        {
+          "page": 13,
+          "first_lines": [
+            "Example - Conditional Vector Field for Gaussian",
+            "Proof Sketch:",
+            "Step 1: By checking ODE, show that the flow of the vector field is given by"
+          ]
+        },
+        {
+          "page": 14,
+          "first_lines": [
+            "Gaussian",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 15,
+          "first_lines": [
+            "Simulating ODE",
+            "with Conditional",
+            "Vector Field for"
+          ]
+        },
+        {
+          "page": 16,
+          "first_lines": [
+            "Toy example",
+            "Figure credit:",
+            "Yaron Lipman"
+          ]
+        },
+        {
+          "page": 17,
+          "first_lines": [
+            "Simulating ODE",
+            "with Marginal",
+            "Vector Field for"
+          ]
+        },
+        {
+          "page": 18,
+          "first_lines": [
+            "Ground truth ODE samples ODE Trajectories"
+          ]
+        },
+        {
+          "page": 19,
+          "first_lines": [
+            "Continuity Equation",
+            "Given:",
+            "Randomly initialized ODE"
+          ]
+        },
+        {
+          "page": 20,
+          "first_lines": [
+            "Continuity Equation",
+            "Outflow",
+            "Inflow"
+          ]
+        },
+        {
+          "page": 21,
+          "first_lines": [
+            "Conditional Prob. Path, Vector Field, and Score",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 22,
+          "first_lines": [
+            "Marginal Prob. Path, Vector Field, and Score",
+            "Marginal",
+            "Probability"
+          ]
+        },
+        {
+          "page": 23,
+          "first_lines": [
+            "Example marginal vector field - Meta MovieGen",
+            "These videos are generated by simulating the ODE with",
+            "the (learnt) marginal vector field"
+          ]
+        },
+        {
+          "page": 24,
+          "first_lines": []
+        },
+        {
+          "page": 25,
+          "first_lines": [
+            "Conditional Flow Matching for Gaussian probability path",
+            "Conditional VF",
+            "Prob. path"
+          ]
+        },
+        {
+          "page": 26,
+          "first_lines": [
+            "Straight Line Schedule",
+            "Difference",
+            "between"
+          ]
+        },
+        {
+          "page": 27,
+          "first_lines": [
+            "Figure",
+            "credit:",
+            "Yaron"
+          ]
+        },
+        {
+          "page": 28,
+          "first_lines": []
+        },
+        {
+          "page": 29,
+          "first_lines": [
+            "Example Flow Matching - Meta MovieGen",
+            "The neural network that generates these videos was trained",
+            "with the algorithm in the previous slide"
+          ]
+        },
+        {
+          "page": 30,
+          "first_lines": [
+            "Example Flow Matching - Stable Diffusion 3",
+            "The neural network that generates these images was trained",
+            "with the algorithm just shown"
+          ]
+        },
+        {
+          "page": 31,
+          "first_lines": [
+            "Return final point",
+            "Reminder: Sampling Algorithm for Flow Model",
+            "Random initialization!"
+          ]
+        },
+        {
+          "page": 32,
+          "first_lines": [
+            "The Flow Matching Matrix",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 33,
+          "first_lines": [
+            "Conditional Prob. Path, Vector Field, and FM Loss",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 34,
+          "first_lines": [
+            "Marginal Prob. Path, Vector Field, and FM Loss",
+            "Marginal",
+            "Probability"
+          ]
+        },
+        {
+          "page": 35,
+          "first_lines": [
+            "Next class:",
+            "Friday (Tomorrow), 11am-12:30pm",
+            "Score matching and guidance!"
+          ]
+        }
+      ],
+      "official_url": "https://diffusion.csail.mit.edu/2026/docs/20260122_Lecture_02.pdf"
+    },
+    {
+      "filename": "20260123_Lecture_03.pdf",
+      "sha256": "161cb9138dab88add94bc9bfd59007b16c15bad025448aa1039a02c63306dddd",
+      "pages": 46,
+      "page_index": [
+        {
+          "page": 1,
+          "first_lines": [
+            "Lecture 03",
+            "Score Matching and Guidance",
+            "MIT IAP 2026 | Jan 23, 2025"
+          ]
+        },
+        {
+          "page": 2,
+          "first_lines": [
+            "Reminder: Conditional Prob. Path and Cond. Vector Field",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 3,
+          "first_lines": [
+            "Reminder: Marginal Prob. Path and Marginal Vector Field",
+            "Marginal",
+            "Probability"
+          ]
+        },
+        {
+          "page": 4,
+          "first_lines": [
+            "We can learn the marginal vector field by approximating the cond. VF for",
+            "many different data points z."
+          ]
+        },
+        {
+          "page": 5,
+          "first_lines": [
+            "Return final point",
+            "Reminder: Sampling Algorithm for Flow Model",
+            "Random initialization!"
+          ]
+        },
+        {
+          "page": 6,
+          "first_lines": [
+            "Section 4:",
+            "Training algorithms - 2: Score Matching",
+            "Goal: New perspective on flow and diffusion models."
+          ]
+        },
+        {
+          "page": 7,
+          "first_lines": [
+            "Score Functions = Gradients of the log-likelihood",
+            "Log-likelihood: Score function:"
+          ]
+        },
+        {
+          "page": 8,
+          "first_lines": [
+            "Proof:",
+            "Example - Score of Gaussian Probability Path"
+          ]
+        },
+        {
+          "page": 9,
+          "first_lines": [
+            "Conditional Prob. Path, Vector Field, and Score",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 10,
+          "first_lines": [
+            "Marginal Prob. Path, Vector Field, and Score",
+            "Marginal",
+            "Probability"
+          ]
+        },
+        {
+          "page": 11,
+          "first_lines": [
+            "Observation: Both Conditional VF and Cond Score are",
+            "linear functions! Just with different coefficients!",
+            "Conditional"
+          ]
+        },
+        {
+          "page": 12,
+          "first_lines": [
+            "Reparameterization: Velocity Field –> Score Function",
+            "Early Diffusion Models learnt the score function instead and then",
+            "just transformed it into the vector field! This is equivalent!"
+          ]
+        },
+        {
+          "page": 13,
+          "first_lines": []
+        },
+        {
+          "page": 14,
+          "first_lines": [
+            "Denoising Score Matching for Gaussian Prob. Path",
+            "Note what the network does: It needs to predict the noise that was",
+            "used to corrupt the data point! (DENOISING diffusion models)"
+          ]
+        },
+        {
+          "page": 15,
+          "first_lines": [
+            "Numerically",
+            "unstable for",
+            "low beta!"
+          ]
+        },
+        {
+          "page": 16,
+          "first_lines": [
+            "Fokker-Planck equation",
+            "Given:",
+            "Randomly initialized SDE"
+          ]
+        },
+        {
+          "page": 17,
+          "first_lines": [
+            "Fokker-Planck Equation",
+            "DispersionChange of",
+            "probability"
+          ]
+        },
+        {
+          "page": 18,
+          "first_lines": [
+            "Stochastic Sampling of diffusion models",
+            "Choose noise level . By “SDE extension trick”, we can sample from:",
+            "Plugin score network:"
+          ]
+        },
+        {
+          "page": 19,
+          "first_lines": [
+            "Deterministic Sampling",
+            "Stochastic Sampling"
+          ]
+        },
+        {
+          "page": 20,
+          "first_lines": [
+            "Stochastic (SDE) Sampling with Diffusion Models",
+            "Conversion of",
+            "of noise into"
+          ]
+        },
+        {
+          "page": 21,
+          "first_lines": [
+            "Why would we want stochastic/SDE dynamics?",
+            "In theory: All diffusion coefficients lead to the same result (sample from data",
+            "distribution)."
+          ]
+        },
+        {
+          "page": 22,
+          "first_lines": [
+            "Aside: Langevin dynamics - Basis of Molecular Dynamics",
+            "simulation",
+            "Molecular dynamics simulate Langevin"
+          ]
+        },
+        {
+          "page": 23,
+          "first_lines": [
+            "Key takeaway:",
+            "- Conversion formula: Learning the marginal vector field and learning the",
+            "score function is equivalent for Gaussian probability paths."
+          ]
+        },
+        {
+          "page": 24,
+          "first_lines": [
+            "Section 6:",
+            "Classifier-free guidance",
+            "Goal: Understand how to enforce coherence to prompts"
+          ]
+        },
+        {
+          "page": 25,
+          "first_lines": [
+            "Unguided: “Generate an image. ”",
+            "Guided: “Generate an image of a cat baking a cake. ”",
+            "Image source: Scaling Rectiﬁed"
+          ]
+        },
+        {
+          "page": 26,
+          "first_lines": [
+            "Vanilla Guided Sampling"
+          ]
+        },
+        {
+          "page": 27,
+          "first_lines": [
+            "Vanilla Guidance leads to suboptimal",
+            "results",
+            "Image source:"
+          ]
+        },
+        {
+          "page": 28,
+          "first_lines": [
+            "Intuition: Classifier guidance",
+            "prompt-dependent",
+            "No prompt"
+          ]
+        },
+        {
+          "page": 29,
+          "first_lines": [
+            "Intuition: Classifier guidance",
+            "Scale up prompt-dependent part",
+            "Prompt-reinforced vector field"
+          ]
+        },
+        {
+          "page": 30,
+          "first_lines": [
+            "Classifier-free guidance"
+          ]
+        },
+        {
+          "page": 31,
+          "first_lines": [
+            "Classifier-free guidance",
+            "Prompt-reinforced vector field"
+          ]
+        },
+        {
+          "page": 32,
+          "first_lines": [
+            "Classifier-free guidance training: Account for empty token",
+            "Drop label with a certain",
+            "probability!"
+          ]
+        },
+        {
+          "page": 33,
+          "first_lines": [
+            "Sampling with Classifier-Free Guidance simply",
+            "is the same as before but we use the weighted",
+            "vector field:"
+          ]
+        },
+        {
+          "page": 34,
+          "first_lines": [
+            "Example: Classifier-Free Guidance",
+            "Image source:",
+            "Classifier-free"
+          ]
+        },
+        {
+          "page": 35,
+          "first_lines": [
+            "Image source:",
+            "Classifier-free",
+            "diffusion guidance [5]."
+          ]
+        },
+        {
+          "page": 36,
+          "first_lines": [
+            "Virtually all Images or Videos that you see use CFG!",
+            "- CFG is key: Without classifier-free guidance (CFG), almost nothing would",
+            "work."
+          ]
+        },
+        {
+          "page": 37,
+          "first_lines": [
+            "CFG does not model the data distribution anymore!",
+            "- CFG is a heuristic: We do not model the data distribution anymore. In fact,",
+            "we go beyond it! It is primarily justified by its good empirical results!"
+          ]
+        },
+        {
+          "page": 38,
+          "first_lines": [
+            "Section 5:",
+            "A guide to the diffusion literature",
+            "Goal: Understand different interpretations for diffusion models"
+          ]
+        },
+        {
+          "page": 39,
+          "first_lines": [
+            "Time conventions:",
+            "“Flow time convention”:",
+            "- Data: t = 1"
+          ]
+        },
+        {
+          "page": 40,
+          "first_lines": [
+            "Noising Procedure",
+            "Probability path (here):",
+            "Interpolant function:"
+          ]
+        },
+        {
+          "page": 41,
+          "first_lines": [
+            "Constructing noising procedures via forward noising",
+            "processes",
+            "The time-reversed SDE is a specific solution to the SDE extension trick that we discussed"
+          ]
+        },
+        {
+          "page": 42,
+          "first_lines": [
+            "Here: Flow Matching",
+            "- Arguably most simple flow and diffusion algorithms",
+            "- Allows you to restrict yourself to flows"
+          ]
+        },
+        {
+          "page": 43,
+          "first_lines": [
+            "Bridging arbitrary",
+            "distributions - Example",
+            "Videos without audio → videos"
+          ]
+        },
+        {
+          "page": 44,
+          "first_lines": [
+            "Class Overview",
+            "● Lecture 1 - Generation as Sampling. Flow and Diffusion Models",
+            "● Lecture 2 - Flow Matching: Training algorithm."
+          ]
+        },
+        {
+          "page": 45,
+          "first_lines": [
+            "Next class:",
+            "Monday, 11am-12:30pm",
+            "Neural network architectures + latent spaces!"
+          ]
+        },
+        {
+          "page": 46,
+          "first_lines": [
+            "References",
+            "1. Scaling Rectified Flow Transformers for High-Resolution Image Synthesis, https://arxiv.org/abs/2403.032062. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, https://arxiv.org/abs/2010.11929",
+            "3. Scalable Diffusion Models with Transformers,"
+          ]
+        }
+      ],
+      "official_url": "https://diffusion.csail.mit.edu/2026/docs/20260123_Lecture_03.pdf"
+    },
+    {
+      "filename": "20260128_Lecture_04_edited.pdf",
+      "sha256": "e9c18c928e45fb379052b4d45d93a374ee35c69d2b59f15e31f1e3a41ca1ff51",
+      "pages": 40,
+      "page_index": [
+        {
+          "page": 1,
+          "first_lines": [
+            "Lecture 04",
+            "Latent Spaces, Neural network architectures",
+            "MIT IAP 2026 | Jan 28, 2025"
+          ]
+        },
+        {
+          "page": 2,
+          "first_lines": [
+            "Class Overview",
+            "● Lecture 1 - Flow and Diffusion Models",
+            "● Lecture 2 - Flow Matching: Training algorithm."
+          ]
+        },
+        {
+          "page": 3,
+          "first_lines": [
+            "Section 6:",
+            "Latent Spaces",
+            "Goal: Understand how data can be transformed into latents"
+          ]
+        },
+        {
+          "page": 4,
+          "first_lines": []
+        },
+        {
+          "page": 5,
+          "first_lines": [
+            "The Need for Latent Spaces",
+            "- High-resolution image: 3 color channels, height 600, width",
+            "1000 → the resulting dimension is: 3*600*1000 = 1.8 million!"
+          ]
+        },
+        {
+          "page": 6,
+          "first_lines": [
+            "The Need for Latent Spaces",
+            "- High-resolution image: 3 color channels, height 600, width",
+            "1000 → the resulting dimension is: 3*600*1000 = 1.8 million!"
+          ]
+        },
+        {
+          "page": 7,
+          "first_lines": []
+        },
+        {
+          "page": 8,
+          "first_lines": [
+            "The Need for Latent Spaces",
+            "- High-resolution image: 3 color channels, height 600, width",
+            "1000 → the resulting dimension is: 3*600*1000 = 1.8 million!"
+          ]
+        },
+        {
+          "page": 9,
+          "first_lines": [
+            "The Need for Latent Spaces",
+            "- High-resolution image: 3 color channels, height 600, width",
+            "1000 → the resulting dimension is: 3*600*1000 = 1.8 million!"
+          ]
+        },
+        {
+          "page": 10,
+          "first_lines": [
+            "Latent Spaces are constructed via autoencoders",
+            "Data space Latent",
+            "space Data space"
+          ]
+        },
+        {
+          "page": 11,
+          "first_lines": [
+            "Compression",
+            "Latent Spaces are constructed via autoencoders",
+            "Data space Latent"
+          ]
+        },
+        {
+          "page": 12,
+          "first_lines": [
+            "The Problem of Standard Autoencoders",
+            "Our goal is to transform data into latents and then learn",
+            "the distribution of latents."
+          ]
+        },
+        {
+          "page": 13,
+          "first_lines": [
+            "KL-divergence",
+            "The KL divergences measures how different two distributions are. It fulfills the",
+            "natural properties:"
+          ]
+        },
+        {
+          "page": 14,
+          "first_lines": [
+            "KL-divergence of two normal distributions",
+            "Dist. of",
+            "mean"
+          ]
+        },
+        {
+          "page": 15,
+          "first_lines": [
+            "Plotting",
+            "Minimum at 1"
+          ]
+        },
+        {
+          "page": 16,
+          "first_lines": [
+            "KL-divergence of two normal distributions",
+            "Dist. of",
+            "mean"
+          ]
+        },
+        {
+          "page": 17,
+          "first_lines": [
+            "VAE -",
+            "Training",
+            "Algorithm"
+          ]
+        },
+        {
+          "page": 18,
+          "first_lines": [
+            "Latent Diffusion Models (LDMs) - Recipe",
+            "1. Data: Take all training data x1,....,xN (e.g. all images on the internet)",
+            "2. Encoding: Convert all images into latents (for VAE simply take the mean"
+          ]
+        },
+        {
+          "page": 19,
+          "first_lines": [
+            "Virtually all AI-generated Images or Videos that you see",
+            "are generated in latent spaces!",
+            "- Latent space is key: Memory would blow up too much otherwise. We need"
+          ]
+        },
+        {
+          "page": 20,
+          "first_lines": [
+            "Section 7:",
+            "Neural network architectures",
+            "Goal: Understand how to build neural networks for diffusion"
+          ]
+        },
+        {
+          "page": 21,
+          "first_lines": [
+            "Parameterizing a vector field in a neural network",
+            "Parameters",
+            "Latent"
+          ]
+        },
+        {
+          "page": 22,
+          "first_lines": [
+            "Encoding Time",
+            "Time is only one-dimensional, while all other variables are high-dimensional.",
+            "To make it “count” more, we embed it via the following sinusoidal embedding"
+          ]
+        },
+        {
+          "page": 23,
+          "first_lines": [
+            "Encoding Language Prompt",
+            "“A dog running on grass in a park at sunshine in an Italian city.””",
+            "To embed text, most models rely on pre-trained language embeddings:"
+          ]
+        },
+        {
+          "page": 24,
+          "first_lines": [
+            "Patchify: Turn an Image into a Sequence of Vectors",
+            "Source:",
+            "https://gowrishankar.info/blog/transformers-everywhere-patch-encoding-t"
+          ]
+        },
+        {
+          "page": 25,
+          "first_lines": [
+            "Diffusion",
+            "Transformer (DiT)",
+            "Transformer model for"
+          ]
+        },
+        {
+          "page": 26,
+          "first_lines": [
+            "Diffusion Transformer Overview",
+            "Inputs",
+            "Attention"
+          ]
+        },
+        {
+          "page": 27,
+          "first_lines": [
+            "Background - Scaled dot-product attention",
+            "Attention is an operation that maps sequences of vectors to sequences of",
+            "vectors via simple matrix multiplication + softmax operation."
+          ]
+        },
+        {
+          "page": 28,
+          "first_lines": [
+            "DiTBlock Overview",
+            "- Image via Self-attention: Process image itself",
+            "Queries = image, Keys = image, values = image"
+          ]
+        },
+        {
+          "page": 29,
+          "first_lines": [
+            "Bonus:",
+            "Large-scale diffusion models",
+            "Goal: Understand how diffusion models are trained at scale"
+          ]
+        },
+        {
+          "page": 30,
+          "first_lines": [
+            "Case Study: Stable Diffusion 3",
+            "Overview:",
+            "- Flow Matching model with “straight line” schedulers (CondOT path)"
+          ]
+        },
+        {
+          "page": 31,
+          "first_lines": [
+            "Neural network architecture for Stable Diffusion 3",
+            "- Conditions on CLIP",
+            "(coarse-grained) and T5-XXL"
+          ]
+        },
+        {
+          "page": 32,
+          "first_lines": [
+            "Case Study - Meta MovieGen"
+          ]
+        },
+        {
+          "page": 33,
+          "first_lines": [
+            "Case Study: Meta MovieGen",
+            "- Flow Matching model with “straight line” schedulers (CondOT path)",
+            "- Classifier-free guidance"
+          ]
+        },
+        {
+          "page": 34,
+          "first_lines": [
+            "Bonus:",
+            "A guide to the diffusion literature",
+            "Goal: Understand different interpretations for diffusion models"
+          ]
+        },
+        {
+          "page": 35,
+          "first_lines": [
+            "Time conventions:",
+            "“Flow time convention”:",
+            "- Data: t = 1"
+          ]
+        },
+        {
+          "page": 36,
+          "first_lines": [
+            "Noising Procedure - how to corrupt data?",
+            "Probability path (here):",
+            "Interpolant function:"
+          ]
+        },
+        {
+          "page": 37,
+          "first_lines": [
+            "Constructing noising procedures via forward noising",
+            "processes",
+            "The time-reversed SDE is a specific solution to the SDE extension trick that we discussed"
+          ]
+        },
+        {
+          "page": 38,
+          "first_lines": [
+            "Here: Flow Matching",
+            "- Arguably most simple flow and diffusion algorithms",
+            "- Allows you to restrict yourself to flows"
+          ]
+        },
+        {
+          "page": 39,
+          "first_lines": [
+            "Bridging arbitrary",
+            "distributions - Example",
+            "Videos without audio → videos"
+          ]
+        },
+        {
+          "page": 40,
+          "first_lines": [
+            "Next class:",
+            "Friday, 12:30pm-2pm",
+            "Discrete diffusion models"
+          ]
+        }
+      ],
+      "official_url": "https://diffusion.csail.mit.edu/2026/docs/20260128_Lecture_04_edited.pdf"
+    },
+    {
+      "filename": "20260130_Lecture_05.pdf",
+      "sha256": "88c0f7e90d8e659e0a3cc1e7d8ebf8b5c9b0d146ffae388c004261e424d69b52",
+      "pages": 42,
+      "page_index": [
+        {
+          "page": 1,
+          "first_lines": [
+            "Lecture 05",
+            "Discrete diffusion models and discrete flow matching",
+            "MIT IAP 2026 | Jan 30, 2025"
+          ]
+        },
+        {
+          "page": 2,
+          "first_lines": [
+            "Class Overview",
+            "● Lecture 1 - Flow and Diffusion Models",
+            "● Lecture 2 - Flow Matching: Training algorithm."
+          ]
+        },
+        {
+          "page": 3,
+          "first_lines": [
+            "Discrete Diffusion Models in the news",
+            "Slide: Subham Sahoo"
+          ]
+        },
+        {
+          "page": 4,
+          "first_lines": [
+            "Austin et al., “Structured Denoising Diffusion Models in Discrete State-Spaces”, NeurIPS 2022",
+            "Diffusion LLMs generate text in arbitrary order",
+            "Slide: Subham Sahoo"
+          ]
+        },
+        {
+          "page": 5,
+          "first_lines": [
+            "Discrete diffusion models and discrete flow matching",
+            "- Models for discrete sequence data: Language, protein sequences, etc.",
+            "- Note: There is no diffusion/SDE and also no flow/ODE in discrete space."
+          ]
+        },
+        {
+          "page": 6,
+          "first_lines": [
+            "Continuous Time Markov Chains",
+            "Figures: Andrew Campbell"
+          ]
+        },
+        {
+          "page": 7,
+          "first_lines": [
+            "Example - Continuous-time Markov chain",
+            "Rate matrix",
+            "State space"
+          ]
+        },
+        {
+          "page": 8,
+          "first_lines": [
+            "Examples of neighbors",
+            "X and y are",
+            "neighbors"
+          ]
+        },
+        {
+          "page": 9,
+          "first_lines": [
+            "Factorized CTMC",
+            "General CTMC",
+            "Figures: Yaron Lipman"
+          ]
+        },
+        {
+          "page": 10,
+          "first_lines": [
+            "Sampling",
+            "from",
+            "factorized"
+          ]
+        },
+        {
+          "page": 11,
+          "first_lines": [
+            "Austin et al., “Structured Denoising Diffusion Models in Discrete State-Spaces”, NeurIPS 2022",
+            "Illustration of sampling procedure",
+            "Slide: Subham Sahoo"
+          ]
+        },
+        {
+          "page": 12,
+          "first_lines": [
+            "Generative Modeling with CTMCs",
+            "Goal: Convert “Noise” to Data with a CTMC",
+            "CTMC"
+          ]
+        },
+        {
+          "page": 13,
+          "first_lines": [
+            "Continuous Flow Matching",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 14,
+          "first_lines": [
+            "The Discrete Flow Matching Matrix",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 15,
+          "first_lines": [
+            "Example - Factorized Mixture Path",
+            "Idea: Noise each token independently with probability :",
+            "Sampling procedure:"
+          ]
+        },
+        {
+          "page": 16,
+          "first_lines": [
+            "Toy example",
+            "Figure credit:",
+            "Yaron Lipman"
+          ]
+        },
+        {
+          "page": 17,
+          "first_lines": [
+            "Discrete",
+            "Probability Path",
+            "Figure credit:"
+          ]
+        },
+        {
+          "page": 18,
+          "first_lines": [
+            "Note difference",
+            "to before:",
+            "Probability is"
+          ]
+        },
+        {
+          "page": 19,
+          "first_lines": [
+            "Discrete",
+            "Probability Path",
+            "Figure credit:"
+          ]
+        },
+        {
+          "page": 20,
+          "first_lines": [
+            "Kolmogorov Forward Equation",
+            "Discrete analogue to the continuity equation.",
+            "A CTMC with rate matrix Q_t follows the probability path"
+          ]
+        },
+        {
+          "page": 21,
+          "first_lines": [
+            "Conditional Rate Matrix for Factorized Mixture Path",
+            "If current token correct, zero rate",
+            "If incorrect, jump to correct"
+          ]
+        },
+        {
+          "page": 22,
+          "first_lines": []
+        },
+        {
+          "page": 23,
+          "first_lines": [
+            "Conditional Rate Matrix for Factorized Mixture Path",
+            "If current token correct, zero rate",
+            "If incorrect, jump to correct"
+          ]
+        },
+        {
+          "page": 24,
+          "first_lines": [
+            "Conditional Prob. Path, Vector Field, and Score",
+            "Conditional",
+            "Probability"
+          ]
+        },
+        {
+          "page": 25,
+          "first_lines": [
+            "Marginal Prob. Path, Vector Field, and Score",
+            "Marginal",
+            "Probability"
+          ]
+        },
+        {
+          "page": 26,
+          "first_lines": [
+            "Marginal Rate Matrix for Factorized Mixture Path",
+            "Conditional probability!",
+            "Only unknown!"
+          ]
+        },
+        {
+          "page": 27,
+          "first_lines": [
+            "Discrete Flow Matching loss",
+            "Cross-entropy loss for every",
+            "dimension!"
+          ]
+        },
+        {
+          "page": 28,
+          "first_lines": []
+        },
+        {
+          "page": 29,
+          "first_lines": [
+            "Mask Diffusion Language Models",
+            "Introduce new token into vocabulary: [MASK]",
+            "This token indicates that we masked the reference token"
+          ]
+        },
+        {
+          "page": 30,
+          "first_lines": []
+        },
+        {
+          "page": 31,
+          "first_lines": [
+            "Sampling from a Masked Language Model",
+            "---- ----- ------ -- -- ----- --- ------ ------ ------- ---------",
+            "------- --- -- -------- ---- ------- --------- ---- --- ------"
+          ]
+        },
+        {
+          "page": 32,
+          "first_lines": [
+            "---- ----- ------ -- -- ----- --- ------ squad, ------- ---------",
+            "------- --- to remember ---- ------- --------- when --- ------",
+            "---- --- to -------- ---- -- ---- ---- ------- --- - ------- --"
+          ]
+        },
+        {
+          "page": 33,
+          "first_lines": [
+            "Many years later, as he faced --- ------ squad, ------- ---------",
+            "Buendía was to remember that distant --------- when his ------",
+            "took --- to discover ---- At that ---- ------- was a village of"
+          ]
+        },
+        {
+          "page": 34,
+          "first_lines": [
+            "Many years later, as he faced the firing squad, Colonel Aureliano",
+            "Buendía was to remember that distant --------- when his father",
+            "took him to discover ice. At that time Macondo was a village of"
+          ]
+        },
+        {
+          "page": 35,
+          "first_lines": [
+            "Many years later, as he faced the firing squad, Colonel Aureliano",
+            "Buendía was to remember that distant afternoon when his father",
+            "took him to discover ice. At that time Macondo was a village of"
+          ]
+        },
+        {
+          "page": 36,
+          "first_lines": [
+            "Austin et al., “Structured Denoising Diffusion Models in Discrete State-Spaces”, NeurIPS 2022",
+            "Masked Diffusion LLMs generate text",
+            "Slide: Subham Sahoo"
+          ]
+        },
+        {
+          "page": 37,
+          "first_lines": [
+            "Discussion: Discrete Diffusion Models vs Autoregressive",
+            "Models",
+            "- Generate Multiple Tokens in Parallel → More Speed?!"
+          ]
+        },
+        {
+          "page": 38,
+          "first_lines": [
+            "Continuous Flow Matching",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 39,
+          "first_lines": [
+            "The Discrete Flow Matching Matrix",
+            "Conditional",
+            "Probability Path"
+          ]
+        },
+        {
+          "page": 40,
+          "first_lines": [
+            "How can it be that Flow Matching recipe works so similarly",
+            "for discrete data and CTMCs?",
+            "The principle underlying flow matching is more general. It can be derived for a"
+          ]
+        },
+        {
+          "page": 41,
+          "first_lines": [
+            "Class Recap",
+            "● Lecture 1 - Flow and Diffusion Models",
+            "● Lecture 2 - Flow Matching: Training algorithm."
+          ]
+        },
+        {
+          "page": 42,
+          "first_lines": [
+            "This is our final class!",
+            "Thank you for joining us!!!!",
+            "Please fill out the subject evaluation surveys!"
+          ]
+        }
+      ],
+      "official_url": "https://diffusion.csail.mit.edu/2026/docs/20260130_Lecture_05.pdf"
+    }
+  ],
+  "notebooks": [
+    {
+      "filename": "lab_one.ipynb",
+      "canonical_path": "lecture_01/references/lab_one_original.ipynb",
+      "sha256": "7f2cbaa8edc229f241cc74061f4fc7d0fbf4e554184175f49578d38ea24d5730",
+      "cells": 49,
+      "sections": [
+        {
+          "cell_index": 0,
+          "cell_id": "93d49b57-85cb-407c-a2e3-c79f682a3dc1",
+          "headings": [
+            "# Lab One: Simulating ODEs and SDEs"
+          ]
+        },
+        {
+          "cell_index": 3,
+          "cell_id": "2dd11ba4-80a5-4354-913b-ae17827f59e1",
+          "headings": [
+            "# Part 0: Introduction"
+          ]
+        },
+        {
+          "cell_index": 7,
+          "cell_id": "8a220737-5fbb-4405-852d-a9610d27e345",
+          "headings": [
+            "# Part 1: Numerical Methods for Simulating ODEs and SDEs"
+          ]
+        },
+        {
+          "cell_index": 9,
+          "cell_id": "27d9b6b5-e7eb-44a1-a180-aa55d16d8356",
+          "headings": [
+            "### Question 1.1: Integrate EulerSimulator and EulerMaruyamaSimulator"
+          ]
+        },
+        {
+          "cell_index": 14,
+          "cell_id": "4afdf59a-25e3-4537-a357-bbbb8ee5332b",
+          "headings": [
+            "# Part 2: Visualizing Solutions to SDEs"
+          ]
+        },
+        {
+          "cell_index": 15,
+          "cell_id": "84c480e6-bfcf-4105-b21a-002d3a110923",
+          "headings": [
+            "### Question 2.1: Implementing Brownian Motion"
+          ]
+        },
+        {
+          "cell_index": 23,
+          "cell_id": "9b22c81b-7ce9-4b84-82ab-fac03f741b03",
+          "headings": [
+            "### Question 2.2: Implementing an Ornstein-Uhlenbeck Process"
+          ]
+        },
+        {
+          "cell_index": 31,
+          "cell_id": "d49bcbdc-237c-4639-a447-b0c13f575a8d",
+          "headings": [
+            "# Part 3: Transforming Distributions with SDEs"
+          ]
+        },
+        {
+          "cell_index": 36,
+          "cell_id": "5b51093e-b25a-4cdb-bc0d-ab8c1a3145b3",
+          "headings": [
+            "### Question 3.1: Implementing Langevin Dynamics"
+          ]
+        },
+        {
+          "cell_index": 46,
+          "cell_id": "d149c323-3c9e-40a7-8e00-15fe8b87f3f8",
+          "headings": [
+            "### Question 3.2: Ornstein-Uhlenbeck as Langevin Dynamics"
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "lab_two.ipynb",
+      "canonical_path": "lecture_02/references/lab_two_original.ipynb",
+      "sha256": "37e38db2c1dede124dda3ed0ac053c6f7c72ef3b53483a224cf2cd77e47c23e6",
+      "cells": 79,
+      "sections": [
+        {
+          "cell_index": 0,
+          "cell_id": "f4ca5863-5112-49cd-800c-61199d955cb6",
+          "headings": [
+            "# Lab Two: Flow Matching and Score Matching"
+          ]
+        },
+        {
+          "cell_index": 2,
+          "cell_id": "82a79a8b-a061-4c93-aedb-3d2269011f36",
+          "headings": [
+            "### Part 0: Miscellaneous Imports and Utility Functions"
+          ]
+        },
+        {
+          "cell_index": 8,
+          "cell_id": "9b91789e-d50d-4aef-9d98-4188aa20ceed",
+          "headings": [
+            "### Part 1: Implementing Conditional Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 11,
+          "cell_id": "7351c076-f555-4068-9337-d3d0311bc6de",
+          "headings": [
+            "# Part 2: Gaussian Conditional Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 14,
+          "cell_id": "574e24a6-59f7-4ea5-b7d8-efc1106a412a",
+          "headings": [
+            "### Problem 2.1: Implementing $\\alpha_t$ and $\\beta_t$ "
+          ]
+        },
+        {
+          "cell_index": 21,
+          "cell_id": "6ae68e0c-b534-41ca-8f05-86d3994ea34d",
+          "headings": [
+            "### Problem 2.2: Gaussian Conditional Probability Path"
+          ]
+        },
+        {
+          "cell_index": 25,
+          "cell_id": "ec77b226-8faf-4fd6-80f9-f2d151d529d0",
+          "headings": [
+            "### Problem 2.3: Conditional Vector Field"
+          ]
+        },
+        {
+          "cell_index": 31,
+          "cell_id": "75225acb-5522-467e-82df-9fba32c0b708",
+          "headings": [
+            "### Problem 2.4: The Conditional Score"
+          ]
+        },
+        {
+          "cell_index": 37,
+          "cell_id": "4609e0a6-cc7f-429e-9f81-2423164b5c8d",
+          "headings": [
+            "# Part 3: Flow Matching and Score Matching with Gaussian Conditional Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 38,
+          "cell_id": "565e1f4f-f02e-4663-ae99-b62d9fee95b3",
+          "headings": [
+            "### Problem 3.1 Flow Matching with Gaussian Conditional Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 50,
+          "cell_id": "24b0491a-9d82-413d-b6c9-95199e0f23e4",
+          "headings": [
+            "### Problem 3.2: Score Matching with Gaussian Conditional Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 59,
+          "cell_id": "57aaf7f6-d7d0-4fe8-b415-8a069ac02f93",
+          "headings": [
+            "### Question 3.3: Deriving the Marginal Score from the Marginal Flow"
+          ]
+        },
+        {
+          "cell_index": 64,
+          "cell_id": "b58fd169-6891-45ab-b917-14cc3912bec8",
+          "headings": [
+            "# Part 4: Flow Matching Between Arbitrary Distributions with a Linear Probability Path"
+          ]
+        },
+        {
+          "cell_index": 67,
+          "cell_id": "5e14a9a6-a5c7-40df-9acc-39af296b22e2",
+          "headings": [
+            "### Problem 4.1: Linear Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 72,
+          "cell_id": "aaf5f81d-bd38-4222-a14e-553a31afa964",
+          "headings": [
+            "### Part 4.2: Flow Matching with Linear Probability Paths"
+          ]
+        },
+        {
+          "cell_index": 75,
+          "cell_id": "98e4271f-495d-4164-8183-8619c08af3d7",
+          "headings": [
+            "### Problem 4.3: Bridging Between Arbitrary Source and Target"
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "lab_three.ipynb",
+      "canonical_path": "lecture_04/references/lab_three_original.ipynb",
+      "sha256": "cdb50ba680593181b2880f63eb9fcdb7e9faedc293286ca95775d87fc9e245a4",
+      "cells": 80,
+      "sections": [
+        {
+          "cell_index": 0,
+          "cell_id": "5738896e-b128-4724-ab55-b3fe9113743d",
+          "headings": [
+            "# Lab 3: A Conditional Generative Model for Images"
+          ]
+        },
+        {
+          "cell_index": 2,
+          "cell_id": "06c02887-12f1-40c9-8384-31fde27bcf4e",
+          "headings": [
+            "### Part 0: Recycling Components from Previous Labs"
+          ]
+        },
+        {
+          "cell_index": 19,
+          "cell_id": "85821a69-c29b-4c4d-9910-17cc43e1dc39",
+          "headings": [
+            "# Part 1: Getting a Feel for MNIST"
+          ]
+        },
+        {
+          "cell_index": 23,
+          "cell_id": "3a574647-2c63-49f3-bd1f-5b4b495f497e",
+          "headings": [
+            "# Part 2: Classifier Free Guidance"
+          ]
+        },
+        {
+          "cell_index": 27,
+          "cell_id": "a53545c1-0c24-482d-a9fc-2d3fa3f2d98a",
+          "headings": [
+            "### Question 2.2: Training for Classifier-Free Guidance"
+          ]
+        },
+        {
+          "cell_index": 32,
+          "cell_id": "BJPgC0JlQqip",
+          "headings": [
+            "### Question 2.3: MLPConditionalVectorField"
+          ]
+        },
+        {
+          "cell_index": 34,
+          "cell_id": "4nu8uC-cRSzT",
+          "headings": [
+            "### Sanity Check 2.4"
+          ]
+        },
+        {
+          "cell_index": 37,
+          "cell_id": "83ca0376-dfb2-4ec9-ab0c-6f1943fdd191",
+          "headings": [
+            "# Part 3: Building a Diffusion Transformer"
+          ]
+        },
+        {
+          "cell_index": 38,
+          "cell_id": "f79bc767-5a66-4297-a54a-382dc26baecc",
+          "headings": [
+            "### Question 3.1: Fourier Time Encoder"
+          ]
+        },
+        {
+          "cell_index": 40,
+          "cell_id": "8nlg28K1SPKU",
+          "headings": [
+            "### Question 3.2: Patchifier"
+          ]
+        },
+        {
+          "cell_index": 43,
+          "cell_id": "YFqlxD4UScFa",
+          "headings": [
+            "### Question 3.3: Diffusion Transformer"
+          ]
+        },
+        {
+          "cell_index": 45,
+          "cell_id": "k88jcAuTShCS",
+          "headings": [
+            "### Question 3.4 Depatchifier"
+          ]
+        },
+        {
+          "cell_index": 47,
+          "cell_id": "i_B0bc1d25Xp",
+          "headings": [
+            "### Question 3.5: Putting It All Together"
+          ]
+        },
+        {
+          "cell_index": 49,
+          "cell_id": "TWXfDv0p4LPN",
+          "headings": [
+            "### Training the Diffusion Transformer"
+          ]
+        },
+        {
+          "cell_index": 55,
+          "cell_id": "Kwrqoyt8TOPU",
+          "headings": [
+            "# Part 4: Training a Variational Autoencoder"
+          ]
+        },
+        {
+          "cell_index": 56,
+          "cell_id": "lWZD1N-OFrLL",
+          "headings": [
+            "### Question 4.1: Residual Block"
+          ]
+        },
+        {
+          "cell_index": 58,
+          "cell_id": "6Ref-vesGxxB",
+          "headings": [
+            "### Question 4.2: Attention Block"
+          ]
+        },
+        {
+          "cell_index": 60,
+          "cell_id": "haEJ7znIHpD-",
+          "headings": [
+            "### Question 4.3: Encoder Block"
+          ]
+        },
+        {
+          "cell_index": 62,
+          "cell_id": "Z8ZJRSqAIDZl",
+          "headings": [
+            "### Question 4.4: Encoder"
+          ]
+        },
+        {
+          "cell_index": 64,
+          "cell_id": "l-IgLkGzI_Vt",
+          "headings": [
+            "### Question 4.5: Decoder Block"
+          ]
+        },
+        {
+          "cell_index": 66,
+          "cell_id": "SVmhLB42JPmm",
+          "headings": [
+            "### Question 4.6: Decoder"
+          ]
+        },
+        {
+          "cell_index": 68,
+          "cell_id": "G3CWT88IJtBB",
+          "headings": [
+            "### Question 4.7: Putting It Together"
+          ]
+        },
+        {
+          "cell_index": 75,
+          "cell_id": "Zvhjuc9wfOCR",
+          "headings": [
+            "# Part 5: Training a Latent Diffusion Model"
+          ]
+        },
+        {
+          "cell_index": 76,
+          "cell_id": "j_ErMPLszqB7",
+          "headings": [
+            "### Question 5.1: Latent Diffusion Trainer"
+          ]
+        },
+        {
+          "cell_index": 79,
+          "cell_id": "asYhfW62y946",
+          "headings": [
+            "### References:"
+          ]
+        }
+      ]
+    }
+  ]
+}

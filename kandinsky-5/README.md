@@ -1,5 +1,11 @@
 # KandinskyLab — учебные Jupyter-лабораторные по Kandinsky 5 Lite
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+<!-- study-navigation:end -->
+
+[Общий учебный маршрут Lecture 1–5 / Lab 1–3](../curriculum/README.md) связывает математические предпосылки, PyTorch и ComfyUI с этими исследованиями. Начните с него, если важно понимать порядок и критерии готовности.
+
 Курс объясняет устройство Kandinsky от небольших опытов с тензорами до запуска **Kandinsky 5.0 T2V Lite distilled16steps 5s**. Основное оборудование: **Apple M3 Max, 40 GPU cores, 48 ГБ Unified Memory**. Второй маршрут — Google Colab с NVIDIA GPU. Объяснения и задания на русском.
 
 Главная идея: сначала понять отдельную операцию, воспроизвести её маленьким кодом, посмотреть результат, затем найти ту же операцию в официальном исходнике. Маленькие сети курса показывают механику; настоящие pretrained-компоненты запускаются отдельными ячейками.
