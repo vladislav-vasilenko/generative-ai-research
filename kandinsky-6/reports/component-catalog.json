@@ -1,0 +1,177 @@
+{
+  "source_revision": "7ceeefad7fb625011f7db602c43893a989f19c15",
+  "paper": "https://huggingface.co/papers/2610.05608",
+  "notebooks": [
+    {
+      "stem": "01_system_and_training_map",
+      "title": "01. K6 Lite: вся система и training map",
+      "goal": "восстановить состав checkpoint и посчитать параметры каждого потока без выделения памяти под 3B весов",
+      "sources": [
+        "core/components/dit.py",
+        "core/components/piflow_dit.py",
+        "runtime/sampler.py"
+      ],
+      "paper_section": "3.1–3.2, 4",
+      "prerequisites": "вводный probability notebook; K5 00"
+    },
+    {
+      "stem": "02_text_conditioning",
+      "title": "02. Текст: tokenizer, Qwen, CLIP и два refiner",
+      "goal": "различать IDs, hidden states, pooled condition и padding mask; проверить crop и text-projection cache",
+      "sources": [
+        "core/components/text_embedder.py",
+        "core/components/dit.py"
+      ],
+      "paper_section": "3.1–3.2",
+      "prerequisites": "K6 01; attention из Lecture 4"
+    },
+    {
+      "stem": "03_video_vae",
+      "title": "03. Видео VAE: posterior, compression, causality и scaling",
+      "goal": "вывести VAE objective, обучить маленький codec и проверить causal Conv3d/latent normalization",
+      "sources": [
+        "core/components/hunyuan_vae.py",
+        "core/components/vae_video.py",
+        "core/algo/postprocess_video.py"
+      ],
+      "paper_section": "3.1",
+      "prerequisites": "Lecture 4 / Lab 3; подробная теория VAE в K5 02"
+    },
+    {
+      "stem": "04_audio_vae_and_vocoder",
+      "title": "04. Аудио: waveform → mel → VAE → vocoder",
+      "goal": "понять частотное представление, роль audio VAE и vocoder, проверить duration/scaling/clipping",
+      "sources": [
+        "core/components/vae_audio.py",
+        "core/components/mmaudio/features_utils.py",
+        "core/algo/postprocess_audio.py"
+      ],
+      "paper_section": "3.1",
+      "prerequisites": "K6 03; базовая вероятность Gaussian"
+    },
+    {
+      "stem": "05_nn_patches_and_modulation",
+      "title": "05. Строительные блоки: patches, time, AdaLN и gates",
+      "goal": "воспроизвести patch layout и проверить native modulation/residual на маленьких тензорах",
+      "sources": [
+        "core/components/dit.py",
+        "core/tensors.py"
+      ],
+      "paper_section": "3.2",
+      "prerequisites": "K6 01–03; linear layers и broadcasting"
+    },
+    {
+      "stem": "06_attention_and_rope",
+      "title": "06. Attention и RoPE: текст, видео и аудио",
+      "goal": "сравнить ручной attention с SDPA, измерить память и проверить геометрию вращений",
+      "sources": [
+        "core/components/dit.py",
+        "core/components/rope.py",
+        "core/tensors.py",
+        "runtime/kernels/sdpa.py"
+      ],
+      "paper_section": "3.2",
+      "prerequisites": "K6 05; матричное умножение и softmax"
+    },
+    {
+      "stem": "07_dit_and_text_crossdit",
+      "title": "07. От DiT к CrossDiT: как denoiser устроен изнутри",
+      "goal": "проследить путь latent→patches→DiT blocks→output и отличить time-modulation от text cross-attention",
+      "sources": [
+        "core/components/dit.py",
+        "core/tensors.py"
+      ],
+      "paper_section": "3.2",
+      "prerequisites": "K6 05–06; Lecture 4 / Lab 3"
+    },
+    {
+      "stem": "08_dual_stream_audio_video_crossdit",
+      "title": "08. Dual-stream CrossDiT K6: два потока Audio + Video",
+      "goal": "воспроизвести оба направления fusion, проверить gates и измерить межмодальную чувствительность/градиент",
+      "sources": [
+        "core/components/dit.py",
+        "core/components/rope.py"
+      ],
+      "paper_section": "3.2, Figures 1–2",
+      "prerequisites": "K6 07; Q/K/V и RoPE из 06"
+    },
+    {
+      "stem": "09_flow_matching_training",
+      "title": "09. Joint Flow Matching: path, velocity и учебное обучение",
+      "goal": "вывести target в noise→data sampling convention и обучить настоящий tiny joint CrossDiT",
+      "sources": [
+        "core/components/dit.py",
+        "core/algo/flow_matching.py",
+        "core/algo/denoise_loop.py"
+      ],
+      "paper_section": "4.2",
+      "prerequisites": "Lecture 2 / Lab 2; K6 08"
+    },
+    {
+      "stem": "10_piflow_distillation",
+      "title": "10. Lite Distill: grid-head, DX policy и π-Flow",
+      "goal": "разобрать 160/400 outputs, выполнить native grid forward и отдельно network-free policy rollout",
+      "sources": [
+        "core/components/piflow_dit.py",
+        "core/algo/piflow_math.py",
+        "core/algo/piflow_sampler.py",
+        "runtime/sampler.py"
+      ],
+      "paper_section": "4.5, 5",
+      "prerequisites": "K6 08–09; ODE и Euler"
+    },
+    {
+      "stem": "11_sampling_cfg_and_nfe",
+      "title": "11. Sampling: Euler, CFG, schedules и NFE",
+      "goal": "измерить ошибки solver и фактическое число calls в настоящем native denoise_loop",
+      "sources": [
+        "core/algo/flow_matching.py",
+        "core/algo/guidance.py",
+        "core/algo/denoise_loop.py"
+      ],
+      "paper_section": "5",
+      "prerequisites": "K6 09–10; Lecture 1 и Lecture 3"
+    },
+    {
+      "stem": "12_latents_conditioning_and_output",
+      "title": "12. Latents, I2AV references, decode и output contracts",
+      "goal": "проверить shapes/offsets, воспроизвести visual reference channels и разобрать encode/decode API",
+      "sources": [
+        "core/algo/prepare_latents.py",
+        "core/algo/visual_conditioning.py",
+        "core/algo/postprocess_video.py",
+        "core/algo/postprocess_audio.py",
+        "core/algo/mux.py"
+      ],
+      "paper_section": "4.2.3, 5",
+      "prerequisites": "K6 03–04, 08 и 11"
+    },
+    {
+      "stem": "13_runtime_memory_and_mlx",
+      "title": "13. Runtime: память, offload, cache и путь к Apple MLX",
+      "goal": "составить ресурсный бюджет и план переноса с измеримыми parity gates",
+      "sources": [
+        "runtime/offload/block.py",
+        "runtime/offload/module.py",
+        "runtime/cache/magcache.py",
+        "runtime/sampler.py",
+        "runtime/weights.py"
+      ],
+      "paper_section": "6",
+      "prerequisites": "K6 01, 07–12"
+    },
+    {
+      "stem": "14_comfyui_component_experiments",
+      "title": "14. ComfyUI: от визуального baseline к отдельному исследованию",
+      "goal": "связать UI nodes с кодовыми компонентами и подготовить измеряемые однородные A/B опыты",
+      "sources": [
+        "core/components/dit.py",
+        "core/algo/piflow_sampler.py",
+        "core/algo/postprocess_video.py",
+        "core/algo/postprocess_audio.py"
+      ],
+      "paper_section": "5–6",
+      "prerequisites": "K6 01–13; ComfyUI C0–C5 общего маршрута"
+    }
+  ]
+}

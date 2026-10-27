@@ -1,7 +1,7 @@
 # Lecture 3A / 3B: score matching, stochastic sampling и CFG
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md) · [Полное содержание](../curriculum/CONTENTS.md).
 
 **Связанные лекции:** [Lecture 3](https://diffusion.csail.mit.edu/2026/docs/20260123_Lecture_03.pdf).
 <!-- study-navigation:end -->

@@ -56,7 +56,7 @@ uv run --locked python curriculum/scripts/validate_curriculum.py --execute
 
 ## Навигация, разметка и дополнительные контроли
 
-- `sync_study_navigation.py --check`: 17 авторских notebooks и 18 руководств; код ячеек не изменился. Все ведут на MIT course/notes и учебную карту. Канонические originals и ответы Lecture 1 исключены из автоматической правки.
+- `sync_study_navigation.py --check` после расширения K6: 31 авторский notebook и 21 руководство; код ячеек не изменился. Все ведут на MIT course/notes и учебную карту. Канонические originals и ответы Lecture 1 исключены из автоматической правки.
 - `check_markdown_math.py`: все lecture README и общие руководства прошли проверку блоков/команд; GitHub preview проверяется отдельно.
 - [Дополнительные источники](../SUPPLEMENTARY_READING.md) привязаны к основным MIT темам, а не заменяют их.
 - [CPU-контроли параметризаций, rectification и временной согласованности](supplementary-experiments.json) выполнены через зафиксированное окружение. Это аналитические/synthetic опыты, не pretrained benchmarks.
@@ -70,3 +70,5 @@ uv run --locked python curriculum/scripts/validate_curriculum.py --execute
 Повтор одного кадра имеет нулевую raw temporal MSE, но нарушает заданное движение. Поэтому одна такая метрика не доказывает качество видео.
 
 Конспект `lecture_01/LECTURE_01_RU.md` также включён в проверку: 16 отдельных display blocks, без inline LaTeX и формул в таблицах. Проверка исходного синтаксиса не заменяет визуальную проверку конкретного приложения.
+
+Новые 14 K6 component labs имеют [собственный execution report](../../kandinsky-6/reports/COMPONENT_VALIDATION.md). Полное содержание всех материалов — [CONTENTS](../CONTENTS.md); [brief для Claude](../CLAUDE_REVIEW_BRIEF.md) задаёт дальнейшую полировку.

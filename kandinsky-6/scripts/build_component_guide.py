@@ -1,0 +1,219 @@
+"""Build README navigation and an AST-based component/source index."""
+from pathlib import Path
+import ast,json
+ROOT=Path(__file__).resolve().parents[1]
+cat=json.loads((ROOT/'reports/component-catalog.json').read_text())
+rows=cat['notebooks'];rev=cat['source_revision']
+repo=f'https://github.com/kandinskylab/kandinsky-6/blob/{rev}/kandinsky'
+readme='''# Kandinsky 6 Lite — по-компонентный учебный курс
+
+[Полное содержание всех материалов](../curriculum/CONTENTS.md) · [Общая учебная карта MIT → industry](../curriculum/README.md) · [Курс Kandinsky 5](../kandinsky-5/README.md).
+
+Цель: понять **как устроен Kandinsky 6.0 Lite Distill 5s**, воспроизвести его операции на небольших тензорах и подготовиться к измеряемому запуску на M3 Max / 48 GB Unified Memory. Объяснения на русском, код Python/PyTorch. Архитектурная основа — [отчёт Kandinsky 6 на Hugging Face Papers](https://huggingface.co/papers/2610.05608) и [полный arXiv-текст](https://arxiv.org/html/2610.05608v1).
+
+В курсе **14 самостоятельных лабораторных**: теория перед кодом, native tiny components, графики, численные контроли, упражнения и критерии понимания. В каждой есть ссылки на раздел отчёта, соответствующий K5 notebook и закреплённый официальный исходник. [Полная карта файлов/классов/методов](COMPONENT_GUIDE.md).
+
+## С чего начать
+
+Из корня репозитория, в основном Python 3.12 окружении:
+
+```bash
+uv sync --locked
+uv run --locked jupyter lab kandinsky-6/notebooks/01_system_and_training_map.ipynb
+```
+
+Для этих CPU-лаб достаточно основного `uv.lock`; отдельная установка Diffusers/Transformers, окружения ComfyUI или MLX не требуется. Существующие оригинальные исходники читаются из `reference/`. Веса моделей не загружаются. На Mac используйте kernel корневой `.venv`; CPU выбран по умолчанию. [Проверенные результаты](reports/COMPONENT_VALIDATION.md).
+
+В Colab выберите CPU runtime. Первая ячейка получает исходники курса из ветки `kandinsky-6-components`, если checkout отсутствует, и использует предустановленный PyTorch; pretrained-веса не скачиваются. Сравнение чисел Colab и Mac требует записи версии Torch, не bitwise равенства. В обычном локальном запуске сеть не требуется. Badges ниже ведут в ветку с этим курсом до её слияния; файлы можно открывать и локально.
+
+## Учебный маршрут
+
+| № | Лабораторная | Конкретный результат | Colab |
+|---|---|---|---|
+'''
+for r in rows:
+    stem=r['stem'];url=f'https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/kandinsky-6-components/kandinsky-6/notebooks/{stem}.ipynb'
+    readme+=f"| {stem[:2]} | [{r['title'][4:]}](notebooks/{stem}.ipynb) | {r['goal']} | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)]({url}) |\n"
+readme+='''
+Основная последовательность: **01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09 → 10 → 11 → 12 → 13 → 14**. Если основы K5 уже пройдены, прочитайте контракты 01–06, затем выполните 07–12. Для исследования голоса после этого переходите к [ручному журналу эксперимента](notebooks/00_manual_experiment_comfy_mlx_film.ipynb).
+
+**Особый фокус:** [07 DiT / text CrossDiT](notebooks/07_dit_and_text_crossdit.ipynb) и [08 Dual-stream Audio+Video CrossDiT](notebooks/08_dual_stream_audio_video_crossdit.ipynb) — разные лабораторные. Вторая показывает оба направления Q/K/V, точный порядок residual updates, separate time conditioning, RoPE, cross-gates, perturbation cuts и gradient flow. Dual-stream здесь означает две модальности, а не стереоканалы.
+
+## Архитектура минимального Lite Distill
+
+```mermaid
+flowchart TB
+    P["Video/audio captions"] --> Q["Qwen tokenizer + frozen Qwen2.5-VL-7B"]
+    P --> C["CLIP tokenizer + frozen CLIP text encoder"]
+    Q --> TV["Video text projection + refiner"]
+    Q --> TA["Audio text projection + refiner"]
+    C --> T["Pooled projections + separate time embeddings"]
+    NV["Video noise: 16 channels"] --> V["Video tokens: width 1792"]
+    NA["Audio noise: 40 channels"] --> A["Audio tokens: width 896"]
+    TV --> V
+    TA --> A
+    T --> V
+    T --> A
+    V --> X["32 fused blocks: self + text CA + bidirectional AV CA + FFN"]
+    A --> X
+    X --> G["Grid heads: 10 x 16 video / 10 x 40 audio"]
+    G --> S["DX policies + PiFlow rollout / 10 network steps"]
+    S --> V
+    S --> A
+    S --> VD["Reverse video scale + HunyuanVideo VAE decoder"]
+    S --> AD["Reverse audio scale + MMAudio VAE decoder"]
+    AD --> M["Mel spectrogram"]
+    M --> B["BigVGAN-style vocoder"]
+    VD --> OUT["RGB frames + waveform / mux MP4"]
+    B --> OUT
+```
+
+Это карта основного генератора. SR — отдельный pipeline с другим KVAE latent contract. Beautifier — опциональная подготовка prompt. В минимальном Smoke их нет. Native и Diffusers реализации могут отличаться упаковкой tensors/API; изучаем pinned native код и явно сверяем HF configs, не смешиваем их конструкторы.
+
+## Training map: какие веса и когда обучаются
+
+| Компонент | Происхождение / роль | В полном FM учебном контракте | В нашем frozen-FiLM исследовании |
+|---|---|---|---|
+| Qwen2.5-VL-7B + processor/tokenizer | Внешний Qwen: 3584-wide token context, до 1024 tokens после crop | Encoder frozen; tokenizer фиксирован | Frozen |
+| CLIP ViT-L/14 text tower + tokenizer | Внешний CLIP: pooled 768, до 77 tokens | Encoder frozen; tokenizer фиксирован | Frozen |
+| HunyuanVideo VAE | Внешний codec: 16 channels, temporal ×4, spatial ×8 | Frozen при обучении DiT | Frozen |
+| MMAudio VAE | Внешний mel/latent codec: 40 channels, 44100 Hz | Frozen при обучении DiT | Frozen |
+| BigVGAN-style vocoder | Внешние waveform synthesis weights; отдельны от VAE | Frozen | Frozen |
+| Video stream: patches, text-refiner, time, blocks, out | Kandinsky, video initialization от K5 | Trainable | Frozen |
+| Audio stream: embeddings, refiner, time, blocks, out | Kandinsky, собственное аудиообучение | Trainable | Frozen |
+| AV fusion Q/K/V, norms/modulation/gates | Kandinsky, межмодальный обмен | Trainable | Frozen |
+| Token Role Embeddings | Kandinsky, noisy/reference frame roles | Trainable | Frozen |
+| RoPE / sinusoid / masks / shift / solver | Формулы и buffers, не отдельная pretrained сеть | Нет optimizer weights | Нет optimizer weights |
+| PiFlow expanded output heads | Часть distilled DiT checkpoint | Не используем в обычном velocity-training опыте 09; исследуем в 10 | Frozen |
+| Speaker-FiLM | Наш предлагаемый адаптер | Не часть stock K6 | Только этот добавленный слой trainable; пока гипотеза |
+| SR-DiT + latent upscaler + KVAE | Отдельная SR ветвь | Не входит в основной Lite опыт | Не нужен для первого voice опыта |
+
+Эта таблица задаёт **наши контракты опытов**, не универсальный optimizer всей истории Kandinsky. Статья §4 описывает разные стадии: separate/joint pretraining, SFT, RL и distillation. В SFT stage 1 обучается video branch при frozen audio/fusion; stage 2 размораживает DiT-модули. В inference optimizer отсутствует; `eval()` и `requires_grad_(False)` — разные операции. Полный industrial trainer в этом inference snapshot не воспроизводится.
+
+## Ключевые shapes и checkpoint-specific детали
+
+| Величина | Lite / Lite Distill |
+|---|---|
+| Video/audio widths | 1792 / 896 |
+| Video/audio FF widths | 7168 / 3584 |
+| Video/audio heads | 28 / 14 при head_dim=64 |
+| Fused blocks / text blocks per branch | 32 / 2 |
+| Video patch | 1×2×2; 33 input channels → Linear 132→1792 |
+| Physical latent channels | Video 16; audio 40 |
+| Обычный FM output | Video 16; audio 40 |
+| Distill output | Video 160; audio 400 = 10 grid points × channels |
+| 121 frames, 480×864 | Video latent 31×60×108×16; 50220 video tokens; 218 audio latent steps |
+| Video scale | 0.476986 |
+| Audio scale | **0.417 для Lite Distill**, 0.5302 для plain Lite native config |
+| Time | normalized state path 0=data / 1=noise; DiT input 1000×time |
+| Default distill sampler | 10 network steps, CFG=1, shift=5, grid=10, policy substeps=128 |
+
+Метаданные: [HF transformer config](reference/hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/transformer/config.json), [codec/scheduler configs](reference/hf/Kandinsky-6.0-Lite-distill-5s-Diffusers), [native checkpoint config](reference/kandinsky-6/kandinsky/configs/checkpoints/lite-distill.yaml).
+
+В 01 native constructor на `meta` насчитал **3 177 988 112 параметров** для выбранного expanded config без чтения весов: video 2 008 739 200, audio 574 096 016, fusion 595 152 896. Наша группировка относит cross-modal modulation к fusion; округлённая архитектурная разбивка статьи и такое именование state_dict не тождественны. BF16 storage только DiT составляет около 5.919 GiB; это не peak RAM всего pipeline.
+
+## ComfyUI и отдельное исследование
+
+| Workflow | Размеры | Назначение |
+|---|---|---|
+| [Lite Smoke](workflows/k6_lite_distill_smoke.json) | 432×240, 33 frames | Проверить установку и ресурсы |
+| [Lite Baseline](workflows/k6_lite_distill_baseline.json) | 864×480, 121 frames | Воспроизводимые 5s замеры |
+
+Оба: seed=42 fixed, 10 steps, CFG=1, audio scale=.417, 12 nodes / 14 links, без Pro/SR/beautifier/MagCache. [Общий ComfyUI маршрут C0–C6](../curriculum/COMFYUI_LABS.md) → [K6 component UI lab 14](notebooks/14_comfyui_component_experiments.ipynb) → [ручной K6 журнал](notebooks/00_manual_experiment_comfy_mlx_film.ipynb) → [подробный протокол](COMFYUI_AND_EXPERIMENT_RU.md).
+
+**Полные загрузки и generation по-прежнему отложены до освобождения 50 GB+ на SSD по вашему решению.** Qwen, Lite DiT, codecs и vocoder — разные зависимости. Ветка SR с KVAE и дополнительные beautifiers не нужны для первого Lite baseline. Автоматические CPU проверки не отправляют ComfyUI prompts.
+
+## Что реально проверено
+
+[Отчёт component labs](reports/COMPONENT_VALIDATION.md) содержит measured shapes, errors, gradient controls и learning curves; [машиночитаемый отчёт](reports/component-validation.json) — результаты свежих CPU kernels. Native tiny DiT использует оригинальные class bodies через явный локальный SDPA adapter. Полный VAE не загружается: causal convolution проверяется отдельным оригинальным определением, VAE теория — маленьким учебным codec. В отдельных sampler/codec обвязках predictor/decoder test doubles подписаны явно.
+
+[Ранее выполненный ручной notebook](reports/VALIDATION.md) и [состояние voice/MLX](STATUS.md) сохраняют отдельный смысл. Pretrained AV inference, MLX joint parity и voice-adapter training/evaluation ещё не пройдены. Успех random-weight forward или снижение synthetic loss не объявляются результатом клонирования голоса.
+
+Повторить проверки из корня:
+
+```bash
+uv run --locked python kandinsky-6/scripts/validate_component_notebooks.py --execute
+uv run --locked python curriculum/scripts/sync_study_navigation.py --check
+```
+
+## Структура и источники
+
+```text
+notebooks/          01–14 component labs + ручной журнал исследования
+labkit/             Native CPU adapter, учебные helpers, MLX audio prototype
+scripts/            Сборка notebooks, проверки, ComfyUI/VCTK/parity инструменты
+workflows/          Lite Smoke/Baseline JSON
+reports/            Измеренные результаты и проверенные графики
+reference/          Неизменённые pinned code/config snapshots и LICENSE
+artifacts/          Локальные outputs/cache/data; ignored Git
+```
+
+Исходники закреплены на `7ceeefad7fb625011f7db602c43893a989f19c15`, HF Lite Distill config — на `4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81`. [Manifest и SHA-256](reference/source-manifest.json), [атрибуция](THIRD_PARTY.md). Для пересборки: `build_component_notebooks.py`, `build_component_guide.py`, затем `sync_study_navigation.py --write`.
+
+Первичные статьи: [K6](https://huggingface.co/papers/2610.05608), [DiT](https://arxiv.org/abs/2212.09748), [K5](https://arxiv.org/abs/2511.14993), [Flow Matching](https://arxiv.org/abs/2210.02747), [π-Flow](https://arxiv.org/abs/2510.14974), [Ovi](https://arxiv.org/abs/2510.01284), [LTX-2](https://arxiv.org/abs/2601.03233), [MMAudio](https://arxiv.org/abs/2412.15322), [BigVGAN](https://arxiv.org/abs/2206.04658). Сравнения не означают, что разные архитектуры/кодеки взаимозаменяемы.
+'''
+(ROOT/'README.md').write_text(readme)
+
+text='''# K6: карта архитектурных компонентов и оригинального кода
+
+[Курс / последовательность](README.md) · [Полное содержание проекта](../curriculum/CONTENTS.md) · [K6 paper](https://huggingface.co/papers/2610.05608).
+
+## Как читать один компонент
+
+1. Зафиксировать вход/выход, layout, units и смысл timestep.
+2. Прочитать соответствующий раздел отчёта, затем конкретный class/function из закреплённого source.
+3. Воспроизвести маленький случай и предсказать результат до исполнения.
+4. Изменить один фактор, измерить форму/ошибку/градиент; записать ограниченный вывод.
+5. Найти тот же контракт в ComfyUI node или готовом pipeline.
+
+## Сопоставление K5 → K6 → практика
+
+| Тема | Предпосылка K5 | K6 компонент | Следующий опыт |
+|---|---|---|---|
+| Текст | text_embedders, lab 01 | [02: Qwen/CLIP → separate refiners](notebooks/02_text_conditioning.ipynb) | masks и cache |
+| Visual codec | vae, lab 02/11 | [03: HunyuanVideo](notebooks/03_video_vae.ipynb) | ComfyUI VAE reconstruction C4 |
+| Audio codec | Новый канал относительно K5 T2V | [04: MMAudio + vocoder](notebooks/04_audio_vae_and_vocoder.ipynb) | mel/latent/waveform и durations |
+| Строительные блоки | nn, attention, utils | [05](notebooks/05_nn_patches_and_modulation.ipynb), [06](notebooks/06_attention_and_rope.ipynb) | numeric identity/parity |
+| DiT / CrossDiT | K5 lab 06 | [07: DiT и текстовая CA](notebooks/07_dit_and_text_crossdit.ipynb) | hooks, token-condition cut |
+| AV fusion | Новый joint backbone | [08: Dual-stream CrossDiT](notebooks/08_dual_stream_audio_video_crossdit.ipynb) | directional cut, gradient |
+| Обучение | K5 FM lab 06 | [09: joint FM](notebooks/09_flow_matching_training.ipynb) | synthetic held-out loss |
+| Distillation | K5 sampling 07 | [10: π-Flow](notebooks/10_piflow_distillation.ipynb) | grid policy / NFE |
+| Solver | K5 generation_utils, sampling | [11](notebooks/11_sampling_cfg_and_nfe.ipynb), [12](notebooks/12_latents_conditioning_and_output.ipynb) | Euler/CFG/layout contracts |
+| Deployment | K5 MPS/CUDA/parallelize | [13: runtime/MLX](notebooks/13_runtime_memory_and_mlx.ipynb) | budget, parity gates |
+| UI → research | K5 inference labs | [14: ComfyUI](notebooks/14_comfyui_component_experiments.ipynb) | [отдельный voice protocol](COMFYUI_AND_EXPERIMENT_RU.md) |
+
+## По одному fused блоку K6
+
+Внутри каждого потока: self-attention → text cross-attention → cross-modal exchange → FFN, с отдельными residual gates. Video/audio widths различаются. Video queries читают audio K/V и обновляют video; audio queries читают video K/V и обновляют audio. Номер позиции в каждой модальности выражен собственным RoPE. Обе cross-modal ветви используют сохранённые pre-text-CA states противоположной модальности, а не новый output уже обновлённой cross-ветви. Полное тело класса и ablations исполняются в notebook 08.
+
+`cross_gates=True` даёт video-sized gate из av-modulation и audio-sized gate из va-modulation. `fix_modulation=True` выбирает соответствующий query timestep. Zero-init выключает residual-влияние на шаге 0; параметры при этом могут обучаться. `OutLayerAudio` содержит второй norm; его нельзя убрать при переносе без изменения функции.
+
+## Границы исходников и воспроизведения
+
+`labkit/components.py` загружает tensor-only native modules в изолированный namespace, используя существующий dense SDPA adapter из `torch_reference.py`. Тела DiT/solver функций не переписываются; CUDA application imports обходятся явно. `native_causal_conv()` выполняет только оригинальное определение causal Conv3d; это не полный Hunyuan VAE. Текстовые encoders и codecs в CPU-лабораторных не загружаются; synthetic embeddings и test doubles помечены перед кодом. Все original files остаются неизменными и проверяются по manifest.
+
+## Полный индекс выбранных class/function definitions
+
+Список ниже автоматически извлекается через AST из файлов, на которые ссылаются лабораторные. Это навигация по **реальным** именам и методам, а не список отдельных pretrained моделей. Переход «Код» закреплён на revision; «Лабы» открывает объяснение/эксперименты.
+
+'''
+paths=sorted({p for r in rows for p in r['sources']})
+for rel in paths:
+    src=ROOT/'reference/kandinsky-6/kandinsky'/rel
+    labs=' · '.join(f"[{r['stem'][:2]}](notebooks/{r['stem']}.ipynb)" for r in rows if rel in r['sources'])
+    text+=f'### `{rel}`\n\n[Код]({repo}/{rel}) · Лабы: {labs}.\n\n'
+    definitions=[]
+    for n in ast.parse(src.read_text()).body:
+        if isinstance(n,ast.ClassDef):
+            methods=[x.name for x in n.body if isinstance(x,ast.FunctionDef)]
+            definitions.append(f'- **`{n.name}`**: '+(', '.join(f'`{m}`' for m in methods) if methods else 'typed data structure')+'.')
+        elif isinstance(n,ast.FunctionDef):definitions.append(f'- `{n.name}`.')
+    text+='\n'.join(definitions or ['Модуль объявляет конфигурацию/imports; см. исходник.'])+'\n\n'
+text+='''## Самостоятельные архитектурные продолжения
+
+SR-DiT/Latent Upscaler используют KVAE и описаны в K6 §3.3/4.6; они не требуются для основного Lite генератора. Сначала пройдите [самостоятельный visual codec опыт K5 11](../kandinsky-5/notebooks/11_kvae_separate.ipynb), затем сравните latent contracts по [pinned KVAE](reference/kvae/README.md) и [KVAE-Audio](reference/kvae-audio/README.md). Новые pretrained кодеки нельзя подставлять в уже обученный DiT только по совпадению shapes.
+
+Для сравнений HunyuanVideo/Wan/LTX-Video/Mochi/Open-Sora используйте [общую industrial map](../curriculum/INDUSTRY_BRIDGE.md), а не переносите K6-specific значения в другие семейства.
+'''
+(ROOT/'COMPONENT_GUIDE.md').write_text(text)
+print('Built README and component guide for',len(paths),'source files')

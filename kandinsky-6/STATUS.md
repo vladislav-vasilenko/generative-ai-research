@@ -1,5 +1,7 @@
 # Состояние эксперимента, 27 октября 2026
 
+**Учебное расширение:** [14 компонентных CPU-лабораторных](README.md), отдельные [DiT](notebooks/07_dit_and_text_crossdit.ipynb) и [Dual-stream AV CrossDiT](notebooks/08_dual_stream_audio_video_crossdit.ipynb). [Численные проверки](reports/COMPONENT_VALIDATION.md), [полное содержание](../curriculum/CONTENTS.md). Эти контроли не меняют статус незапущенного pretrained/voice/MLX исследования ниже.
+
 ## Решение пользователя
 
 Загрузку больших весов и генерацию отложили до освобождения **50 GB+** на диске. При подготовке было около 24.2 GiB свободно. Установка MLX остановлена; полные модели не запускались.

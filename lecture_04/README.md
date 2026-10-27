@@ -1,7 +1,7 @@
 # Lecture 4 → Lab 3: DiT, VAE и обучение в latent space
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md) · [Полное содержание](../curriculum/CONTENTS.md).
 
 **Связанные лекции:** [Lecture 4](https://diffusion.csail.mit.edu/2026/docs/20260128_Lecture_04_edited.pdf).
 <!-- study-navigation:end -->

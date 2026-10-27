@@ -1,12 +1,14 @@
 # От вероятностей к исследованию генеративных видео- и аудиомоделей
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md) · [Полное содержание](CONTENTS.md).
 <!-- study-navigation:end -->
 
 Этот маршрут связывает пять предоставленных лекций MIT 6.S184, три исходные лабораторные, курс Kandinsky и практику ComfyUI/PyTorch. Главный результат каждого этапа: **формула → предсказание → работающий код → измерение → объяснение**. Переход определяется проверяемым навыком, а не количеством просмотренных видео.
 
 Материалы проверены 27 октября 2026. [Индекс источников и страниц](references/materials_manifest.json), [атрибуция](references/README.md), [важные уточнения](SOURCE_NOTES.md). Номера страниц ниже — физические страницы PDF, начиная с 1; индексы ячеек — с 0.
+
+**[Полное содержание всех материалов](CONTENTS.md)** — единая навигация между лекциями, всеми notebooks, архитектурными блоками, ComfyUI и исследованием.
 
 ## Начать здесь
 
@@ -151,3 +153,7 @@ Probability path задаёт распределения в каждый мом�
 ## Поддержка навигации
 
 После повторной генерации авторских notebooks выполните `python curriculum/scripts/sync_study_navigation.py --write`, затем `--check`. Утилита меняет только навигационный Markdown; код ячеек, канонические originals и пользовательские notebooks Lecture 1 не изменяются.
+
+## Покомпонентное продолжение Kandinsky 6
+
+После P7: [14 новых CPU labs](../kandinsky-6/README.md), включая отдельные [DiT / text CrossDiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb) и [Dual-stream Audio+Video CrossDiT](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb). [Карта файлов/классов/методов](../kandinsky-6/COMPONENT_GUIDE.md) связывает отчёт K6, native code и упражнения. Затем UI baseline и отдельный voice experiment, с прежним resource gate для pretrained запуска.

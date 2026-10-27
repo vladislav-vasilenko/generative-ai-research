@@ -1,7 +1,7 @@
 # Самопроверка студента
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md) · [Полное содержание](CONTENTS.md).
 <!-- study-navigation:end -->
 
 Выполнение агентом smoke tests не означает освоение темы студентом. Заполняйте свой статус и ссылку на собственный отчёт. Рекомендуемый переход — только после объяснения без подсказки и воспроизводимого numerical evidence.

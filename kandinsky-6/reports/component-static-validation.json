@@ -1,0 +1,112 @@
+{
+  "created_utc": "2026-10-27T13:08:31.308918+00:00",
+  "mode": "static",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "no_pretrained_weights": true,
+  "comfyui_jobs_submitted": 0,
+  "pinned_source_hashes_checked": 243,
+  "colab_bootstrap_executed": false,
+  "helper_sha256": "2b942ab7f666bbd92af989dd2e5d7437de44e70b73782a6a7c0b00725fc118c7",
+  "notebooks": [
+    {
+      "notebook": "01_system_and_training_map.ipynb",
+      "source_sha256": "bd85f2f76fa864c9bf4bc0328baf44ec6c93144ca06fb779754ae05a5de2b612",
+      "cells": 11,
+      "code_cells": 4,
+      "executed": false
+    },
+    {
+      "notebook": "02_text_conditioning.ipynb",
+      "source_sha256": "7c21ddbaee562ae8021a029376e12a1d9b1b5c9b6f510ae0ec7c67c380aa312d",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "03_video_vae.ipynb",
+      "source_sha256": "1585673b4684c4c2843b6f887848abcba28fc21160b14d7c361e3285ed19cef2",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "04_audio_vae_and_vocoder.ipynb",
+      "source_sha256": "c84bd7b1957cc020c994d38d501eac8c54336b03bb8bb6de8afc71687648fbdf",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "05_nn_patches_and_modulation.ipynb",
+      "source_sha256": "32e321e5d0c57ac4996d3fec6cfcb314b274f625d396bb39f235814c45e093f1",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "06_attention_and_rope.ipynb",
+      "source_sha256": "5c0b7ec72efb96249b93cd9fc1c7aaf3d87d86cc5c882d518e76e8b1b239a28c",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "07_dit_and_text_crossdit.ipynb",
+      "source_sha256": "6551cdd1b4b56d7b5e065c3f5b269f7ed8daa49bbeb06db308ae078d2f2d701b",
+      "cells": 13,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "08_dual_stream_audio_video_crossdit.ipynb",
+      "source_sha256": "efecc4f7e067bfc93105c88a64e5c1c0a4fe76e638ee72cd9f67d47ed12d671b",
+      "cells": 15,
+      "code_cells": 6,
+      "executed": false
+    },
+    {
+      "notebook": "09_flow_matching_training.ipynb",
+      "source_sha256": "2d2755ddc538578b773e3bd920c505fcb63493fff3fb35cf8a0a23c4f8f9a1b0",
+      "cells": 11,
+      "code_cells": 4,
+      "executed": false
+    },
+    {
+      "notebook": "10_piflow_distillation.ipynb",
+      "source_sha256": "287bfd17f428309d910ce21be60ebec821ab424979f418ee55cb623350d2fb25",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "11_sampling_cfg_and_nfe.ipynb",
+      "source_sha256": "95c102b07e20f1a0ea30b30c4512f45a3f9fb2d7202bdbdb392775714cf92a05",
+      "cells": 11,
+      "code_cells": 4,
+      "executed": false
+    },
+    {
+      "notebook": "12_latents_conditioning_and_output.ipynb",
+      "source_sha256": "25bd9483c478243b9d395519db1ef06fbaa907ffebb149358d822a8289478c11",
+      "cells": 13,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "13_runtime_memory_and_mlx.ipynb",
+      "source_sha256": "02e30bf8a67845fe4973a8207d10dcf2e143a93bbd328eed467ecc0728685742",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "14_comfyui_component_experiments.ipynb",
+      "source_sha256": "2295e63783ef3d7af42ce81e12ec8e55c501291b106e8f849c137d2ff7b93728",
+      "cells": 11,
+      "code_cells": 4,
+      "executed": false
+    }
+  ],
+  "passed": true,
+  "errors": []
+}

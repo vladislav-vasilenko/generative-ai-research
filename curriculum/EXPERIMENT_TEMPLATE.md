@@ -1,7 +1,7 @@
 # Карточка учебного или исследовательского эксперимента
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md) · [Полное содержание](CONTENTS.md).
 <!-- study-navigation:end -->
 
 Скопируйте в собственный отчёт и заполните до запуска. Если запуск отложен, оставляйте статус `not_run`, а не предполагаемые числа.
