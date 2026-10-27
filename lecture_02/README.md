@@ -22,15 +22,15 @@
 
 Основная конструкция — marginal probability path:
 
-$$
-p_t(x) = \int p_t(x\mid z) p_{\mathrm{data}}(z) dz.
-$$
+```math
+p_t(x) = \int p_t(x \mid z) p_{\mathrm{data}}(z) \mathrm{d}z.
+```
 
 Здесь `z` — чистый endpoint, а `x` — текущее состояние. Conditional fields усредняются с **posterior weights**, зависящими от наблюдаемого состояния:
 
-$$
-p(z\mid X_t=x).
-$$
+```math
+p(z \mid X_t = x).
+```
 
 Это не неизменные prior weights. Регрессия на доступный conditional target даёт marginal predictor при достаточной модели и корректном обучении.
 
