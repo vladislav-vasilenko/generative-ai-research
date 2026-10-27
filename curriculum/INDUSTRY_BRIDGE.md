@@ -122,3 +122,7 @@ Mochi 1: прежний URL `genmoai/models` перенаправляется н
 ## Исполняемая ветвь HunyuanVideo VAE
 
 [Девять подробных labs](../vae/README.md) дополняют source map: вывод ELBO/KL, native tiny encoder/decoder, causal normalization caveat, coverage spatial/temporal loops и synthetic free-VRAM planner. [Source provenance](../vae/SOURCE_MAP.md) различает Tencent paper v6, приложенную Kandinsky адаптацию и Diffusers runtime.
+
+## Глубокий исполняемый CrossDiT / π-Flow case
+
+[Общий DiT курс](../dit/README.md) разворачивает K5 single generated visual stream + text context и K6 dual Audio/Video streams в formulas, Q/K/V dimensions и original code. Native block parity, directional Jacobian cuts, visual references, Euler convergence и toy policy imitation имеют [отдельные измерения](../dit/reports/VALIDATION.md). [MIT bridge](../dit/MIT_BRIDGE.md) отделяет исходный курс от AV fusion/π-Flow extensions.

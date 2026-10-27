@@ -3,7 +3,7 @@ import json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 paths=[*sorted((ROOT/'curriculum').glob('*.md')),*sorted(ROOT.glob('lecture_*/*.md')),
-       ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',*sorted((ROOT/'hunyuan-video').glob('*.md')),*sorted((ROOT/'vae').glob('*.md')),ROOT/'vae/reports/VALIDATION.md']
+       ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',*sorted((ROOT/'hunyuan-video').glob('*.md')),*sorted((ROOT/'vae').glob('*.md')),ROOT/'vae/reports/VALIDATION.md',*sorted((ROOT/'dit').glob('*.md')),ROOT/'dit/reports/VALIDATION.md']
 errors=[];rows=[]
 for path in paths:
     fenced=False;math=False;math_fence=False;block=[];count=0;start=0

@@ -17,7 +17,7 @@
 | 2. Flow Matching | [Lecture 2 / Lab 2](../lecture_02/README.md) | [K5 FM](../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb), [K6 joint FM](../kandinsky-6/notebooks/09_flow_matching_training.ipynb) | C2: steps/NFE на совместимом checkpoint | path/velocity/time conventions + held-out loss |
 | 3. Score / conditioning / CFG | [Lecture 3 / Lab 2–3](../lecture_03/README.md) | [K5 text](../kandinsky-5/notebooks/01_text_embedders.ipynb), [K6 text](../kandinsky-6/notebooks/02_text_conditioning.ipynb), [K6 CFG](../kandinsky-6/notebooks/11_sampling_cfg_and_nfe.ipynb) | C3 CFG; Distill CFG=1 не universal sweep | masks, encoder/refiner, branch count |
 | 4. VAE / codecs | [Lecture 4 / Lab 3](../lecture_04/README.md) | [VAE MIT → video](../vae/README.md), [K5 VAE theory](../kandinsky-5/notebooks/02_vae.ipynb), [K6 video](../kandinsky-6/notebooks/03_video_vae.ipynb), [K6 audio/vocoder](../kandinsky-6/notebooks/04_audio_vae_and_vocoder.ipynb) | C4 standalone reconstruction | ELBO/posterior/scale, реконструкция отдельно от генерации |
-| 5. DiT / CrossDiT | Lecture 4, Lab 3 Part 3 | [K5 nn/DiT](../kandinsky-5/notebooks/03_nn_building_blocks.ipynb), [K6 DiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb), [K6 dual AV CrossDiT](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb) | C5 token budget, Lite graph | Q/K/V, gates, shapes, directional ablation |
+| 5. DiT / CrossDiT | Lecture 4, Lab 3 Part 3 | [Общий DiT route](../dit/README.md), [K5 nn/DiT](../kandinsky-5/notebooks/03_nn_building_blocks.ipynb), [K6 DiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb), [K6 dual AV CrossDiT](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb) | C5 token budget, Lite graph | Q/K/V, gates, shapes, directional ablation |
 | 6. Discrete branch | [Lecture 5](../lecture_05/README.md) | [CTMC lab](../lecture_05/05_ctmc_and_discrete_flow.ipynb) | C6 visualizes Python result | rates, positivity, exact law vs simulation |
 | 7. Distillation / deployment | [Industrial map](INDUSTRY_BRIDGE.md) | [K6 π-Flow](../kandinsky-6/notebooks/10_piflow_distillation.ipynb), [runtime/MLX](../kandinsky-6/notebooks/13_runtime_memory_and_mlx.ipynb) | [K6 UI component lab](../kandinsky-6/notebooks/14_comfyui_component_experiments.ipynb) | policy/NFE distinction, resource baseline |
 | 8. Separate research | [Research protocol](RESEARCH_PROTOCOL.md) | [K6 manual journal](../kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb), FiLM/voice or own hypothesis | baseline + controlled A/B | data split, metrics, regression, supported conclusion |
@@ -123,6 +123,24 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 | [07_controlled_benchmark.ipynb](../vae/notebooks/07_controlled_benchmark.ipynb) | 1. Гипотеза, контроль и метрики; 2. Графики и диагностическая локализация; 3. Overlap work и retained buffers |
 | [08_pretrained_and_comfyui_protocol.ipynb](../vae/notebooks/08_pretrained_and_comfyui_protocol.ipynb) | 1. Исследовательская карточка; 2. Команда ручного запуска после resource gate; 3. ComfyUI как визуальный контроль; 4. Как сделать вывод, когда появятся реальные числа |
 
+## DiT / CrossDiT / Conditioning / Denoise Loop / π-Flow
+
+[11 labs: порядок и запуск](../dit/README.md); [Конкретные задания MIT](../dit/MIT_BRIDGE.md); [Каждый класс и метод](../dit/SOURCE_MAP.md); [CPU измерения](../dit/reports/VALIDATION.md).
+
+| Notebook | Теория → code → experiment |
+|---|---|
+| [00_probability_path_and_learning_route.ipynb](../dit/notebooks/00_probability_path_and_learning_route.ipynb) | 1. От распределения к траектории; 2. Почему solver не равен DiT; 3. Порядок нового маршрута; Измерение → вывод; Самостоятельные опыты; Первичные источники |
+| [01_dit_primitives_and_tensor_geometry.ipynb](../dit/notebooks/01_dit_primitives_and_tensor_geometry.ipynb) | 1. Patchification — перестановка индексов плюс проекция; 2. Time embedding и adaLN; 2b. LayerNorm, RMSNorm и FFN без скрытых формул; 3. Attention от скалярных произведений к tensor axes; 4. OutLayer — learned prediction, не обратная embedding matrix; Измерение → вывод |
+| [02_single_stream_crossdit_k5.ipynb](../dit/notebooks/02_single_stream_crossdit_k5.ipynb) | 1. Что означает «один поток»; 2. Что изменено в execution adapter; 3. Cross-attention и условная зависимость; Измерение → вывод; Самостоятельные опыты; Первичные источники |
+| [03_dual_stream_crossdit_k6.ipynb](../dit/notebooks/03_dual_stream_crossdit_k6.ipynb) | 1. Два генерируемых состояния и разные widths; 2. Порядок внутри FusedTransformerDecoderBlock; 3. Cross gates и два времени; 4. Измеряем cross dependence градиентом; Измерение → вывод; Самостоятельные опыты |
+| [04_conditioning_text_and_clean_modalities.ipynb](../dit/notebooks/04_conditioning_text_and_clean_modalities.ipynb) | 1. Условная плотность и три маршрута информации; 2. Mask polarity: boolean keep-mask не равна float 0/1 bias; 3. Что можно кэшировать; 4. Null conditions и wrapper boundaries; Измерение → вывод; Самостоятельные опыты |
+| [05_visual_conditioning_references_and_rope.ipynb](../dit/notebooks/05_visual_conditioning_references_and_rope.ipynb) | 1. Три схемы visual condition; 2. Append / restore / generated mask; 3. Semantic time и storage index различаются; 4. Constraint projection и solver; Измерение → вывод; Самостоятельные опыты |
+| [06_denoise_loop_euler_cfg_and_partial_sampling.ipynb](../dit/notebooks/06_denoise_loop_euler_cfg_and_partial_sampling.ipynb) | 1. Дискретизация интеграла и ошибка; 2. CFG — две оценки поля, одна Euler траектория; 3. Partial sampling: modality остаётся в input; 4. Helpers, RoPE caching и настоящее tiny forward; Измерение → вывод; Самостоятельные опыты |
+| [07_piflow_math_dx_policy.ipynb](../dit/notebooks/07_piflow_math_dx_policy.ipynb) | 1. Почему clean endpoint связан с velocity; 2. Raw τ и shifted σ: вывод inverse и Jacobian; 3. Grid interpolation, error и endpoint amplification; 4. Polynomial mode: coefficients, не grid samples; 5. Native policy rollout: discretization vs representation; 6. Разная длина rollout в одном batch |
+| [08_piflow_grid_head_and_native_sampler.ipynb](../dit/notebooks/08_piflow_grid_head_and_native_sampler.ipynb) | 1. Physical channels и expanded head; 2. Почему final segment короче; 3. MultimodalDXPolicy: независимые policies, совместно предсказанные параметры; 4. Полный native sampler с random tiny grid-DiT; 5. Ошибка compute budget и корректный итог; Измерение → вывод |
+| [09_miniature_policy_imitation_distillation.ipynb](../dit/notebooks/09_miniature_policy_imitation_distillation.ipynb) | 1. FM regression и imitation — разные targets; 2. Train → measure, без утечки held-out target; 3. От velocity loss к trajectory error: что требует доказательства; 4. Что в этом эксперименте не воспроизведено; Измерение → вывод; Самостоятельные опыты |
+| [10_comfyui_and_manual_research_protocol.ipynb](../dit/notebooks/10_comfyui_and_manual_research_protocol.ipynb) | 1. Где блоки находятся в ComfyUI graph; 2. Ручной baseline после resource gate; 3. Карточка одного исследования; Измерение → вывод; Самостоятельные опыты; Первичные источники |
+
 ## Промышленные семейства и архитектурные блоки
 
 [Сводная industrial map с закреплёнными official sources](INDUSTRY_BRIDGE.md) — общий вход. Ниже это кейсы для переноса знаний; самостоятельных полноценных pretrained labs для каждого семейства пока нет.
@@ -181,6 +199,10 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [curriculum/SUPPLEMENTARY_READING.md](SUPPLEMENTARY_READING.md) — Дополнительные материалы к основному курсу.
 - [curriculum/references/README.md](references/README.md) — Источники и границы адаптации.
 - [curriculum/reports/VALIDATION.md](reports/VALIDATION.md) — Проверка учебного маршрута, 27 октября 2026.
+- [dit/MIT_BRIDGE.md](../dit/MIT_BRIDGE.md) — MIT 6.S184 → DiT/CrossDiT и π-Flow: точное соответствие.
+- [dit/README.md](../dit/README.md) — DiT → CrossDiT → Conditioning → Denoise Loop → π-Flow.
+- [dit/SOURCE_MAP.md](../dit/SOURCE_MAP.md) — Источники и карта каждого архитектурного блока.
+- [dit/reports/VALIDATION.md](../dit/reports/VALIDATION.md) — DiT / CrossDiT / π-Flow: измеренные CPU результаты.
 - [hunyuan-video/README.md](../hunyuan-video/README.md) — HunyuanVideo: архитектурные лабораторные.
 - [kandinsky-5/MODEL_CATALOG.md](../kandinsky-5/MODEL_CATALOG.md) — Каталог моделей Kandinsky Lab.
 - [kandinsky-5/README.md](../kandinsky-5/README.md) — KandinskyLab — учебные Jupyter-лабораторные по Kandinsky 5 Lite.
@@ -270,6 +292,13 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [summarize_labs.py](../vae/scripts/summarize_labs.py) — Publish compact measured CPU results, CSV and selected plots after successful execution.
 - [validate_labs.py](../vae/scripts/validate_labs.py) — Check all Hunyuan VAE labs; --execute runs fresh CPU kernels, no weights/downloads.
 - [check_math.cjs](../vae/scripts/check_math.cjs) — optional strict KaTeX parse/render; dependency setup in vae README.
+
+### `dit/scripts`
+
+- [build_notebooks.py](../dit/scripts/build_notebooks.py) — Build a MIT-linked course from DiT primitives to K5/K6 CrossDiT and native π-Flow.
+- [summarize_labs.py](../dit/scripts/summarize_labs.py) — Publish measured DiT/CrossDiT/π-Flow results, compact CSVs and selected plots.
+- [validate_labs.py](../dit/scripts/validate_labs.py) — Validate DiT/CrossDiT/π-Flow labs; --execute uses fresh CPU kernels, no downloads.
+- [check_math.cjs](../dit/scripts/check_math.cjs) — optional strict KaTeX parse/render; dependency setup in vae README.
 
 ## Как поддерживать содержание
 

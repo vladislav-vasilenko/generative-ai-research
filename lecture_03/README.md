@@ -55,3 +55,7 @@ $$
 ## Дополнительный разбор
 
 Для сравнения noise/score/VP v/RF velocity: опыт A. [Материалы, первичные источники и CPU-контроли](../curriculum/SUPPLEMENTARY_READING.md). Основной порядок лекций/labs не меняется.
+
+## От class conditioning к тексту/модальностям
+
+[Conditioning lab04](../dit/notebooks/04_conditioning_text_and_clean_modalities.ipynb) раскрывает token/pooled paths, masks, cache и clean codec conditions. [Denoise loop lab06](../dit/notebooks/06_denoise_loop_euler_cfg_and_partial_sampling.ipynb) проверяет CFG algebra и реальное число branch forwards. [MIT bridge](../dit/MIT_BRIDGE.md) указывает Q2.2–Q2.3 исходного Lab3.

@@ -161,3 +161,7 @@ Probability path задаёт распределения в каждый мом�
 ## Подробная ветвь HunyuanVideo VAE
 
 После Lecture 4 / Lab 3 пройдите [девять VAE labs](../vae/README.md): ELBO → Conv3D/GroupNorm → архитектура/posterior → spatial/temporal tiling → memory planner → контролируемый benchmark → ручной ComfyUI/pretrained protocol. [Измерения](../vae/reports/VALIDATION.md) отдельно описывают CPU tiny и ещё не выполненный pretrained этап.
+
+## Углублённая ветвь DiT / CrossDiT / π-Flow
+
+[Маршрут из 11 labs](../dit/README.md) связывает MIT ODE/CFM/CFG/DiT с original K5/K6 blocks: tensor geometry → one-stream → dual AV → semantic/visual conditions → Euler → DX mathematics → native sampler → toy imitation. [MIT bridge](../dit/MIT_BRIDGE.md) указывает questions/cells и отмечает дополнения сверх курса; [source map](../dit/SOURCE_MAP.md) — каждый метод приложенных файлов.

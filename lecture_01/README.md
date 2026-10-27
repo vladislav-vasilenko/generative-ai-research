@@ -71,3 +71,7 @@ uv run --locked python lecture_01/scripts/execute_notebook.py --animation
 ## Мини-отчёт
 
 Для каждого задания запишите: **цель → параметры и seed → теоретическое ожидание → рисунок или числа → объяснение расхождений → вывод**. Различайте ошибку численного метода, конечное число частиц и недостаточное время перемешивания.
+
+## Перенос Euler в промышленный sampler
+
+После Q1.1 сравните [native K6 denoise loop](../dit/notebooks/06_denoise_loop_euler_cfg_and_partial_sampling.ipynb) с exact matrix-exponential ODE. [DX rollout](../dit/notebooks/07_piflow_math_dx_policy.ipynb) затем отделяет neural evaluations от cheap integration substeps. Это продолжение, не замена исходного Lab1.

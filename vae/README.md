@@ -54,16 +54,16 @@ uv run --locked --offline python vae/scripts/validate_labs.py --execute
 
 `uv sync` устанавливает зависимости; сами notebooks не устанавливают пакеты. Root lock уже содержит PyTorch, NumPy, Matplotlib, Jupyter и nbclient. Diffusers для этих CPU labs не нужен: оригинальные pure classes/methods извлекаются AST, а маленькие dependency adapters явно подписаны в [labkit](labkit/vae_lab.py).
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/codex/hunyuan-vae-labs/vae/notebooks/00_route_and_source_contracts.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/vae/notebooks/00_route_and_source_contracts.ipynb)
 
-Для Colab [откройте стартовую lab](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/codex/hunyuan-vae-labs/vae/notebooks/00_route_and_source_contracts.ipynb). После открытия выполните в **добавленной первой code cell** checkout учебных исходников (это загрузка кода, не model weights):
+Для Colab [откройте стартовую lab](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/vae/notebooks/00_route_and_source_contracts.ipynb). После открытия выполните в **добавленной первой code cell** checkout учебных исходников (это загрузка кода, не model weights):
 
 ```python
-!git clone --depth 1 --branch codex/hunyuan-vae-labs https://github.com/vladislav-vasilenko/generative-ai-research.git /content/generative-ai-research
+!git clone --depth 1 --branch main https://github.com/vladislav-vasilenko/generative-ai-research.git /content/generative-ai-research
 %cd /content/generative-ai-research
 ```
 
-Выберите CPU runtime: GPU для этих опытов не нужен. Основные numerical packages в Colab обычно доступны; при отличиях версий запишите их. Авторская проверка сделана в root lock, не в Colab. Ветка в ссылке позволяет открыть материалы до merge.
+Выберите CPU runtime: GPU для этих опытов не нужен. Основные numerical packages в Colab обычно доступны; при отличиях версий запишите их. Авторская проверка сделана в root lock, не в Colab. Ссылки и checkout направлены на основную ветку main.
 
 ## Что именно измеряется
 
