@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-27",
+  "executed_at_utc": "2026-10-27T10:09:27.188162+00:00",
+  "original_labs_executed": false,
+  "pretrained_generation": "not_run",
+  "comfyui_runtime": "not_run",
+  "mlx": "not_run",
+  "notebooks": [
+    {
+      "path": "curriculum/notebooks/00_probability_and_model_contracts.ipynb",
+      "cells": 17,
+      "code_cells": 8,
+      "syntax": "passed",
+      "execution": "passed"
+    },
+    {
+      "path": "lecture_05/05_ctmc_and_discrete_flow.ipynb",
+      "cells": 13,
+      "code_cells": 6,
+      "syntax": "passed",
+      "execution": "passed"
+    }
+  ],
+  "canonical_notebook_hashes": "3 matched provided originals",
+  "comfyui_static_links": "passed: image IO and VAE reconstruction",
+  "industrial_entry_points": "5 repositories; selected paths pinned by revision and SHA-256",
+  "local_guide_links": "passed",
+  "existing_user_answers": "unchanged",
+  "probability_bridge": {
+    "scope": "small educational CPU experiments; no pretrained inference",
+    "mlx": "not_run",
+    "gaussian_score_error": 4.440892098500626e-16,
+    "time_reversal_max_error": 1.1102230246251565e-16,
+    "marginal_velocity_score_conversion_error": 2.6645352591003757e-15,
+    "cfg_identities": "passed; random network, no conditional generation claim",
+    "patch_roundtrip": "exact; no learned projection involved",
+    "frozen_codec_gradients": "none; predictor gradients finite"
+  },
+  "ctmc": {
+    "scope": "small educational CPU experiments; no pretrained inference",
+    "mlx": "not_run",
+    "finite_step": [
+      {
+        "steps": 1,
+        "h": 2.0,
+        "transition_valid": false,
+        "max_probability_error": 1.782549961172315
+      },
+      {
+        "steps": 4,
+        "h": 0.5,
+        "transition_valid": true,
+        "max_probability_error": 0.014124961172315209
+      },
+      {
+        "steps": 16,
+        "h": 0.125,
+        "transition_valid": true,
+        "max_probability_error": 0.005882493036511116
+      },
+      {
+        "steps": 64,
+        "h": 0.03125,
+        "transition_valid": true,
+        "max_probability_error": 0.0015661575782871529
+      },
+      {
+        "steps": 256,
+        "h": 0.0078125,
+        "transition_valid": true,
+        "max_probability_error": 0.0003967889189782081
+      }
+    ],
+    "gillespie": {
+      "trajectories": 12000,
+      "empirical_probability_state_1": 0.6169166666666667,
+      "exact_probability_state_1": 0.6174500388276848,
+      "binomial_standard_error": 0.004436641826683925,
+      "total_jumps": 23043
+    },
+    "toy_denoising": {
+      "parameters": 732,
+      "steps": 140,
+      "initial_validation_cross_entropy": 0.7181189656257629,
+      "final_validation_cross_entropy": 0.22218909859657288,
+      "bayes_posterior_validation_cross_entropy": 0.21863919855552963,
+      "scope": "two-token synthetic distribution only; not natural text or full CTMC generation"
+    },
+    "toy_posterior_max_error": 0.07277685403823853,
+    "full_learned_ctmc_sampling": "not_implemented_in_this_intro_lab"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.8.0",
+    "numpy": "2.5.3",
+    "matplotlib": "3.11.2",
+    "nbclient": "0.11.0",
+    "backend": "cpu"
+  }
+}

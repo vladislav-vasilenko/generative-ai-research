@@ -1,5 +1,7 @@
 # Kandinsky 6: ComfyUI baseline и исследование MLX / voice conditioning
 
+[Общий учебный маршрут Lecture 1–5 / Lab 1–3](../curriculum/README.md) связывает математические предпосылки, PyTorch и ComfyUI с этими исследованиями. Начните с него, если важно понимать порядок и критерии готовности.
+
 Начните с [пошагового Jupyter Notebook](notebooks/00_manual_experiment_comfy_mlx_film.ipynb): проверка диска и моделей, ComfyUI baseline, учебные примеры FiLM/attention/Flow Matching, VCTK, MLX parity и план оценки голоса. Run All не скачивает большие веса и не запускает генерацию.
 
 **Полный запуск отложен до освобождения 50 GB+ на SSD.** Нужные в Desktop Qwen 15.45 GB и Lite 5.94 GB — оставшиеся компоненты минимального workflow; учебные ячейки доступны без них.

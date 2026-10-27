@@ -2,6 +2,10 @@
 
 Проект по [первой лекции MIT 6.S184, 2026](https://diffusion.csail.mit.edu/2026/docs/20260120_Lecture_01.pdf) и предоставленной лабораторной `lab_one.ipynb`.
 
+## Место в общем курсе
+
+Это первые два этапа [сквозного маршрута Lecture 1–5](../curriculum/README.md). Перед Lab 1 выполните небольшой [мост по многомерным вероятностям](../curriculum/notebooks/00_probability_and_model_contracts.ipynb). После ODE/SDE, Gaussian score и Langevin переходите к [Lecture 2 / Lab 2](../lecture_02/README.md), где поле уже не задаётся вручную, а обучается.
+
 ## Что открыть
 
 - [Полный разбор](lab_one_ru.ipynb) — перевод, реализованные методы, ответы, графики и проверки. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru.ipynb)

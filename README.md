@@ -2,6 +2,12 @@
 
 Учебный репозиторий по генеративным моделям: от численного решения ОДУ и СДУ до обучения DDPM на изображениях и исследования Kandinsky 5 Lite и Kandinsky 6 Lite с видео и аудио. Материалы снабжены русскими пояснениями, формулами и экспериментами.
 
+## Последовательный учебный маршрут
+
+**[Карта Lecture 1–5 → Lab 1–3 → ComfyUI/PyTorch → видеомодели](curriculum/README.md)** задаёт порядок чтения, реализации, экспериментов и критерии перехода. Пять лекций не соответствуют трём labs один к одному: Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. Для Lecture 5 добавлен отдельный CTMC-практикум.
+
+Начните с [многомерных вероятностей и контрактов моделей](curriculum/notebooks/00_probability_and_model_contracts.ipynb). Затем: Lecture 1/Lab 1 → Lecture 2 + 3A/Lab 2 → Lecture 3B + 4/Lab 3 → HunyuanVideo/Wan/Kandinsky. Lecture 5/CTMC — отдельная ветвь общего курса. [Визуальные эксперименты ComfyUI](curriculum/COMFYUI_LABS.md) сопровождаются математической/PyTorch частью; MLX optional после parity checks. Большие weights для новых учебных notebooks не нужны.
+
 ## С чего начать
 
 | Материал | Содержание | Colab |
@@ -19,7 +25,7 @@
 | [Kandinsky: функции генерации](kandinsky-5/notebooks/12_generation_utils.ipynb) | Все 10 функций generation_utils.py: tensor contracts, CFG, sampling, conditioning и offload | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/12_generation_utils.ipynb) |
 | [Kandinsky: аудит normalization и VAE](kandinsky-5/notebooks/13_normalization_and_vae_contract_audit.ipynb) | Проверка main, численных граничных случаев и достижимости через реальные callers | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/13_normalization_and_vae_contract_audit.ipynb) |
 
-Порядок: **конспект → Lab One с пояснениями → упражнения → DDPM**. Lecture 1 посвящена механике потоков и диффузий. Обучение DDPM идёт дальше первой лекции и служит отдельным продолжением.
+Основной порядок задаёт [карта курса](curriculum/README.md). DDPM на CIFAR-10 — дополнительный пример noise-prediction, а не обязательная замена Lab 2/3 или продолжение только Lecture 1.
 
 ## Kandinsky 5 Lite: устройство и инференс
 
@@ -84,6 +90,11 @@ uv run --locked python lecture_01/scripts/execute_notebook.py --animation
 ## Структура
 
 ```text
+curriculum/                   Общая карта курса, bridges, протоколы, ComfyUI graphs
+lecture_02/                   Маршрут Flow Matching и оригинал Lab 2
+lecture_03/                   Связь score/CFG с Lab 2 и Lab 3
+lecture_04/                   Маршрут DiT/VAE/LDM и оригинал Lab 3
+lecture_05/                   Новый CPU CTMC-практикум
 kandinsky-5/                  Курс K5: 14 labs, свой uv environment
 kandinsky-6/
   notebooks/                  Пошаговый manual experiment notebook
