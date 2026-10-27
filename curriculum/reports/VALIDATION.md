@@ -1,6 +1,6 @@
 # Проверка учебного маршрута, 27 октября 2026
 
-Фактическое окружение исполнения: Python 3.12.14, Torch 2.8.0, NumPy 2.5.3. Проверка использовала существующее исследовательское окружение; новый `uv sync` и установка зависимостей в ComfyUI не выполнялись.
+Фактическое окружение: Python 3.12.14, Torch 2.14.1, NumPy 2.5.4, nbclient 0.10.4. Основной маршрут проверен через `uv run --locked --offline` в корневой `.venv`, без сети и без новых установок.
 
 ## Что выполнено
 
@@ -23,7 +23,7 @@
 | Original Lab 1/2/3 hashes | Совпали с вложениями; оригиналы не выполнялись |
 | Пользовательские ответы Lecture 1 | Контрольные суммы не изменились |
 | Новые ComfyUI graphs | Links/types проверены; runtime не запускался |
-| Карта официального кода | 5 repositories, revisions и SHA-256 выбранных файлов |
+| Карта официального кода | 8 repositories, revisions и SHA-256 выбранных файлов |
 | Локальные ссылки руководств | PASS |
 
 [Машиночитаемый отчёт](validation.json).
@@ -50,6 +50,23 @@
 uv run --locked python curriculum/scripts/validate_curriculum.py --execute
 ```
 
-Без `--execute` выполняются проверки схемы/ссылок, но отчёт execution будет `not_run`. Новые bridge/CTMC notebook checks не означают, что решены исходные Lab 2/3, проверен полный MNIST training или пройден MLX/pretrained inference.
+Без `--execute` выполняются проверки схемы/ссылок с отдельным `static-validation.json`; сохранённые результаты исполнения не перезаписываются. Новые bridge/CTMC notebook checks не означают, что решены исходные Lab 2/3, проверен полный MNIST training или пройден MLX/pretrained inference.
 
 Полная генерация и загрузка больших моделей остаются отложены до освобождения 50 GB+ на SSD; это пользовательское решение не отменялось.
+
+## Навигация, разметка и дополнительные контроли
+
+- `sync_study_navigation.py --check`: 17 авторских notebooks и 18 руководств; код ячеек не изменился. Все ведут на MIT course/notes и учебную карту. Канонические originals и ответы Lecture 1 исключены из автоматической правки.
+- `check_markdown_math.py`: все lecture README и общие руководства прошли проверку блоков/команд; GitHub preview проверяется отдельно.
+- [Дополнительные источники](../SUPPLEMENTARY_READING.md) привязаны к основным MIT темам, а не заменяют их.
+- [CPU-контроли параметризаций, rectification и временной согласованности](supplementary-experiments.json) выполнены через зафиксированное окружение. Это аналитические/synthetic опыты, не pretrained benchmarks.
+
+![Analytic rectification](figures/rectification.png)
+
+У аналитического выпрямленного поля endpoint map известен заранее. One-step equality — oracle control; студент/видеомодель здесь не обучались.
+
+![Temporal controls](figures/temporal-metrics.png)
+
+Повтор одного кадра имеет нулевую raw temporal MSE, но нарушает заданное движение. Поэтому одна такая метрика не доказывает качество видео.
+
+Конспект `lecture_01/LECTURE_01_RU.md` также включён в проверку: 16 отдельных display blocks, без inline LaTeX и формул в таблицах. Проверка исходного синтаксиса не заменяет визуальную проверку конкретного приложения.

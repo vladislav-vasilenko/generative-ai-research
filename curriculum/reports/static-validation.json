@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-27",
+  "executed_at_utc": "2026-10-27T11:14:25.540686+00:00",
+  "original_labs_executed": false,
+  "pretrained_generation": "not_run",
+  "comfyui_runtime": "not_run",
+  "mlx": "not_run",
+  "notebooks": [
+    {
+      "path": "curriculum/notebooks/00_probability_and_model_contracts.ipynb",
+      "cells": 17,
+      "code_cells": 8,
+      "syntax": "passed",
+      "execution": "not_run"
+    },
+    {
+      "path": "lecture_05/05_ctmc_and_discrete_flow.ipynb",
+      "cells": 13,
+      "code_cells": 6,
+      "syntax": "passed",
+      "execution": "not_run"
+    }
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.14.1",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "nbclient": "0.10.4",
+    "backend": "cpu"
+  },
+  "canonical_notebook_hashes": "3 matched provided originals",
+  "comfyui_static_links": "passed: image IO and VAE reconstruction",
+  "industrial_entry_points": "8 repositories; selected paths pinned by revision and SHA-256",
+  "local_guide_links": "passed",
+  "existing_user_answers": "unchanged"
+}

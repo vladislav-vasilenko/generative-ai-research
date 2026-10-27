@@ -334,6 +334,207 @@
           ]
         }
       ]
+    },
+    {
+      "repository": "Lightricks/LTX-Video",
+      "revision": "4b2d053057623ddd4d0a1d3e9cd28890e9ef487f",
+      "url": "https://github.com/Lightricks/LTX-Video",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "09d0cbcec65734a07a67c6b5e96fa16989792633020d993e157b76f35ff68c3a",
+          "url": "https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/README.md"
+        },
+        {
+          "path": "ltx_video/models/autoencoders/causal_video_autoencoder.py",
+          "sha256": "cb07ee461e70f999da4f7286d4774ddcb836a388a605836616ede3e1d4cc4e5e",
+          "url": "https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/ltx_video/models/autoencoders/causal_video_autoencoder.py",
+          "symbols": [
+            "CausalVideoAutoencoder",
+            "Encoder",
+            "Decoder",
+            "UNetMidBlock3D",
+            "SpaceToDepthDownsample",
+            "DepthToSpaceUpsample",
+            "LayerNorm",
+            "ResnetBlock3D",
+            "patchify",
+            "unpatchify",
+            "create_video_autoencoder_demo_config",
+            "test_vae_patchify_unpatchify",
+            "demo_video_autoencoder_forward_backward"
+          ]
+        },
+        {
+          "path": "ltx_video/models/transformers/transformer3d.py",
+          "sha256": "eed52784c19145dca531bb20cb6f98e2f7e01862b55e3c13ee86b7c1b8399f81",
+          "url": "https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/ltx_video/models/transformers/transformer3d.py",
+          "symbols": [
+            "Transformer3DModelOutput",
+            "Transformer3DModel"
+          ]
+        },
+        {
+          "path": "ltx_video/schedulers/rf.py",
+          "sha256": "7ee1ce61fc47e6e90250a884a902033ed8c3948dc21e4a85bf17a2e3f136c3ba",
+          "url": "https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/ltx_video/schedulers/rf.py",
+          "symbols": [
+            "linear_quadratic_schedule",
+            "simple_diffusion_resolution_dependent_timestep_shift",
+            "time_shift",
+            "get_normal_shift",
+            "strech_shifts_to_terminal",
+            "sd3_resolution_dependent_timestep_shift",
+            "TimestepShifter",
+            "RectifiedFlowSchedulerOutput",
+            "RectifiedFlowScheduler"
+          ]
+        }
+      ]
+    },
+    {
+      "repository": "genmoai/mochi",
+      "revision": "15c9bad662df1fa3e7b53136423695b286484c08",
+      "url": "https://github.com/genmoai/mochi",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "eb6ac7974bc392d527f31f2b8ce07c701c1239946d17e410cf52f0085276f39f",
+          "url": "https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/README.md"
+        },
+        {
+          "path": "src/genmo/mochi_preview/dit/joint_model/asymm_models_joint.py",
+          "sha256": "e6ab52713030e0340456c574b63e2d9b4c0ab10045a9907aaef97623c1c04882",
+          "url": "https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/src/genmo/mochi_preview/dit/joint_model/asymm_models_joint.py",
+          "symbols": [
+            "ck",
+            "AsymmetricAttention",
+            "AsymmetricJointBlock",
+            "FinalLayer",
+            "AsymmDiTJoint"
+          ]
+        },
+        {
+          "path": "src/genmo/mochi_preview/vae/models.py",
+          "sha256": "7d7fa3528f1b1eeee3d95784de171587aace67222dc2c1339978fcd2165dfc69",
+          "url": "https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/src/genmo/mochi_preview/vae/models.py",
+          "symbols": [
+            "cast_tuple",
+            "GroupNormSpatial",
+            "SafeConv3d",
+            "StridedSafeConv3d",
+            "ContextParallelConv3d",
+            "Conv1x1",
+            "DepthToSpaceTime",
+            "norm_fn",
+            "ResBlock",
+            "prepare_for_attention",
+            "Attention",
+            "AttentionBlock",
+            "CausalUpsampleBlock",
+            "block_fn",
+            "add_fourier_features",
+            "FourierFeatures",
+            "Decoder",
+            "make_broadcastable",
+            "blend",
+            "blend_horizontal",
+            "blend_vertical",
+            "nearest_multiple",
+            "apply_tiled",
+            "DownsampleBlock",
+            "Encoder",
+            "normalize_decoded_frames",
+            "decode_latents_tiled_full",
+            "decode_latents_tiled_spatial",
+            "decode_latents"
+          ]
+        },
+        {
+          "path": "src/genmo/mochi_preview/pipelines.py",
+          "sha256": "d3f796fb0b4dc46bcbd960a5c34c8d4d92aa2c1769a8031dea648cc880e2199f",
+          "url": "https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/src/genmo/mochi_preview/pipelines.py",
+          "symbols": [
+            "load_to_cpu",
+            "linear_quadratic_schedule",
+            "setup_fsdp_sync",
+            "ModelFactory",
+            "T5ModelFactory",
+            "DitModelFactory",
+            "DecoderModelFactory",
+            "EncoderModelFactory",
+            "get_conditioning",
+            "get_conditioning_for_prompts",
+            "compute_packed_indices",
+            "assert_eq",
+            "sample_model",
+            "move_to_device",
+            "t5_tokenizer",
+            "MochiSingleGPUPipeline",
+            "cast_dit",
+            "MultiGPUContext",
+            "MochiMultiGPUPipeline"
+          ]
+        }
+      ]
+    },
+    {
+      "repository": "hpcaitech/Open-Sora",
+      "revision": "7ad6a96a135feb81f755c84fb391818718f6beb2",
+      "url": "https://github.com/hpcaitech/Open-Sora",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "0fcb328e414279344c13ccf65fdf297c054a152b8a39c0be485cb9146bd5cd26",
+          "url": "https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/README.md"
+        },
+        {
+          "path": "opensora/models/mmdit/model.py",
+          "sha256": "b36fd5c1cc8f7339c678ae8120d4a3eb6a05fabc1b41fc7dbfeed37f58fb559b",
+          "url": "https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/models/mmdit/model.py",
+          "symbols": [
+            "MMDiTConfig",
+            "MMDiTModel",
+            "Flux"
+          ]
+        },
+        {
+          "path": "opensora/models/hunyuan_vae/autoencoder_kl_causal_3d.py",
+          "sha256": "aeef7d9db5f0ebf5a091a0a9b284820cf652dab5353b0c9540c11aa56b4739e5",
+          "url": "https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/models/hunyuan_vae/autoencoder_kl_causal_3d.py",
+          "symbols": [
+            "AutoEncoder3DConfig",
+            "AutoencoderKLCausal3D",
+            "CausalVAE3D_HUNYUAN"
+          ]
+        },
+        {
+          "path": "opensora/utils/sampling.py",
+          "sha256": "4f874900b35ecdcc61032f1ec3a9cc6aacc993d4267139bf7e4531c164d8ed01",
+          "url": "https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/utils/sampling.py",
+          "symbols": [
+            "SamplingOption",
+            "sanitize_sampling_option",
+            "get_oscillation_gs",
+            "Denoiser",
+            "I2VDenoiser",
+            "DistilledDenoiser",
+            "time_shift",
+            "get_res_lin_function",
+            "get_schedule",
+            "get_noise",
+            "pack",
+            "unpack",
+            "prepare",
+            "prepare_ids",
+            "prepare_models",
+            "prepare_api"
+          ]
+        }
+      ]
     }
-  ]
+  ],
+  "aliases": {
+    "https://github.com/genmoai/models": "https://github.com/genmoai/mochi"
+  }
 }

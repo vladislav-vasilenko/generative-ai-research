@@ -1,5 +1,11 @@
 # Lecture 4 → Lab 3: DiT, VAE и обучение в latent space
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+
+**Связанные лекции:** [Lecture 4](https://diffusion.csail.mit.edu/2026/docs/20260128_Lecture_04_edited.pdf).
+<!-- study-navigation:end -->
+
 [Общий маршрут](../curriculum/README.md), [слайды](https://diffusion.csail.mit.edu/2026/docs/20260128_Lecture_04_edited.pdf), [исходный Lab 3](references/lab_three_original.ipynb), 80 ячеек. Это исходник с заготовками, не полностью решённая лабораторная.
 
 Предварительно выполнены Lab 3 Parts 1–2 из [Lecture 3B](../lecture_03/README.md). В slides VAE идёт раньше DiT. Прочитайте overview, но исполняйте notebook в его порядке: **Part 3 → Part 4 → Part 5**.
@@ -33,3 +39,7 @@ Tokenizer обычно означает фиксированные правил�
 Для подробного разложения используйте [K5 VAE lab](../kandinsky-5/notebooks/02_vae.ipynb), [attention](../kandinsky-5/notebooks/04_attention.ipynb), [DiT/FM](../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb). После P7 можно прослеживать [реальные архитектуры](../curriculum/INDUSTRY_BRIDGE.md).
 
 **Готовность:** собрать shape diagram всего latent pipeline, показать gradient только у нужных parameters и объяснить, почему замороженный decoder всё равно нужен при оценке.
+
+## Дополнительный разбор
+
+После VAE/DiT: temporal metrics и causal Conv3d, опыт C. [Материалы, первичные источники и CPU-контроли](../curriculum/SUPPLEMENTARY_READING.md). Основной порядок лекций/labs не меняется.

@@ -1,5 +1,9 @@
 # Как читать промышленный pipeline после Lab 1–3
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+<!-- study-navigation:end -->
+
 Цель — переносить понятия и проверяемые контракты. Сначала проследите один prompt/noise до decoder, затем выберите один компонент. Одновременный полный запуск всех семейств не нужен.
 
 ## Общая схема
@@ -16,8 +20,11 @@
 | Wan2.2 TI2V-5B | После codec/shape maps | Это dense вариант, не A14B two-expert architecture; иной high-compression codec | Отдельный graph/model+codec, не подмена VAE в Wan2.1 |
 | Kandinsky 5 | P3–P7 + [14 labs](../kandinsky-5/README.md) | Qwen/CLIP, Hunyuan VAE, DiT, LTF/cross-attention и generation utilities | Сравнить non-distilled vs distilled по разным profile; не смешивать objectives |
 | Kandinsky 6 Lite | После K5 и baseline | Audio/video/cross-modal parts общей модели, MMAudio/Hunyuan codecs, PiFlow Distill | [Подготовленные Lite graphs](../kandinsky-6/README.md), затем измерения AV |
+| LTX-Video | После P7 | Собственные codec/Transformer/RF scheduler contracts; выбрать конкретную revision | Сопоставить shape map с её VAE, не подменять его Hunyuan/Wan codec |
+| Mochi 1 | После P6–P7 | Asymmetric visual/text streams, VAE и pipeline | Сначала интерфейсы блоков, затем отдельный совместимый workflow |
+| Open-Sora, HPC-AI Tech | После P7 | Конкретный release/config: MMDiT, codec и sampling path | Фиксировать release и graph; это не Open-Sora-Plan |
 
-Это учебная последовательность, не рейтинг качества моделей. Архитектурные особенности сверены с официальными исходниками; конкретные Mac throughput/peak memory здесь не измерены. В Wan2.2 не все варианты MoE. В K6 audio-only path пропускает cross-modal interactions и не эквивалентен совместному sampler.
+Это каталог кейсов после MIT-основы, не рейтинг и не обязательная последовательность всех моделей. Архитектурные особенности сверены с официальными исходниками; конкретные Mac throughput/peak memory здесь не измерены. В Wan2.2 не все варианты MoE. В K6 audio-only path пропускает cross-modal interactions и не эквивалентен совместному sampler.
 
 ## Что воспроизводить по ступеням
 
@@ -85,3 +92,29 @@ Revision: `7ceeefad7fb625011f7db602c43893a989f19c15`.
 - [kandinsky/core/components/piflow_dit.py](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/piflow_dit.py) — PiFlowDiffusionTransformer3D.
 - [kandinsky/core/algo/piflow_sampler.py](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_sampler.py) — _normalize_grid_prediction, piflow_denoise_loop.
 - [kandinsky/core/algo/flow_matching.py](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/flow_matching.py) — flow_match_timesteps.
+
+### Lightricks/LTX-Video
+
+Revision: `4b2d053057623ddd4d0a1d3e9cd28890e9ef487f`.
+
+- [ltx_video/models/autoencoders/causal_video_autoencoder.py](https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/ltx_video/models/autoencoders/causal_video_autoencoder.py).
+- [ltx_video/models/transformers/transformer3d.py](https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/ltx_video/models/transformers/transformer3d.py).
+- [ltx_video/schedulers/rf.py](https://github.com/Lightricks/LTX-Video/blob/4b2d053057623ddd4d0a1d3e9cd28890e9ef487f/ltx_video/schedulers/rf.py).
+
+### genmoai/mochi
+
+Revision: `15c9bad662df1fa3e7b53136423695b286484c08`.
+
+- [src/genmo/mochi_preview/dit/joint_model/asymm_models_joint.py](https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/src/genmo/mochi_preview/dit/joint_model/asymm_models_joint.py).
+- [src/genmo/mochi_preview/vae/models.py](https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/src/genmo/mochi_preview/vae/models.py).
+- [src/genmo/mochi_preview/pipelines.py](https://github.com/genmoai/mochi/blob/15c9bad662df1fa3e7b53136423695b286484c08/src/genmo/mochi_preview/pipelines.py).
+
+### hpcaitech/Open-Sora
+
+Revision: `7ad6a96a135feb81f755c84fb391818718f6beb2`.
+
+- [opensora/models/mmdit/model.py](https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/models/mmdit/model.py).
+- [opensora/models/hunyuan_vae/autoencoder_kl_causal_3d.py](https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/models/hunyuan_vae/autoencoder_kl_causal_3d.py).
+- [opensora/utils/sampling.py](https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/utils/sampling.py).
+
+Mochi 1: прежний URL `genmoai/models` перенаправляется на `genmoai/mochi`. Для LTX выбран LTX-Video, а не отдельное семейство LTX-2. Open-Sora здесь означает проект HPC-AI Tech. Ни одно из новых семейств в этом стенде не запускалось с pretrained weights.

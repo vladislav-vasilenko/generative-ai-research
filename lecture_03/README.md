@@ -1,5 +1,11 @@
 # Lecture 3A / 3B: score matching, stochastic sampling и CFG
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+
+**Связанные лекции:** [Lecture 3](https://diffusion.csail.mit.edu/2026/docs/20260123_Lecture_03.pdf).
+<!-- study-navigation:end -->
+
 [Общий маршрут](../curriculum/README.md), [слайды](https://diffusion.csail.mit.edu/2026/docs/20260123_Lecture_03.pdf). Это **два практических блока**, использующие разные notebooks.
 
 ## 3A: score и связь с Flow Matching
@@ -45,3 +51,7 @@ $$
 [ComfyUI C3](../curriculum/COMFYUI_LABS.md) проводить на поддерживающем обычный CFG non-distilled checkpoint. K6 Lite Distill по умолчанию CFG=1; такой checkpoint не подходит для универсального учебного guidance sweep.
 
 **Готовность:** вывести Gaussian score; объяснить conditional vs marginal score; показать CFG identity w=1 и осознанно посчитать compute branches. После этого переходите к [Lecture 4](../lecture_04/README.md).
+
+## Дополнительный разбор
+
+Для сравнения noise/score/VP v/RF velocity: опыт A. [Материалы, первичные источники и CPU-контроли](../curriculum/SUPPLEMENTARY_READING.md). Основной порядок лекций/labs не меняется.

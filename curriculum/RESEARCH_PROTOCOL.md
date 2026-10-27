@@ -1,5 +1,9 @@
 # Переход от учебного задания к исследованию
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+<!-- study-navigation:end -->
+
 ## Шесть уровней доказательств
 
 | Уровень | Что доказываем | Пример |

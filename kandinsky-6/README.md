@@ -1,5 +1,9 @@
 # Kandinsky 6: ComfyUI baseline и исследование MLX / voice conditioning
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+<!-- study-navigation:end -->
+
 [Общий учебный маршрут Lecture 1–5 / Lab 1–3](../curriculum/README.md) связывает математические предпосылки, PyTorch и ComfyUI с этими исследованиями. Начните с него, если важно понимать порядок и критерии готовности.
 
 Начните с [пошагового Jupyter Notebook](notebooks/00_manual_experiment_comfy_mlx_film.ipynb): проверка диска и моделей, ComfyUI baseline, учебные примеры FiLM/attention/Flow Matching, VCTK, MLX parity и план оценки голоса. Run All не скачивает большие веса и не запускает генерацию.

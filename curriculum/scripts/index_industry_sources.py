@@ -9,7 +9,10 @@ REPOS = {
 'Wan-Video/Wan2.1': ['wan/modules/model.py','wan/modules/vae.py','wan/modules/t5.py','wan/text2video.py','wan/utils/fm_solvers.py'],
 'Wan-Video/Wan2.2': ['wan/modules/model.py','wan/modules/vae2_2.py','wan/text2video.py','wan/configs/wan_ti2v_5B.py','wan/configs/wan_t2v_A14B.py'],
 'kandinskylab/kandinsky-5': ['kandinsky/models/dit.py','kandinsky/models/vae.py','kandinsky/models/text_embedders.py','kandinsky/generation_utils.py'],
-'kandinskylab/kandinsky-6': ['kandinsky/core/components/dit.py','kandinsky/core/components/piflow_dit.py','kandinsky/core/algo/piflow_sampler.py','kandinsky/core/algo/flow_matching.py']}
+'kandinskylab/kandinsky-6': ['kandinsky/core/components/dit.py','kandinsky/core/components/piflow_dit.py','kandinsky/core/algo/piflow_sampler.py','kandinsky/core/algo/flow_matching.py'],
+'Lightricks/LTX-Video': ['ltx_video/models/autoencoders/causal_video_autoencoder.py','ltx_video/models/transformers/transformer3d.py','ltx_video/schedulers/rf.py'],
+'genmoai/mochi': ['src/genmo/mochi_preview/dit/joint_model/asymm_models_joint.py','src/genmo/mochi_preview/vae/models.py','src/genmo/mochi_preview/pipelines.py'],
+'hpcaitech/Open-Sora': ['opensora/models/mmdit/model.py','opensora/models/hunyuan_vae/autoencoder_kl_causal_3d.py','opensora/utils/sampling.py']}
 def get(url):
     request = urllib.request.Request(url, headers={'User-Agent':'generative-ai-research-curriculum'})
     with urllib.request.urlopen(request, timeout=60) as response:

@@ -1,0 +1,64 @@
+{
+  "scope": "small deterministic CPU controls; no upstream code execution or model download",
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.14.1",
+    "numpy": "2.5.4"
+  },
+  "parameterizations": {
+    "vp_inverse_max_error": 8.881784197001252e-16,
+    "vp_v_vs_rf_target_mse": 4.7113419304373325,
+    "scope": "exact parameterization identities; VP v is not a generic RF velocity"
+  },
+  "rectification": {
+    "errors": [
+      {
+        "nfe": 1,
+        "teacher_euler_rmse": 1.3259847605788324,
+        "analytic_rectified_rmse": 2.1079622870091728e-16
+      },
+      {
+        "nfe": 4,
+        "teacher_euler_rmse": 0.39500565612833655,
+        "analytic_rectified_rmse": 2.8483070300340415e-16
+      },
+      {
+        "nfe": 16,
+        "teacher_euler_rmse": 0.09204476922840245,
+        "analytic_rectified_rmse": 6.3931400348064285e-16
+      },
+      {
+        "nfe": 64,
+        "teacher_euler_rmse": 0.02241024402329473,
+        "analytic_rectified_rmse": 2.566590011475423e-15
+      }
+    ],
+    "teacher_action_minus_displacement_squared": 1.2396975263630328,
+    "scope": "known affine teacher and oracle rectification; no learned student, no one-step quality claim"
+  },
+  "video": {
+    "metrics": [
+      {
+        "variant": "coherent",
+        "reference_mse": 0.0,
+        "raw_temporal_mse": 0.000674859636147329,
+        "known_motion_residual_mse": 0.0
+      },
+      {
+        "variant": "frozen",
+        "reference_mse": 0.015089228162882476,
+        "raw_temporal_mse": 0.0,
+        "known_motion_residual_mse": 0.0006748596361473288
+      },
+      {
+        "variant": "independent_noise",
+        "reference_mse": 0.0026846010907585383,
+        "raw_temporal_mse": 0.004715982068931186,
+        "known_motion_residual_mse": 0.004049210213205157
+      }
+    ],
+    "causal_past_output_delta": 0.0,
+    "symmetric_past_output_delta": 2.333333730697632,
+    "scope": "synthetic translation, exact known motion and isolated Conv3d; not a production video benchmark"
+  }
+}

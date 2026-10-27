@@ -1,0 +1,292 @@
+{
+  "checked_date": "2026-10-27",
+  "checked_at_utc": "2026-10-27T10:39:27.759137+00:00",
+  "scope": "text and metadata only; no package install, model download or upstream code execution",
+  "repositories": [
+    {
+      "repository": "lucidrains/rectified-flow-pytorch",
+      "revision": "688cad582422f807adffb32ab8f8bf511fec1e89",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "8eb4c4f243b8deba57745c60893c952c97061a2c6841d1bdd4a3983b6496d256",
+          "url": "https://github.com/lucidrains/rectified-flow-pytorch/blob/688cad582422f807adffb32ab8f8bf511fec1e89/README.md"
+        },
+        {
+          "path": "rectified_flow_pytorch/rectified_flow.py",
+          "sha256": "4da42ad4d460888fc37a9126ee8f53e427b72da121c3c027b4a54ffe456c7834",
+          "url": "https://github.com/lucidrains/rectified-flow-pytorch/blob/688cad582422f807adffb32ab8f8bf511fec1e89/rectified_flow_pytorch/rectified_flow.py",
+          "symbols": [
+            "exists",
+            "default",
+            "identity",
+            "append_dims",
+            "normalize_to_neg_one_to_one",
+            "unnormalize_to_zero_to_one",
+            "cosmap",
+            "LPIPSLoss",
+            "PseudoHuberLoss",
+            "PseudoHuberLossWithLPIPS",
+            "MSELoss",
+            "MeanVarianceNetLoss",
+            "RectifiedFlow",
+            "cast_tuple",
+            "divisible_by",
+            "Upsample",
+            "Downsample",
+            "RMSNorm",
+            "SinusoidalPosEmb",
+            "RandomOrLearnedSinusoidalPosEmb",
+            "Residual",
+            "Block",
+            "ResnetBlock",
+            "LinearAttention",
+            "Attention",
+            "Unet",
+            "ImageDataset",
+            "cycle",
+            "Trainer"
+          ]
+        },
+        {
+          "path": "rectified_flow_pytorch/reflow.py",
+          "sha256": "a92866ab34746786e7e3b50996f496022e8b8fc7a376aa3d6a261cfe92296dcc",
+          "url": "https://github.com/lucidrains/rectified-flow-pytorch/blob/688cad582422f807adffb32ab8f8bf511fec1e89/rectified_flow_pytorch/reflow.py",
+          "symbols": [
+            "exists",
+            "default",
+            "divisible_by",
+            "Reflow",
+            "ReflowTrainer"
+          ]
+        },
+        {
+          "path": "pyproject.toml",
+          "sha256": "ca832f7926fde365b99675b4263c5f7c1ace56aac1f772f0ca8ca97d451cd9ee",
+          "url": "https://github.com/lucidrains/rectified-flow-pytorch/blob/688cad582422f807adffb32ab8f8bf511fec1e89/pyproject.toml"
+        }
+      ]
+    },
+    {
+      "repository": "facebookresearch/flow_matching",
+      "revision": "11568d37f8d5a080e12aa7b5305d9c35ae07d136",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "80a4a7c6bdcd2bf718770dff3c06048a473f2123bee55df426c5ea59a6910fb0",
+          "url": "https://github.com/facebookresearch/flow_matching/blob/11568d37f8d5a080e12aa7b5305d9c35ae07d136/README.md"
+        },
+        {
+          "path": "flow_matching/path/affine.py",
+          "sha256": "420be3d2e2e84924b9c5b689887cb75ea1451e2ecde9b36ba93366bb4f1e009d",
+          "url": "https://github.com/facebookresearch/flow_matching/blob/11568d37f8d5a080e12aa7b5305d9c35ae07d136/flow_matching/path/affine.py",
+          "symbols": [
+            "AffineProbPath",
+            "CondOTProbPath"
+          ]
+        },
+        {
+          "path": "flow_matching/path/scheduler/scheduler.py",
+          "sha256": "7c084315907b4d0811dd07e5447d72421909dfb0f86217d3c26fa5aaf7e674c7",
+          "url": "https://github.com/facebookresearch/flow_matching/blob/11568d37f8d5a080e12aa7b5305d9c35ae07d136/flow_matching/path/scheduler/scheduler.py",
+          "symbols": [
+            "SchedulerOutput",
+            "Scheduler",
+            "ConvexScheduler",
+            "CondOTScheduler",
+            "PolynomialConvexScheduler",
+            "VPScheduler",
+            "LinearVPScheduler",
+            "CosineScheduler"
+          ]
+        },
+        {
+          "path": "flow_matching/solver/ode_solver.py",
+          "sha256": "911d385753b59b4e172d7edfd3664524e5051e9a840079187c98b005fdf17485",
+          "url": "https://github.com/facebookresearch/flow_matching/blob/11568d37f8d5a080e12aa7b5305d9c35ae07d136/flow_matching/solver/ode_solver.py",
+          "symbols": [
+            "ODESolver"
+          ]
+        },
+        {
+          "path": "flow_matching/path/mixture.py",
+          "sha256": "23358ea034bc087ce8f553a0b16b22a3fc33603069086e846ed5e81ac5206c0a",
+          "url": "https://github.com/facebookresearch/flow_matching/blob/11568d37f8d5a080e12aa7b5305d9c35ae07d136/flow_matching/path/mixture.py",
+          "symbols": [
+            "MixtureDiscreteProbPath"
+          ]
+        }
+      ]
+    },
+    {
+      "repository": "gnobitab/RectifiedFlow",
+      "revision": "5a1fd4dd3ea7db764ce370a84ce35f9c8b15fde6",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "7680cd5d365dd9a9b501c6d17da3027433379b6bbc98815ce8f4f1c83ca468fe",
+          "url": "https://github.com/gnobitab/RectifiedFlow/blob/5a1fd4dd3ea7db764ce370a84ce35f9c8b15fde6/README.md"
+        },
+        {
+          "path": "ImageGeneration/sde_lib.py",
+          "sha256": "8b608786153cd944d76d8d0ef331023405b1cf3440c79de7bbb6ed6b44543729",
+          "url": "https://github.com/gnobitab/RectifiedFlow/blob/5a1fd4dd3ea7db764ce370a84ce35f9c8b15fde6/ImageGeneration/sde_lib.py",
+          "symbols": [
+            "RectifiedFlow"
+          ]
+        },
+        {
+          "path": "ImageGeneration/sampling.py",
+          "sha256": "653407a258be0be930dad38871c234e0968892387d0130c7fed39646d6a2d8ed",
+          "url": "https://github.com/gnobitab/RectifiedFlow/blob/5a1fd4dd3ea7db764ce370a84ce35f9c8b15fde6/ImageGeneration/sampling.py",
+          "symbols": [
+            "get_sampling_fn",
+            "get_rectified_flow_sampler"
+          ]
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "url": "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/",
+      "sha256": "c5fd07c66775f2772dcebd21cf833d82d6e80359376278dfa421a3449686bc28",
+      "role": "secondary explanatory reading; technical claims checked against primary papers/code",
+      "headings": [
+        {
+          "heading": "What are Diffusion Models?"
+        },
+        {
+          "heading": "What are Diffusion Models?",
+          "anchor": "what-are-diffusion-models"
+        },
+        {
+          "heading": "Forward diffusion process",
+          "anchor": "forward-diffusion-process"
+        },
+        {
+          "heading": "Connection with stochastic gradient Langevin dynamics",
+          "anchor": "connection-with-stochastic-gradient-langevin-dynamics"
+        },
+        {
+          "heading": "Reverse diffusion process",
+          "anchor": "reverse-diffusion-process"
+        },
+        {
+          "heading": "Parameterization of $L_t$ for Training Loss",
+          "anchor": "parameterization-of-l_t-for-training-loss"
+        },
+        {
+          "heading": "Simplification",
+          "anchor": "simplification"
+        },
+        {
+          "heading": "Connection with noise-conditioned score networks (NCSN)",
+          "anchor": "connection-with-noise-conditioned-score-networks-ncsn"
+        },
+        {
+          "heading": "Parameterization of $\\beta_t$",
+          "anchor": "parameterization-of-beta_t"
+        },
+        {
+          "heading": "Parameterization of reverse process variance $\\boldsymbol{\\Sigma}_\\theta$",
+          "anchor": "parameterization-of-reverse-process-variance-boldsymbolsigma_theta"
+        },
+        {
+          "heading": "Conditioned Generation",
+          "anchor": "conditioned-generation"
+        },
+        {
+          "heading": "Classifier Guided Diffusion",
+          "anchor": "classifier-guided-diffusion"
+        },
+        {
+          "heading": "Classifier-Free Guidance",
+          "anchor": "classifier-free-guidance"
+        },
+        {
+          "heading": "Speed up Diffusion Models",
+          "anchor": "speed-up-diffusion-models"
+        },
+        {
+          "heading": "Fewer Sampling Steps & Distillation",
+          "anchor": "fewer-sampling-steps--distillation"
+        },
+        {
+          "heading": "Latent Variable Space",
+          "anchor": "latent-variable-space"
+        },
+        {
+          "heading": "Scale up Generation Resolution and Quality",
+          "anchor": "scale-up-generation-resolution-and-quality"
+        },
+        {
+          "heading": "Model Architecture",
+          "anchor": "model-architecture"
+        },
+        {
+          "heading": "Quick Summary",
+          "anchor": "quick-summary"
+        },
+        {
+          "heading": "Citation",
+          "anchor": "citation"
+        },
+        {
+          "heading": "References",
+          "anchor": "references"
+        }
+      ]
+    },
+    {
+      "url": "https://lilianweng.github.io/posts/2024-04-12-diffusion-video/",
+      "sha256": "c5ccac241854ec42bef641ed99d372334f0504150c3cfcf1c11c51d77ff6bd73",
+      "role": "secondary explanatory reading; technical claims checked against primary papers/code",
+      "headings": [
+        {
+          "heading": "Diffusion Models for Video Generation"
+        },
+        {
+          "heading": "Video Generation Modeling from Scratch",
+          "anchor": "video-generation-modeling-from-scratch"
+        },
+        {
+          "heading": "Parameterization & Sampling Basics",
+          "anchor": "parameterization--sampling-basics"
+        },
+        {
+          "heading": "Model Architecture: 3D U-Net & DiT",
+          "anchor": "model-architecture-3d-u-net--dit"
+        },
+        {
+          "heading": "Adapting Image Models to Generate Videos",
+          "anchor": "adapting-image-models-to-generate-videos"
+        },
+        {
+          "heading": "Fine-tuning on Video Data",
+          "anchor": "fine-tuning-on-video-data"
+        },
+        {
+          "heading": "Training-Free Adaptation",
+          "anchor": "training-free-adaptation"
+        },
+        {
+          "heading": "Citation",
+          "anchor": "citation"
+        },
+        {
+          "heading": "References",
+          "anchor": "references"
+        }
+      ]
+    }
+  ],
+  "primary_papers": [
+    "https://arxiv.org/abs/2006.11239",
+    "https://arxiv.org/abs/2202.00512",
+    "https://arxiv.org/abs/2204.03458",
+    "https://arxiv.org/abs/2209.03003",
+    "https://arxiv.org/abs/2210.02747",
+    "https://arxiv.org/abs/2412.06264"
+  ]
+}

@@ -1,5 +1,9 @@
 # От вероятностей к исследованию генеративных видео- и аудиомоделей
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+<!-- study-navigation:end -->
+
 Этот маршрут связывает пять предоставленных лекций MIT 6.S184, три исходные лабораторные, курс Kandinsky и практику ComfyUI/PyTorch. Главный результат каждого этапа: **формула → предсказание → работающий код → измерение → объяснение**. Переход определяется проверяемым навыком, а не количеством просмотренных видео.
 
 Материалы проверены 27 октября 2026. [Индекс источников и страниц](references/materials_manifest.json), [атрибуция](references/README.md), [важные уточнения](SOURCE_NOTES.md). Номера страниц ниже — физические страницы PDF, начиная с 1; индексы ячеек — с 0.
@@ -49,7 +53,7 @@ flowchart LR
 | P6 | [Lecture 4](../lecture_04/README.md), pp.20–28; notes §6.1, pp.41–46 | Lab 3 Part 3, Q3.1–3.5 | Patchify/unpatchify, attention, modulation, time/class embeddings, output shape и training | DiT из toy images → video latent tokens; [C5](COMFYUI_LABS.md) |
 | P7 | Lecture 4 pp.3–19; notes §6.2, pp.46–52 и Appendix D, pp.77–82 | Lab 3 Part 4 → Part 5 | KL/reconstruction units, posterior sampling; заморозить VAE при latent training | [C4](COMFYUI_LABS.md): VAE reconstruction без Qwen/DiT; затем полный latent pipeline |
 | P8 | [Lecture 5](../lecture_05/README.md), pp.5–28,37–40; notes §7, pp.54–66 | [Дополнительная CTMC lab](../lecture_05/05_ctmc_and_discrete_flow.ipynb) | Rate matrix, positivity, probability conservation, exact vs simulated distribution, masked-token loss | Отличать дискретные token IDs conditioning от CTMC-генерации текста |
-| R | [Карта архитектур](INDUSTRY_BRIDGE.md) и [протокол](RESEARCH_PROTOCOL.md) | Один воспроизводимый component/adapter experiment | Baseline, один фактор, held-out data, несколько seed, ограничения вывода | HunyuanVideo → Wan2.1 → конкретный Wan2.2 → K5 → K6 |
+| R | [Карта архитектур](INDUSTRY_BRIDGE.md) и [протокол](RESEARCH_PROTOCOL.md) | Один воспроизводимый component/adapter experiment | Baseline, один фактор, held-out data, несколько seed, ограничения вывода | Один кейс: Hunyuan/Wan/Kandinsky/LTX/Mochi/Open-Sora |
 
 Промышленный continuous-video маршрут можно начинать после P7; P8 — отдельная ветвь про discrete state spaces, а не обязательная предпосылка Hunyuan/Wan/Kandinsky.
 
@@ -118,6 +122,10 @@ $$
 
 Probability path задаёт распределения в каждый момент; он сам по себе не задаёт единственную траекторию частицы. Аналогично, одинаковые marginals ODE и SDE не требуют одинаковых sample paths.
 
+## Дополнительные чтения по месту в курсе
+
+[Rectified Flow, обзоры Lilian Weng и контрольные опыты](SUPPLEMENTARY_READING.md) привязаны к Lecture 2–4. Сначала основная MIT lab, затем дополнение. Они не являются новой обязательной ветвью.
+
 ## Что открывать после основного курса
 
 - [Kandinsky 5: 14 лабораторных](../kandinsky-5/README.md): VAE → text embeddings → attention/DiT → Flow Matching → sampling → локальный/CUDA pipeline. Это увеличенный масштаб тех же понятий.
@@ -139,3 +147,7 @@ Probability path задаёт распределения в каждый мом�
 ## Проверенные материалы
 
 [Отчёт с результатами и графиками](reports/VALIDATION.md): две новые лабораторные, 30 cells / 14 code cells, выполнены на CPU. Исходные Lab 1–3 сохранены без изменений и остаются самостоятельными заданиями. Новые ComfyUI graphs прошли статическую проверку; runtime, MLX и pretrained generation пока не выполнялись.
+
+## Поддержка навигации
+
+После повторной генерации авторских notebooks выполните `python curriculum/scripts/sync_study_navigation.py --write`, затем `--check`. Утилита меняет только навигационный Markdown; код ячеек, канонические originals и пользовательские notebooks Lecture 1 не изменяются.

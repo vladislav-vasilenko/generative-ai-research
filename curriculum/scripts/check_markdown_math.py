@@ -2,7 +2,7 @@
 import json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-paths=[*sorted((ROOT/'curriculum').glob('*.md')),*sorted(ROOT.glob('lecture_*/README.md'))]
+paths=[*sorted((ROOT/'curriculum').glob('*.md')),*sorted(ROOT.glob('lecture_*/*.md'))]
 errors=[];rows=[]
 for path in paths:
     fenced=False;math=False;block=[];count=0;start=0

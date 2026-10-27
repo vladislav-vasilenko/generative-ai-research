@@ -1,5 +1,11 @@
 # Lecture 1: ОДУ, СДУ и численное семплирование
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+
+**Связанные лекции:** [Lecture 1](https://diffusion.csail.mit.edu/2026/docs/20260120_Lecture_01.pdf).
+<!-- study-navigation:end -->
+
 Проект по [первой лекции MIT 6.S184, 2026](https://diffusion.csail.mit.edu/2026/docs/20260120_Lecture_01.pdf) и предоставленной лабораторной `lab_one.ipynb`.
 
 ## Место в общем курсе
@@ -8,8 +14,8 @@
 
 ## Что открыть
 
-- [Полный разбор](lab_one_ru.ipynb) — перевод, реализованные методы, ответы, графики и проверки. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru.ipynb)
-- [Самостоятельная работа](lab_one_ru_exercises.ipynb) — тот же перевод: восемь методов и текстовые ответы нужно заполнить. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/lab_one_ru_exercises.ipynb)
+- [Полный разбор](lab_one_ru.ipynb) — перевод, реализованные методы, ответы, графики и проверки. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/lecture_01/lab_one_ru.ipynb)
+- [Самостоятельная работа](lab_one_ru_exercises.ipynb) — тот же перевод: восемь методов и текстовые ответы нужно заполнить. [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/lecture_01/lab_one_ru_exercises.ipynb)
 - [HTML для чтения](outputs/lab_one_ru.html) — выполненная лабораторная с графиками.
 - [Конспект Lecture 1](LECTURE_01_RU.md) — основные идеи и формулы.
 - [Происхождение материалов](references/README.md) — оригинал, атрибуция и изменения.

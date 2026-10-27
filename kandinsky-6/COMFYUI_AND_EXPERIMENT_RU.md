@@ -1,5 +1,9 @@
 # Kandinsky 6: ручной запуск и протокол исследования
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+<!-- study-navigation:end -->
+
 ## Что уже готово и что ещё не проверено
 
 Подготовлены два облегчённых ComfyUI workflow, скрипты проверки файлов и памяти, подготовка VCTK, PyTorch reference и **прототип audio-forward на MLX**. Это не законченный MLX-порт всего K6 и не готовое клонирование голоса. Обучение адаптера на pretrained-весах, waveform sampling с ним и custom node для подключения обученного FiLM пока не реализованы как проверенный сквозной маршрут.

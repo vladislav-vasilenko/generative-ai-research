@@ -1,5 +1,11 @@
 # Lecture 5: CTMC и дискретный Flow Matching
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+
+**Связанные лекции:** [Lecture 5](https://diffusion.csail.mit.edu/2026/docs/20260130_Lecture_05.pdf).
+<!-- study-navigation:end -->
+
 В предоставленных трёх исходных labs нет отдельного задания на Lecture 5. Поэтому добавлен [самостоятельный CPU notebook](05_ctmc_and_discrete_flow.ipynb). Это новая учебная адаптация, не официальный Lab Four MIT.
 
 Читать [slides](https://diffusion.csail.mit.edu/2026/docs/20260130_Lecture_05.pdf) pp.5–28,37–40; notes §7, PDF pp.54–66. Предпосылки: многомерные вероятности, условное ожидание, probability paths и CFM из P0/P3. Полный video inference для этой темы не требуется.

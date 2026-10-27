@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 import nbformat
 ROOT=Path(__file__).resolve().parents[2]
-parser=argparse.ArgumentParser();parser.add_argument('--execute',action='store_true');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--execute',action='store_true');parser.add_argument('--output',type=Path);args=parser.parse_args()
 paths=[ROOT/'curriculum/notebooks/00_probability_and_model_contracts.ipynb',
        ROOT/'lecture_05/05_ctmc_and_discrete_flow.ipynb']
 result={'date':datetime.now(ZoneInfo('Europe/Moscow')).date().isoformat(), 'executed_at_utc':datetime.now(timezone.utc).isoformat(),'original_labs_executed':False,'pretrained_generation':'not_run',
@@ -46,7 +46,7 @@ for path in (ROOT/'curriculum/workflows').glob('*.json'):
 result['comfyui_static_links']='passed: image IO and VAE reconstruction'
 industry=json.loads((ROOT/'curriculum/references/industry_manifest.json').read_text())
 assert all('sha256' in f for repo in industry['repositories'] for f in repo['files'])
-result['industrial_entry_points']='5 repositories; selected paths pinned by revision and SHA-256'
+result['industrial_entry_points']=str(len(industry['repositories']))+' repositories; selected paths pinned by revision and SHA-256'
 # Validate local links in newly authored teaching guides, not upstream documents.
 docs=list((ROOT/'curriculum').glob('*.md'))+[ROOT/f'lecture_{n:02}/README.md' for n in range(2,6)]
 bad=[]
@@ -65,5 +65,8 @@ if protected.exists():
 if args.execute:
     result['probability_bridge']=json.loads((ROOT/'curriculum/artifacts/probability-and-contracts-results.json').read_text())
     result['ctmc']=json.loads((ROOT/'curriculum/artifacts/ctmc-results.json').read_text())
-(ROOT/'curriculum/reports/validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+destination=args.output or (ROOT/'curriculum/reports'/('validation.json' if args.execute else 'static-validation.json'))
+if not destination.is_absolute():destination=ROOT/destination
+destination.parent.mkdir(parents=True,exist_ok=True)
+destination.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(result,ensure_ascii=False,indent=2),flush=True)

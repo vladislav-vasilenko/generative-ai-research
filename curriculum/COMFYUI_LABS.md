@@ -1,5 +1,9 @@
 # ComfyUI как наблюдаемый эксперимент
 
+<!-- study-navigation:start -->
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+<!-- study-navigation:end -->
+
 Для каждой работы сначала выполняйте математический/PyTorch вариант, затем наблюдайте соответствующее поведение в graph. ComfyUI показывает dataflow и запускает inference. Он не заменяет вывод loss, доказательство marginalization или контроль gradients.
 
 ## Подготовленные workflow
