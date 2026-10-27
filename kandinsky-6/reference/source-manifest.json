@@ -1,0 +1,1529 @@
+{
+  "checked_date": "2026-10-26",
+  "repositories": {
+    "kandinsky-6": {
+      "revision": "7ceeefad7fb625011f7db602c43893a989f19c15",
+      "url": "https://github.com/kandinskylab/kandinsky-6"
+    },
+    "kvae": {
+      "revision": "8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7",
+      "url": "https://github.com/kandinskylab/kvae"
+    },
+    "kvae-audio": {
+      "revision": "0573cdbde53ddf716ac0d38fefbbb175e4514a3d",
+      "url": "https://github.com/kandinskylab/kvae-audio"
+    }
+  },
+  "models": {
+    "kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers": {
+      "revision": "4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers",
+      "pipeline_tag": "image-to-video"
+    },
+    "kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers": {
+      "revision": "8ec017692475fd8e7908d8e75442bba0737649af",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers",
+      "pipeline_tag": "image-to-video"
+    },
+    "kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers": {
+      "revision": "80d5e6c7f646c5f512b684e2da0765618d805894",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers",
+      "pipeline_tag": "image-to-video"
+    },
+    "kandinskylab/Kandinsky-6.0-Pro-5s-Diffusers": {
+      "revision": "7be18aed6fbd64653c0c4872fddfe4a3e3e109f5",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-5s-Diffusers",
+      "pipeline_tag": "image-to-video"
+    },
+    "kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers": {
+      "revision": "2c68d9e260e2b5ee0980ffaf79fae507f847763c",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers",
+      "pipeline_tag": "image-to-video"
+    },
+    "kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers": {
+      "revision": "c2f2a7f934948e935fe4e69d9a770c091385567e",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers",
+      "pipeline_tag": "image-to-video"
+    },
+    "kandinskylab/KVAE-3D-2.0-t4s16": {
+      "revision": "9a04d0afc73bd46e0753b7f46c33830f392f3f8b",
+      "url": "https://huggingface.co/kandinskylab/KVAE-3D-2.0-t4s16",
+      "pipeline_tag": null
+    },
+    "kandinskylab/KVAE-3D-2.0-t4s8": {
+      "revision": "a9f4c53420a7da936cde18826bccc2212d849dde",
+      "url": "https://huggingface.co/kandinskylab/KVAE-3D-2.0-t4s8",
+      "pipeline_tag": null
+    },
+    "kandinskylab/KVAE-2D-2.0": {
+      "revision": "a62a38531aed26a643e22aa7197ea62578c134a3",
+      "url": "https://huggingface.co/kandinskylab/KVAE-2D-2.0",
+      "pipeline_tag": null
+    },
+    "kandinskylab/KVAE-Audio": {
+      "revision": "bb459ec3facdd88ed166fe6993dd9c12fb2c9d75",
+      "url": "https://huggingface.co/kandinskylab/KVAE-Audio",
+      "pipeline_tag": "audio-to-audio"
+    }
+  },
+  "files": [
+    {
+      "path": "kandinsky-6/LICENSE",
+      "bytes": 1080,
+      "sha256": "924c4cae92e640ad22c3cf60e1976828e93fedbd652c985dcc6e0bb9c55dbbe7",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/LICENSE"
+    },
+    {
+      "path": "kandinsky-6/README.md",
+      "bytes": 6740,
+      "sha256": "332e19400ff9f70cd3252ad771e81301a232a90fd62979df177a956618d84df1",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/README.md"
+    },
+    {
+      "path": "kandinsky-6/docs/generation_modes.md",
+      "bytes": 5203,
+      "sha256": "0cd50d672667a520884b6b78e0d71ab5cf51f078efb1e67117139dd6e2ab8ae4",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/generation_modes.md"
+    },
+    {
+      "path": "kandinsky-6/docs/just.md",
+      "bytes": 1507,
+      "sha256": "3b0c8d495bcd9513e485620944759bd5266683f09cf2e98e5eb8589248c3021a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/just.md"
+    },
+    {
+      "path": "kandinsky-6/docs/performance/a100.md",
+      "bytes": 2971,
+      "sha256": "1e30d2fe8ce591deaba9cab369195c1d6de5c1d99dd59c291672979ec7ef86d6",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/performance/a100.md"
+    },
+    {
+      "path": "kandinsky-6/docs/performance/h100.md",
+      "bytes": 3127,
+      "sha256": "516835fa60be228477b797496b0f0b83c9c2a2451f38d86b883303759f9a1268",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/performance/h100.md"
+    },
+    {
+      "path": "kandinsky-6/docs/performance/rtx-4090.md",
+      "bytes": 3017,
+      "sha256": "ff83f3297f78a5dfa01e91a0e9d6632b315d2fbaeb204a3950bc512ca9e5408d",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/performance/rtx-4090.md"
+    },
+    {
+      "path": "kandinsky-6/docs/performance/rtx-5060-ti.md",
+      "bytes": 2980,
+      "sha256": "e39a2e371887741b49751bc65410ac5460ea3779e103a001ee77848b54a5d71c",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/performance/rtx-5060-ti.md"
+    },
+    {
+      "path": "kandinsky-6/docs/performance/rtx-5090.md",
+      "bytes": 2939,
+      "sha256": "c7cab45266d6e5abe182cbba042ee0eea3c20d2b2c5b32dded66043a51c2c03c",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/performance/rtx-5090.md"
+    },
+    {
+      "path": "kandinsky-6/docs/quickstart/quick_start.md",
+      "bytes": 4207,
+      "sha256": "21f8970841a62e281f667fd16f05bc5a25757ce9054aff7051a281c567e62043",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/quickstart/quick_start.md"
+    },
+    {
+      "path": "kandinsky-6/docs/quickstart/quick_start_fastvideo.md",
+      "bytes": 5408,
+      "sha256": "afe96114549de3a4afe92d8c675c1b4cdf1e893c8c025dab797713bed0ee3cbc",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/quickstart/quick_start_fastvideo.md"
+    },
+    {
+      "path": "kandinsky-6/docs/quickstart/quick_start_sglang.md",
+      "bytes": 7422,
+      "sha256": "52e7509a4d2b11c9551e5e5534535a4470ffdefe0d76d6d0cf6f121b24240b04",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/quickstart/quick_start_sglang.md"
+    },
+    {
+      "path": "kandinsky-6/docs/quickstart/quick_start_vllm.md",
+      "bytes": 5407,
+      "sha256": "f84ae8d8ff75e9db12545ed1bb8c57e91ebab4efb590d0dd4c3d4f9efe642dcd",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/docs/quickstart/quick_start_vllm.md"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/__init__.py",
+      "bytes": 81,
+      "sha256": "be6c78f1f6cb744b17300d7ff8657752ab0b6fab3979d539d88cc985dafa5218",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/__main__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/__main__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/cli.py",
+      "bytes": 19514,
+      "sha256": "55dd33a5a2d224b1ad3918bc2bcc3f47bb0b0e6e910926c803710fe7fa7f95a3",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/cli.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/checkpoints/lite-distill.yaml",
+      "bytes": 945,
+      "sha256": "dfec9824fabfadb992d7e3e68542692e53dcb2f04e88070500eafd5e8cbf6fad",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/checkpoints/lite-distill.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/checkpoints/lite-pretrain.yaml",
+      "bytes": 631,
+      "sha256": "b9c0f5a39b721e3c44d870ae0e70bae701938dfbf6e00260ca34f69f11c180a5",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/checkpoints/lite-pretrain.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/checkpoints/lite.yaml",
+      "bytes": 1960,
+      "sha256": "2e4d4be604c4abee46d80fa2a23ee5564801f2e14a9fe6cf91330d7fc9754599",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/checkpoints/lite.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/checkpoints/pro-distill.yaml",
+      "bytes": 942,
+      "sha256": "dc2cd50afba88469fa1c23cd0665707b35123e0faebb3c815e236dca3366ecbe",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/checkpoints/pro-distill.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/checkpoints/pro-pretrain.yaml",
+      "bytes": 628,
+      "sha256": "96a201547476adb2e802fd2649ccb78ef2a3db62fe45334cb3a5644ac11746ed",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/checkpoints/pro-pretrain.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/checkpoints/pro.yaml",
+      "bytes": 2730,
+      "sha256": "4f8f5d60b9bb6740a2d8a0ea2f1d5260f44c8edd78bb636a4658ab08d1ee45e8",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/checkpoints/pro.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/a100-80gb.yaml",
+      "bytes": 469,
+      "sha256": "c453cab3fb79cf2181abfa21ea198c662c2e392c65c3ee34a7de511af56a14a2",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/a100-80gb.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/h100.yaml",
+      "bytes": 394,
+      "sha256": "9263e0a419bc968459f3d8434e910861537a2eaac45cd72af2df84fded85650d",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/h100.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/rtx-4090.yaml",
+      "bytes": 469,
+      "sha256": "2e1658e2c67632f100d17d88331ecb7f26f80d197dea1035ba453ba854728de5",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/rtx-4090.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/rtx-5060-ti.yaml",
+      "bytes": 507,
+      "sha256": "ccc8b473ec8bc5e7cb156feac7dba07a5c6c33ea0222ab734981417a97820281",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/rtx-5060-ti.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/rtx-5080.yaml",
+      "bytes": 504,
+      "sha256": "7856f7f6007ee7ca5f78f48eba224fe511f0bcce2dc143da6ff34ba9d43e6336",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/rtx-5080.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/rtx-5090.yaml",
+      "bytes": 476,
+      "sha256": "74164788d216cb53e05d9ca81d38bed6e71a2af0341925d171c633a263b9c6a7",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/rtx-5090.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/devices/rtx-pro-6000.yaml",
+      "bytes": 394,
+      "sha256": "2719071f18a2f1d325907073f0f9d70b0044927e7f35a346b059342be4bc0869",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/devices/rtx-pro-6000.yaml"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/audio_vae.json",
+      "bytes": 760,
+      "sha256": "5a465bc31ed196edda6a499bd4c8bffeb40223422b643766b8ae05a5b52203da",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/audio_vae.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/text_encoder.json",
+      "bytes": 1375,
+      "sha256": "7f06b04f260b9c6dfb65c95bb866b8889ac7692e3c8d59f1c8641bec8c2a71a3",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/text_encoder.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/text_encoder_2.json",
+      "bytes": 944,
+      "sha256": "d5f57048c92560a448e1189485f6aa993eeb3500f18f897e1069395811b39406",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/text_encoder_2.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/transformer_lite.json",
+      "bytes": 718,
+      "sha256": "55f7b0395edf379d865acbc2c9760d056b1c89e775af2bc1318f2286798400af",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/transformer_lite.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/transformer_pro.json",
+      "bytes": 722,
+      "sha256": "78606eced4c482c82d101f174d12c287697d00204d454a0bb27271f0894ee4c2",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/transformer_pro.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/vae.json",
+      "bytes": 718,
+      "sha256": "8dd1ef5ce49d2a56cdb5ea4c6553244320cd7185918463578c4c08a31f55e50a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/vae.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/configs/modules/vocoder.json",
+      "bytes": 483,
+      "sha256": "0364767fc6472fe36b4c96a6dd522f845b24e1ede7a6ea037b58e8c5557e2b89",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/configs/modules/vocoder.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/conditioning.py",
+      "bytes": 1367,
+      "sha256": "563c64609061547cc98fe067b9513efa605cd50c93daa44b2993fc5f663bb578",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/conditioning.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/denoise_loop.py",
+      "bytes": 11480,
+      "sha256": "b3a42518de5a6eee8b751d25f3d0576e8c89b1a57c2e2f33cb3dc42b7beb32f6",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/denoise_loop.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/flow_matching.py",
+      "bytes": 523,
+      "sha256": "7931c423fc44bb868ef3c3a8f3c9d84a08623186f2b08b3dabde3cf920e059fe",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/flow_matching.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/guidance.py",
+      "bytes": 262,
+      "sha256": "d0f3ad9de5055c335510fad7a31f3b4e625b64a819ab68cf80433a471333d8b8",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/guidance.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/mux.py",
+      "bytes": 5186,
+      "sha256": "5d71f3a6e1489912f8aedc2fd5c2a3579085354ba8010cdf82f9e0bb6239b59a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/mux.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/piflow_math.py",
+      "bytes": 6749,
+      "sha256": "2a1376505420121a0cfcb4066d9816f97b57402d85ddc5be829f585d8122e6a3",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_math.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/piflow_sampler.py",
+      "bytes": 8808,
+      "sha256": "56a90aa2d7b005af89d015332fa31eb4825fc9ffa19b36072ccee372d80343f4",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_sampler.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/postprocess_audio.py",
+      "bytes": 2557,
+      "sha256": "a8ae13de42508bfccb44fefabc5ed36dde4a41b39f43e361e6a166f9b11c1e06",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/postprocess_audio.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/postprocess_video.py",
+      "bytes": 1200,
+      "sha256": "476474b6827476d06c62b0e70957bd2f807e04261676292c3b116b9087c92847",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/postprocess_video.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/prepare_latents.py",
+      "bytes": 11149,
+      "sha256": "edd9cdef58ce31a20442eea568621578fd129722325992850b31cdaa95751ee2",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/prepare_latents.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/prepare_ropes.py",
+      "bytes": 3126,
+      "sha256": "6184122b9d0024e003463d251090d39fd79c09d57452c8fc7d02dc68de1ed64e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/prepare_ropes.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/algo/visual_conditioning.py",
+      "bytes": 3404,
+      "sha256": "4b85bf1e1ad67072fc61b05858172218434fa68943011ce8ba3296269f2fd0bc",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/visual_conditioning.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/attention/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/attention/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/attention/dispatch.py",
+      "bytes": 286,
+      "sha256": "a8a0eae919f5eef6fde6df14943977959d72ca675d020d083d3efb34eeea4218",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/attention/dispatch.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/attention/flash.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/attention/flash.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/beautifier/__init__.py",
+      "bytes": 1616,
+      "sha256": "767f1d6327d52d241d24f4a9f8e480fce230203c0405a2418c3c63559b3a6bc2",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/beautifier/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/beautifier/base.py",
+      "bytes": 769,
+      "sha256": "7660c723282128afb136eb0713a9ed5c88704e4a10e0eb9459efe1431e71b40c",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/beautifier/base.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/beautifier/qwen25.py",
+      "bytes": 11526,
+      "sha256": "272cf2e581b701a56c0bb3f3abfff1af3313da0f3bd40598842afe90423887f5",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/beautifier/qwen25.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/dit.py",
+      "bytes": 41020,
+      "sha256": "8d0154c8c069889c6e7b3b07ffef36b8caa16b1ee2ceecb9cbd2d1ebb35e9df7",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/dit.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/hunyuan_vae.py",
+      "bytes": 43089,
+      "sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/hunyuan_vae.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/__init__.py",
+      "bytes": 17,
+      "sha256": "7c01eef21662b922cc6c875175f5ac2a00c303fd5dc4d6c654f3fc0c44830dfc",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/__init__.py",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/autoencoder/__init__.py",
+      "bytes": 75,
+      "sha256": "e87e784c866721bd78acd2f6bc52b35a60d152f3bc56ad40b4231c4ad209c069",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/autoencoder/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/autoencoder/autoencoder.py",
+      "bytes": 4927,
+      "sha256": "679d50184879a5cf7cc0fa29cf77b63f083c7fe09979bdbd248f0e5421890660",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/autoencoder/autoencoder.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/autoencoder/distributions.py",
+      "bytes": 1514,
+      "sha256": "0570d97c1f902b76c49c3f6479e2956f11182f6707884e39123b48930b8ec102",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/autoencoder/distributions.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/autoencoder/edm2_utils.py",
+      "bytes": 5547,
+      "sha256": "9a61ca2344f3b6ddd1a745e89669725eb182575453a395c224e7df8152e956a7",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/autoencoder/edm2_utils.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/autoencoder/vae.py",
+      "bytes": 12152,
+      "sha256": "1db6a0897acf6c9d60af12934b9c24d34a29e2236295643635a92f45ed4d5292",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/autoencoder/vae.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/autoencoder/vae_modules.py",
+      "bytes": 3292,
+      "sha256": "11775d04a2a3c2f17abe44ad0116b6aa2485a4d399587271611812e8e3dfaf04",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/autoencoder/vae_modules.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/activations.py",
+      "bytes": 4541,
+      "sha256": "ff2562e116399bca730929aeb07e029a61321660a4f07c3db0b8f9853c70470f",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/activations.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/cuda/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/cuda/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/cuda/activation1d.py",
+      "bytes": 2555,
+      "sha256": "54778a4308d359cac8348bc28f5407652982b22732c3c768a6721183c26f5b0e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/cuda/activation1d.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/cuda/load.py",
+      "bytes": 2594,
+      "sha256": "6ee5cbfaedc6b73cf2bff9677f18bcc5a46c91a088523e853bca12805a909e8a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/cuda/load.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/__init__.py",
+      "bytes": 200,
+      "sha256": "2e3138e1052e377ba2e51ea59c7d5d255a519559001757af21dbec4cb9c22471",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/act.py",
+      "bytes": 812,
+      "sha256": "71db16033a8c861255e3d21ef907292d698fbcf276ae0dcfbea96680e640056c",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/act.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/filter.py",
+      "bytes": 3379,
+      "sha256": "f1be6f8432cb6fd7bfd4c03f8bfa109780adc52e94307eaa2d0e897b4f0c60b2",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/filter.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/resample.py",
+      "bytes": 1775,
+      "sha256": "45daa0e39055a98e5ed624f1f33dc9e0c4e1e5ce5dff35df83b5b13fd5406a2f",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/alias_free_activation/torch/resample.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/bigvgan.py",
+      "bytes": 10769,
+      "sha256": "402e7ca525cc1404ad3596d965dc87c8ddfd0cd4d264762ef63c54f14c8bee2d",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/bigvgan.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/config.json",
+      "bytes": 1403,
+      "sha256": "65b7f487bfaf15256056a75f6667ef5f640214c981922a111927873705ea4ddb",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/config.json"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/env.py",
+      "bytes": 265,
+      "sha256": "88eb6a0df8fc1d8be535b0a172a7838f7ac203be55e5425da3a3f244b1787a1a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/env.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/bigvgan_v2/utils.py",
+      "bytes": 373,
+      "sha256": "455b1676ddb2997896c6cf89318f4bf09b7061d42f9a2e2fec51c38a91c31387",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/bigvgan_v2/utils.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/ext/mel_converter.py",
+      "bytes": 3232,
+      "sha256": "ee5e24d68d9af35a57a039b42cb7add6696778dfbbbd9cf408af25a19235cb2a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/ext/mel_converter.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/mmaudio/features_utils.py",
+      "bytes": 2427,
+      "sha256": "daf31ae9a9d59a6f81f772893142e96d6d12abc1d20328e45cfd8568b8003133",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/mmaudio/features_utils.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/piflow_dit.py",
+      "bytes": 1597,
+      "sha256": "d15767c76530c7c641065bbadee5931a6f39f2e838cccf25465ad0ee8d71ddbb",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/piflow_dit.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/rope.py",
+      "bytes": 3272,
+      "sha256": "c8c4b0695b12972704d1e73808315b9cea560ab90d8d170dff3afc3f5d34295a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/rope.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/text_embedder.py",
+      "bytes": 11127,
+      "sha256": "dcd1e02e52dfb750b971b0c592795615d3e249d2620e466e1e9ea92e03b29d1e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/text_embedder.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/vae_audio.py",
+      "bytes": 1279,
+      "sha256": "0d3c72034212505aa742b35269291a8736e6b1bf381c5001417fe2a289b47277",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/vae_audio.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/components/vae_video.py",
+      "bytes": 386,
+      "sha256": "7ad34af7bbf99319e223ebaf5a2048e15d324692740d0fbcbc0718030df1ec28",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/vae_video.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/ports.py",
+      "bytes": 1925,
+      "sha256": "682c5917e3497cebf3eb15e39947c0a20e8340d9ebbc5505f0bcfdae68a002c5",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/ports.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/tensors.py",
+      "bytes": 1632,
+      "sha256": "36bd2c13d5efd99a71a28adfef22e3da911b2581c57ba9fe8f12630153ed9193",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/tensors.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/core/types.py",
+      "bytes": 1391,
+      "sha256": "b3807828214c57cd4c0d390a2f97a2db75070a6e04ac795ca710823dfbc629a0",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/types.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/config.py",
+      "bytes": 10283,
+      "sha256": "4dc4a59e7db8b7faf3593b858e6501c4d7319ead73d2c7b7fea6481698629f16",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/config.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/factory.py",
+      "bytes": 9905,
+      "sha256": "6b6cc346f9cf51ddd9fa20819c18c54a09fb208f78ecd2afad9d4d4ce1d691ac",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/factory.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/media.py",
+      "bytes": 2691,
+      "sha256": "636296fcaa464eaab4f66d6456b34c6b8b7057bdc521dbd527a47870f6e363c3",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/media.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/pipeline.py",
+      "bytes": 32316,
+      "sha256": "eb7255a8e868c7f82d3a58498b94e2b4c9dc49a4b554e0d6f146e5633d68016e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/pipeline.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/progress.py",
+      "bytes": 1834,
+      "sha256": "2d23034ebbf8868a33a747f2c3c8de6cf16bbec48da9f2b0da63389db8286e4d",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/progress.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/reconfigure.py",
+      "bytes": 14851,
+      "sha256": "da8eef97bdf4d4807aaa2138bf1a09d2780fe8b34763a283786fbcaa7bee4d0a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/reconfigure.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/pipeline/sr.py",
+      "bytes": 2243,
+      "sha256": "c9f4994a07a1bdf4e0175a5bfc88dedcd6fc11d4edc608a73ac3fea0ffecfe8d",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/sr.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/__init__.py",
+      "bytes": 362,
+      "sha256": "12922867937f47c0245f2984e702052b1e7fccfe628b213180abf75d69d26784",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/aoti.py",
+      "bytes": 15626,
+      "sha256": "f9718d8a4f0903be890b4280a7d1d75e2a314e43fd11e81e364090d9f4f68178",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/aoti.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/base.py",
+      "bytes": 743,
+      "sha256": "1a98193251227b2d929d48ae90510787669ecc224ea3a4cabc0ba5dc3ba5947f",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/base.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/cache/__init__.py",
+      "bytes": 5500,
+      "sha256": "aeacb5f133ce2570994910b4ce42e854944ae7523bfb0862b00ebaa66d72bf3e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/cache/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/cache/magcache.py",
+      "bytes": 10884,
+      "sha256": "784020ecf900469547987aa30e31323f04ec71573a8e89846716dabae7b2e6de",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/cache/magcache.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/cache/navicache.py",
+      "bytes": 7424,
+      "sha256": "cdf079c1859202b1aca4aa79b26614bc8463ec5552ce7cffb96a0a342f93cd05",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/cache/navicache.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/compile.py",
+      "bytes": 5573,
+      "sha256": "3bfaf721ed528646e837298c240197d87de3dfd906832fe99480f884898e22de",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/compile.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/home.py",
+      "bytes": 2238,
+      "sha256": "bab85fcf757357544df448381a30d690270343f6878ce9a8bd2e8710e8c6a3fd",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/home.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/kernels/__init__.py",
+      "bytes": 1431,
+      "sha256": "63b06db8d11c6759ef697c7dc9a6b94eedc7ecac67f0b7326232bd48d72e4fea",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/kernels/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/kernels/attention_engine.py",
+      "bytes": 2204,
+      "sha256": "5490645b96a1d2cb2a975cec5e91e7e7bc9705d2b3527a2c22a69bc24653f070",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/kernels/attention_engine.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/kernels/flash_attention_2.py",
+      "bytes": 208,
+      "sha256": "a36315649a9f8bf04c7135ca88436db67755e91be33caf1582620248b0d93fff",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/kernels/flash_attention_2.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/kernels/flash_attention_3.py",
+      "bytes": 218,
+      "sha256": "ea1ac6462676fe1f588945dea993d93195bb114744d138fa71877e0267c0552d",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/kernels/flash_attention_3.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/kernels/sage.py",
+      "bytes": 277,
+      "sha256": "0d1eb30ea44882df1ef628d8fe33a0e6c7b3bc3dd3296848621356e52e16b012",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/kernels/sage.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/kernels/sdpa.py",
+      "bytes": 441,
+      "sha256": "72c1b4a2aa2f5f3a9a78a0d26a498a45f7cc22f9a04a24d968d1bbae2e895246",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/kernels/sdpa.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/offload/__init__.py",
+      "bytes": 3364,
+      "sha256": "f4f4df25e1900159e5fc4be0204d412f453455e5c93172514b721ea23855309b",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/offload/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/offload/block.py",
+      "bytes": 17522,
+      "sha256": "48f2e5a31f8047fd65b4a843b62afd75b55c3c6a4ff1da5beb8106d5c815a649",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/offload/block.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/offload/common.py",
+      "bytes": 1644,
+      "sha256": "acae9aeb8467a491ba3bb785c1e12728e683fc3269cb31b88332fc9b01df0a8f",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/offload/common.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/offload/module.py",
+      "bytes": 4950,
+      "sha256": "9d6f6b88e493d82be34a3bce0611a4e9ec0c6b187373f411ed1b8b2a56ada562",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/offload/module.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/profile.py",
+      "bytes": 26181,
+      "sha256": "32d2ef90a58470dd154b87a0f50f883b3d46dcab74822c940540ac6d8842d12a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/profile.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/quantize/__init__.py",
+      "bytes": 232,
+      "sha256": "3369819e71c7dcb2f3b0ebc541761147d2a971f5bd6d5bbe94f54b3bf176e591",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/quantize/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/quantize/nf4.py",
+      "bytes": 915,
+      "sha256": "2a99df5a819454e7f3aa724901d9f72fab748a33f5a1984abf2811c776ef9a8f",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/quantize/nf4.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/sampler.py",
+      "bytes": 1503,
+      "sha256": "6f640f89422fae70af9d378e54e692582d1784799c392596b83fa58c92c6cd5e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/sampler.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/runtime/weights.py",
+      "bytes": 7853,
+      "sha256": "271190f3abd4980bac3729165aa2c96ca13941f5b272a84ab04feeed5ff26593",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/runtime/weights.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/tools/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/tools/__init__.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/tools/bench.py",
+      "bytes": 21789,
+      "sha256": "7f65aaf4d0fb892178cfd24708f2a5a8e9a01f5aabcfb961b7a70cab09fa145c",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/tools/bench.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/tools/bench_report.py",
+      "bytes": 23315,
+      "sha256": "9c760e797d440724df4086a11d8fb3b25308710a6cb7fe3b003cac4a93623c7b",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/tools/bench_report.py"
+    },
+    {
+      "path": "kandinsky-6/kandinsky/tools/memfit.py",
+      "bytes": 25040,
+      "sha256": "0a6c4e6abfe2ca7c3c40bef4183b71051b453a5e24cc99e9fabf352a4f862d3b",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/tools/memfit.py"
+    },
+    {
+      "path": "kandinsky-6/pyproject.toml",
+      "bytes": 2701,
+      "sha256": "66dde1753aa6dd48de774e1df446d8f9c22d35c5330a11f41a0b381a3293cc52",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/pyproject.toml"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_bench.py",
+      "bytes": 6215,
+      "sha256": "24b9bfe93e7ced857f6b009a43ea8026bec075c0e529a7cb83422615eac74e60",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_bench.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_bench_report.py",
+      "bytes": 8545,
+      "sha256": "478514f75cd7f2841134bd598d1179b74c8f9095210f3425bcaad3c5c339de1a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_bench_report.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_download.py",
+      "bytes": 1235,
+      "sha256": "a129b2b54877dddef0f93ae508e42782201dbf3ca53c3a88ef868cf80287bb8c",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_download.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_fastvideo_example.py",
+      "bytes": 2307,
+      "sha256": "35e599e589baa04854dbc8a075ed77c5ffd64f4bbbdd005b740824fc17861360",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_fastvideo_example.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_generate_conditioning.py",
+      "bytes": 2334,
+      "sha256": "e96b26f6eaebec86ddd874927ef648341aada8915ee328db90057223dfefd547",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_generate_conditioning.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_generate_run.py",
+      "bytes": 2769,
+      "sha256": "1b900bf4995fbd835755ffe2e934e24b9282f2587bf25ca2be8e01cbe9733e4f",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_generate_run.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_low_vram.py",
+      "bytes": 11509,
+      "sha256": "a53dd47885ce1dd6b009ac4199a064febcd766126b68af558a498882e822fa04",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_low_vram.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_memfit.py",
+      "bytes": 6314,
+      "sha256": "d80b56680d926615f2d002dce9a74714432a41dc39e6484764dc61d539a3f332",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_memfit.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_modality_conditioning.py",
+      "bytes": 7951,
+      "sha256": "11fa18189462ce94bb7d304fea6ae77d13dc378741d15b9ef86550064b1f6ccf",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_modality_conditioning.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_piflow.py",
+      "bytes": 1866,
+      "sha256": "d18f0c60defbb4412e430e1fefacc0544107698f481494c4d8ad181d4b48a461",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_piflow.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_pipeline_batch.py",
+      "bytes": 5606,
+      "sha256": "7bbadc77144915a21ee3ab74145d93ee2aa57f2de26e4f0ebdfc318c96166de3",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_pipeline_batch.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_ports_contract.py",
+      "bytes": 3311,
+      "sha256": "5cfb1dcaa5f754c75489812a64da5dd8de5f2ac1f5c6b1776f2d70babb270113",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_ports_contract.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_profile.py",
+      "bytes": 3210,
+      "sha256": "1cd7ee69410dda343d742d1d81458ef285b436f2e6b6070c1a5ca04f6adc83c5",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_profile.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_progress.py",
+      "bytes": 907,
+      "sha256": "e2ab1eeb2652aab6a064cb81fab1963a65cd9bf34bcce42077b66b7772871062",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_progress.py"
+    },
+    {
+      "path": "kandinsky-6/tests/unit/test_visual_conditioning.py",
+      "bytes": 2843,
+      "sha256": "e1c58682a19029d9c9cd793fd240c3a45c17eec4be6d2c3b592e7a0b980a112b",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/tests/unit/test_visual_conditioning.py"
+    },
+    {
+      "path": "kvae/LICENSE",
+      "bytes": 1099,
+      "sha256": "949460981b5a8441c32448aaedb2ab8a5676c835714e5524ad564186b00c973a",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/LICENSE"
+    },
+    {
+      "path": "kvae/README.md",
+      "bytes": 7790,
+      "sha256": "a01a70f807ccb5a78dc76cd946a5b997b41931765e245f78e51afa90122c699b",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/README.md"
+    },
+    {
+      "path": "kvae/data/__init__.py",
+      "bytes": 322,
+      "sha256": "168529692c63de92e5f2eefdf10ccc5817764d8c089a6d1d211fd4efbc2911d9",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/data/__init__.py"
+    },
+    {
+      "path": "kvae/data/audio_dataset.py",
+      "bytes": 2684,
+      "sha256": "19b6533d734f938a00dec88a1f4f836363bbe142d4e443581b332397d6b49722",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/data/audio_dataset.py"
+    },
+    {
+      "path": "kvae/data/image_dataset.py",
+      "bytes": 2518,
+      "sha256": "1955acc227cfee2c1440a736204fe364c8bdec0dbeba94ff1276ad6bd88655fa",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/data/image_dataset.py"
+    },
+    {
+      "path": "kvae/data/saving_reconstruction_utils.py",
+      "bytes": 6514,
+      "sha256": "2d51eade5122e7e6635d79b7be205ad98b1212dcc533e52483a93baac197ddc9",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/data/saving_reconstruction_utils.py"
+    },
+    {
+      "path": "kvae/data/video_dataset.py",
+      "bytes": 7178,
+      "sha256": "45907ce8f7392dc2559028f5362d77e1a485c6bf6dc62dccde8004f3c13e6c58",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/data/video_dataset.py"
+    },
+    {
+      "path": "kvae/data/video_stream.py",
+      "bytes": 4750,
+      "sha256": "33f212c441b341fc68c71cbc06a10dd3d6f1e19748246ec81debe767f7f65c3f",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/data/video_stream.py"
+    },
+    {
+      "path": "kvae/kvae/__init__.py",
+      "bytes": 103,
+      "sha256": "47fad546f8e1edc709ab011890c1786c6d9e886b6f5a3439fe89e0a1c768d11c",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/__init__.py"
+    },
+    {
+      "path": "kvae/kvae/layers/__init__.py",
+      "bytes": 427,
+      "sha256": "1434a7635cd15ee86f095cd458edca7a51889774475263a3ecf50ee2ebda43a9",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/layers/__init__.py"
+    },
+    {
+      "path": "kvae/kvae/layers/common.py",
+      "bytes": 1211,
+      "sha256": "dea99f57db1fd42c9eebefeaa4719a31ae213a548fe782921d01db419a50487d",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/layers/common.py"
+    },
+    {
+      "path": "kvae/kvae/layers/conv.py",
+      "bytes": 6694,
+      "sha256": "536f7752712a6719578785f40f0170ac90c6820fcbaabab065088f6ab8372a22",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/layers/conv.py"
+    },
+    {
+      "path": "kvae/kvae/layers/norm.py",
+      "bytes": 5384,
+      "sha256": "5cd05425b43eb6161153142e6df0c69873dd527c0456b87240e692156336f020",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/layers/norm.py"
+    },
+    {
+      "path": "kvae/kvae/layers/resnet.py",
+      "bytes": 5369,
+      "sha256": "4840eee30e1348c94da07aa5c6b5ac0e0bf82a87203bd5549b0c31d4fb9a8aa1",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/layers/resnet.py"
+    },
+    {
+      "path": "kvae/kvae/layers/sampling.py",
+      "bytes": 8900,
+      "sha256": "d70125edb8e59aab73fb346bba4b9ad333d650bbf649c8a0dec1404d064f3d47",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/layers/sampling.py"
+    },
+    {
+      "path": "kvae/kvae/models/__init__.py",
+      "bytes": 170,
+      "sha256": "d62bfdd904b0bcc7fd70b0e3ed16f695923665c9e3fa3977bc41669b179d614b",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/models/__init__.py"
+    },
+    {
+      "path": "kvae/kvae/models/kvae_1d.py",
+      "bytes": 6857,
+      "sha256": "2d1e1a2a2b88901eecb2fee928be7267d190500ca80c01a3da51e49a3432d78f",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/models/kvae_1d.py"
+    },
+    {
+      "path": "kvae/kvae/models/kvae_2d.py",
+      "bytes": 8426,
+      "sha256": "8bf2ef1fde44a1fbe11b430704631b0146b27b7f3dd80c10cfc33c14cf654203",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/models/kvae_2d.py"
+    },
+    {
+      "path": "kvae/kvae/models/kvae_3d.py",
+      "bytes": 11716,
+      "sha256": "c186de55f67cd584a2647d84ef5320671852e49f969f56c6e399fac3cdc9661e",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/kvae/models/kvae_3d.py"
+    },
+    {
+      "path": "kvae/metrics/__init__.py",
+      "bytes": 207,
+      "sha256": "444208650923e8f833afbd8450ceac8a2bc5d69526638630d20103e701f9e9b2",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/metrics/__init__.py"
+    },
+    {
+      "path": "kvae/metrics/audio_metrics.py",
+      "bytes": 7657,
+      "sha256": "996baf9680cc3237df8c32d479f0162f672cc1e43b8efde317cc8845b478a76e",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/metrics/audio_metrics.py"
+    },
+    {
+      "path": "kvae/metrics/video_metrics.py",
+      "bytes": 2791,
+      "sha256": "d4e29f4424a2a88e7e7fa7e56da1f0280d51313634bd7a84af8a3bac1c22c8b7",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/metrics/video_metrics.py"
+    },
+    {
+      "path": "kvae/requirements.txt",
+      "bytes": 399,
+      "sha256": "87bd8111ab273c797b5acfc4a561011596407d605fcc42de4b50156c78af73ad",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/requirements.txt"
+    },
+    {
+      "path": "kvae/scripts/__init__.py",
+      "bytes": 260,
+      "sha256": "c6f6f1dbc8dca27e734eafd33eb8d0669a0274c21f30351be655dafe682b7f76",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/scripts/__init__.py"
+    },
+    {
+      "path": "kvae/scripts/common_utils.py",
+      "bytes": 1118,
+      "sha256": "e5fdcad822e2b4f08ba8eb8c36b0a4cef5fb087123232cce584561085899e678",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/scripts/common_utils.py"
+    },
+    {
+      "path": "kvae/scripts/inference_1d_kvae.py",
+      "bytes": 5571,
+      "sha256": "face87c37d6c2750055cbce4512d1d4cd517bf1f4e5c7786496ad4f6ae086049",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/scripts/inference_1d_kvae.py"
+    },
+    {
+      "path": "kvae/scripts/inference_2d_kvae.py",
+      "bytes": 5073,
+      "sha256": "9cec0a545a11da8a62d91d56ec9569e9ac104fdcc6a98e8b40b1ff59ae8e7342",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/scripts/inference_2d_kvae.py"
+    },
+    {
+      "path": "kvae/scripts/inference_3d_kvae.py",
+      "bytes": 7144,
+      "sha256": "a2d8185c97ab65031acab3c53644bcb0fef6ff5f98ea33113d693b94f4b50763",
+      "url": "https://github.com/kandinskylab/kvae/blob/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7/scripts/inference_3d_kvae.py"
+    },
+    {
+      "path": "kvae-audio/LICENSE",
+      "bytes": 1069,
+      "sha256": "a899e75d557c2ac94c999268539fffc736499a19ad4fd89a2bbba4dfee5a8b2b",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/LICENSE"
+    },
+    {
+      "path": "kvae-audio/README.md",
+      "bytes": 13902,
+      "sha256": "d1cfc9277235502b87896f7c92bc17ab7298d92e71e3220ce65ff75ab096d4bc",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/README.md"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/__init__.py",
+      "bytes": 193,
+      "sha256": "0c1c86a4e766de1f9c850a3d02ea426244612a5bf8dad7ea641e4411cbf1f336",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/__init__.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/metrics/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/metrics/__init__.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/metrics/loss.py",
+      "bytes": 5972,
+      "sha256": "23083bf1bf19bfb089d87dbedea5bde654773c9c6f661337c48977d4050e78ea",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/metrics/loss.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/model/__init__.py",
+      "bytes": 63,
+      "sha256": "f130c051149c90d7471ce38dd8fa464b991429ab263ebf236ee5c2581215e7df",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/model/__init__.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/model/base.py",
+      "bytes": 2027,
+      "sha256": "a63b3c09de66d924dbe3246d5ade7cafd38125c56787578ed88e395af0f9736b",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/model/base.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/model/kvae_audio.py",
+      "bytes": 7179,
+      "sha256": "535dd240c8d6803bea2348f18acdb8f2706c3e3ad142fd5481a0d68ae8803be3",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/model/kvae_audio.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/nn/__init__.py",
+      "bytes": 21,
+      "sha256": "d27c3ad8a3690978462d530764abdf998411320b0804da29e7878fee2f9e8a16",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/nn/__init__.py"
+    },
+    {
+      "path": "kvae-audio/kvae_audio/nn/layers.py",
+      "bytes": 641,
+      "sha256": "9796d62c75d7e4aa9313047418031e1a03a79557286bff96b7ce250ba46679fa",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/kvae_audio/nn/layers.py"
+    },
+    {
+      "path": "kvae-audio/requirements.txt",
+      "bytes": 92,
+      "sha256": "7fe3a35c3e37e0fd17c9c630d5095139223dc3ae29fa1101919dec978b1e6e5a",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/requirements.txt"
+    },
+    {
+      "path": "kvae-audio/scripts/eval.py",
+      "bytes": 2843,
+      "sha256": "81f881463651a0b15bff7863c02a525538914ac7b2503245697146ecb00f756d",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/scripts/eval.py"
+    },
+    {
+      "path": "kvae-audio/scripts/infer.py",
+      "bytes": 1708,
+      "sha256": "44c2c6dc49b23f2528bc041bbee2cb7fa1dfa00995e9f4a4d38671e85c410fcd",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/scripts/infer.py"
+    },
+    {
+      "path": "kvae-audio/setup.py",
+      "bytes": 591,
+      "sha256": "52113f882c594c546ad8dae43199e2a7e2711b0eded8d803814a71a8b7fc4761",
+      "url": "https://github.com/kandinskylab/kvae-audio/blob/0573cdbde53ddf716ac0d38fefbbb175e4514a3d/setup.py"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/README.md",
+      "bytes": 11884,
+      "sha256": "8e0726475128f23a9bd58d1e711b5380837a8937aa9c6f656993fb96cd64586d",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/README.md"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/audio_vae/config.json",
+      "bytes": 826,
+      "sha256": "f6c2ccb3ec16e5bd5d1277aad0e42830ea4620e4bf0c1bc82940c27a4b57517d",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/audio_vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/model_index.json",
+      "bytes": 995,
+      "sha256": "143c22aba7263a1d4e2717b9b63283283d4f06dc5513817300e38d9893f6d1e7",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/model_index.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/scheduler/scheduler_config.json",
+      "bytes": 580,
+      "sha256": "058abd9834b1d780a1bcb3626709cdb84d19d0764153e104fe0cff03f70efa88",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/scheduler/scheduler_config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/text_encoder/config.json",
+      "bytes": 1374,
+      "sha256": "77d9ec7321cc572e3579e2c84799c9cadaded63c49ce93b101733349fc330c43",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/text_encoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/text_encoder_2/config.json",
+      "bytes": 944,
+      "sha256": "d5f57048c92560a448e1189485f6aa993eeb3500f18f897e1069395811b39406",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/text_encoder_2/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/transformer/config.json",
+      "bytes": 720,
+      "sha256": "4de144f71528df712a020dabc79001aa4d353fd807a6456930397b115567992c",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/transformer/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/vae/config.json",
+      "bytes": 718,
+      "sha256": "8dd1ef5ce49d2a56cdb5ea4c6553244320cd7185918463578c4c08a31f55e50a",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/vocoder/config.json",
+      "bytes": 483,
+      "sha256": "0364767fc6472fe36b4c96a6dd522f845b24e1ede7a6ea037b58e8c5557e2b89",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/vocoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/README.md",
+      "bytes": 11638,
+      "sha256": "7d1f3619251e0b82b732f3d171defe8cb3217c66bcad60ee9c302a2a0eadb10d",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/README.md"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/audio_vae/config.json",
+      "bytes": 827,
+      "sha256": "7dbcf79107e3fbfa78e4d0cfc79b1c5ee20278f15abc210bf8d9d08a46ad49c3",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/audio_vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/model_index.json",
+      "bytes": 703,
+      "sha256": "329b8c2e25c20d69a4ca9f1948c5b25514775a8ac3d859d777f196edbcea7779",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/model_index.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/scheduler/scheduler_config.json",
+      "bytes": 487,
+      "sha256": "5086862560fe08fd10757cb5db3e337afcad8be375d5ef133a5fb112abf5be8c",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/scheduler/scheduler_config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/text_encoder/config.json",
+      "bytes": 1374,
+      "sha256": "77d9ec7321cc572e3579e2c84799c9cadaded63c49ce93b101733349fc330c43",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/text_encoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/text_encoder_2/config.json",
+      "bytes": 944,
+      "sha256": "d5f57048c92560a448e1189485f6aa993eeb3500f18f897e1069395811b39406",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/text_encoder_2/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/transformer/config.json",
+      "bytes": 718,
+      "sha256": "55f7b0395edf379d865acbc2c9760d056b1c89e775af2bc1318f2286798400af",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/transformer/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/vae/config.json",
+      "bytes": 718,
+      "sha256": "8dd1ef5ce49d2a56cdb5ea4c6553244320cd7185918463578c4c08a31f55e50a",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-5s-Diffusers/vocoder/config.json",
+      "bytes": 483,
+      "sha256": "0364767fc6472fe36b4c96a6dd522f845b24e1ede7a6ea037b58e8c5557e2b89",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers/blob/8ec017692475fd8e7908d8e75442bba0737649af/vocoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/README.md",
+      "bytes": 11877,
+      "sha256": "0480431ae584c8e443d80022b7d18ea45ee785794c11e942c3c9c104ae39694e",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/README.md"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/audio_vae/config.json",
+      "bytes": 826,
+      "sha256": "f6c2ccb3ec16e5bd5d1277aad0e42830ea4620e4bf0c1bc82940c27a4b57517d",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/audio_vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/model_index.json",
+      "bytes": 995,
+      "sha256": "143c22aba7263a1d4e2717b9b63283283d4f06dc5513817300e38d9893f6d1e7",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/model_index.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/scheduler/scheduler_config.json",
+      "bytes": 580,
+      "sha256": "058abd9834b1d780a1bcb3626709cdb84d19d0764153e104fe0cff03f70efa88",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/scheduler/scheduler_config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/text_encoder/config.json",
+      "bytes": 1374,
+      "sha256": "77d9ec7321cc572e3579e2c84799c9cadaded63c49ce93b101733349fc330c43",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/text_encoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/text_encoder_2/config.json",
+      "bytes": 944,
+      "sha256": "d5f57048c92560a448e1189485f6aa993eeb3500f18f897e1069395811b39406",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/text_encoder_2/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/transformer/config.json",
+      "bytes": 724,
+      "sha256": "21039face825b24a24866b2c3a2297284217a3801770700ba8d9330c9f32ce09",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/transformer/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/vae/config.json",
+      "bytes": 718,
+      "sha256": "8dd1ef5ce49d2a56cdb5ea4c6553244320cd7185918463578c4c08a31f55e50a",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-distill-5s-Diffusers/vocoder/config.json",
+      "bytes": 483,
+      "sha256": "0364767fc6472fe36b4c96a6dd522f845b24e1ede7a6ea037b58e8c5557e2b89",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-distill-5s-Diffusers/blob/80d5e6c7f646c5f512b684e2da0765618d805894/vocoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-5s-Diffusers/README.md",
+      "bytes": 11669,
+      "sha256": "372e671cdc6e36370b39dd0c1978c8cfe7720b65ca96ce88abd905ab067aa5d9",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-5s-Diffusers/blob/7be18aed6fbd64653c0c4872fddfe4a3e3e109f5/README.md"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/README.md",
+      "bytes": 11758,
+      "sha256": "1657adb6becbf7f6162f41703db69d90dbe6137524208d92b2211c247ebb30da",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/README.md"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/audio_vae/config.json",
+      "bytes": 826,
+      "sha256": "f6c2ccb3ec16e5bd5d1277aad0e42830ea4620e4bf0c1bc82940c27a4b57517d",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/audio_vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/model_index.json",
+      "bytes": 1011,
+      "sha256": "1b7e33620c81ff207ca5176a7b5c466fb7d24784c5d6538e5a13154d0bafced2",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/model_index.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/scheduler/scheduler_config.json",
+      "bytes": 487,
+      "sha256": "5086862560fe08fd10757cb5db3e337afcad8be375d5ef133a5fb112abf5be8c",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/scheduler/scheduler_config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/text_encoder/config.json",
+      "bytes": 1374,
+      "sha256": "77d9ec7321cc572e3579e2c84799c9cadaded63c49ce93b101733349fc330c43",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/text_encoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/text_encoder_2/config.json",
+      "bytes": 944,
+      "sha256": "d5f57048c92560a448e1189485f6aa993eeb3500f18f897e1069395811b39406",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/text_encoder_2/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/transformer/config.json",
+      "bytes": 718,
+      "sha256": "55f7b0395edf379d865acbc2c9760d056b1c89e775af2bc1318f2286798400af",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/transformer/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/vae/config.json",
+      "bytes": 718,
+      "sha256": "8dd1ef5ce49d2a56cdb5ea4c6553244320cd7185918463578c4c08a31f55e50a",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/vocoder/config.json",
+      "bytes": 483,
+      "sha256": "0364767fc6472fe36b4c96a6dd522f845b24e1ede7a6ea037b58e8c5557e2b89",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-pretrain-5s-Diffusers/blob/2c68d9e260e2b5ee0980ffaf79fae507f847763c/vocoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/README.md",
+      "bytes": 11750,
+      "sha256": "0889f47b208447078709a414547bc28ba6fb6323cad2ad8535eab69618ebeac4",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/README.md"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/audio_vae/config.json",
+      "bytes": 826,
+      "sha256": "f6c2ccb3ec16e5bd5d1277aad0e42830ea4620e4bf0c1bc82940c27a4b57517d",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/audio_vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/model_index.json",
+      "bytes": 1011,
+      "sha256": "1b7e33620c81ff207ca5176a7b5c466fb7d24784c5d6538e5a13154d0bafced2",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/model_index.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/scheduler/scheduler_config.json",
+      "bytes": 487,
+      "sha256": "5086862560fe08fd10757cb5db3e337afcad8be375d5ef133a5fb112abf5be8c",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/scheduler/scheduler_config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/text_encoder/config.json",
+      "bytes": 1374,
+      "sha256": "77d9ec7321cc572e3579e2c84799c9cadaded63c49ce93b101733349fc330c43",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/text_encoder/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/text_encoder_2/config.json",
+      "bytes": 944,
+      "sha256": "d5f57048c92560a448e1189485f6aa993eeb3500f18f897e1069395811b39406",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/text_encoder_2/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/transformer/config.json",
+      "bytes": 722,
+      "sha256": "78606eced4c482c82d101f174d12c287697d00204d454a0bb27271f0894ee4c2",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/transformer/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/vae/config.json",
+      "bytes": 718,
+      "sha256": "8dd1ef5ce49d2a56cdb5ea4c6553244320cd7185918463578c4c08a31f55e50a",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/vae/config.json"
+    },
+    {
+      "path": "hf/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/vocoder/config.json",
+      "bytes": 483,
+      "sha256": "0364767fc6472fe36b4c96a6dd522f845b24e1ede7a6ea037b58e8c5557e2b89",
+      "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Pro-pretrain-5s-Diffusers/blob/c2f2a7f934948e935fe4e69d9a770c091385567e/vocoder/config.json"
+    },
+    {
+      "path": "hf/KVAE-3D-2.0-t4s16/README.md",
+      "bytes": 4904,
+      "sha256": "2d27280c4cd0d4308fbebd4a22a7816dc0a5970aa875e0b17cfb991d38c04bfe",
+      "url": "https://huggingface.co/kandinskylab/KVAE-3D-2.0-t4s16/blob/9a04d0afc73bd46e0753b7f46c33830f392f3f8b/README.md"
+    },
+    {
+      "path": "hf/KVAE-3D-2.0-t4s16/config.json",
+      "bytes": 687,
+      "sha256": "70533df6665871a0504e151f04e4c83544979845eff1fbde66e65d5b8bbf6083",
+      "url": "https://huggingface.co/kandinskylab/KVAE-3D-2.0-t4s16/blob/9a04d0afc73bd46e0753b7f46c33830f392f3f8b/config.json"
+    },
+    {
+      "path": "hf/KVAE-3D-2.0-t4s8/README.md",
+      "bytes": 4100,
+      "sha256": "4ddb4b21c41eb7631e88b5d97e71de699a45aa300ba31e7c9ce416e947e5c029",
+      "url": "https://huggingface.co/kandinskylab/KVAE-3D-2.0-t4s8/blob/a9f4c53420a7da936cde18826bccc2212d849dde/README.md"
+    },
+    {
+      "path": "hf/KVAE-3D-2.0-t4s8/config.json",
+      "bytes": 526,
+      "sha256": "686b15149aea940499ef342a98e88a1d65e3eb062fb30f78a834ee522acfafc4",
+      "url": "https://huggingface.co/kandinskylab/KVAE-3D-2.0-t4s8/blob/a9f4c53420a7da936cde18826bccc2212d849dde/config.json"
+    },
+    {
+      "path": "hf/KVAE-2D-2.0/README.md",
+      "bytes": 3711,
+      "sha256": "4f4012db0768cad8c4a26bd8192be66df25602a8db9f8e8fe45e587d05a07f4f",
+      "url": "https://huggingface.co/kandinskylab/KVAE-2D-2.0/blob/a62a38531aed26a643e22aa7197ea62578c134a3/README.md"
+    },
+    {
+      "path": "hf/KVAE-2D-2.0/config.json",
+      "bytes": 196,
+      "sha256": "60fb2845977cdadc46cc297c86ac76e99bf0734a645a421209550913e469369b",
+      "url": "https://huggingface.co/kandinskylab/KVAE-2D-2.0/blob/a62a38531aed26a643e22aa7197ea62578c134a3/config.json"
+    },
+    {
+      "path": "hf/KVAE-Audio/README.md",
+      "bytes": 6858,
+      "sha256": "45c9d79db624943fd14dbe37e301011049814f01372a56a1b15ba40ec0a1b721",
+      "url": "https://huggingface.co/kandinskylab/KVAE-Audio/blob/bb459ec3facdd88ed166fe6993dd9c12fb2c9d75/README.md"
+    },
+    {
+      "path": "hf/KVAE-Audio/config.json",
+      "bytes": 254,
+      "sha256": "08a668c34ee57a186173d664aa2e31f219680fda1400ac5a0c04ba31106a358a",
+      "url": "https://huggingface.co/kandinskylab/KVAE-Audio/blob/bb459ec3facdd88ed166fe6993dd9c12fb2c9d75/config.json"
+    },
+    {
+      "path": "hf/KVAE-Audio/diffusers/config.json",
+      "bytes": 361,
+      "sha256": "69320bfbdee133d37b0756347423010639e7532efc16a54389e17027a45fc17a",
+      "url": "https://huggingface.co/kandinskylab/KVAE-Audio/blob/bb459ec3facdd88ed166fe6993dd9c12fb2c9d75/diffusers/config.json"
+    },
+    {
+      "path": "kandinsky-6/comfyui/README.md",
+      "bytes": 9804,
+      "sha256": "906d9397c6d0f0945d30b5506acb8e84212c8ffe9f451d7ed4235e06ed73d0dd",
+      "url": "https://raw.githubusercontent.com/kandinskylab/kandinsky-6/7ceeefad7fb625011f7db602c43893a989f19c15/comfyui/README.md"
+    },
+    {
+      "path": "kandinsky-6/comfyui/kandinsky6/nodes.py",
+      "bytes": 22803,
+      "sha256": "51b0c704e344edcb7d9425fc2203926bdaab13171dfe607d8609ac72453466df",
+      "url": "https://raw.githubusercontent.com/kandinskylab/kandinsky-6/7ceeefad7fb625011f7db602c43893a989f19c15/comfyui/kandinsky6/nodes.py"
+    },
+    {
+      "path": "kandinsky-6/comfyui/kandinsky6/supported_model.py",
+      "bytes": 1088,
+      "sha256": "7c2170ac999891aa4cac55c13c69422948d84492964dfbcb252ea3399024631b",
+      "url": "https://raw.githubusercontent.com/kandinskylab/kandinsky-6/7ceeefad7fb625011f7db602c43893a989f19c15/comfyui/kandinsky6/supported_model.py"
+    },
+    {
+      "path": "kandinsky-6/comfyui/example_workflows/Kandinsky 6.0 Text to Video+Audio.json",
+      "bytes": 25907,
+      "sha256": "07f0da80798c1652b28815f77e5533898c3ee9b94e7949a20d51d2ed689b1357",
+      "url": "https://raw.githubusercontent.com/kandinskylab/kandinsky-6/7ceeefad7fb625011f7db602c43893a989f19c15/comfyui/example_workflows/Kandinsky%206.0%20Text%20to%20Video%2BAudio.json"
+    },
+    {
+      "path": "kandinsky-6/comfyui/model_downloads.py",
+      "bytes": 7155,
+      "sha256": "9487b504c226dc471432e413d0e5e59d93647b837cf20d1d265d2562bae16e4a",
+      "url": "https://raw.githubusercontent.com/kandinskylab/kandinsky-6/7ceeefad7fb625011f7db602c43893a989f19c15/comfyui/model_downloads.py"
+    }
+  ]
+}

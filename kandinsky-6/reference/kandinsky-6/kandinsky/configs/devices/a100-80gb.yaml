@@ -1,0 +1,31 @@
+# A100 80 GB, Ampere sm_80.
+
+checkpoint: pro-distill
+
+cache:
+  # none | magcache | navicache
+  mode: none
+
+offload:
+  # none | module | block
+  strategy: module
+
+compile:
+  # none | torch
+  strategy: none
+
+attention:
+  # flash_attention_3 | flash_attention_2 | sage | sdpa | auto
+  engine: sage
+
+text_embedder:
+  quantized_qwen: false
+
+beautifier:
+  # none | qwen25
+  name: qwen25
+
+sr:
+  decode_segment_frames: 16
+  decode_spatial_splits: 1
+  decode_spatial_overlap: 4

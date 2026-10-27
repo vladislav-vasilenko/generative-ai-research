@@ -1,0 +1,2942 @@
+{
+  "sha": "8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7",
+  "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/8d66af3fac19d5f5e9ffb1ea7780eadebdf5f9b7",
+  "tree": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1ed16461c386b16d45ce0838829210149b7e3226",
+      "size": 42,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1ed16461c386b16d45ce0838829210149b7e3226"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31e589da8d612968c862a67d8df56150ae1a1095",
+      "size": 1099,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/31e589da8d612968c862a67d8df56150ae1a1095"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95358590c44b3c36825915b89b2ede8804384ae9",
+      "size": 7790,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/95358590c44b3c36825915b89b2ede8804384ae9"
+    },
+    {
+      "path": "assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "524866e6de7b88cfca482b3cdebb4ef05f5f75d3",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/524866e6de7b88cfca482b3cdebb4ef05f5f75d3"
+    },
+    {
+      "path": "assets/audio_examples",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a6248feb26350fd6152e3b47e40f6c5b6a382bc8",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/a6248feb26350fd6152e3b47e40f6c5b6a382bc8"
+    },
+    {
+      "path": "assets/audio_examples/prompt_01",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "914671a84d6b0f30f2af0f7fe4d2307420b45944",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/914671a84d6b0f30f2af0f7fe4d2307420b45944"
+    },
+    {
+      "path": "assets/audio_examples/prompt_01/kvae.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5c979c57e25625e9215ccf5b92a51da5ad7706c",
+      "size": 485752,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f5c979c57e25625e9215ccf5b92a51da5ad7706c"
+    },
+    {
+      "path": "assets/audio_examples/prompt_01/mma.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d605cde5a2e1b40f5cba7a839dd471e2aa5347a3",
+      "size": 446508,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d605cde5a2e1b40f5cba7a839dd471e2aa5347a3"
+    },
+    {
+      "path": "assets/audio_examples/prompt_01/moviegen.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4921ead1603c69969d956db0cc7ddc37a3766c9a",
+      "size": 487724,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4921ead1603c69969d956db0cc7ddc37a3766c9a"
+    },
+    {
+      "path": "assets/audio_examples/prompt_01/samel.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "35f9ea4541b866a64dec9320057b1a6e4aa8aa77",
+      "size": 901164,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/35f9ea4541b866a64dec9320057b1a6e4aa8aa77"
+    },
+    {
+      "path": "assets/audio_examples/prompt_02",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e090aecf2551d43f7a048a43dc702688311ace21",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/e090aecf2551d43f7a048a43dc702688311ace21"
+    },
+    {
+      "path": "assets/audio_examples/prompt_02/kvae.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb83256824831d889a28566cad80d99fa367469b",
+      "size": 485752,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/eb83256824831d889a28566cad80d99fa367469b"
+    },
+    {
+      "path": "assets/audio_examples/prompt_02/mma.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d5222674afa3034ed92e45d725c085d7eb4cf11",
+      "size": 446508,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9d5222674afa3034ed92e45d725c085d7eb4cf11"
+    },
+    {
+      "path": "assets/audio_examples/prompt_02/moviegen.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e61de79f2afdea75d244dfd077a8241fc7c1952e",
+      "size": 487724,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e61de79f2afdea75d244dfd077a8241fc7c1952e"
+    },
+    {
+      "path": "assets/audio_examples/prompt_02/samel.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb5e90ef50dbf14d87445932f7e0518dc6a48c89",
+      "size": 901164,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/cb5e90ef50dbf14d87445932f7e0518dc6a48c89"
+    },
+    {
+      "path": "assets/audio_examples/prompt_03",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9efa303ffdf41cb41b9fdba06cc495ebc7722535",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/9efa303ffdf41cb41b9fdba06cc495ebc7722535"
+    },
+    {
+      "path": "assets/audio_examples/prompt_03/kvae.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ef2f9522d777ca6fbb252f60d33cc62c562507a",
+      "size": 485752,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8ef2f9522d777ca6fbb252f60d33cc62c562507a"
+    },
+    {
+      "path": "assets/audio_examples/prompt_03/mma.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a62ddd5dcfeb074dc5eb29f2e5a64cd7efda9c51",
+      "size": 446508,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a62ddd5dcfeb074dc5eb29f2e5a64cd7efda9c51"
+    },
+    {
+      "path": "assets/audio_examples/prompt_03/moviegen.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "94a1bb698e50f55e4178c6d0182b4038964685f5",
+      "size": 487724,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/94a1bb698e50f55e4178c6d0182b4038964685f5"
+    },
+    {
+      "path": "assets/audio_examples/prompt_03/samel.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f114a96cff343ca93f5a665b87edb3105659c174",
+      "size": 901164,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f114a96cff343ca93f5a665b87edb3105659c174"
+    },
+    {
+      "path": "assets/audio_test",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1185691c43c7db40501328c1400171f42ae51e0e",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/1185691c43c7db40501328c1400171f42ae51e0e"
+    },
+    {
+      "path": "assets/audio_test/98537484.wav",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8db29225dcdee09d125b23f1b7dd34ca9879012",
+      "size": 1205262,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d8db29225dcdee09d125b23f1b7dd34ca9879012"
+    },
+    {
+      "path": "assets/docs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "36f9aa758544362ac528a71cd96924b1da7ed7b5",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/36f9aa758544362ac528a71cd96924b1da7ed7b5"
+    },
+    {
+      "path": "assets/docs/EVALUATION.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fccc2f9c07ee67c06138a2897740cf7a6fe8cc68",
+      "size": 15084,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/fccc2f9c07ee67c06138a2897740cf7a6fe8cc68"
+    },
+    {
+      "path": "assets/docs/INFERENCE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "42f52e26360f6dd2d498af98ca932e1dd30aec9e",
+      "size": 8483,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/42f52e26360f6dd2d498af98ca932e1dd30aec9e"
+    },
+    {
+      "path": "assets/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "832c59229dee9b7873a4e6c02ae01a8a50e61070",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/832c59229dee9b7873a4e6c02ae01a8a50e61070"
+    },
+    {
+      "path": "assets/images/0002.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f57c08e64b64d0c928d334cc32aa4b9265c84b68",
+      "size": 948009,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f57c08e64b64d0c928d334cc32aa4b9265c84b68"
+    },
+    {
+      "path": "assets/images/0004.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "08a926e0c66b62381aa55a74bed50c984ce08437",
+      "size": 1334840,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/08a926e0c66b62381aa55a74bed50c984ce08437"
+    },
+    {
+      "path": "assets/images/10040.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ad66fc919afeea66b45183c38597db7c3c442ab6",
+      "size": 285123,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ad66fc919afeea66b45183c38597db7c3c442ab6"
+    },
+    {
+      "path": "assets/images/10200.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28ac78027055049f4399171325d7fe1badb04fc2",
+      "size": 429527,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/28ac78027055049f4399171325d7fe1badb04fc2"
+    },
+    {
+      "path": "assets/kvae-black-no-version.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "351108ca6d8a2f10d17a1e1f2178ad1ba652acd5",
+      "size": 6145,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/351108ca6d8a2f10d17a1e1f2178ad1ba652acd5"
+    },
+    {
+      "path": "assets/kvae-white-no-version.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52c5e3a86befd3ce1ddecaa987c465134a2fdb4b",
+      "size": 10676,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/52c5e3a86befd3ce1ddecaa987c465134a2fdb4b"
+    },
+    {
+      "path": "assets/kvae2d-charts.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "302927c3138514fbbf8b4dae48b836a65f9db09c",
+      "size": 159164,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/302927c3138514fbbf8b4dae48b836a65f9db09c"
+    },
+    {
+      "path": "assets/kvae2d-comparison-table.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4d495b363a5964d45d8f9d7c9590a6707e8e90b7",
+      "size": 94502,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4d495b363a5964d45d8f9d7c9590a6707e8e90b7"
+    },
+    {
+      "path": "assets/kvae2d-comparison.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "92c9c94cb1aa7e68c1ebe806797c7f49d6164342",
+      "size": 3523683,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/92c9c94cb1aa7e68c1ebe806797c7f49d6164342"
+    },
+    {
+      "path": "assets/kvae3d-10-comparison-s8.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2638d5d336cc99066455263f09f034a805087892",
+      "size": 39622,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2638d5d336cc99066455263f09f034a805087892"
+    },
+    {
+      "path": "assets/kvae3d-20-comparison-s16-artifacts-example.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9aa31ed2723a83e12c51c9c87129d4178c27f7e8",
+      "size": 676129,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9aa31ed2723a83e12c51c9c87129d4178c27f7e8"
+    },
+    {
+      "path": "assets/kvae3d-20-comparison-s16-last.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af4ce0573c4649b67fca1fa405c8977c06b50689",
+      "size": 43756,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/af4ce0573c4649b67fca1fa405c8977c06b50689"
+    },
+    {
+      "path": "assets/kvae3d-20-comparison-s16.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "950c4fbcf1b791e1ee03b8e7fa12198b9d8a5e95",
+      "size": 22893,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/950c4fbcf1b791e1ee03b8e7fa12198b9d8a5e95"
+    },
+    {
+      "path": "assets/kvae3d-20-comparison-s8-artifacts-example.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "606de1951100b3e42027e5d36c16ef6548b642c9",
+      "size": 927415,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/606de1951100b3e42027e5d36c16ef6548b642c9"
+    },
+    {
+      "path": "assets/kvae3d-20-comparison-s8.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a37f192fab5f517cc540afbfffd8b9bdebe7ee40",
+      "size": 42186,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a37f192fab5f517cc540afbfffd8b9bdebe7ee40"
+    },
+    {
+      "path": "assets/kvae3d-20-latent-space-qualities-bars.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "043da07430d1044fea9dbf29e83fb18fce14831f",
+      "size": 206342,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/043da07430d1044fea9dbf29e83fb18fce14831f"
+    },
+    {
+      "path": "assets/kvae3d-20-latent-space-qualities.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75fb0160477129395b50ec44dfcffdaf6877b38a",
+      "size": 57435,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/75fb0160477129395b50ec44dfcffdaf6877b38a"
+    },
+    {
+      "path": "assets/kvae3d-comparison.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5d58572e908be8d5da49a1919809f5672bbc4534",
+      "size": 1902987,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5d58572e908be8d5da49a1919809f5672bbc4534"
+    },
+    {
+      "path": "assets/sbs_mmaudio.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "51998b8a3e0fbf65a75617b1916fbcc218f1e918",
+      "size": 39489,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/51998b8a3e0fbf65a75617b1916fbcc218f1e918"
+    },
+    {
+      "path": "assets/sbs_moviegen.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06fede296ab6dd5579db5a228f9a1d88bfd3157a",
+      "size": 42035,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/06fede296ab6dd5579db5a228f9a1d88bfd3157a"
+    },
+    {
+      "path": "assets/sbs_same_l.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b2d5f3ebc8c78ffa5faad9f2e0f83300db50a2a4",
+      "size": 42378,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b2d5f3ebc8c78ffa5faad9f2e0f83300db50a2a4"
+    },
+    {
+      "path": "assets/test1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fcc7d80126641519fefeb9329d2f6488cadc5bcd",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/fcc7d80126641519fefeb9329d2f6488cadc5bcd"
+    },
+    {
+      "path": "assets/test1/panda_004_0.mp4",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ff11ecf0d0f20284769847c8f60d3b31b330816",
+      "size": 399334,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8ff11ecf0d0f20284769847c8f60d3b31b330816"
+    },
+    {
+      "path": "assets/test2",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0525159ac0938bec69f7db93e58a2fc7e1e0733c",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/0525159ac0938bec69f7db93e58a2fc7e1e0733c"
+    },
+    {
+      "path": "assets/test2/31",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3094fecab873e2f9928e6b04ce64120ec0b6faf9",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/3094fecab873e2f9928e6b04ce64120ec0b6faf9"
+    },
+    {
+      "path": "assets/test2/31/001.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1d4632324a4f4dbc9e6e73eb009f60bb71b2a3b",
+      "size": 288790,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d1d4632324a4f4dbc9e6e73eb009f60bb71b2a3b"
+    },
+    {
+      "path": "assets/test2/31/002.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7a6a1bdd9322852067aa556501afd19152545082",
+      "size": 290180,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7a6a1bdd9322852067aa556501afd19152545082"
+    },
+    {
+      "path": "assets/test2/31/003.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac5b047113d45c47e7d9f5b955595a4e8477b392",
+      "size": 294179,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ac5b047113d45c47e7d9f5b955595a4e8477b392"
+    },
+    {
+      "path": "assets/test2/31/004.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2e05ceed7266b48ca62bfa193754b9b92938eee",
+      "size": 297842,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d2e05ceed7266b48ca62bfa193754b9b92938eee"
+    },
+    {
+      "path": "assets/test2/31/005.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3abf3f2f0049767ef6188f1c149d01e6058d61e4",
+      "size": 300447,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3abf3f2f0049767ef6188f1c149d01e6058d61e4"
+    },
+    {
+      "path": "assets/test2/31/006.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f13a783c05c5fddc1ef1cc54ce0134482daf2cc2",
+      "size": 299979,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f13a783c05c5fddc1ef1cc54ce0134482daf2cc2"
+    },
+    {
+      "path": "assets/test2/31/007.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e427ae33a52fae4189162156f8ca104d59235e96",
+      "size": 305286,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e427ae33a52fae4189162156f8ca104d59235e96"
+    },
+    {
+      "path": "assets/test2/31/008.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e48f187b3e2796030676af2226292fdbf00c9130",
+      "size": 307387,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e48f187b3e2796030676af2226292fdbf00c9130"
+    },
+    {
+      "path": "assets/test2/31/009.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "697655b44a53c854be2a3464af905a19ed28ddfa",
+      "size": 310057,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/697655b44a53c854be2a3464af905a19ed28ddfa"
+    },
+    {
+      "path": "assets/test2/31/010.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05bf18a7d4e8ef7b35c485630b3d62a61b0b042e",
+      "size": 313124,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/05bf18a7d4e8ef7b35c485630b3d62a61b0b042e"
+    },
+    {
+      "path": "assets/test2/31/011.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aba645b89116ff54b928024e5d2f897d840aed8b",
+      "size": 316205,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/aba645b89116ff54b928024e5d2f897d840aed8b"
+    },
+    {
+      "path": "assets/test2/31/012.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4798447d44a47913045f03f89d3428471dbb975",
+      "size": 321031,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b4798447d44a47913045f03f89d3428471dbb975"
+    },
+    {
+      "path": "assets/test2/31/013.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1fad81de406722a4e6cda705e120c3d31b3e37e8",
+      "size": 322359,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1fad81de406722a4e6cda705e120c3d31b3e37e8"
+    },
+    {
+      "path": "assets/test2/31/014.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97197152ee77594085422ed6cd959fd15b31e77b",
+      "size": 322405,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/97197152ee77594085422ed6cd959fd15b31e77b"
+    },
+    {
+      "path": "assets/test2/31/015.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e390c1aa9cbd536c802585e6c5a678010d507b74",
+      "size": 321757,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e390c1aa9cbd536c802585e6c5a678010d507b74"
+    },
+    {
+      "path": "assets/test2/31/016.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "11195e0e15c475209840513e44c25f55c8514ee3",
+      "size": 320882,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/11195e0e15c475209840513e44c25f55c8514ee3"
+    },
+    {
+      "path": "assets/test2/31/017.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0741789aa81218d781b04483d0ecb74938fdeea",
+      "size": 323191,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d0741789aa81218d781b04483d0ecb74938fdeea"
+    },
+    {
+      "path": "assets/test2/31/018.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8cab94d787bf7fac5bd1b268e61f3fd99135f78f",
+      "size": 323206,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8cab94d787bf7fac5bd1b268e61f3fd99135f78f"
+    },
+    {
+      "path": "assets/test2/31/019.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d5f64625df5e8084acaf45ee10bbf3f85aba6fc8",
+      "size": 322564,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d5f64625df5e8084acaf45ee10bbf3f85aba6fc8"
+    },
+    {
+      "path": "assets/test2/31/020.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "89eab4c9a18a31b62312b80565baa0425b38bcee",
+      "size": 321484,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/89eab4c9a18a31b62312b80565baa0425b38bcee"
+    },
+    {
+      "path": "assets/test2/31/021.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9158c4da12af86d0cd4ae0b118351e4d5f06f473",
+      "size": 321125,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9158c4da12af86d0cd4ae0b118351e4d5f06f473"
+    },
+    {
+      "path": "assets/test2/31/022.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3ac96470293919b34d2153e33274f2553954be1",
+      "size": 321640,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f3ac96470293919b34d2153e33274f2553954be1"
+    },
+    {
+      "path": "assets/test2/31/023.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b400c3fa3f5d723f4604f3a79fbd9d5d029f618",
+      "size": 321933,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7b400c3fa3f5d723f4604f3a79fbd9d5d029f618"
+    },
+    {
+      "path": "assets/test2/31/024.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac33503e83a330a28ea6d8856cc688e4ccad88a2",
+      "size": 321716,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ac33503e83a330a28ea6d8856cc688e4ccad88a2"
+    },
+    {
+      "path": "assets/test2/31/025.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d61bb08218ffb536c7d950741852006015fbd40d",
+      "size": 321656,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d61bb08218ffb536c7d950741852006015fbd40d"
+    },
+    {
+      "path": "assets/test2/31/026.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a66e33dc96f01eaa646546c182f888b5e89b36d6",
+      "size": 320967,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a66e33dc96f01eaa646546c182f888b5e89b36d6"
+    },
+    {
+      "path": "assets/test2/31/027.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ed467c1d4990f09f290f2bd7005c4c400733ff77",
+      "size": 322203,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ed467c1d4990f09f290f2bd7005c4c400733ff77"
+    },
+    {
+      "path": "assets/test2/31/028.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c8fd71362e61965cd9edd7f1eacc6dbd19cc45d",
+      "size": 320475,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6c8fd71362e61965cd9edd7f1eacc6dbd19cc45d"
+    },
+    {
+      "path": "assets/test2/31/029.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "85b0f2ef756ec580c27728d6bb237f8f82bc27b4",
+      "size": 320081,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/85b0f2ef756ec580c27728d6bb237f8f82bc27b4"
+    },
+    {
+      "path": "assets/test2/31/030.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95567ca2a2869db6939a7463bf298cb142f7d193",
+      "size": 318580,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/95567ca2a2869db6939a7463bf298cb142f7d193"
+    },
+    {
+      "path": "assets/test2/31/031.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "427c003b532e27b700fe61e5941b778a840e0027",
+      "size": 317558,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/427c003b532e27b700fe61e5941b778a840e0027"
+    },
+    {
+      "path": "assets/test2/31/032.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b5ebd63b6d7907a378cfbd920fa00f9cf51ea763",
+      "size": 318162,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b5ebd63b6d7907a378cfbd920fa00f9cf51ea763"
+    },
+    {
+      "path": "assets/test2/31/033.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d17f376bd3b527214d0e2638f5bf332c1211f936",
+      "size": 318606,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d17f376bd3b527214d0e2638f5bf332c1211f936"
+    },
+    {
+      "path": "assets/test2/31/034.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "979afb94934e0996debba885642c445b25b9ce08",
+      "size": 317743,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/979afb94934e0996debba885642c445b25b9ce08"
+    },
+    {
+      "path": "assets/test2/31/035.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "236e0258b2f01205aad85c5197695713200ce134",
+      "size": 318401,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/236e0258b2f01205aad85c5197695713200ce134"
+    },
+    {
+      "path": "assets/test2/31/036.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a34898324e278d934a444a1ac2f4d7a42cec21e",
+      "size": 317141,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4a34898324e278d934a444a1ac2f4d7a42cec21e"
+    },
+    {
+      "path": "assets/test2/31/037.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4fd74f23b13e392fc699f72f4c728845eb4ade79",
+      "size": 315792,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4fd74f23b13e392fc699f72f4c728845eb4ade79"
+    },
+    {
+      "path": "assets/test2/31/038.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73551d99f09dc98f33dc4f70afb09337b548f798",
+      "size": 319480,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/73551d99f09dc98f33dc4f70afb09337b548f798"
+    },
+    {
+      "path": "assets/test2/31/039.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1673e2cf91ef26dcbe672b6a19c31d89674e2102",
+      "size": 322668,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1673e2cf91ef26dcbe672b6a19c31d89674e2102"
+    },
+    {
+      "path": "assets/test2/31/040.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ed29df8415c83b11fe984b237980715e4cbd32dc",
+      "size": 325344,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ed29df8415c83b11fe984b237980715e4cbd32dc"
+    },
+    {
+      "path": "assets/test2/31/041.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9948ac0bf42a44db090b8d24125c6dd33a2b16c",
+      "size": 325054,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e9948ac0bf42a44db090b8d24125c6dd33a2b16c"
+    },
+    {
+      "path": "assets/test2/31/042.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d25ebdde676e84029c03421109d1d87c32c9fb6",
+      "size": 334477,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8d25ebdde676e84029c03421109d1d87c32c9fb6"
+    },
+    {
+      "path": "assets/test2/31/043.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c67425cc208704e00cb226713441bb258a81476a",
+      "size": 338908,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c67425cc208704e00cb226713441bb258a81476a"
+    },
+    {
+      "path": "assets/test2/31/044.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa866ec2f260b7a316bf89f9e3389bab19dd2eb6",
+      "size": 343284,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/fa866ec2f260b7a316bf89f9e3389bab19dd2eb6"
+    },
+    {
+      "path": "assets/test2/31/045.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "239d4fe80586f557d85faa428cd11cd6aa3ff4c7",
+      "size": 345098,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/239d4fe80586f557d85faa428cd11cd6aa3ff4c7"
+    },
+    {
+      "path": "assets/test2/31/046.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bb13743c513c1a42ace053a658326ee31294682d",
+      "size": 349080,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/bb13743c513c1a42ace053a658326ee31294682d"
+    },
+    {
+      "path": "assets/test2/31/047.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "21fb186fd078a4353811a861461b8d7a4e00b8e1",
+      "size": 351728,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/21fb186fd078a4353811a861461b8d7a4e00b8e1"
+    },
+    {
+      "path": "assets/test2/31/048.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f4835ae5c3f5a27535612eb6cff9a4d7531c272",
+      "size": 355027,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9f4835ae5c3f5a27535612eb6cff9a4d7531c272"
+    },
+    {
+      "path": "assets/test2/31/049.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e1a7b16d33475401ffb2fd15370dd5f29dae9ec",
+      "size": 357875,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6e1a7b16d33475401ffb2fd15370dd5f29dae9ec"
+    },
+    {
+      "path": "assets/test2/31/050.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e816826fef640aeebcd0f4d88d63fe299c202b7",
+      "size": 359205,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4e816826fef640aeebcd0f4d88d63fe299c202b7"
+    },
+    {
+      "path": "assets/test2/31/051.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c40a0d0ebca47372bc0e3b29252a629ff8e881e1",
+      "size": 359521,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c40a0d0ebca47372bc0e3b29252a629ff8e881e1"
+    },
+    {
+      "path": "assets/test2/31/052.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f015781f69d33bc370c14f572e57a61295293ab5",
+      "size": 362348,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f015781f69d33bc370c14f572e57a61295293ab5"
+    },
+    {
+      "path": "assets/test2/31/053.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3c8da9ae86af409566ad8194a76cac4d6ba60d9a",
+      "size": 364226,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3c8da9ae86af409566ad8194a76cac4d6ba60d9a"
+    },
+    {
+      "path": "assets/test2/31/054.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98ccb944a732ad85d3aa3278d3161c1e0da48517",
+      "size": 365050,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/98ccb944a732ad85d3aa3278d3161c1e0da48517"
+    },
+    {
+      "path": "assets/test2/31/055.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "554f2ce86dbbdec45af717c56e153159da1e37b3",
+      "size": 367702,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/554f2ce86dbbdec45af717c56e153159da1e37b3"
+    },
+    {
+      "path": "assets/test2/31/056.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cf4aa2a5f4c95fa764a225a1490f7b11fe3f19f",
+      "size": 366798,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3cf4aa2a5f4c95fa764a225a1490f7b11fe3f19f"
+    },
+    {
+      "path": "assets/test2/31/057.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df79f7f453b8732955053fcb0976da93f5efff25",
+      "size": 375043,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/df79f7f453b8732955053fcb0976da93f5efff25"
+    },
+    {
+      "path": "assets/test2/31/058.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "17550d612fae57249919b35376bbbd3c1f66306c",
+      "size": 373111,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/17550d612fae57249919b35376bbbd3c1f66306c"
+    },
+    {
+      "path": "assets/test2/31/059.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c38d2ddd1a7faa979eac96d02b94d6bc686f648e",
+      "size": 372084,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c38d2ddd1a7faa979eac96d02b94d6bc686f648e"
+    },
+    {
+      "path": "assets/test2/31/060.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5e5c504d181d0720ed3830f9cdd46e73698e24ca",
+      "size": 371411,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5e5c504d181d0720ed3830f9cdd46e73698e24ca"
+    },
+    {
+      "path": "assets/test2/31/061.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98e705a4cf2c4908dac20c11e34b98126dd791e9",
+      "size": 370752,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/98e705a4cf2c4908dac20c11e34b98126dd791e9"
+    },
+    {
+      "path": "assets/test2/31/062.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f722d80b85a009945a94754864db6847be6e5600",
+      "size": 370120,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f722d80b85a009945a94754864db6847be6e5600"
+    },
+    {
+      "path": "assets/test2/31/063.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a402266d779849fcbe6bf60c0ad6faa2785db470",
+      "size": 372374,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a402266d779849fcbe6bf60c0ad6faa2785db470"
+    },
+    {
+      "path": "assets/test2/31/064.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d7fc5de48d40fab03792e757d04a64be94cc641",
+      "size": 372925,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9d7fc5de48d40fab03792e757d04a64be94cc641"
+    },
+    {
+      "path": "assets/test2/31/065.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "84204eb4dcdd5f2a2fe277270ff0e934d7611e99",
+      "size": 372316,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/84204eb4dcdd5f2a2fe277270ff0e934d7611e99"
+    },
+    {
+      "path": "assets/test2/31/066.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f16418c01f966702b85b980767d58279315a2917",
+      "size": 374720,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f16418c01f966702b85b980767d58279315a2917"
+    },
+    {
+      "path": "assets/test2/31/067.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a12de337f5908e71282a0262cde0ec79c01d082d",
+      "size": 374521,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a12de337f5908e71282a0262cde0ec79c01d082d"
+    },
+    {
+      "path": "assets/test2/31/068.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f6eb8beb289bcda33223ef66f8cd9ea62edc1529",
+      "size": 373662,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f6eb8beb289bcda33223ef66f8cd9ea62edc1529"
+    },
+    {
+      "path": "assets/test2/31/069.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ea7061505c4be818722f635f2ebb2aa026d6ccb",
+      "size": 374125,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9ea7061505c4be818722f635f2ebb2aa026d6ccb"
+    },
+    {
+      "path": "assets/test2/31/070.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "197626ef2dc3dce4257b402b3101e439e8d3c66c",
+      "size": 373184,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/197626ef2dc3dce4257b402b3101e439e8d3c66c"
+    },
+    {
+      "path": "assets/test2/31/071.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aab17fed1b4720763e287e0a7df0f2f63f0603b3",
+      "size": 372061,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/aab17fed1b4720763e287e0a7df0f2f63f0603b3"
+    },
+    {
+      "path": "assets/test2/31/072.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec778ceed074894380ecc5ff6bc4a3a69af80a2b",
+      "size": 372788,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ec778ceed074894380ecc5ff6bc4a3a69af80a2b"
+    },
+    {
+      "path": "assets/test2/31/073.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd8d5dc04983d13af124b51f8bc260e2c52b97f6",
+      "size": 373295,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/dd8d5dc04983d13af124b51f8bc260e2c52b97f6"
+    },
+    {
+      "path": "assets/test2/31/074.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9aa76d01d53e1a16a2d46944d9b82cd46c4784b",
+      "size": 372323,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e9aa76d01d53e1a16a2d46944d9b82cd46c4784b"
+    },
+    {
+      "path": "assets/test2/31/075.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "147a8157cfc911ff91b6754cd5b98957c321d49d",
+      "size": 370788,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/147a8157cfc911ff91b6754cd5b98957c321d49d"
+    },
+    {
+      "path": "assets/test2/31/076.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "92c6961e3875e34213e4a52c81960f9a88006c08",
+      "size": 370042,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/92c6961e3875e34213e4a52c81960f9a88006c08"
+    },
+    {
+      "path": "assets/test2/31/077.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b3272634752ca656c3a0493d4b23363667912abf",
+      "size": 370039,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b3272634752ca656c3a0493d4b23363667912abf"
+    },
+    {
+      "path": "assets/test2/31/078.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "741699f873753bd62c6f35a0e75fc953abeeae5c",
+      "size": 370521,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/741699f873753bd62c6f35a0e75fc953abeeae5c"
+    },
+    {
+      "path": "assets/test2/31/079.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c75bf178b12d6ed53249b4b53f480e1945af885e",
+      "size": 369565,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c75bf178b12d6ed53249b4b53f480e1945af885e"
+    },
+    {
+      "path": "assets/test2/31/080.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b3712ec33ba78e4e7b05e0a7084525a14abbf575",
+      "size": 367290,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b3712ec33ba78e4e7b05e0a7084525a14abbf575"
+    },
+    {
+      "path": "assets/test2/31/081.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "444ba9ce051d2a87db956790549623b68de4bf6d",
+      "size": 369251,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/444ba9ce051d2a87db956790549623b68de4bf6d"
+    },
+    {
+      "path": "assets/test2/31/082.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97735e3101eaf72fd5afa4cce1b0fc724c6c1511",
+      "size": 367504,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/97735e3101eaf72fd5afa4cce1b0fc724c6c1511"
+    },
+    {
+      "path": "assets/test2/31/083.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a4a9ecaa694fa5b04c6ce66e3dbd961e78441e89",
+      "size": 368110,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a4a9ecaa694fa5b04c6ce66e3dbd961e78441e89"
+    },
+    {
+      "path": "assets/test2/31/084.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06d23dda00195d30c3cf6161971e8fe18c955785",
+      "size": 369754,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/06d23dda00195d30c3cf6161971e8fe18c955785"
+    },
+    {
+      "path": "assets/test2/31/085.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d81ea4a1ef954b0aa5b53c4940c243f95a0f59e",
+      "size": 368036,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3d81ea4a1ef954b0aa5b53c4940c243f95a0f59e"
+    },
+    {
+      "path": "assets/test2/31/086.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b793b2d9c82932afeeb2f512326d4135f4f0dcb7",
+      "size": 368869,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b793b2d9c82932afeeb2f512326d4135f4f0dcb7"
+    },
+    {
+      "path": "assets/test2/31/087.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d54705a224a8a3b59afef8167acd18f5da730a8d",
+      "size": 368373,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d54705a224a8a3b59afef8167acd18f5da730a8d"
+    },
+    {
+      "path": "assets/test2/31/088.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c75369fa24e51a831d28d00d79cd9afe8cd94e09",
+      "size": 368919,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c75369fa24e51a831d28d00d79cd9afe8cd94e09"
+    },
+    {
+      "path": "assets/test2/31/089.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "452a3dd164c569e7c85ab9fc247e2a3ddc1c2a93",
+      "size": 369389,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/452a3dd164c569e7c85ab9fc247e2a3ddc1c2a93"
+    },
+    {
+      "path": "assets/test2/31/090.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ced522e9074f194b8bab2c771df5686d89e857a",
+      "size": 368208,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2ced522e9074f194b8bab2c771df5686d89e857a"
+    },
+    {
+      "path": "assets/test2/31/091.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d41361f1b94306c0602d086600a6af5d6b5978cb",
+      "size": 369138,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d41361f1b94306c0602d086600a6af5d6b5978cb"
+    },
+    {
+      "path": "assets/test2/31/092.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57aa32a1d0c43b08f5d2d22af1916560b82029e7",
+      "size": 367588,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/57aa32a1d0c43b08f5d2d22af1916560b82029e7"
+    },
+    {
+      "path": "assets/test2/31/093.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1bc490af62ff4cafdb472631945ecfb1f6122a8d",
+      "size": 369067,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1bc490af62ff4cafdb472631945ecfb1f6122a8d"
+    },
+    {
+      "path": "assets/test2/31/094.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c28ed959a3301454a7565108fa0814c666ab4f7c",
+      "size": 369834,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c28ed959a3301454a7565108fa0814c666ab4f7c"
+    },
+    {
+      "path": "assets/test2/31/095.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b9d705b296be749f57e0bc1c7417039ae763a46d",
+      "size": 368916,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b9d705b296be749f57e0bc1c7417039ae763a46d"
+    },
+    {
+      "path": "assets/test2/31/096.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "641ac14f97c5964d5e809e469d9b8537e945b40c",
+      "size": 371952,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/641ac14f97c5964d5e809e469d9b8537e945b40c"
+    },
+    {
+      "path": "assets/test2/31/097.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee8f5f0c4b6ebf362ae1192ccc407b3830d56c80",
+      "size": 369559,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ee8f5f0c4b6ebf362ae1192ccc407b3830d56c80"
+    },
+    {
+      "path": "assets/test2/31/098.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a5b526f15662b4d25030ebc7b6a6f3cd59822445",
+      "size": 370572,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a5b526f15662b4d25030ebc7b6a6f3cd59822445"
+    },
+    {
+      "path": "assets/test2/31/099.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "163bb2462e2bae01d44231578289c1fcc65d329c",
+      "size": 371212,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/163bb2462e2bae01d44231578289c1fcc65d329c"
+    },
+    {
+      "path": "assets/test2/31/100.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3dfa64920ddf75f5db31ce4119949b21a27af576",
+      "size": 368436,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3dfa64920ddf75f5db31ce4119949b21a27af576"
+    },
+    {
+      "path": "assets/test2/31/101.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5f6a1dc98d27342c15c1518e2d0f803fbfa80bcf",
+      "size": 369206,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5f6a1dc98d27342c15c1518e2d0f803fbfa80bcf"
+    },
+    {
+      "path": "assets/test2/31/102.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e04a98314e87ef6a93cbbbea723e2c3b9be81acd",
+      "size": 369589,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e04a98314e87ef6a93cbbbea723e2c3b9be81acd"
+    },
+    {
+      "path": "assets/test2/31/103.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df53c9f1d770f99a3dfc0caa5e78b69d31e0cf52",
+      "size": 368045,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/df53c9f1d770f99a3dfc0caa5e78b69d31e0cf52"
+    },
+    {
+      "path": "assets/test2/31/104.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ab09970d5fc4d8e1bab0977ba37dae2db0e6a80c",
+      "size": 365845,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ab09970d5fc4d8e1bab0977ba37dae2db0e6a80c"
+    },
+    {
+      "path": "assets/test2/31/105.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b1808dab1b6c0da28eb4af01e7511381ab9ec92e",
+      "size": 365015,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b1808dab1b6c0da28eb4af01e7511381ab9ec92e"
+    },
+    {
+      "path": "assets/test2/31/106.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ae581e1eb6f25375b552e45168ed1bb83eedfca1",
+      "size": 362373,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ae581e1eb6f25375b552e45168ed1bb83eedfca1"
+    },
+    {
+      "path": "assets/test2/31/107.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e520e2661548d08e67ac0bc03057b4abf1404bfc",
+      "size": 363376,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e520e2661548d08e67ac0bc03057b4abf1404bfc"
+    },
+    {
+      "path": "assets/test2/31/108.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "434e1465736161faa4f5372ae77128ccebe069cc",
+      "size": 365976,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/434e1465736161faa4f5372ae77128ccebe069cc"
+    },
+    {
+      "path": "assets/test2/31/109.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d01779245bd16ebea42dbec5e6e06537d3a1744e",
+      "size": 366075,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d01779245bd16ebea42dbec5e6e06537d3a1744e"
+    },
+    {
+      "path": "assets/test2/31/110.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5db6db6c0f7b01697c283e25f38117720852673",
+      "size": 364682,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f5db6db6c0f7b01697c283e25f38117720852673"
+    },
+    {
+      "path": "assets/test2/31/111.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e50db8ac8f7e5e044d439c5aec0165fa2af3bc0a",
+      "size": 366595,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e50db8ac8f7e5e044d439c5aec0165fa2af3bc0a"
+    },
+    {
+      "path": "assets/test2/31/112.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1268155142bdb6256769bcd78d1316870c272c96",
+      "size": 366843,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1268155142bdb6256769bcd78d1316870c272c96"
+    },
+    {
+      "path": "assets/test2/31/113.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6430d4433780d749abc943fbd78591410ed73011",
+      "size": 365976,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6430d4433780d749abc943fbd78591410ed73011"
+    },
+    {
+      "path": "assets/test2/31/114.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d78a58667b6d7c1644bbba088525bd10e6a4f7a6",
+      "size": 367786,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d78a58667b6d7c1644bbba088525bd10e6a4f7a6"
+    },
+    {
+      "path": "assets/test2/31/115.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d3dce5c7f844d92e17655537a0ebc674be7b54c",
+      "size": 362805,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8d3dce5c7f844d92e17655537a0ebc674be7b54c"
+    },
+    {
+      "path": "assets/test2/31/116.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "603d7185a44f7f0ad6242298c6d6ebf998c148ed",
+      "size": 362010,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/603d7185a44f7f0ad6242298c6d6ebf998c148ed"
+    },
+    {
+      "path": "assets/test2/31/117.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9138a4e8b751f4da4e53fb02c33af8a21daa03d0",
+      "size": 364202,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9138a4e8b751f4da4e53fb02c33af8a21daa03d0"
+    },
+    {
+      "path": "assets/test2/31/118.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "59bac3809b5e3358c1d18bfac9202b23e5d1aea5",
+      "size": 363400,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/59bac3809b5e3358c1d18bfac9202b23e5d1aea5"
+    },
+    {
+      "path": "assets/test2/31/119.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f69b22671ac0f754588c9af7eee610e5e42d8b6",
+      "size": 362990,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7f69b22671ac0f754588c9af7eee610e5e42d8b6"
+    },
+    {
+      "path": "assets/test2/31/120.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "82dac984d64f6f62385200dc5e94fef9b42727a2",
+      "size": 363027,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/82dac984d64f6f62385200dc5e94fef9b42727a2"
+    },
+    {
+      "path": "assets/test2/31/121.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc83fce3604f79ffe62502de8f0dc2677f0e94c7",
+      "size": 351818,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/bc83fce3604f79ffe62502de8f0dc2677f0e94c7"
+    },
+    {
+      "path": "assets/test2/31/122.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "23f5d2c46eb9a6dc95204b6568e003dabc89a330",
+      "size": 357821,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/23f5d2c46eb9a6dc95204b6568e003dabc89a330"
+    },
+    {
+      "path": "assets/test2/31/123.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4cc5ef543f49dcea847ec6ba8ac03cfb2f94d57b",
+      "size": 362221,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4cc5ef543f49dcea847ec6ba8ac03cfb2f94d57b"
+    },
+    {
+      "path": "assets/test2/31/124.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71219209cfe0fb988365aefde5760e5d6adcc0ec",
+      "size": 360850,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/71219209cfe0fb988365aefde5760e5d6adcc0ec"
+    },
+    {
+      "path": "assets/test2/31/125.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aaf780c58966c541e7b27172cff2ddf8a2ce91a8",
+      "size": 357228,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/aaf780c58966c541e7b27172cff2ddf8a2ce91a8"
+    },
+    {
+      "path": "assets/test2/31/126.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1842420430de6aa52dce83a4d2da87ee0235aab5",
+      "size": 355453,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1842420430de6aa52dce83a4d2da87ee0235aab5"
+    },
+    {
+      "path": "assets/test2/31/127.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0643f794240b0c98d6ff7db900d60c16ab67b7b1",
+      "size": 364412,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0643f794240b0c98d6ff7db900d60c16ab67b7b1"
+    },
+    {
+      "path": "assets/test2/31/128.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "969d46f91b5645a804e3928fa0c271db34f212df",
+      "size": 365543,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/969d46f91b5645a804e3928fa0c271db34f212df"
+    },
+    {
+      "path": "assets/test2/31/129.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f82ea07b1d1d1e16445a7d5dfd7bbd5184424b5",
+      "size": 362479,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1f82ea07b1d1d1e16445a7d5dfd7bbd5184424b5"
+    },
+    {
+      "path": "assets/test2/31/130.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c57ad2f57700d9192dc8ed4ea8da6570e892f07",
+      "size": 359843,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9c57ad2f57700d9192dc8ed4ea8da6570e892f07"
+    },
+    {
+      "path": "assets/test2/31/131.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb81bee80a1fc47048b9a65c7dc32df318c8f265",
+      "size": 357168,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/eb81bee80a1fc47048b9a65c7dc32df318c8f265"
+    },
+    {
+      "path": "assets/test2/31/132.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dda6f5116e3ccb30828ea84d7abf0253a592ff70",
+      "size": 363348,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/dda6f5116e3ccb30828ea84d7abf0253a592ff70"
+    },
+    {
+      "path": "assets/test2/31/133.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c02bfde9a35273cd408d6e66b3f78525f9b905b5",
+      "size": 364780,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c02bfde9a35273cd408d6e66b3f78525f9b905b5"
+    },
+    {
+      "path": "assets/test2/31/134.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8359a2b3f22a0d7aa4c9f46418c055da186d076",
+      "size": 361599,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e8359a2b3f22a0d7aa4c9f46418c055da186d076"
+    },
+    {
+      "path": "assets/test2/31/135.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55911025ff2ad247f44271eaff2dbea71b81cff7",
+      "size": 358445,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/55911025ff2ad247f44271eaff2dbea71b81cff7"
+    },
+    {
+      "path": "assets/test2/31/136.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "91b53cfd5594cb067af7c812361b16edc2d7d92e",
+      "size": 350867,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/91b53cfd5594cb067af7c812361b16edc2d7d92e"
+    },
+    {
+      "path": "assets/test2/31/137.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71084f5db83fa9eefc7b006d8dcd6fe1df8d7424",
+      "size": 356146,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/71084f5db83fa9eefc7b006d8dcd6fe1df8d7424"
+    },
+    {
+      "path": "assets/test2/31/138.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b13d26e1e7631bdc985fb9332f0414d9b850439",
+      "size": 355382,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5b13d26e1e7631bdc985fb9332f0414d9b850439"
+    },
+    {
+      "path": "assets/test2/31/139.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a957a93ecf8c47314ab82f731b6917a082a12e6",
+      "size": 352049,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4a957a93ecf8c47314ab82f731b6917a082a12e6"
+    },
+    {
+      "path": "assets/test2/31/140.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a34f27af1bdcdf665aaf6c2c1c9c385ba3b9bb5f",
+      "size": 347892,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a34f27af1bdcdf665aaf6c2c1c9c385ba3b9bb5f"
+    },
+    {
+      "path": "assets/test2/31/141.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bdb880e2c78960ba31528e20bdbc8b597a9d9640",
+      "size": 341578,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/bdb880e2c78960ba31528e20bdbc8b597a9d9640"
+    },
+    {
+      "path": "assets/test2/31/142.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dcbba749e965210026c9e60545dba7214a6fc7ef",
+      "size": 346635,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/dcbba749e965210026c9e60545dba7214a6fc7ef"
+    },
+    {
+      "path": "assets/test2/31/143.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c54afe4a5eab5ea5bc28aad23251ac869a22061",
+      "size": 348175,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2c54afe4a5eab5ea5bc28aad23251ac869a22061"
+    },
+    {
+      "path": "assets/test2/31/144.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29e85a689fbc9d5e55238c72ee413cf48df99e4a",
+      "size": 347112,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/29e85a689fbc9d5e55238c72ee413cf48df99e4a"
+    },
+    {
+      "path": "assets/test2/31/145.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a7ddfa5199aa1440b4968ed76176cced011db42",
+      "size": 341672,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2a7ddfa5199aa1440b4968ed76176cced011db42"
+    },
+    {
+      "path": "assets/test2/31/146.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b6bde0f3a13c98597349800a77cdd8a388973fa7",
+      "size": 336011,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b6bde0f3a13c98597349800a77cdd8a388973fa7"
+    },
+    {
+      "path": "assets/test2/31/147.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3a21bc995a021a34725d5623ef6f61a92abd559",
+      "size": 345039,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a3a21bc995a021a34725d5623ef6f61a92abd559"
+    },
+    {
+      "path": "assets/test2/31/148.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "017e4d3f9c63c12d53fc167fa66bae7e740cdd95",
+      "size": 351839,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/017e4d3f9c63c12d53fc167fa66bae7e740cdd95"
+    },
+    {
+      "path": "assets/test2/31/149.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73dbc2ca87601ec1b7dfc6ade3224e7f69df6b86",
+      "size": 347696,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/73dbc2ca87601ec1b7dfc6ade3224e7f69df6b86"
+    },
+    {
+      "path": "assets/test2/31/150.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "038e8d2a81dd731d64f36a7ba3e16c45ea3cb531",
+      "size": 345806,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/038e8d2a81dd731d64f36a7ba3e16c45ea3cb531"
+    },
+    {
+      "path": "assets/test2/31/151.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ed0e748492f524e56c056ee14f5a71c51013b79",
+      "size": 341479,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3ed0e748492f524e56c056ee14f5a71c51013b79"
+    },
+    {
+      "path": "assets/test2/31/152.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a6994ec41417ff2ebf7b91a4fd47b2e7ba3fc88",
+      "size": 348852,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4a6994ec41417ff2ebf7b91a4fd47b2e7ba3fc88"
+    },
+    {
+      "path": "assets/test2/31/153.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5a0fd6547b56ab3323868c48a0e85611ef5c0199",
+      "size": 355981,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5a0fd6547b56ab3323868c48a0e85611ef5c0199"
+    },
+    {
+      "path": "assets/test2/31/154.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c96b0dbbe904a59dfe69c8be56e50e4b87921cb5",
+      "size": 353402,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c96b0dbbe904a59dfe69c8be56e50e4b87921cb5"
+    },
+    {
+      "path": "assets/test2/31/155.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06acd5c19048b9ccacc865a51cdceabddde72272",
+      "size": 352836,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/06acd5c19048b9ccacc865a51cdceabddde72272"
+    },
+    {
+      "path": "assets/test2/31/156.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "81b65dcc9517f07a0c5766a9707d7b9edf8fe47c",
+      "size": 337948,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/81b65dcc9517f07a0c5766a9707d7b9edf8fe47c"
+    },
+    {
+      "path": "assets/test2/31/157.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4043985d09b2b06a6280b491a01715905575a6ab",
+      "size": 347766,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4043985d09b2b06a6280b491a01715905575a6ab"
+    },
+    {
+      "path": "assets/test2/31/158.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db387f2d582a8a37c109c606416125ba7ed8237d",
+      "size": 348152,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/db387f2d582a8a37c109c606416125ba7ed8237d"
+    },
+    {
+      "path": "assets/test2/31/159.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ec6c5f42eb1d8a2b307934a3199be0ff0a4b9ea",
+      "size": 342463,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3ec6c5f42eb1d8a2b307934a3199be0ff0a4b9ea"
+    },
+    {
+      "path": "assets/test2/31/160.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d8dd8a126a3349ec9acd17fba12189d8ae50182",
+      "size": 338450,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8d8dd8a126a3349ec9acd17fba12189d8ae50182"
+    },
+    {
+      "path": "assets/test2/31/161.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "665e7e356bdcb2ab65ee3e217d7f2cc26a9d7b6f",
+      "size": 320440,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/665e7e356bdcb2ab65ee3e217d7f2cc26a9d7b6f"
+    },
+    {
+      "path": "assets/test2/31/162.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ed6f4a23d04db85236db88c81f262b72ec9b521",
+      "size": 328219,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6ed6f4a23d04db85236db88c81f262b72ec9b521"
+    },
+    {
+      "path": "assets/test2/31/163.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5e12f90bfd5d213102d38f88312a3093f5c7d112",
+      "size": 333972,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5e12f90bfd5d213102d38f88312a3093f5c7d112"
+    },
+    {
+      "path": "assets/test2/31/164.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "18402b1fd41cde54e6cc5f3bfe11263caff3cf36",
+      "size": 329364,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/18402b1fd41cde54e6cc5f3bfe11263caff3cf36"
+    },
+    {
+      "path": "assets/test2/31/165.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74fd6be3c867d244ae57681869ffa6c05a1ea97d",
+      "size": 320273,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/74fd6be3c867d244ae57681869ffa6c05a1ea97d"
+    },
+    {
+      "path": "assets/test2/31/166.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2dacd0639911a17ce9ee8440a33b0c1f0cd887c",
+      "size": 300144,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d2dacd0639911a17ce9ee8440a33b0c1f0cd887c"
+    },
+    {
+      "path": "assets/test2/31/167.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3e5b687c93c17c4dfa625e6cad1a833155ccc871",
+      "size": 310361,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3e5b687c93c17c4dfa625e6cad1a833155ccc871"
+    },
+    {
+      "path": "assets/test2/31/168.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4325aeb2a7033b450d07e8efc7fc80c3ffc18372",
+      "size": 310321,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4325aeb2a7033b450d07e8efc7fc80c3ffc18372"
+    },
+    {
+      "path": "assets/test2/31/169.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a478204536e6fcfcc71f283af9f7bed81733d2f",
+      "size": 305606,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3a478204536e6fcfcc71f283af9f7bed81733d2f"
+    },
+    {
+      "path": "assets/test2/31/170.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e3c3de868488e97f4b86dec6aec1a3effd9505e7",
+      "size": 302043,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e3c3de868488e97f4b86dec6aec1a3effd9505e7"
+    },
+    {
+      "path": "assets/test2/31/171.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d27635de340200c29dfd6acdf29cad64b99dad79",
+      "size": 289286,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d27635de340200c29dfd6acdf29cad64b99dad79"
+    },
+    {
+      "path": "assets/test2/31/172.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8e9dc4a89c5b21f6ddb7a2071ec0434b7f7989d",
+      "size": 299485,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e8e9dc4a89c5b21f6ddb7a2071ec0434b7f7989d"
+    },
+    {
+      "path": "assets/test2/31/173.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ece50597a03715bc8fa7fa6c48c317f1c0ab3a77",
+      "size": 301062,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ece50597a03715bc8fa7fa6c48c317f1c0ab3a77"
+    },
+    {
+      "path": "assets/test2/31/174.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "805dfa9829c7d914a4a0b27bf0160b8bd326fa3b",
+      "size": 298096,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/805dfa9829c7d914a4a0b27bf0160b8bd326fa3b"
+    },
+    {
+      "path": "assets/test2/31/175.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb436da97f64a9dd7df1a7a1bdb5f7513081abca",
+      "size": 293018,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/eb436da97f64a9dd7df1a7a1bdb5f7513081abca"
+    },
+    {
+      "path": "assets/test2/31/176.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc3113e3aad883e89df7764cd258f9d9fa36d583",
+      "size": 285207,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/bc3113e3aad883e89df7764cd258f9d9fa36d583"
+    },
+    {
+      "path": "assets/test2/31/177.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e58d7258b61551c7dc8563438ec72e3e58b2a4d",
+      "size": 301460,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8e58d7258b61551c7dc8563438ec72e3e58b2a4d"
+    },
+    {
+      "path": "assets/test2/31/178.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "84b9094d0acab4c13a5b7d1f623415d6343cba67",
+      "size": 308232,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/84b9094d0acab4c13a5b7d1f623415d6343cba67"
+    },
+    {
+      "path": "assets/test2/31/179.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "885635930b5eaf7312f2d076ac675088d0781e76",
+      "size": 313987,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/885635930b5eaf7312f2d076ac675088d0781e76"
+    },
+    {
+      "path": "assets/test2/31/180.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a8900ad128bad48031cba7761106819904e78e7",
+      "size": 318181,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2a8900ad128bad48031cba7761106819904e78e7"
+    },
+    {
+      "path": "assets/test2/31/181.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa5ad9ea20c1d866995138eeae30b4f4f7a81eba",
+      "size": 315107,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/fa5ad9ea20c1d866995138eeae30b4f4f7a81eba"
+    },
+    {
+      "path": "assets/test2/31/182.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7866148ca10b8ee7be3315bf346c52c21044b690",
+      "size": 320121,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7866148ca10b8ee7be3315bf346c52c21044b690"
+    },
+    {
+      "path": "assets/test2/31/183.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b55f515255197cccf847cad8fac1f1535ddb1db",
+      "size": 322251,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5b55f515255197cccf847cad8fac1f1535ddb1db"
+    },
+    {
+      "path": "assets/test2/31/184.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "23cc610cb5646f9dd1f3eecaee8b23612c7044e3",
+      "size": 325189,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/23cc610cb5646f9dd1f3eecaee8b23612c7044e3"
+    },
+    {
+      "path": "assets/test2/31/185.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a1e6b252a85665e700491dd1281bb8b1537f486",
+      "size": 371466,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9a1e6b252a85665e700491dd1281bb8b1537f486"
+    },
+    {
+      "path": "assets/test2/31/186.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7cc2fc649b3efb70d7a80c4f20e238f300c50496",
+      "size": 370469,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7cc2fc649b3efb70d7a80c4f20e238f300c50496"
+    },
+    {
+      "path": "assets/test2/31/187.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5250583138c6313fdd1301cc9ef5673011168a44",
+      "size": 374836,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5250583138c6313fdd1301cc9ef5673011168a44"
+    },
+    {
+      "path": "assets/test2/31/188.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d09804ed9e9bc1e13d2c71ff98a4f4df0486bbd3",
+      "size": 379137,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d09804ed9e9bc1e13d2c71ff98a4f4df0486bbd3"
+    },
+    {
+      "path": "assets/test2/31/189.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "16bd07ab5265d3d5ae8f9d78025ffa235f8aa5f7",
+      "size": 382453,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/16bd07ab5265d3d5ae8f9d78025ffa235f8aa5f7"
+    },
+    {
+      "path": "assets/test2/31/190.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f7bb2333f9221fc664c53963fddabfdb89caf92",
+      "size": 384371,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4f7bb2333f9221fc664c53963fddabfdb89caf92"
+    },
+    {
+      "path": "assets/test2/31/191.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c908d7da0b8cce2b03c642976a653db609636470",
+      "size": 386856,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c908d7da0b8cce2b03c642976a653db609636470"
+    },
+    {
+      "path": "assets/test2/31/192.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "60a57b4fc111f20b1b9e96334804fe2f343f19e8",
+      "size": 387186,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/60a57b4fc111f20b1b9e96334804fe2f343f19e8"
+    },
+    {
+      "path": "assets/test2/31/193.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca517780e5a813b9c7bf717405b73ad687fc4393",
+      "size": 387749,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ca517780e5a813b9c7bf717405b73ad687fc4393"
+    },
+    {
+      "path": "assets/test2/31/194.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ccc328bb1cecce3df80cc7b72b2cd52ddb7bd68",
+      "size": 389271,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4ccc328bb1cecce3df80cc7b72b2cd52ddb7bd68"
+    },
+    {
+      "path": "assets/test2/31/195.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe11e805c086ea054a9f678ef94c687665d75119",
+      "size": 384158,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/fe11e805c086ea054a9f678ef94c687665d75119"
+    },
+    {
+      "path": "assets/test2/31/196.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9831f39d82f1dde4690c2961174e8fd65804c19",
+      "size": 381354,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f9831f39d82f1dde4690c2961174e8fd65804c19"
+    },
+    {
+      "path": "assets/test2/31/197.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "24c6cddc4e52c99f091cfddc8b822c5277f8afbf",
+      "size": 383290,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/24c6cddc4e52c99f091cfddc8b822c5277f8afbf"
+    },
+    {
+      "path": "assets/test2/31/198.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0230595e72f82123b6cf14308303f2ac6411fb44",
+      "size": 382469,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0230595e72f82123b6cf14308303f2ac6411fb44"
+    },
+    {
+      "path": "assets/test2/31/199.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb2ea7087637b606322f265b5579de43880b139a",
+      "size": 381161,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/eb2ea7087637b606322f265b5579de43880b139a"
+    },
+    {
+      "path": "assets/test2/31/200.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d9f5cf675e0d7269b385abc60924a8a0f8fb3607",
+      "size": 380263,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d9f5cf675e0d7269b385abc60924a8a0f8fb3607"
+    },
+    {
+      "path": "assets/test2/31/201.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "441867059e7e3615e816f61490b4dedec5d93416",
+      "size": 378793,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/441867059e7e3615e816f61490b4dedec5d93416"
+    },
+    {
+      "path": "assets/test2/31/202.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0302cae0898a0927e547ff4277752fa0ee8ed668",
+      "size": 376375,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0302cae0898a0927e547ff4277752fa0ee8ed668"
+    },
+    {
+      "path": "assets/test2/31/203.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1c14dcce5edd6e3e84fd1672a055f0fbf744a4d4",
+      "size": 375977,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1c14dcce5edd6e3e84fd1672a055f0fbf744a4d4"
+    },
+    {
+      "path": "assets/test2/31/204.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b799091bf01233fcbb2ffc1138ebff3c8edfabb",
+      "size": 377206,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3b799091bf01233fcbb2ffc1138ebff3c8edfabb"
+    },
+    {
+      "path": "assets/test2/31/205.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af83c351fcd9907a18729b1fef7222beb2c8a824",
+      "size": 373604,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/af83c351fcd9907a18729b1fef7222beb2c8a824"
+    },
+    {
+      "path": "assets/test2/31/206.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "463adbe6f359327bbc57acd1c0df51d099c08ad4",
+      "size": 373434,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/463adbe6f359327bbc57acd1c0df51d099c08ad4"
+    },
+    {
+      "path": "assets/test2/31/207.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "024f71c59ee54be705845666754d65b2424e12a0",
+      "size": 374033,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/024f71c59ee54be705845666754d65b2424e12a0"
+    },
+    {
+      "path": "assets/test2/31/208.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b01f76dbb28445137fc1e3731ca83a3412b9f35",
+      "size": 373371,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7b01f76dbb28445137fc1e3731ca83a3412b9f35"
+    },
+    {
+      "path": "assets/test2/31/209.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ef5dc2fed8eccd803c0e445071f12f17bb8e94a",
+      "size": 374603,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2ef5dc2fed8eccd803c0e445071f12f17bb8e94a"
+    },
+    {
+      "path": "assets/test2/31/210.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "88009e2be8ba2badc64608ea7af10c24acb5908e",
+      "size": 374833,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/88009e2be8ba2badc64608ea7af10c24acb5908e"
+    },
+    {
+      "path": "assets/test2/31/211.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "11030be75e65cc188f84f9b3d0da0bbc9b24ec9f",
+      "size": 376403,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/11030be75e65cc188f84f9b3d0da0bbc9b24ec9f"
+    },
+    {
+      "path": "assets/test2/31/212.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "778987b1dd75b9c906eb358fbb05e6dfa804de9a",
+      "size": 376419,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/778987b1dd75b9c906eb358fbb05e6dfa804de9a"
+    },
+    {
+      "path": "assets/test2/31/213.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea2807762ddd0ba902079cc8044367c2bf729de1",
+      "size": 379548,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ea2807762ddd0ba902079cc8044367c2bf729de1"
+    },
+    {
+      "path": "assets/test2/31/214.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5f76010780cee875b4ace21a70e266485f58fc6",
+      "size": 380723,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e5f76010780cee875b4ace21a70e266485f58fc6"
+    },
+    {
+      "path": "assets/test2/31/215.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5e9808257f30f5c8fc2ea222af996f08bd83603",
+      "size": 379261,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f5e9808257f30f5c8fc2ea222af996f08bd83603"
+    },
+    {
+      "path": "assets/test2/31/216.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ac1dbd399414728a1b3a2efca1f31d0562a63b9",
+      "size": 382997,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5ac1dbd399414728a1b3a2efca1f31d0562a63b9"
+    },
+    {
+      "path": "assets/test2/31/217.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8600fe3a113849e95f46819fce6547aacf7d9e3e",
+      "size": 381525,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/8600fe3a113849e95f46819fce6547aacf7d9e3e"
+    },
+    {
+      "path": "assets/test2/31/218.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22c7dec723d6a4212918c967024b043991d942af",
+      "size": 382139,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/22c7dec723d6a4212918c967024b043991d942af"
+    },
+    {
+      "path": "assets/test2/31/219.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ab43b3c3fb4531a0e690e8dd5437c655f27a78f",
+      "size": 383826,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0ab43b3c3fb4531a0e690e8dd5437c655f27a78f"
+    },
+    {
+      "path": "assets/test2/31/220.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "85e29781c106cc2cdb0b9bd3036ef7a2ee207025",
+      "size": 381072,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/85e29781c106cc2cdb0b9bd3036ef7a2ee207025"
+    },
+    {
+      "path": "assets/test2/31/221.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "074a3b8c87be49c3cf973659d5c5f81f916d03ee",
+      "size": 382956,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/074a3b8c87be49c3cf973659d5c5f81f916d03ee"
+    },
+    {
+      "path": "assets/test2/31/222.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "134bc8310a50a6697dc53857bbc0f13fb964f53f",
+      "size": 382712,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/134bc8310a50a6697dc53857bbc0f13fb964f53f"
+    },
+    {
+      "path": "assets/test2/31/223.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d9e71f2e28aad758d3d735558002c4b75994ba01",
+      "size": 383062,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d9e71f2e28aad758d3d735558002c4b75994ba01"
+    },
+    {
+      "path": "assets/test2/31/224.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4213f0cab66a04b04d0be8dfe83bb9343dc82ed7",
+      "size": 383751,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4213f0cab66a04b04d0be8dfe83bb9343dc82ed7"
+    },
+    {
+      "path": "assets/test2/31/225.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "802f4c4f1c343d7e270e68cda6d1018aafd4ec34",
+      "size": 383785,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/802f4c4f1c343d7e270e68cda6d1018aafd4ec34"
+    },
+    {
+      "path": "assets/test2/31/226.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "753516b903d635a00a02f528699234a3dfe034ac",
+      "size": 385314,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/753516b903d635a00a02f528699234a3dfe034ac"
+    },
+    {
+      "path": "assets/test2/31/227.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4317434ccd8ce2285f63d31d313bb587baf6a0b8",
+      "size": 382363,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4317434ccd8ce2285f63d31d313bb587baf6a0b8"
+    },
+    {
+      "path": "assets/test2/31/228.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7cf282edcc3a745deaf972dffcd7f173d08d098",
+      "size": 384215,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e7cf282edcc3a745deaf972dffcd7f173d08d098"
+    },
+    {
+      "path": "assets/test2/31/229.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ced5e358849b4df1d413d0f63b0528a49a5b3b1a",
+      "size": 384020,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ced5e358849b4df1d413d0f63b0528a49a5b3b1a"
+    },
+    {
+      "path": "assets/test2/31/230.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c761a5b99f216567fa62e51ffc767a1e6b2692ad",
+      "size": 381548,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c761a5b99f216567fa62e51ffc767a1e6b2692ad"
+    },
+    {
+      "path": "assets/test2/31/231.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "916204effb7cea9e1667f5cb8dc08bf3ca758e71",
+      "size": 384407,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/916204effb7cea9e1667f5cb8dc08bf3ca758e71"
+    },
+    {
+      "path": "assets/test2/31/232.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cc8ccb0ded0de438b058cfb0c9469ff4059b0cd6",
+      "size": 380000,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/cc8ccb0ded0de438b058cfb0c9469ff4059b0cd6"
+    },
+    {
+      "path": "assets/test2/31/233.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00e5e45c3b8faeeb93faabc3ab9b3e0a0f1416b8",
+      "size": 380768,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/00e5e45c3b8faeeb93faabc3ab9b3e0a0f1416b8"
+    },
+    {
+      "path": "assets/test2/31/234.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5c566007a53948732d53d176fe9017afffcefd0b",
+      "size": 381773,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/5c566007a53948732d53d176fe9017afffcefd0b"
+    },
+    {
+      "path": "assets/test2/31/235.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7cf292168522109fc2031ac0eaf5ecabec890818",
+      "size": 377995,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7cf292168522109fc2031ac0eaf5ecabec890818"
+    },
+    {
+      "path": "assets/test2/31/236.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "729b4a82038b593a080828d5b02b92110a3c8d7e",
+      "size": 379039,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/729b4a82038b593a080828d5b02b92110a3c8d7e"
+    },
+    {
+      "path": "assets/test2/31/237.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "842c3dfe2b04104b8354badbf7b0a233a0fbb773",
+      "size": 376907,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/842c3dfe2b04104b8354badbf7b0a233a0fbb773"
+    },
+    {
+      "path": "assets/test2/31/238.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f1900450d5c7dc3a6490b9e5450f454b4596960",
+      "size": 374939,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0f1900450d5c7dc3a6490b9e5450f454b4596960"
+    },
+    {
+      "path": "assets/test2/31/239.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a14e39518d11627ae8cf73a6a88f37144cf0b43",
+      "size": 372457,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0a14e39518d11627ae8cf73a6a88f37144cf0b43"
+    },
+    {
+      "path": "assets/test2/31/240.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7cd3828aaebaeeb0667de64ce97105149a5a08fc",
+      "size": 370682,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7cd3828aaebaeeb0667de64ce97105149a5a08fc"
+    },
+    {
+      "path": "assets/test2/31/241.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d993f32e409180f649fae20a40c58705893d5571",
+      "size": 369537,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d993f32e409180f649fae20a40c58705893d5571"
+    },
+    {
+      "path": "assets/test2/31/242.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e0e7ff4c6a5d530240810372b1e75ffcdd6a77c",
+      "size": 366241,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4e0e7ff4c6a5d530240810372b1e75ffcdd6a77c"
+    },
+    {
+      "path": "assets/test2/31/243.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "791b1c534685a1b2a197da40438a1c7bfb9e75ce",
+      "size": 368734,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/791b1c534685a1b2a197da40438a1c7bfb9e75ce"
+    },
+    {
+      "path": "assets/test2/31/244.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "acbd0078f3b1405686e49445354e584859c64265",
+      "size": 370153,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/acbd0078f3b1405686e49445354e584859c64265"
+    },
+    {
+      "path": "assets/test2/31/245.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b6b68bd9632a0666ced3fb94495f5333b206e364",
+      "size": 372444,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b6b68bd9632a0666ced3fb94495f5333b206e364"
+    },
+    {
+      "path": "assets/test2/31/246.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34de392d6c3926d729ddfd9ee14c7f383913e332",
+      "size": 376922,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/34de392d6c3926d729ddfd9ee14c7f383913e332"
+    },
+    {
+      "path": "assets/test2/31/247.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ed14755c1b642d56290b6c50f23c28db3f4a3aa",
+      "size": 377123,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2ed14755c1b642d56290b6c50f23c28db3f4a3aa"
+    },
+    {
+      "path": "assets/test2/31/248.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cdcab3cd15ab4de6fe81700697a3ff9dfc48288f",
+      "size": 378556,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/cdcab3cd15ab4de6fe81700697a3ff9dfc48288f"
+    },
+    {
+      "path": "assets/test2/31/249.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71f213874c179919e717cc97b1d50e0dfe172e9b",
+      "size": 379660,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/71f213874c179919e717cc97b1d50e0dfe172e9b"
+    },
+    {
+      "path": "assets/test2/31/250.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "413b9be7d0cdc3a4423db32ce537f4f51a7739c1",
+      "size": 376852,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/413b9be7d0cdc3a4423db32ce537f4f51a7739c1"
+    },
+    {
+      "path": "assets/test2/31/251.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a580f9c923c93f020b16bd26788484bcc9c799cc",
+      "size": 375187,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a580f9c923c93f020b16bd26788484bcc9c799cc"
+    },
+    {
+      "path": "assets/test2/31/252.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8b3eb361fc54e8b257ca5523d6aa0498ae0c564",
+      "size": 376442,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b8b3eb361fc54e8b257ca5523d6aa0498ae0c564"
+    },
+    {
+      "path": "assets/test2/31/253.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76125d5701ce15942b0c81929a75769770b5dbc7",
+      "size": 377995,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/76125d5701ce15942b0c81929a75769770b5dbc7"
+    },
+    {
+      "path": "assets/test2/31/254.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a2c73a1aef35c290bc013f11e3735f4d401176d",
+      "size": 378348,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2a2c73a1aef35c290bc013f11e3735f4d401176d"
+    },
+    {
+      "path": "assets/test2/31/255.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "51f8b9776d1a9cce2edad3cfbe7afdd478d9574d",
+      "size": 378436,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/51f8b9776d1a9cce2edad3cfbe7afdd478d9574d"
+    },
+    {
+      "path": "assets/test2/31/256.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "754cdf64e0b94b9f1f9278ded6a41be64935cdbd",
+      "size": 378595,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/754cdf64e0b94b9f1f9278ded6a41be64935cdbd"
+    },
+    {
+      "path": "assets/test2/31/257.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6a4dbc681fea6e37d047bb66855d1704680eebef",
+      "size": 379746,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6a4dbc681fea6e37d047bb66855d1704680eebef"
+    },
+    {
+      "path": "assets/test2/31/258.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "663602327355df0919ebb9bf75ee1a216deaa6d1",
+      "size": 382702,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/663602327355df0919ebb9bf75ee1a216deaa6d1"
+    },
+    {
+      "path": "assets/test2/31/259.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "53efc6e6b5b13d4611dd65d8becd6732d61d2112",
+      "size": 383866,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/53efc6e6b5b13d4611dd65d8becd6732d61d2112"
+    },
+    {
+      "path": "assets/test2/31/260.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "296a7d63ee84b29d0ee07e21b4e2f865f40f2f5e",
+      "size": 381441,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/296a7d63ee84b29d0ee07e21b4e2f865f40f2f5e"
+    },
+    {
+      "path": "assets/test2/31/261.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d13b3b5fbc264f30251f0e1cedb5f12abc8852e1",
+      "size": 383364,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d13b3b5fbc264f30251f0e1cedb5f12abc8852e1"
+    },
+    {
+      "path": "assets/test2/31/262.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2acea56635bf1be8bede81e807f2f20258e535c4",
+      "size": 383616,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/2acea56635bf1be8bede81e807f2f20258e535c4"
+    },
+    {
+      "path": "assets/test2/31/263.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "288996072396930d68bedf9d714e14d70f59bcbf",
+      "size": 383824,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/288996072396930d68bedf9d714e14d70f59bcbf"
+    },
+    {
+      "path": "assets/test2/31/264.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f59a8b407d5e5be040eaa85767b36ddbd1798e4",
+      "size": 385427,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7f59a8b407d5e5be040eaa85767b36ddbd1798e4"
+    },
+    {
+      "path": "assets/test2/31/265.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "18124be036512aa8718caf85bc3d028d20fbc226",
+      "size": 382887,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/18124be036512aa8718caf85bc3d028d20fbc226"
+    },
+    {
+      "path": "assets/test2/31/266.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "90e189a78141c0fba304c4ade2019981027d9ea7",
+      "size": 383488,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/90e189a78141c0fba304c4ade2019981027d9ea7"
+    },
+    {
+      "path": "assets/test2/31/267.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff0da6803fa0722f71c36b8790ad8bec23bb958d",
+      "size": 382551,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ff0da6803fa0722f71c36b8790ad8bec23bb958d"
+    },
+    {
+      "path": "assets/test2/31/268.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63bbf2b392584a4998ff6746724f7d80168010db",
+      "size": 381809,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/63bbf2b392584a4998ff6746724f7d80168010db"
+    },
+    {
+      "path": "assets/test2/31/269.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd155e315532401cde4996a7e202ec0fe6979fbd",
+      "size": 381592,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/bd155e315532401cde4996a7e202ec0fe6979fbd"
+    },
+    {
+      "path": "assets/test2/31/270.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "828455b63d08df5132773021bde441fe2f4e952f",
+      "size": 381589,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/828455b63d08df5132773021bde441fe2f4e952f"
+    },
+    {
+      "path": "assets/test2/31/271.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7b21689b1b01083ea0d2d07d419e739fc328fe3",
+      "size": 382610,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a7b21689b1b01083ea0d2d07d419e739fc328fe3"
+    },
+    {
+      "path": "assets/test2/31/272.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aa4d205635465b32ea0ed8f86c0bf4c61a7745de",
+      "size": 380365,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/aa4d205635465b32ea0ed8f86c0bf4c61a7745de"
+    },
+    {
+      "path": "assets/test2/31/273.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4bd0d0f9cf5a1df072107ac5974d622bdd5be904",
+      "size": 381913,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4bd0d0f9cf5a1df072107ac5974d622bdd5be904"
+    },
+    {
+      "path": "assets/test2/31/274.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c401c38f41a88d6727eb03b739fe8b9acb4066f",
+      "size": 381860,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6c401c38f41a88d6727eb03b739fe8b9acb4066f"
+    },
+    {
+      "path": "assets/test2/31/275.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "863add888642dd7ce91683646474ca091c6bc214",
+      "size": 379385,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/863add888642dd7ce91683646474ca091c6bc214"
+    },
+    {
+      "path": "assets/test2/31/276.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb8016ac5f30c278e51ed3aafc63eb766e420613",
+      "size": 381891,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/eb8016ac5f30c278e51ed3aafc63eb766e420613"
+    },
+    {
+      "path": "assets/test2/31/277.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ad2fded732fdf4618875fc44b299239f381a355",
+      "size": 379176,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0ad2fded732fdf4618875fc44b299239f381a355"
+    },
+    {
+      "path": "assets/test2/31/278.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a858752b7dd3f89c7fffc88d1c89d6da0022954",
+      "size": 377973,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0a858752b7dd3f89c7fffc88d1c89d6da0022954"
+    },
+    {
+      "path": "assets/test2/31/279.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e0aff671ef2d39e23f2d2fcce675e1293315f0b",
+      "size": 378614,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/0e0aff671ef2d39e23f2d2fcce675e1293315f0b"
+    },
+    {
+      "path": "assets/test2/31/280.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a1a7d8d7d008e872e104862aab2176df110107ba",
+      "size": 374573,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/a1a7d8d7d008e872e104862aab2176df110107ba"
+    },
+    {
+      "path": "assets/test2/31/281.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d9ab5f664c54d577527795a8b993def9ae4a423",
+      "size": 374354,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9d9ab5f664c54d577527795a8b993def9ae4a423"
+    },
+    {
+      "path": "assets/test2/31/282.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7cf3618f561ab124ecb27fd4d3626b151b8994a",
+      "size": 372358,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/e7cf3618f561ab124ecb27fd4d3626b151b8994a"
+    },
+    {
+      "path": "assets/test2/31/283.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b453a16ad0fa10743a0df3ba9c35dd3bd504fc6c",
+      "size": 371912,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b453a16ad0fa10743a0df3ba9c35dd3bd504fc6c"
+    },
+    {
+      "path": "assets/test2/31/284.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f68e31304a6d5d732a441e67b9f209affb8baf3",
+      "size": 368769,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/9f68e31304a6d5d732a441e67b9f209affb8baf3"
+    },
+    {
+      "path": "assets/test2/31/285.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47345057d21565b00528196e4b52820ff695ed7f",
+      "size": 369389,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/47345057d21565b00528196e4b52820ff695ed7f"
+    },
+    {
+      "path": "data",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a8ef0caabee73eda7bdc53b31dfd2f8a775051e8",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/a8ef0caabee73eda7bdc53b31dfd2f8a775051e8"
+    },
+    {
+      "path": "data/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "60d12a37f343f8525a65ba251bd989ec064d2eac",
+      "size": 322,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/60d12a37f343f8525a65ba251bd989ec064d2eac"
+    },
+    {
+      "path": "data/audio_dataset.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b5e398128905b147bda5789e099ef7de6797720a",
+      "size": 2684,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b5e398128905b147bda5789e099ef7de6797720a"
+    },
+    {
+      "path": "data/image_dataset.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "495de1f150b7845682928f1c416566ce0abacb45",
+      "size": 2518,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/495de1f150b7845682928f1c416566ce0abacb45"
+    },
+    {
+      "path": "data/saving_reconstruction_utils.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "064d8958092773f2dbc4680c95acea17adb9c96b",
+      "size": 6514,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/064d8958092773f2dbc4680c95acea17adb9c96b"
+    },
+    {
+      "path": "data/video_dataset.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a2d0288136ccca2776a4ab507b5cd8324d6a4ce",
+      "size": 7178,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/4a2d0288136ccca2776a4ab507b5cd8324d6a4ce"
+    },
+    {
+      "path": "data/video_stream.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6317d4487d4103bc5dd26a92640bc6cca1a4fa40",
+      "size": 4750,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/6317d4487d4103bc5dd26a92640bc6cca1a4fa40"
+    },
+    {
+      "path": "kvae",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1bcdef1ef3d89cff47c035a3b8c4c9d77368852e",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/1bcdef1ef3d89cff47c035a3b8c4c9d77368852e"
+    },
+    {
+      "path": "kvae/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b908e816b2dbe2e4877532c68b76e6ac2c69af4d",
+      "size": 103,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b908e816b2dbe2e4877532c68b76e6ac2c69af4d"
+    },
+    {
+      "path": "kvae/layers",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f8f8464b2d2a02fc6dab259f470bbdb7c80b8509",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/f8f8464b2d2a02fc6dab259f470bbdb7c80b8509"
+    },
+    {
+      "path": "kvae/layers/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2585f2fb5d9e8efbfd3ebd9f2596f4a52c0219b",
+      "size": 427,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d2585f2fb5d9e8efbfd3ebd9f2596f4a52c0219b"
+    },
+    {
+      "path": "kvae/layers/common.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a07305a37bf8423abbbb512245217d5d1eba8c0",
+      "size": 1211,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/3a07305a37bf8423abbbb512245217d5d1eba8c0"
+    },
+    {
+      "path": "kvae/layers/conv.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78ab87cd1bedecf419b1a1b08e0b4acbfc742b85",
+      "size": 6694,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/78ab87cd1bedecf419b1a1b08e0b4acbfc742b85"
+    },
+    {
+      "path": "kvae/layers/norm.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cbd406c0480d44b949d7c26932d21aa972533f44",
+      "size": 5384,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/cbd406c0480d44b949d7c26932d21aa972533f44"
+    },
+    {
+      "path": "kvae/layers/resnet.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ed0a1c53213c535a05dadcc339b23802c05d46ec",
+      "size": 5369,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ed0a1c53213c535a05dadcc339b23802c05d46ec"
+    },
+    {
+      "path": "kvae/layers/sampling.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7c6ba8447a222aacf59f8531003c2ce397c7559e",
+      "size": 8900,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7c6ba8447a222aacf59f8531003c2ce397c7559e"
+    },
+    {
+      "path": "kvae/models",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "54c9b6621bab5d25e0f81df839af2fa8460cbb23",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/54c9b6621bab5d25e0f81df839af2fa8460cbb23"
+    },
+    {
+      "path": "kvae/models/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34d985f8e42caac739a0fa67563b3139a7f034e7",
+      "size": 170,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/34d985f8e42caac739a0fa67563b3139a7f034e7"
+    },
+    {
+      "path": "kvae/models/kvae_1d.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71bd4f60f9ef678617dd857b9f31291250c51e4c",
+      "size": 6857,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/71bd4f60f9ef678617dd857b9f31291250c51e4c"
+    },
+    {
+      "path": "kvae/models/kvae_2d.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f373875620e95910650f0ad6d00dc2affd6c7b7",
+      "size": 8426,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/7f373875620e95910650f0ad6d00dc2affd6c7b7"
+    },
+    {
+      "path": "kvae/models/kvae_3d.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b26d8d89e7410971befa905ad65ccab28c11eb66",
+      "size": 11716,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b26d8d89e7410971befa905ad65ccab28c11eb66"
+    },
+    {
+      "path": "metrics",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "93ea819caab842afee2a49295d7c2f03a84446eb",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/93ea819caab842afee2a49295d7c2f03a84446eb"
+    },
+    {
+      "path": "metrics/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce88402b56680395983715bca745626864bba994",
+      "size": 207,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/ce88402b56680395983715bca745626864bba994"
+    },
+    {
+      "path": "metrics/audio_metrics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d94f07086657d8cf08a807632969ba295a1b06d2",
+      "size": 7657,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/d94f07086657d8cf08a807632969ba295a1b06d2"
+    },
+    {
+      "path": "metrics/video_metrics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f49e9f0fd921134b797990946f1d46e2256bdd9d",
+      "size": 2791,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/f49e9f0fd921134b797990946f1d46e2256bdd9d"
+    },
+    {
+      "path": "requirements.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1151c7458cdcf7f413a81e1afff5c4d4a7a6d3e1",
+      "size": 399,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/1151c7458cdcf7f413a81e1afff5c4d4a7a6d3e1"
+    },
+    {
+      "path": "scripts",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5c644e079a5384f53c14ca3997f7f36e0440e8de",
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/trees/5c644e079a5384f53c14ca3997f7f36e0440e8de"
+    },
+    {
+      "path": "scripts/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "13598f7b104a405a25e2a0cdde996055a6969748",
+      "size": 260,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/13598f7b104a405a25e2a0cdde996055a6969748"
+    },
+    {
+      "path": "scripts/common_utils.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b83fdc45a45ca8da80ba4bfc6b3cc59161e8ac46",
+      "size": 1118,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/b83fdc45a45ca8da80ba4bfc6b3cc59161e8ac46"
+    },
+    {
+      "path": "scripts/inference_1d_kvae.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c9f10e0b85147d65a3010bd044ea114c5b234f12",
+      "size": 5571,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/c9f10e0b85147d65a3010bd044ea114c5b234f12"
+    },
+    {
+      "path": "scripts/inference_2d_kvae.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fdb89ffbb43b23bb12234dd1296b32c3581f483c",
+      "size": 5073,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/fdb89ffbb43b23bb12234dd1296b32c3581f483c"
+    },
+    {
+      "path": "scripts/inference_3d_kvae.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "43fb5da0658c29fcfd3eab3ab35858c51c16c7f3",
+      "size": 7144,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/43fb5da0658c29fcfd3eab3ab35858c51c16c7f3"
+    },
+    {
+      "path": "scripts/inference_examples.ipynb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "89322008c2a861cc1f3c460658523df2569a5366",
+      "size": 12055,
+      "url": "https://api.github.com/repos/kandinskylab/kvae/git/blobs/89322008c2a861cc1f3c460658523df2569a5366"
+    }
+  ],
+  "truncated": false
+}

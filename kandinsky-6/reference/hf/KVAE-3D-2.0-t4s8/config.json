@@ -1,0 +1,26 @@
+{
+  "data": {
+    "input_norm": "m11"
+  },
+  "model": {
+    "encoder_params": {
+      "in_channels": 3,
+      "ch": 128,
+      "z_channels": 16,
+      "ch_mult": [1, 2, 4, 8],
+      "num_res_blocks": 2,
+      "temporal_compress_times": 4,
+      "norm_type": "rms_norm",
+      "downsample_version": 2
+    },
+    "decoder_params": {
+      "out_ch": 3,
+      "ch": 128,
+      "z_channels": 16,
+      "ch_mult": [1, 2, 4, 8],
+      "num_res_blocks": 2,
+      "temporal_compress_times": 4,
+      "norm_type": "rms_norm"
+    }
+  }
+}

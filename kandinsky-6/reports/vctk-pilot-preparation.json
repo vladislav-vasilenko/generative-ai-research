@@ -1,0 +1,27 @@
+{
+  "clips": 120,
+  "speakers": [
+    "p225",
+    "p226",
+    "p227",
+    "p228"
+  ],
+  "split_counts": {
+    "reference": 16,
+    "train": 63,
+    "validation": 20,
+    "test": 21
+  },
+  "reassigned_rows": 2,
+  "cross_split_text_overlap": {
+    "reference / train": 0,
+    "reference / validation": 0,
+    "reference / test": 0,
+    "train / validation": 0,
+    "test / train": 0,
+    "test / validation": 0
+  },
+  "split_status": "text_disjoint_verified",
+  "generation_or_training_performed": false,
+  "dataset_revision": "f39449cbbb0a5ee4879635dffb6c07b510a49e63"
+}

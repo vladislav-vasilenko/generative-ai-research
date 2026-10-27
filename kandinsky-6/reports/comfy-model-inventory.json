@@ -1,0 +1,29 @@
+{
+  "model_files": [
+    {
+      "relative_path": "text_encoders/clip_l.safetensors",
+      "bytes": 246144152,
+      "file": "clip_l.safetensors",
+      "structurally_complete": true,
+      "tensor_count": 196,
+      "audio_tensor_count": 0,
+      "dtypes": [
+        "F16"
+      ],
+      "audio_output_shape": null
+    },
+    {
+      "relative_path": "vae/hunyuan_video_vae_bf16.safetensors",
+      "bytes": 492984198,
+      "file": "hunyuan_video_vae_bf16.safetensors",
+      "structurally_complete": true,
+      "tensor_count": 248,
+      "audio_tensor_count": 0,
+      "dtypes": [
+        "BF16"
+      ],
+      "audio_output_shape": null
+    }
+  ],
+  "weights_loaded": false
+}

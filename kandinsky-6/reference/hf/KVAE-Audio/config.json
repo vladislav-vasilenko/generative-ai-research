@@ -1,0 +1,11 @@
+{
+    "encoder_dim": 64,
+    "latent_dim": 2048,
+    "use_attn": true,
+    "encoder_rates": [2, 3, 4, 5, 8],
+    "decoder_dim": 1536,
+    "decoder_rates": [8, 5, 4, 3, 2],
+    "sample_rate": 48000,
+    "codebook_dim": 64,
+    "model_type": "kvae-audio"
+}
