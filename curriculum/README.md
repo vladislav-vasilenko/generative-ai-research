@@ -70,21 +70,51 @@ P4 можно изучать после P3, а линейный path Lab 2 Part 
 
 | Объект | Смысл | Типичная форма |
 |---|---|---|
-| $x_t$ | Текущее зашумлённое состояние | `[B,d]` или `[B,C,T,H,W]` |
-| $z$ в MIT probability path | Фиксированный чистый endpoint из датасета | Та же размерность, что у $x_t$ |
-| $y$ | Класс, текст или иное внешнее условие | `[B]`, token IDs или embeddings |
-| $p_t(x\mid z)$ | Удобный для обучения conditional path | Endpoint известен при training |
-| $p_t(x)$ | Marginal path после усреднения по endpoint | Именно его должен воспроизвести unconditional sampler |
-| $p_t(x\mid y)$ | Распределение под внешним условием | Guided generation |
-| $z$ в VAE-коде | Latent representation изображения/аудио | Другое использование буквы z; переименуйте в `latent` |
+| `x_t` | Текущее зашумлённое состояние | `[B,d]` или `[B,C,T,H,W]` |
+| `z` в MIT probability path | Фиксированный чистый endpoint из датасета | Та же размерность, что у `x_t` |
+| `y` | Класс, текст или иное внешнее условие | `[B]`, token IDs или embeddings |
+| `p_t(x ∣ z)` | Удобный для обучения conditional path | Endpoint известен при training |
+| `p_t(x)` | Marginal path после усреднения по endpoint | Именно его должен воспроизвести unconditional sampler |
+| `p_t(x ∣ y)` | Распределение под внешним условием | Guided generation |
+| `z` в VAE-коде | Latent representation изображения/аудио | Другое использование буквы z; переименуйте в `latent` |
 
 CFM даёт доступные targets с известным endpoint, а sampler не получает будущую чистую картинку. Его поле — условное ожидание endpoint-specific velocity при известном текущем состоянии. Не усредняйте conditional fields с постоянными весами, если нужны posterior weights.
 
 ## Соглашение о времени записываем в каждом эксперименте
 
-Для линейного path MIT: $x_s=(1-s)\epsilon+s x_{\rm data}$, $s:0\to1$, target $x_{\rm data}-\epsilon$.
+**MIT: от шума к данным.** Начальное состояние — Gaussian noise, конечное — чистый объект. Обозначим чистый endpoint через `x_data`, а шум через epsilon:
 
-Для сравниваемого data-to-noise соглашения Kandinsky: $x_t=(1-t)x_{\rm data}+t\epsilon$, sampling $t:1\to0$, target $\epsilon-x_{\rm data}$. При $s=1-t$ состояния совпадают, а скорости имеют противоположный знак. В конкретном pipeline дополнительно проверьте time scaling, shift и prediction type: epsilon/velocity/policy нельзя подменять по названию файла.
+$$
+x_s = (1-s)\epsilon + s\,x_{\mathrm{data}}, \qquad s \in [0,1].
+$$
+
+Sampling идёт от `s = 0` к `s = 1`. Target для линейного path:
+
+$$
+u_s^{\star} = x_{\mathrm{data}} - \epsilon.
+$$
+
+**Сравниваемое соглашение Kandinsky: от данных к шуму.** Здесь то же состояние записывается иначе:
+
+$$
+x_t = (1-t)x_{\mathrm{data}} + t\epsilon, \qquad t \in [0,1].
+$$
+
+Генерация идёт в обратную сторону: от `t = 1` к `t = 0`. Target относительно координаты `t`:
+
+$$
+v_t^{\star} = \epsilon - x_{\mathrm{data}}.
+$$
+
+Связь соглашений:
+
+$$
+s = 1-t, \qquad u_s^{\star} = -v_t^{\star}.
+$$
+
+Состояния совпадают при замене времени; знак скорости меняется. Обозначения `u` и `v` здесь относятся к производным линейного path, а не к любому параметру с именем `v` в diffusion-библиотеке.
+
+В конкретном pipeline дополнительно проверьте time scaling, shift и prediction type: epsilon/velocity/policy нельзя подменять по названию файла.
 
 Probability path задаёт распределения в каждый момент; он сам по себе не задаёт единственную траекторию частицы. Аналогично, одинаковые marginals ODE и SDE не требуют одинаковых sample paths.
 

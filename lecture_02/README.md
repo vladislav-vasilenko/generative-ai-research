@@ -14,7 +14,7 @@
 | 6 | Part 4: 64–78 | Linear path и arbitrary source/target | Gaussian source не является обязательным свойством любого FM |
 | После Lecture 3A | Q2.4: 31–36; Q3.2–3.3: 50–63 | Score и conversion | Понять область определения, а не копировать формулу в endpoint |
 
-Основная конструкция: $p_t(x)=\int p_t(x\mid z)p_{\rm data}(z)dz$. Conditional fields усредняются с **posterior** weights $p(z\mid x_t=x)$, не с неизменными prior weights. Регрессия на доступный conditional target даёт marginal predictor при достаточной модели и корректном обучении.
+Основная конструкция: $p_t(x)=\int p_t(x\mid z)p_{\mathrm{data}}(z)dz$. Conditional fields усредняются с **posterior** weights $p(z\mid x_t=x)$, не с неизменными prior weights. Регрессия на доступный conditional target даёт marginal predictor при достаточной модели и корректном обучении.
 
 ## Три опыта
 
