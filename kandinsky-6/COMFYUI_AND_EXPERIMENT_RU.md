@@ -34,14 +34,14 @@ uv run --locked jupyter lab kandinsky-6/notebooks/00_manual_experiment_comfy_mlx
 
 ## 1. Ваша установка
 
-Проверены следующие пути:
+Команды ниже используют две переменные окружения. Задайте их для своей установки ComfyUI Desktop; значения на проверенной станции M3 Max показаны в комментарии:
 
-```text
-ComfyUI: /Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI
-Python:  /Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI/.venv/bin/python
-Plugin:  /Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI/custom_nodes/kandinsky6
-Общая библиотека: /Users/vladmac/ComfyUI-Shared/models
+```bash
+export COMFY_ROOT="$HOME/ComfyUI-Installs/<профиль>/ComfyUI"   # станция: ~/ComfyUI-Installs/Vladislav/ComfyUI
+export COMFY_SHARED_MODELS="$HOME/ComfyUI-Shared/models"        # общая библиотека моделей Desktop
 ```
+
+Тогда Python ComfyUI — `$COMFY_ROOT/.venv/bin/python`, плагин — `$COMFY_ROOT/custom_nodes/kandinsky6`.
 
 На момент осмотра: ComfyUI 0.42.5, kandinsky6 1.0.2, Python 3.13.12, Torch 2.12.1. Устанавливать исследовательские зависимости в это окружение не требуется. MLX будет иметь отдельное окружение. Фактический model root проверьте в Desktop: установка может использовать общую библиотеку или собственную папку models.
 
@@ -54,7 +54,7 @@ Plugin:  /Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI/custom_nodes/kandinsk
 Для повторной установки после обновления расширения из папки kandinsky-6:
 
 ```bash
-python3 scripts/install_comfy_templates.py --comfy-root /Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI --install
+python3 scripts/install_comfy_templates.py --comfy-root "$COMFY_ROOT" --install
 ```
 
 Без `--install` это dry run. Если существующий исследовательский шаблон отличается, скрипт остановится для сравнения; `--replace` разрешает его заменить. Официальные шаблоны не заменяются, веса не скачиваются.
@@ -106,8 +106,8 @@ Smoke — только уменьшенная проверка работосп�
 
 ```bash
 python3 scripts/inspect_comfy_models.py \
-  --models /Users/vladmac/ComfyUI-Shared/models \
-  --models /Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI/models
+  --models "$COMFY_SHARED_MODELS" \
+  --models "$COMFY_ROOT/models"
 ```
 
 Смотрите `reports/comfy-model-inventory.json`. Поле structurally_complete проверяет длину safetensors по offsets; это не проверка качества весов и не подтверждение их происхождения. Во время подготовки найдены CLIP и video VAE; перечень при повторном запуске может расшириться.
@@ -172,7 +172,7 @@ python3 scripts/extract_audio_local.py \
 Первое обязательное сравнение — маленький случайный fixture с ненулевыми gates, проверяющий математику. Он **не** оценивает pretrained качество. Команда использует существующий Python ComfyUI только для CPU reference и ничего в него не устанавливает:
 
 ```bash
-/Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI/.venv/bin/python \
+"$COMFY_ROOT/.venv/bin/python" \
   scripts/torch_parity_reference.py
 ```
 
@@ -188,7 +188,7 @@ UV_HTTP_TIMEOUT=120 uv pip install --python .venv-mlx/bin/python \
 Продолжайте только при `passed=true`. Затем, после полной загрузки и проверки оригинальных Lite весов:
 
 ```bash
-/Users/vladmac/ComfyUI-Installs/Vladislav/ComfyUI/.venv/bin/python \
+"$COMFY_ROOT/.venv/bin/python" \
   scripts/torch_parity_reference.py --pretrained \
   --weights /ПОЛНЫЙ/ПУТЬ/К/LITE/diffusion_pytorch_model.safetensors
 .venv-mlx/bin/python scripts/mlx_parity.py --pretrained

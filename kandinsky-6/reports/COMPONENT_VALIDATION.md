@@ -2,7 +2,7 @@
 
 [Курс](../README.md) · [Полное содержание](../../curriculum/CONTENTS.md) · [Машиночитаемый execution report](component-validation.json).
 
-**14 новых notebooks выполнены в отдельных свежих CPU kernels: 169 ячеек / 67 code cells.** Все assertions прошли, локальные ссылки проверены, 243 pinned source hashes совпали. Курс работает через основное зафиксированное окружение `uv run --locked --offline`; модельные веса/датасеты не загружались, ComfyUI jobs не отправлялись, MLX не исполнялся. Colab bootstrap подготовлен, но удалённый Colab runtime не проверялся.
+**14 новых notebooks выполнены в отдельных свежих CPU kernels: 185 ячеек / 76 code cells.** Все assertions прошли, локальные ссылки проверены, 243 pinned source hashes совпали. Курс работает через основное зафиксированное окружение `uv run --locked --offline`; модельные веса/датасеты не загружались, ComfyUI jobs не отправлялись, MLX не исполнялся. Colab bootstrap подготовлен, но удалённый Colab runtime не проверялся.
 
 ## Что именно исполнялось
 
@@ -25,9 +25,12 @@
 | Visual patch manual/native | max error 0 | Порядок patch features |
 | Zero residual gate | identity max error 0 | При этом modulation gradient ненулевой |
 | Manual attention / SDPA | max error 4.44e-16 | FP64, small unmasked case |
-| Text perturbation after text-CA cut | max change 0 | Изолирован token-level condition path |
+| Fresh native CrossDiT (zero modulation) | text/pooled/time sensitivity 0/0/0 | adaLN-Zero: при init condition не влияет на output |
+| Text perturbation after text-CA cut | max change 0; pooled после cut 0.218 | Token path только через cross-attention; pooled — через modulation |
+| Manual fused block vs native | max error 0; post-text K/V 0.18 | Порядок операций и источник K/V подтверждены на random weights |
+| Video-only vs joint with video-query cut | max error 0 | Unimodal forward = joint без ветви audio→video |
 | AV directional cuts | оба cut deltas = 0; active deltas ненулевые | Проверка wiring одного native fused block |
-| Audio-output loss → video input | gradient norm 0.00476801 active / 0 cut | Межмодальный gradient path |
+| Audio-output loss → video input | gradient norm 0.00817927 active / 0 cut | Межмодальный gradient path |
 | Tiny joint FM held-out video MSE | 1.910945 → 0.212983 | 184,500 parameters, synthetic conditioning |
 | Tiny joint FM held-out audio MSE | 1.380696 → 0.175592 | 100 training steps, один fixed validation batch |
 | Oracle constant-grid policy | endpoint error 5.55e-17 | Аналитический контроль, student не обучался |
@@ -42,7 +45,7 @@
 
 ![Dual-stream architecture](figures/components/dual_stream_architecture.png)
 
-Два потока имеют разные widths; стрелки определяют источник K/V и получателя Q. Детали snapshot states объясняются в notebook 08.
+Два потока имеют разные widths. Q берётся из потока-получателя после text update, K/V — из сохранённых `vis_pre_ca`/`aud_pre_ca` другого потока; подробности в notebook 08.
 
 ![Directional cross-modal ablation](figures/components/cross_modal_ablation.png)
 

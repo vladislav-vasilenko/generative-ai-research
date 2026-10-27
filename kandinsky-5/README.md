@@ -262,11 +262,11 @@ T2V config имеет `visual_cond=True`: вход DiT `[T,H_lat,W_lat,33]`, г�
 
 ## Углублённые лабораторные: VAE и Flow Matching
 
-Лабораторная 02 расширена до 44 ячеек. Теория идёт от generative model и Bayes posterior к выводу ELBO через Jensen и двум разным KL. Exact Gaussian experiment проверяет, что ELBO — нижняя граница likelihood. Затем исследуем diagonal posterior, reparameterization и градиенты, связь reconstruction loss с observation model, β-VAE, posterior collapse и различие reconstruction/prior generation.
+Лабораторная 02 расширена. Теория идёт от generative model и Bayes posterior к выводу ELBO через Jensen и двум разным KL. Exact Gaussian experiment проверяет, что ELBO — нижняя граница likelihood. Затем исследуем diagonal posterior, reparameterization и градиенты, связь reconstruction loss с observation model, β-VAE, posterior collapse и различие reconstruction/prior generation.
 
 Практический разбор vae.py использует настоящие upstream Encoder3D/Decoder3D на уменьшенных размерах. Hooks показывают spatial/temporal stages, 2C posterior channels, quant_conv/post_quant_conv и контракт scaled latents с DiT. Отдельно обсуждаются границы causal convolution: нормализации и остальные слои требуют собственных проверок причинности. Исторический полный loss внешнего Hunyuan codec не выводится из inference файла.
 
-Лабораторная 06 расширена до 38 ячеек. Она разделяет DiT architecture, Flow Matching training objective и ODE sampler. Рассматриваются conditional straight paths, marginal velocity как conditional expectation, пересечение training paths, convention data t=0/noise t=1, связь velocity/noise/clean prediction. Настоящий tiny DiT forward воспроизводится через отдельные stages с проверкой равенства. Дополнительный 2D conditional flow обучается на двух распределениях и генерирует из общего initial noise для разных conditions.
+Лабораторная 06 расширена. Она разделяет DiT architecture, Flow Matching training objective и ODE sampler. Рассматриваются conditional straight paths, marginal velocity как conditional expectation, пересечение training paths, convention data t=0/noise t=1, связь velocity/noise/clean prediction. Настоящий tiny DiT forward воспроизводится через отдельные stages с проверкой равенства. Дополнительный 2D conditional flow обучается на двух распределениях и генерирует из общего initial noise для разных conditions.
 
 В конце теория соединяется с точными строками get_velocity/generate: t×1000, decreasing shifted schedule, отрицательный Δt, CFG и 16-step distilled weights. Учебный CFM loss не выдаётся за полный промышленный distillation trainer.
 
@@ -341,9 +341,11 @@ Hunyuan и KVAE-3D-1.0 оба могут выдавать 16 каналов пр
 
 Команды проверки:
 
+Из папки `kandinsky-5/`, в её собственном окружении:
+
 ```bash
-python scripts/verify_notebooks.py
-python scripts/check_native_port.py
+uv run --locked python scripts/verify_notebooks.py
+uv run --locked python scripts/check_native_port.py
 ```
 
 `verify_notebooks.py` валидирует nbformat и выполняет notebooks с flags по умолчанию в свежем kernel каждого файла. Исполненные копии лежат в `reports/executed/`, сводка — `reports/notebook-validation.json`. `check_native_port.py` проверяет forward/training, dtype, strict checkpoint round-trip и chunked attention на уменьшенной модели. Отчёт статуса: [reports/VALIDATION.md](reports/VALIDATION.md).

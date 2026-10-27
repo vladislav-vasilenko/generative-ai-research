@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-27T13:08:31.308918+00:00",
+  "created_utc": "2026-10-27T14:51:12.762234+00:00",
   "mode": "static",
   "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
   "no_pretrained_weights": true,
@@ -52,16 +52,16 @@
     },
     {
       "notebook": "07_dit_and_text_crossdit.ipynb",
-      "source_sha256": "6551cdd1b4b56d7b5e065c3f5b269f7ed8daa49bbeb06db308ae078d2f2d701b",
-      "cells": 13,
-      "code_cells": 5,
+      "source_sha256": "a82aa8a1a38d7a7d88a1064d8a7a91adfd1ce090e54e449252e4ac0d6f6e481f",
+      "cells": 21,
+      "code_cells": 9,
       "executed": false
     },
     {
       "notebook": "08_dual_stream_audio_video_crossdit.ipynb",
-      "source_sha256": "efecc4f7e067bfc93105c88a64e5c1c0a4fe76e638ee72cd9f67d47ed12d671b",
-      "cells": 15,
-      "code_cells": 6,
+      "source_sha256": "e0e761384c6cf63ef51d420ec54d1f7e61446d6610ec8abc6f6bfaa669c12ab8",
+      "cells": 23,
+      "code_cells": 11,
       "executed": false
     },
     {

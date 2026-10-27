@@ -1,4 +1,6 @@
-# Проверка проекта
+# Проверка проекта (исторический отчёт)
+
+> Снимок от 15 сентября 2026, до появления K5/K6 и `uv.lock`-маршрута. Актуальные проверки: [curriculum/reports/VALIDATION.md](curriculum/reports/VALIDATION.md), [K6 component labs](kandinsky-6/reports/COMPONENT_VALIDATION.md), [K5](kandinsky-5/reports/VALIDATION.md).
 
 Дата: **15 сентября 2026**. Среда: **macOS arm64, Python 3.12.14, CPU**.
 

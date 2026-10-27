@@ -98,8 +98,8 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 | [04_audio_vae_and_vocoder.ipynb](../kandinsky-6/notebooks/04_audio_vae_and_vocoder.ipynb) | 1. Три пространства и три разные задачи; 2. Сколько audio tokens соответствует видео; 3. Настоящий postprocess с явно учебными decoder/vocoder |
 | [05_nn_patches_and_modulation.ipynb](../kandinsky-6/notebooks/05_nn_patches_and_modulation.ipynb) | 1. Из локальной ячейки latent в visual token; 2. AdaLN — condition управляет обработкой state; 3. OutLayerAudio и маленькие на вид особенности |
 | [06_attention_and_rope.ipynb](../kandinsky-6/notebooks/06_attention_and_rope.ipynb) | 1. Attention — выбор источников информации; 2. Вращение сохраняет норму; позиции меняют сравнение; 3. Почему video attention дорого |
-| [07_dit_and_text_crossdit.ipynb](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb) | 1. Что означает DiT; 2. CrossDiT K5/K6: visual query, text K/V; 3. Проверяем, что текст реально влияет через нужную ветвь; 4. Сопоставление архитектур по контрактам |
-| [08_dual_stream_audio_video_crossdit.ipynb](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb) | 1. Dual-stream — два набора tokens, не stereo audio; 2. Точный порядок внутри FusedTransformerDecoderBlock; 3. Zero-init invariance, затем причинное отключение связей; 4. Gradient показывает путь обучения, не качество синхронизации; 5. Joint probability не означает одинаковые clocks |
+| [07_dit_and_text_crossdit.ipynb](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb) | 0. Вопрос, вход и выход; 1. Что означает DiT и почему K6 использует два канала conditioning; 2. Полный forward одной формулой; 3. adaLN-Zero: свежая модель не видит ни текст, ни время; 4. Text CrossDiT: visual query, text K/V; 5. Velocity head и π-Flow grid head |
+| [08_dual_stream_audio_video_crossdit.ipynb](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb) | 0. Вопрос, вход и выход; 1. Направление определяется по query; 2. Точный порядок внутри FusedTransformerDecoderBlock; 3. Флаги: какое время управляет fusion; 4. Zero-init invariance, затем причинное отключение связей; 5. Gradient показывает путь обучения, не качество синхронизации |
 | [09_flow_matching_training.ipynb](../kandinsky-6/notebooks/09_flow_matching_training.ipynb) | 1. Сначала соглашение о времени; 2. Данные с известной общей причиной; 3. Почему шумы и времена требуют отдельного контроля |
 | [10_piflow_distillation.ipynb](../kandinsky-6/notebooks/10_piflow_distillation.ipynb) | 1. Distillation меняет контракт головы; 2. Из grid prediction в DX policy; 3. Native sampler + настоящий случайный tiny grid-DiT |
 | [11_sampling_cfg_and_nfe.ipynb](../kandinsky-6/notebooks/11_sampling_cfg_and_nfe.ipynb) | 1. Solver интегрирует поле, но не обучает его; 2. Guidance — комбинация двух predictions; 3. Что замерять в промышленном опыте |
@@ -153,7 +153,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 
 - [CLAUDE.md](../CLAUDE.md) — Working on this study stand.
 - [README.md](../README.md) — Generative AI Research.
-- [VALIDATION.md](../VALIDATION.md) — Проверка проекта.
+- [VALIDATION.md](../VALIDATION.md) — Проверка проекта (исторический отчёт).
 - [curriculum/CLAUDE_REVIEW_BRIEF.md](CLAUDE_REVIEW_BRIEF.md) — Задание Claude: отполировать Generative AI Studying Stand.
 - [curriculum/COMFYUI_LABS.md](COMFYUI_LABS.md) — ComfyUI как наблюдаемый эксперимент.
 - [curriculum/EXPERIMENT_TEMPLATE.md](EXPERIMENT_TEMPLATE.md) — Карточка учебного или исследовательского эксперимента.
@@ -164,6 +164,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [curriculum/SOURCE_NOTES.md](SOURCE_NOTES.md) — Уточнения к исходным материалам.
 - [curriculum/SUPPLEMENTARY_READING.md](SUPPLEMENTARY_READING.md) — Дополнительные материалы к основному курсу.
 - [curriculum/references/README.md](references/README.md) — Источники и границы адаптации.
+- [curriculum/reports/VALIDATION.md](reports/VALIDATION.md) — Проверка учебного маршрута, 27 октября 2026.
 - [kandinsky-5/MODEL_CATALOG.md](../kandinsky-5/MODEL_CATALOG.md) — Каталог моделей Kandinsky Lab.
 - [kandinsky-5/README.md](../kandinsky-5/README.md) — KandinskyLab — учебные Jupyter-лабораторные по Kandinsky 5 Lite.
 - [kandinsky-5/THIRD_PARTY.md](../kandinsky-5/THIRD_PARTY.md) — Сторонние материалы.
@@ -194,52 +195,52 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 
 ### `curriculum/scripts`
 
-- [build_bridge_notebooks.py](scripts/build_bridge_notebooks.py) — Build two small teaching notebooks. Never touches original labs or user answers..
-- [build_comfy_workflows.py](scripts/build_comfy_workflows.py) — Build model-free and VAE-only study graphs. Never queues jobs or downloads weights..
-- [build_contents.py](scripts/build_contents.py) — Build a complete navigation index of authored study materials, not vendored source trees..
-- [check_markdown_math.py](scripts/check_markdown_math.py) — Check portable math style in authored Markdown guides; no notebook execution..
-- [compare_images.py](scripts/compare_images.py) — Compare aligned RGB pixels; no hidden resize and no model inference..
-- [index_additional_sources.py](scripts/index_additional_sources.py) — Pin supplementary reading/code metadata, never install or execute downloaded code..
-- [index_industry_sources.py](scripts/index_industry_sources.py) — Pin public architecture entry points. Downloads text/metadata only, never weights..
-- [index_materials.py](scripts/index_materials.py) — Index user-provided teaching sources without executing notebook instructions..
-- [supplementary_experiments.py](scripts/supplementary_experiments.py) — Small CPU experiments for supplementary reading. No external package/model download..
-- [sync_study_navigation.py](scripts/sync_study_navigation.py) — Keep MIT-first navigation in authored study docs; canonical originals/user answers untouched..
-- [validate_curriculum.py](scripts/validate_curriculum.py) — Validate curriculum structure and optionally execute only its two small new labs..
+- [build_bridge_notebooks.py](scripts/build_bridge_notebooks.py) — Build two small teaching notebooks. Never touches original labs or user answers.
+- [build_comfy_workflows.py](scripts/build_comfy_workflows.py) — Build model-free and VAE-only study graphs. Never queues jobs or downloads weights.
+- [build_contents.py](scripts/build_contents.py) — Build a complete navigation index of authored study materials, not vendored source trees.
+- [check_markdown_math.py](scripts/check_markdown_math.py) — Check portable math style in authored Markdown guides; no notebook execution.
+- [compare_images.py](scripts/compare_images.py) — Compare aligned RGB pixels; no hidden resize and no model inference.
+- [index_additional_sources.py](scripts/index_additional_sources.py) — Pin supplementary reading/code metadata, never install or execute downloaded code.
+- [index_industry_sources.py](scripts/index_industry_sources.py) — Pin public architecture entry points. Downloads text/metadata only, never weights.
+- [index_materials.py](scripts/index_materials.py) — Index user-provided teaching sources without executing notebook instructions.
+- [supplementary_experiments.py](scripts/supplementary_experiments.py) — Small CPU experiments for supplementary reading. No external package/model download.
+- [sync_study_navigation.py](scripts/sync_study_navigation.py) — Keep MIT-first navigation in authored study docs; canonical originals/user answers untouched.
+- [validate_curriculum.py](scripts/validate_curriculum.py) — Validate curriculum structure and optionally execute only its two small new labs.
 
 ### `lecture_01/scripts`
 
-- [build_notebooks.py](../lecture_01/scripts/build_notebooks.py) — Собрать перевод и учебные дополнения, сохранив соответствие исходным ячейкам..
-- [execute_notebook.py](../lecture_01/scripts/execute_notebook.py) — Выполнить Lab One в чистом ядре, сохранить результаты и HTML для чтения..
+- [build_notebooks.py](../lecture_01/scripts/build_notebooks.py) — Собрать перевод и учебные дополнения, сохранив соответствие исходным ячейкам.
+- [execute_notebook.py](../lecture_01/scripts/execute_notebook.py) — Выполнить Lab One в чистом ядре, сохранить результаты и HTML для чтения.
 
 ### `kandinsky-5/scripts`
 
-- [add_colab_launch.py](../kandinsky-5/scripts/add_colab_launch.py) — Add reproducible Colab entry points without changing local lab behavior..
+- [add_colab_launch.py](../kandinsky-5/scripts/add_colab_launch.py) — Add reproducible Colab entry points without changing local lab behavior.
 - [add_inference_example.py](../kandinsky-5/scripts/add_inference_example.py) — См. аргументы и назначение в исходнике.
-- [build_generation_lab.py](../kandinsky-5/scripts/build_generation_lab.py) — Build a complete, output-free lab for every pinned generation utility..
-- [build_normalization_audit.py](../kandinsky-5/scripts/build_normalization_audit.py) — Build a reproducible source, numerical and call-site audit, without weights..
+- [build_generation_lab.py](../kandinsky-5/scripts/build_generation_lab.py) — Build a complete, output-free lab for every pinned generation utility.
+- [build_normalization_audit.py](../kandinsky-5/scripts/build_normalization_audit.py) — Build a reproducible source, numerical and call-site audit, without weights.
 - [build_notebooks.py](../kandinsky-5/scripts/build_notebooks.py) — См. аргументы и назначение в исходнике.
-- [check_native_port.py](../kandinsky-5/scripts/check_native_port.py) — Meaningful component contract checks, no pretrained downloads..
-- [deepen_labs.py](../kandinsky-5/scripts/deepen_labs.py) — Add reproducible theory chapters to the two existing labs after base generation..
-- [extend_from_materials.py](../kandinsky-5/scripts/extend_from_materials.py) — Rebuild the source-grounded MIT additions in labs 02 and 06..
+- [check_native_port.py](../kandinsky-5/scripts/check_native_port.py) — Meaningful component contract checks, no pretrained downloads.
+- [deepen_labs.py](../kandinsky-5/scripts/deepen_labs.py) — Add reproducible theory chapters to the two existing labs after base generation.
+- [extend_from_materials.py](../kandinsky-5/scripts/extend_from_materials.py) — Rebuild the source-grounded MIT additions in labs 02 and 06.
 - [package_colab.py](../kandinsky-5/scripts/package_colab.py) — См. аргументы и назначение в исходнике.
 - [verify_notebooks.py](../kandinsky-5/scripts/verify_notebooks.py) — См. аргументы и назначение в исходнике.
 
 ### `kandinsky-6/scripts`
 
-- [build_comfy_baselines.py](../kandinsky-6/scripts/build_comfy_baselines.py) — Derive minimal Lite workflows from the pinned official graph..
-- [build_component_guide.py](../kandinsky-6/scripts/build_component_guide.py) — Build README navigation and an AST-based component/source index..
-- [build_component_notebooks.py](../kandinsky-6/scripts/build_component_notebooks.py) — Build the K6 component course. Only source generation, no network/weights..
-- [build_manual_notebook.py](../kandinsky-6/scripts/build_manual_notebook.py) — Build the lightweight manual experiment notebook; no model downloads..
-- [extract_audio_local.py](../kandinsky-6/scripts/extract_audio_local.py) — Copy original audio tensor bytes from a local ComfyUI checkpoint..
-- [inspect_comfy_models.py](../kandinsky-6/scripts/inspect_comfy_models.py) — Read model paths and safetensors headers, without importing ComfyUI or loading weights..
-- [install_comfy_templates.py](../kandinsky-6/scripts/install_comfy_templates.py) — Install research templates locally; default is a dry run, no model download..
-- [measure_comfy.py](../kandinsky-6/scripts/measure_comfy.py) — Record read-only ComfyUI memory snapshots during a manually queued generation..
-- [mlx_parity.py](../kandinsky-6/scripts/mlx_parity.py) — Compare MLX against a saved PyTorch reference and record actual measurements..
-- [prepare_vctk.py](../kandinsky-6/scripts/prepare_vctk.py) — Download a small, pinned VCTK pilot through remote ZIP byte ranges..
-- [summarize_components.py](../kandinsky-6/scripts/summarize_components.py) — Publish a concise evidence report and selected figures from successful local executions..
-- [torch_parity_reference.py](../kandinsky-6/scripts/torch_parity_reference.py) — Generate a PyTorch numerical reference; never label random fixtures pretrained..
-- [validate_component_notebooks.py](../kandinsky-6/scripts/validate_component_notebooks.py) — Validate K6 teaching labs; --execute uses fresh CPU kernels, no downloads..
-- [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route..
+- [build_comfy_baselines.py](../kandinsky-6/scripts/build_comfy_baselines.py) — Derive minimal Lite workflows from the pinned official graph.
+- [build_component_guide.py](../kandinsky-6/scripts/build_component_guide.py) — Build README navigation and an AST-based component/source index.
+- [build_component_notebooks.py](../kandinsky-6/scripts/build_component_notebooks.py) — Build the K6 component course. Only source generation, no network/weights.
+- [build_manual_notebook.py](../kandinsky-6/scripts/build_manual_notebook.py) — Build the lightweight manual experiment notebook; no model downloads.
+- [extract_audio_local.py](../kandinsky-6/scripts/extract_audio_local.py) — Copy original audio tensor bytes from a local ComfyUI checkpoint.
+- [inspect_comfy_models.py](../kandinsky-6/scripts/inspect_comfy_models.py) — Read model paths and safetensors headers, without importing ComfyUI or loading weights.
+- [install_comfy_templates.py](../kandinsky-6/scripts/install_comfy_templates.py) — Install research templates locally; default is a dry run, no model download.
+- [measure_comfy.py](../kandinsky-6/scripts/measure_comfy.py) — Record read-only ComfyUI memory snapshots during a manually queued generation.
+- [mlx_parity.py](../kandinsky-6/scripts/mlx_parity.py) — Compare MLX against a saved PyTorch reference and record actual measurements.
+- [prepare_vctk.py](../kandinsky-6/scripts/prepare_vctk.py) — Download a small, pinned VCTK pilot through remote ZIP byte ranges.
+- [summarize_components.py](../kandinsky-6/scripts/summarize_components.py) — Publish a concise evidence report and selected figures from successful local executions.
+- [torch_parity_reference.py](../kandinsky-6/scripts/torch_parity_reference.py) — Generate a PyTorch numerical reference; never label random fixtures pretrained.
+- [validate_component_notebooks.py](../kandinsky-6/scripts/validate_component_notebooks.py) — Validate K6 teaching labs; --execute uses fresh CPU kernels, no downloads.
+- [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route.
 
 ## Как поддерживать содержание
 

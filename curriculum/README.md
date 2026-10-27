@@ -131,7 +131,7 @@ Probability path задаёт распределения в каждый мом�
 ## Что открывать после основного курса
 
 - [Kandinsky 5: 14 лабораторных](../kandinsky-5/README.md): VAE → text embeddings → attention/DiT → Flow Matching → sampling → локальный/CUDA pipeline. Это увеличенный масштаб тех же понятий.
-- [Kandinsky 6: ручной notebook](../kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb): совместные audio/video latents, Distill/PiFlow, frozen/trainable map и будущий FiLM experiment.
+- [Kandinsky 6: 14 component labs](../kandinsky-6/README.md): совместные audio/video latents, DiT → Dual-stream CrossDiT, Distill/PiFlow; затем [ручной исследовательский notebook](../kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb) с будущим FiLM experiment.
 - [ComfyUI experiments](COMFYUI_LABS.md): визуальная проверка и измерения; наблюдения не заменяют формальный вывод.
 - [Архитектурные точки входа](INDUSTRY_BRIDGE.md): читать код выбранной revision, а не смешивать API разных моделей.
 
@@ -152,7 +152,7 @@ Probability path задаёт распределения в каждый мом�
 
 ## Поддержка навигации
 
-После повторной генерации авторских notebooks выполните `python curriculum/scripts/sync_study_navigation.py --write`, затем `--check`. Утилита меняет только навигационный Markdown; код ячеек, канонические originals и пользовательские notebooks Lecture 1 не изменяются.
+После повторной генерации авторских notebooks выполните `uv run --locked --offline python curriculum/scripts/sync_study_navigation.py --write`, затем `--check`. Утилита меняет только навигационный Markdown; код ячеек, канонические originals и пользовательские notebooks Lecture 1 не изменяются.
 
 ## Покомпонентное продолжение Kandinsky 6
 

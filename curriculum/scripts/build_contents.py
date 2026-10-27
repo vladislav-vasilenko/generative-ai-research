@@ -122,7 +122,7 @@ text+='''## Промышленные семейства и архитектур�
 
 '''
 folders=[ROOT,ROOT/'curriculum',*sorted(ROOT.glob('lecture_*')),ROOT/'kandinsky-5',ROOT/'kandinsky-6']
-extra=[ROOT/'curriculum/references/README.md',ROOT/'kandinsky-5/reference/course_materials/README.md',
+extra=[ROOT/'curriculum/references/README.md',ROOT/'curriculum/reports/VALIDATION.md',ROOT/'kandinsky-5/reference/course_materials/README.md',
        ROOT/'kandinsky-5/reports/VALIDATION.md',ROOT/'kandinsky-6/reports/VALIDATION.md',
        ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',ROOT/'kandinsky-6/reference/README.md']
 paths=sorted({p for folder in folders for p in folder.glob('*.md')}|{p for p in extra if p.exists()})
@@ -145,7 +145,7 @@ for family in ['curriculum','lecture_01','kandinsky-5','kandinsky-6']:
     for p in sorted((ROOT/family/'scripts').glob('*.py')):
         doc=ast.get_docstring(ast.parse(p.read_text())) or ''
         summary=doc.splitlines()[0] if doc else 'См. аргументы и назначение в исходнике'
-        text+='- '+link(p)+' — '+summary+'.\n'
+        text+='- '+link(p)+' — '+summary.rstrip('.')+'.\n'
     text+='\n'
 text+='''## Как поддерживать содержание
 

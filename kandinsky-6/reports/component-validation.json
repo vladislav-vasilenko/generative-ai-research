@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-27T13:05:48.513789+00:00",
+  "created_utc": "2026-10-27T14:50:59.651821+00:00",
   "mode": "execute",
   "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
   "no_pretrained_weights": true,
@@ -14,7 +14,7 @@
       "cells": 11,
       "code_cells": 4,
       "executed": true,
-      "elapsed_seconds": 2.095533541869372,
+      "elapsed_seconds": 1.5780161251313984,
       "measurements": {
         "parameters": {
           "video": 2008739200,
@@ -31,7 +31,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.1552494578063488,
+      "elapsed_seconds": 1.0703615001402795,
       "measurements": {
         "valid_tokens_after_crop": [
           6,
@@ -48,7 +48,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.7664770421106368,
+      "elapsed_seconds": 1.5836125409696251,
       "measurements": {
         "full_video_latent_shape": [
           31,
@@ -68,7 +68,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.1824383749626577,
+      "elapsed_seconds": 1.1155481250025332,
       "measurements": {
         "stft_inverse_max_error": 7.450580596923828e-08,
         "duration_contract": [
@@ -110,7 +110,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.0377307918388397,
+      "elapsed_seconds": 1.0444918752182275,
       "measurements": {
         "visual_patch_max_error": 0.0,
         "zero_gate_identity_error": 0.0,
@@ -124,7 +124,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.2308279999997467,
+      "elapsed_seconds": 1.2238676249980927,
       "measurements": {
         "manual_sdpa_max_error": 4.440892098500626e-16,
         "rope_norm_error": 1.1920928955078125e-07,
@@ -138,14 +138,53 @@
     },
     {
       "notebook": "07_dit_and_text_crossdit.ipynb",
-      "source_sha256": "6551cdd1b4b56d7b5e065c3f5b269f7ed8daa49bbeb06db308ae078d2f2d701b",
-      "cells": 13,
-      "code_cells": 5,
+      "source_sha256": "a82aa8a1a38d7a7d88a1064d8a7a91adfd1ce090e54e449252e4ac0d6f6e481f",
+      "cells": 21,
+      "code_cells": 9,
       "executed": true,
-      "elapsed_seconds": 1.0912632090039551,
+      "elapsed_seconds": 2.2986261670012027,
       "measurements": {
-        "self_ff_zero_gate_identity_error": 0.0,
-        "self_ff_active_change": 0.019651345908641815,
+        "lite_contract": {
+          "recipe (pixels)": [
+            121,
+            480,
+            864
+          ],
+          "latent [T,H,W,C]": [
+            31,
+            60,
+            108,
+            16
+          ],
+          "visual input channels": 33,
+          "token grid [T/pT,H/pH,W/pW]": [
+            31,
+            30,
+            54
+          ],
+          "video tokens N_v": 50220,
+          "patch features": 132,
+          "model width D / heads": [
+            1792,
+            28
+          ],
+          "time_dim": 512,
+          "output per token, base velocity": 64,
+          "output per token, distill HF config": 640
+        },
+        "time_embedding_manual_error": 0.0,
+        "time_features_cos_at_delta_10": 0.6813732034284126,
+        "fresh_model_invariants": {
+          "composition error": 0.0,
+          "text tokens": 0.0,
+          "pooled": 0.0,
+          "time": 0.0,
+          "output mean |u|": 0.4381062388420105
+        },
+        "unpatchify_roundtrip": {
+          "identity W_out max error": 12.0,
+          "permuted W_out max error": 0.0
+        },
         "native_shapes": {
           "text_projection": [
             1,
@@ -177,59 +216,163 @@
             4
           ]
         },
-        "token_condition_active_delta": 0.2599952220916748,
-        "token_condition_cut_delta": 0.0
-      }
-    },
-    {
-      "notebook": "08_dual_stream_audio_video_crossdit.ipynb",
-      "source_sha256": "efecc4f7e067bfc93105c88a64e5c1c0a4fe76e638ee72cd9f67d47ed12d671b",
-      "cells": 15,
-      "code_cells": 6,
-      "executed": true,
-      "elapsed_seconds": 1.2191497499588877,
-      "measurements": {
-        "fusion_projection_shapes": {
-          "video_Q": [
-            48,
-            48
-          ],
-          "audio_K_to_video": [
-            48,
-            32
-          ],
-          "audio_Q": [
-            32,
-            32
-          ],
-          "video_K_to_audio": [
-            32,
-            48
-          ]
+        "condition_paths": {
+          "tokens, CA active": 0.22414803504943848,
+          "tokens, CA cut": 0.0,
+          "pooled, CA active": 0.25525081157684326,
+          "pooled, CA cut": 0.21767079830169678,
+          "padded tokens changed": 0.0
         },
-        "zero_gate_identity_error": 0.0,
-        "directional_perturbations": {
-          "A affects V: active": 0.2456139326095581,
-          "A affects V: cut": 0.0,
-          "V affects A: active": 0.11695903539657593,
-          "V affects A: cut": 0.0
-        },
-        "audio_loss_gradient_to_video_on": 0.00476801348850131,
-        "audio_loss_gradient_to_video_off": 0.0,
-        "joint_native_output_shapes": [
-          [
+        "velocity_vs_grid_head": {
+          "base out_visual_dim": 16,
+          "distill out_visual_dim (HF)": 160,
+          "base out_audio_dim": 40,
+          "distill out_audio_dim (HF)": 400,
+          "n_grid": 10,
+          "tiny grid video [B,n_grid,T,H,W,C]": [
             1,
+            3,
             2,
             4,
             4,
             4
           ],
-          [
+          "tiny grid audio [B,n_grid,N_a,C]": [
             1,
+            3,
             6,
             4
           ]
-        ]
+        }
+      }
+    },
+    {
+      "notebook": "08_dual_stream_audio_video_crossdit.ipynb",
+      "source_sha256": "e0e761384c6cf63ef51d420ec54d1f7e61446d6610ec8abc6f6bfaa669c12ab8",
+      "cells": 23,
+      "code_cells": 11,
+      "executed": true,
+      "elapsed_seconds": 1.772067332873121,
+      "measurements": {
+        "lite_streams": {
+          "D_v / heads": [
+            1792,
+            28
+          ],
+          "D_a / heads": [
+            896,
+            14
+          ],
+          "head_dim v/a": [
+            64,
+            64
+          ],
+          "ffn v/a": [
+            7168,
+            3584
+          ],
+          "fused blocks": 32,
+          "N_v (121 frames, 480x864)": 50220,
+          "N_a (same clip)": 218,
+          "flags": {
+            "ca_rope": true,
+            "cross_gates": true,
+            "fix_modulation": true
+          },
+          "params per block, M": {
+            "video stream (SA, text CA, FFN, modulation)": 59.7,
+            "audio stream (SA, text CA, FFN, modulation)": 17.0,
+            "fusion attention (va + av)": 14.5,
+            "fusion modulation + norms": 4.1
+          },
+          "all fused blocks, B": 3.05
+        },
+        "fusion_projection_shapes": {
+          "video_Q [out,in]": [
+            48,
+            48
+          ],
+          "audio_K_to_video [out,in]": [
+            48,
+            32
+          ],
+          "audio_Q [out,in]": [
+            32,
+            32
+          ],
+          "video_K_to_audio [out,in]": [
+            32,
+            48
+          ]
+        },
+        "manual_block_vs_native": {
+          "source": {
+            "video max error": 0.0,
+            "audio max error": 0.0
+          },
+          "post-text K/V": {
+            "video max error": 0.04464450478553772,
+            "audio max error": 0.1804269552230835
+          },
+          "sequential V then A": {
+            "video max error": 0.0,
+            "audio max error": 0.04007083177566528
+          }
+        },
+        "fusion_time_routing": {
+          "fix=False, cross=False": {
+            "video query": "c_a",
+            "video gate": "c_a",
+            "audio query": "c_v",
+            "audio gate": "c_v"
+          },
+          "fix=False, cross=True": {
+            "video query": "c_a",
+            "video gate": "c_v",
+            "audio query": "c_v",
+            "audio gate": "c_a"
+          },
+          "fix=True, cross=False": {
+            "video query": "c_v",
+            "video gate": "c_v",
+            "audio query": "c_a",
+            "audio gate": "c_a"
+          },
+          "fix=True, cross=True": {
+            "video query": "c_v",
+            "video gate": "c_a",
+            "audio query": "c_a",
+            "audio gate": "c_v"
+          }
+        },
+        "zero_gate_identity_error": 0.0,
+        "directional_perturbations": {
+          "A affects V: active": 0.11435425281524658,
+          "A affects V: va_gate_scale=0": 0.0,
+          "V affects A: active": 0.13779085874557495,
+          "V affects A: av_gate_scale=0": 0.0
+        },
+        "audio_loss_gradient_to_video_on": 0.008179273456335068,
+        "audio_loss_gradient_to_video_off": 0.0,
+        "forward_modes": {
+          "joint vs video-only, open fusion": 0.3279338777065277,
+          "joint with video-query cut vs video-only": 0.0,
+          "frozen-modality model time (1000*t_final)": 0.0,
+          "joint output shapes": [
+            [
+              1,
+              2,
+              4,
+              4,
+              4
+            ],
+            [
+              1,
+              6,
+              4
+            ]
+          ]
+        }
       }
     },
     {
@@ -238,7 +381,7 @@
       "cells": 11,
       "code_cells": 4,
       "executed": true,
-      "elapsed_seconds": 2.5250552918296307,
+      "elapsed_seconds": 2.466855000006035,
       "measurements": {
         "finite_difference_target_error": 6.651878356933594e-05,
         "heldout_initial_video_audio": [
@@ -258,7 +401,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.1009586248546839,
+      "elapsed_seconds": 1.10786166600883,
       "measurements": {
         "native_grid_shapes": [
           [
@@ -287,7 +430,7 @@
       "cells": 11,
       "code_cells": 4,
       "executed": true,
-      "elapsed_seconds": 1.3008030839264393,
+      "elapsed_seconds": 1.1504197078756988,
       "measurements": {
         "known_ode_errors": [
           {
@@ -366,7 +509,7 @@
       "cells": 13,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.0265289589297026,
+      "elapsed_seconds": 0.9716335420962423,
       "measurements": {
         "packed_shapes": [
           [
@@ -403,7 +546,7 @@
       "cells": 12,
       "code_cells": 5,
       "executed": true,
-      "elapsed_seconds": 1.0640502078458667,
+      "elapsed_seconds": 1.1068065417930484,
       "measurements": {
         "illustrative_3B_memory_terms": {
           "BF16 weights GiB": 5.587935447692871,
@@ -411,7 +554,7 @@
           "FP32 gradients GiB": 11.175870895385742,
           "Two FP32 Adam moments GiB": 22.351741790771484
         },
-        "tiny_cpu_forward_median_seconds": 0.0018135001882910728,
+        "tiny_cpu_forward_median_seconds": 0.0017847500275820494,
         "mps_available": true,
         "mlx_installed": false,
         "pretrained_or_mlx_parity_run": false
@@ -423,7 +566,7 @@
       "cells": 11,
       "code_cells": 4,
       "executed": true,
-      "elapsed_seconds": 1.0842054581735283,
+      "elapsed_seconds": 1.0343699168879539,
       "measurements": {
         "smoke_node_count": 12,
         "smoke_link_count": 14,
