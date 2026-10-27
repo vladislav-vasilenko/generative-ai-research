@@ -1,0 +1,20 @@
+{
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.14",
+    "torch": "2.8.0",
+    "device": "mps",
+    "total_memory_GiB": 48.0,
+    "available_memory_GiB": 19.7
+  },
+  "passed": [
+    "CPU tiny DiT forward/backward",
+    "strict meta checkpoint load + regenerated nonpersistent buffers",
+    "BF16 eager forward with FP32 positional buffers",
+    "query chunk equivalence, padded bool mask",
+    "MPS tiny DiT forward torch.float32",
+    "MPS tiny DiT forward torch.bfloat16"
+  ],
+  "pretrained_weights_tested": false,
+  "full_5s_inference_tested": false
+}

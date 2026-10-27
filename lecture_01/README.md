@@ -12,16 +12,14 @@
 
 ## Запуск локально
 
-Команды выполняются **из корня репозитория**. Используйте Python 3.11 или 3.12.
+Команды выполняются **из корня репозитория**. Установите [uv](https://docs.astral.sh/uv/getting-started/installation/); Python 3.12 задан в `.python-version`, версии библиотек — в `uv.lock`.
 
 ```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r lecture_01/requirements.txt
-python -m jupyterlab lecture_01/lab_one_ru.ipynb
+uv sync --locked
+uv run --locked jupyter lab lecture_01/lab_one_ru_exercises.ipynb
 ```
 
-В Windows активация: `.venv\Scripts\activate`. Если уже установили корневой `requirements.txt`, повторная установка не нужна. Выберите ядро Python из `.venv`. Все этапы доступны на CPU; GPU не требуется.
+В Jupyter или VS Code выберите ядро Python из корневой `.venv`. В VS Code: **Select Kernel → Select Another Kernel → Python Environments → `.venv`**. Команда `import sys; print(sys.executable)` в ячейке должна показать `.venv/bin/python` (в Windows — `.venv\Scripts\python.exe`). Активация окружения не требуется. Все этапы доступны на CPU; GPU не требуется.
 
 Выполняйте ячейки сверху вниз через **Shift+Enter**. Полный запуск: **Kernel → Restart Kernel and Run All Cells**. В разделах есть условие, инструкция, код, рисунок и разбор. После изменения класса заново выполните ячейки, создающие его экземпляры.
 
@@ -47,8 +45,8 @@ python -m jupyterlab lecture_01/lab_one_ru.ipynb
 ## Проверки и повторное получение результатов
 
 ```bash
-python -m pytest lecture_01/tests -q
-python lecture_01/scripts/execute_notebook.py --animation
+uv run --locked pytest lecture_01/tests -q
+uv run --locked python lecture_01/scripts/execute_notebook.py --animation
 ```
 
 Первая команда проверяет аналитические решения, градиенты и полноту перевода. Вторая выполняет все ячейки в чистом ядре, сохраняет результаты и обновляет HTML. Без `--animation` запуск пропустит анимацию.
@@ -56,8 +54,8 @@ python lecture_01/scripts/execute_notebook.py --animation
 Для правок перевода есть [сборщик](scripts/build_notebooks.py). **Он перезаписывает обе русские версии и очищает их выводы**; свои ответы храните в отдельной копии. После правок:
 
 ```bash
-python lecture_01/scripts/build_notebooks.py
-python lecture_01/scripts/execute_notebook.py --animation
+uv run --locked python lecture_01/scripts/build_notebooks.py
+uv run --locked python lecture_01/scripts/execute_notebook.py --animation
 ```
 
 ## Мини-отчёт

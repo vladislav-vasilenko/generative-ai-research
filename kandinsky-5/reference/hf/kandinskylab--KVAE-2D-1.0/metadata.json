@@ -1,0 +1,90 @@
+{
+  "_id": "691dc0abcdefee48ed0ae947",
+  "id": "kandinskylab/KVAE-2D-1.0",
+  "private": false,
+  "library_name": "kvae",
+  "tags": [
+    "kvae",
+    "diffusers",
+    "safetensors",
+    "pytorch",
+    "model_hub_mixin",
+    "pytorch_model_hub_mixin",
+    "image-tokenizer",
+    "variational-autoencoder",
+    "image-reconstruction",
+    "diffusion-models",
+    "license:mit",
+    "region:us"
+  ],
+  "downloads": 173,
+  "likes": 9,
+  "modelId": "kandinskylab/KVAE-2D-1.0",
+  "author": "kandinskylab",
+  "sha": "45da99ef5c7c57ae720200319cc0d43e4df670c2",
+  "lastModified": "2026-08-10T10:31:50.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {},
+  "cardData": {
+    "library_name": "kvae",
+    "license": "mit",
+    "tags": [
+      "pytorch",
+      "model_hub_mixin",
+      "pytorch_model_hub_mixin",
+      "image-tokenizer",
+      "variational-autoencoder",
+      "image-reconstruction",
+      "diffusion-models"
+    ]
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes"
+    },
+    {
+      "rfilename": "LICENSE.txt"
+    },
+    {
+      "rfilename": "README.md"
+    },
+    {
+      "rfilename": "assets/kvae-black.png"
+    },
+    {
+      "rfilename": "assets/kvae-white.png"
+    },
+    {
+      "rfilename": "assets/kvae2d-charts.png"
+    },
+    {
+      "rfilename": "assets/kvae2d-comparison.png"
+    },
+    {
+      "rfilename": "assets/kvae3d-comparison.png"
+    },
+    {
+      "rfilename": "config.json"
+    },
+    {
+      "rfilename": "diffusers/config.json"
+    },
+    {
+      "rfilename": "diffusers/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "rfilename": "model.safetensors"
+    }
+  ],
+  "spaces": [],
+  "createdAt": "2025-11-19T13:05:47.000Z",
+  "safetensors": {
+    "parameters": {
+      "BF16": 217426723
+    },
+    "total": 217426723
+  },
+  "usedStorage": 1745116842
+}

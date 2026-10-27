@@ -1,0 +1,12 @@
+.venv*/
+weights/
+artifacts/*
+!artifacts/.gitkeep
+__pycache__/
+.ipynb_checkpoints/
+upstream/
+vendor/
+reports/executed/
+publish/
+*.zip
+.DS_Store

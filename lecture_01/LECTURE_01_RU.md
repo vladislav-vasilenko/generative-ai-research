@@ -39,12 +39,12 @@ $$X_{t+h}=X_t+h\,u_t(X_t)+\sqrt h\,\sigma_t z,\qquad z\sim N(0,I).$$
 
 Для броуновского движения со стартом в нуле:
 
-$$\mathbb E[X_t]=0,\quad\operatorname{Var}(X_t)=\sigma^2t.$$
+$$\mathbb E[X_t]=0,\quad\mathrm{Var}(X_t)=\sigma^2t.$$
 
 Для OU со стартом в фиксированной точке:
 
 $$\mathbb E[X_t]=x_0e^{-\theta t},\quad
-\operatorname{Var}(X_t)=\frac{\sigma^2}{2\theta}(1-e^{-2\theta t}).$$
+\mathrm{Var}(X_t)=\frac{\sigma^2}{2\theta}(1-e^{-2\theta t}).$$
 
 Стационарная дисперсия непрерывного процесса равна $\sigma^2/(2\theta)$. Для численной схемы коэффициент рекурсии $a=1-\theta h$. При $|a|<1$ из $V=a^2V+\sigma^2h$ получаем:
 

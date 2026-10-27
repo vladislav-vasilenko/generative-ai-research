@@ -7826,7 +7826,7 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="%D0%9A%D0%B0%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%82%D1%8C-%D1%81-%D1%8D%D1%82%D0%B8%D0%BC-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA%D0%BE%D0%BC">Как работать с этим ноутбуком<a class="anchor-link" href="#%D0%9A%D0%B0%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%82%D1%8C-%D1%81-%D1%8D%D1%82%D0%B8%D0%BC-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA%D0%BE%D0%BC">¶</a></h2><ol>
-<li>Используйте Python 3.11/3.12 и установите зависимости по <code>README.md</code>. В Google Colab загрузите этот файл через <strong>File → Upload notebook</strong>; при нехватке пакетов выполните <code>%pip install torch numpy matplotlib seaborn scipy tqdm</code> в отдельной ячейке.</li>
+<li>Локально используйте окружение из корня репозитория: <code>uv sync --locked</code> устанавливает зависимости из <code>uv.lock</code>, а <code>.python-version</code> выбирает Python 3.12. Откройте файл в VS Code и выберите <strong>Select Kernel → Python Environments → <code>.venv</code></strong>, либо запустите <code>uv run --locked jupyter lab</code>. В ячейке <code>import sys; print(sys.executable)</code> можно проверить, что используется Python из проектной <code>.venv</code>. В Google Colab загрузите этот файл через <strong>File → Upload notebook</strong>; при нехватке пакетов выполните <code>%pip install torch numpy matplotlib seaborn scipy tqdm</code> в отдельной ячейке (Colab использует собственное окружение).</li>
 <li>Выполняйте ячейки сверху вниз с <strong>Shift+Enter</strong>. Для проверки с чистого состояния выберите <strong>Kernel → Restart Kernel and Run All Cells</strong>. Состояние хранится в ядре: определение класса само по себе ничего не рисует.</li>
 <li>Прочитайте условие, запустите реализацию, рассмотрите график, затем измените <strong>один</strong> параметр и повторите эксперимент. При переопределении класса заново выполните ячейки, создающие его экземпляры.</li>
 <li>Ответы и дополнительные эксперименты помечены <strong>«Разбор»</strong> и <strong>«Дополнение проекта»</strong>. В версии для самостоятельной работы решения скрыты заменой на заготовки.</li>
@@ -7979,8 +7979,8 @@ $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t,\qquad X_0=x_0.$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">Дополнение проекта: как читать интерфейсы<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">¶</a></h3><p><code>xt</code> — пачка точек формы <code>(batch_size, dim)</code>. Например, <code>(500, 1)</code> — 500 частиц на прямой, <code>(1000, 2)</code> — 1000 частиц на плоскости. <code>t</code> и <code>h</code> — скаляры (тензоры формы <code>()</code>).</p>
-<p><code>drift_coefficient</code> возвращает скорость для каждой точки. <code>diffusion_coefficient</code> в этой работе возвращает коэффициенты независимого шума по координатам той же формы, что <code>xt</code>; это диагональный шум, а не произвольная матрица диффузии. <code>ABC</code> задаёт интерфейс, <code>@abstractmethod</code> требует реализацию в потомке.</p>
+<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">Дополнение проекта: как читать интерфейсы<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BA%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B">¶</a></h3><p><code>xt</code> — пачка точек формы <code>(batch_size, dim)</code>. Например, <code>(500, 1)</code> — 500 частиц на прямой, <code>(1000, 2)</code> — 1000 частиц на плоскости. <code>t</code> и <code>h</code> — скаляры (тензоры формы <code>()</code>). Форма <code>()</code> означает ноль осей, а не отсутствие значения: <code>torch.tensor(0.5)</code> — скаляр формы <code>()</code>, а <code>torch.tensor([0.5])</code> — вектор формы <code>(1,)</code>. Время <code>t</code> и длительность шага <code>h</code> общие для всех точек пачки.</p>
+<p><code>drift_coefficient(xt, t)</code> вычисляет $u_t(x)$ для каждой точки: скорость для ОДУ и снос (направленную составляющую движения) для СДУ. <code>diffusion_coefficient</code> в этой работе возвращает коэффициенты независимого шума по координатам той же формы, что <code>xt</code>; это диагональный шум, а не произвольная матрица диффузии. Наследование от <code>ABC</code> позволяет определить абстрактный базовый класс, который здесь выполняет роль интерфейса. <code>@abstractmethod</code> требует реализации метода в конкретном наследнике; поэтому создать экземпляр <code>ODE()</code> без реализации сноса нельзя.</p>
 <p>Интервал $[0,1]$ в определении можно заменить на $[0,T]$; поэтому далее встречаются $T=5,10,15$. Слово «скорость» для броуновской части лишь интуиция: обычной производной у её траекторий почти наверное нет.</p>
 </div>
 </div>
@@ -7996,18 +7996,57 @@ $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t,\qquad X_0=x_0.$$
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ODE</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">drift_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xt</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Снос ОДУ: состояние xt (batch_size, dim), время t (); результат той же формы, что xt."""</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Вычисляет снос ОДУ — вектор скорости u_t(x) для каждой точки.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">            xt: положения точек в момент t, форма (batch_size, dim).</span>
+<span class="sd">                Каждая строка — одна точка в пространстве размерности dim.</span>
+<span class="sd">            t: текущее время, общее для всех точек; скалярный тензор формы ().</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">            Тензор скоростей формы (batch_size, dim), той же формы, что xt.</span>
+<span class="sd">            Строка результата — скорость соответствующей точки.</span>
+<span class="sd">            Для шага Эйлера эту скорость умножают на h и прибавляют к xt.</span>
+<span class="sd">        """</span>
         <span class="k">pass</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SDE</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">drift_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xt</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Снос СДУ: состояние xt (batch_size, dim), время t (); результат (batch_size, dim)."""</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Вычисляет снос СДУ u_t(x) — направленную составляющую движения.</span>
+<span class="sd">        Это коэффициент при dt; случайное приращение вычисляется отдельно.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">            xt: положения точек в момент t, форма (batch_size, dim).</span>
+<span class="sd">                Каждая строка — одна точка в пространстве размерности dim.</span>
+<span class="sd">            t: текущее время, общее для всех точек; скалярный тензор формы ().</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">            Тензор коэффициентов сноса формы (batch_size, dim).</span>
+<span class="sd">            Строка результата — снос для соответствующей точки.</span>
+<span class="sd">            Симулятор умножает результат на длительность шага h.</span>
+<span class="sd">        """</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">diffusion_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xt</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Коэффициенты независимого шума по координатам; результат (batch_size, dim)."""</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Вычисляет коэффициенты диффузии — масштаб шума по координатам.</span>
+<span class="sd">        В этой лабораторной шум диагональный: каждой координате соответствует</span>
+<span class="sd">        свой коэффициент и независимое стандартное нормальное приращение.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">            xt: положения точек в момент t, форма (batch_size, dim).</span>
+<span class="sd">                Интерфейс допускает зависимость коэффициентов от положения.</span>
+<span class="sd">            t: текущее время, общее для всех точек; скалярный тензор формы ().</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">            Тензор коэффициентов диффузии формы (batch_size, dim).</span>
+<span class="sd">            Для скалярного sigma_t все элементы равны этому коэффициенту.</span>
+<span class="sd">            Симулятор отдельно умножает результат на sqrt(h) и случайный шум.</span>
+<span class="sd">        """</span>
         <span class="k">pass</span>
 </pre></div>
 </div>
@@ -8021,7 +8060,7 @@ $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t,\qquad X_0=x_0.$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Примечание.</strong> ОДУ можно считать частным случаем СДУ с нулевым коэффициентом диффузии. Эта интуиция верна, но в лабораторной мы рассматриваем их отдельно ради наглядности и производительности.</p>
+<p><strong>Примечание.</strong> ОДУ является частным случаем СДУ с нулевым коэффициентом диффузии: при $\sigma_t=0$ случайное слагаемое $\sigma_t\,dW_t$ исчезает, и остаётся $dX_t=u_t(X_t)\,dt$. Однако в этой лабораторной мы используем отдельные классы <code>ODE</code> и <code>SDE</code> ради наглядности и производительности: для ОДУ достаточно вычислять снос, а симулятор Эйлера не генерирует случайный шум.</p>
 </div>
 </div>
 </div>
@@ -8038,7 +8077,110 @@ $$dX_t=u_t(X_t)\,dt\quad\longrightarrow\quad X_{t+h}=X_t+h\,u_t(X_t),$$
 где $h=\Delta t$ — <strong>шаг по времени</strong>. Схема Эйлера—Маруямы:
 $$dX_t=u_t(X_t)\,dt+\sigma_t\,dW_t\quad\longrightarrow\quad
 X_{t+h}=X_t+h\,u_t(X_t)+\sqrt h\,\sigma_t z_t,\qquad z_t\sim N(0,I_d).$$
-Приступим к реализации!</p>
+Здесь формулы справа задают <strong>численный шаг</strong>. В общем случае они приближают решение непрерывного уравнения, а не дают его точное значение.</p>
+<h3 id="%D0%A7%D1%82%D0%BE-%D0%B8%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE-%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%BE%D0%B8%D1%82-%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D1%8F%D1%82%D1%8C">Что именно предстоит вычислять<a class="anchor-link" href="#%D0%A7%D1%82%D0%BE-%D0%B8%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE-%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%BE%D0%B8%D1%82-%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D1%8F%D1%82%D1%8C">¶</a></h3><p>Поле $u_t(x)$ отвечает на вопрос <strong>«какова скорость в этой точке сейчас?»</strong>, а метод <code>step</code> — <strong>«куда мы приблизительно попадём через время $h$?»</strong>. Это две разные задачи. Вычисление поля уже предусмотрено интерфейсом <code>drift_coefficient</code>; в задании 1.1 нужно использовать этот метод для построения одного шага.</p>
+<p>В формуле $dX_t=u_t(X_t)\,dt$ символы $dX_t$ и $dt$ обозначают бесконечно малые изменения. Для ОДУ можно записать ту же связь как $X'(t)=u_t(X(t))$. Компьютер выполняет конечные шаги: пусть сейчас время $t$, положение $X_t$, а следующий момент — $t+h$. При маленьком $h$ скорость за этот промежуток меняется мало, поэтому
+$$\frac{X_{t+h}-X_t}{h}\approx u_t(X_t).$$
+Умножаем на $h$ и переносим текущее положение вправо:
+$$X_{t+h}\approx X_t+h\,u_t(X_t).$$
+Это и есть идея Эйлера: <strong>положение + перемещение</strong>, где перемещение равно <strong>скорость × длительность шага</strong>. Поле вычисляется в начале шага — в паре $(X_t,t)$. В следующем шаге его вычислят заново уже в новом положении и в новом времени.</p>
+<h3 id="%D0%9F%D0%BE%D1%87%D0%B5%D0%BC%D1%83-%D1%83-%D0%A1%D0%94%D0%A3-%D0%BF%D0%BE%D1%8F%D0%B2%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F-%D0%B5%D1%89%D1%91-%D0%BE%D0%B4%D0%BD%D0%BE-%D1%81%D0%BB%D0%B0%D0%B3%D0%B0%D0%B5%D0%BC%D0%BE%D0%B5">Почему у СДУ появляется ещё одно слагаемое<a class="anchor-link" href="#%D0%9F%D0%BE%D1%87%D0%B5%D0%BC%D1%83-%D1%83-%D0%A1%D0%94%D0%A3-%D0%BF%D0%BE%D1%8F%D0%B2%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F-%D0%B5%D1%89%D1%91-%D0%BE%D0%B4%D0%BD%D0%BE-%D1%81%D0%BB%D0%B0%D0%B3%D0%B0%D0%B5%D0%BC%D0%BE%D0%B5">¶</a></h3><p>В СДУ к направленному перемещению добавляется броуновское приращение. За время $h$:
+$$\Delta W_t=W_{t+h}-W_t\sim N(0,hI_d),\qquad
+\Delta W_t=\sqrt h\,z_t,\quad z_t\sim N(0,I_d).$$
+Равенство с $z_t$ описывает способ получить такое приращение: выбрать стандартный нормальный вектор и масштабировать его. <strong>$h$ остаётся шагом времени</strong>, а $\sqrt h$ — масштаб случайного перемещения. В одной координате $\operatorname{Var}(\sqrt h\,z_t)=h$; если умножить на $h$, получилась бы неверная дисперсия $h^2$.</p>
+<p>Коэффициент $\sigma_t$ дополнительно задаёт силу шума. Поэтому условно на текущее состояние случайное перемещение имеет нулевое среднее и ковариацию $h\sigma_t^2I_d$ для скалярного $\sigma_t$. <strong>На каждом шаге выбирается новый независимый $z_t$</strong>, но его стандартное нормальное распределение не меняется. Сила шума может меняться через $\sigma_t$.</p>
+<p>Мы приближаем снос его значением в начале шага и добавляем это приращение — получаем схему Эйлера—Маруямы. В лабораторной интерфейс диффузии допускает также коэффициенты по отдельным координатам и зависимость от положения; симулятор получает их через <code>diffusion_coefficient(xt, t)</code>.</p>
+<h3 id="%D0%9A%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%BE%D0%B1%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4-%D0%BA%D0%BE%D0%B4%D0%BE%D0%BC">Как читать обозначения перед кодом<a class="anchor-link" href="#%D0%9A%D0%B0%D0%BA-%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%BE%D0%B1%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4-%D0%BA%D0%BE%D0%B4%D0%BE%D0%BC">¶</a></h3><table>
+<thead>
+<tr>
+<th>В формуле</th>
+<th>В методе <code>step</code></th>
+<th>Что хранится</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$X_t$</td>
+<td><code>xt</code></td>
+<td>Текущие положения всех частиц, форма <code>(batch_size, dim)</code></td>
+</tr>
+<tr>
+<td>$t$</td>
+<td><code>t</code></td>
+<td>Одно текущее время для всей пачки, форма <code>()</code></td>
+</tr>
+<tr>
+<td>$h$</td>
+<td><code>h</code></td>
+<td>Длительность одного шага, форма <code>()</code></td>
+</tr>
+<tr>
+<td>$u_t(X_t)$</td>
+<td>Результат <code>drift_coefficient(xt, t)</code></td>
+<td>Снос для каждой частицы и координаты</td>
+</tr>
+<tr>
+<td>$\sigma_t$</td>
+<td>Результат <code>diffusion_coefficient(xt, t)</code></td>
+<td>Коэффициенты диффузии, развёрнутые до формы <code>xt</code></td>
+</tr>
+<tr>
+<td>$z_t$</td>
+<td>Новая стандартная нормальная выборка</td>
+<td>Отдельное число для каждой частицы и координаты</td>
+</tr>
+<tr>
+<td>$X_{t+h}$</td>
+<td>Возвращаемый результат <code>step</code></td>
+<td>Новые положения той же формы, что <code>xt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Начальное условие $X_0=x_0$ задаётся <strong>до</strong> первого шага. Внутри <code>step</code> используется переданное текущее состояние; заново начинать с $x_0$ не нужно. Приступим к реализации!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=guide-08">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BE%D0%B4%D0%B8%D0%BD-%D1%88%D0%B0%D0%B3-%D0%B8-%D1%86%D0%B5%D0%BB%D0%B0%D1%8F-%D1%82%D1%80%D0%B0%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D1%8F">Дополнение проекта: один шаг и целая траектория<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BE%D0%B4%D0%B8%D0%BD-%D1%88%D0%B0%D0%B3-%D0%B8-%D1%86%D0%B5%D0%BB%D0%B0%D1%8F-%D1%82%D1%80%D0%B0%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D1%8F">¶</a></h3><p>Следующий класс <code>Simulator</code> уже содержит цикл по времени. Чтобы понять его, представьте сетку <code>ts</code> со значениями $0,\;0.1,\;0.2,\;0.3$. Цикл передаёт в <code>step</code> последовательно:</p>
+<table>
+<thead>
+<tr>
+<th>Вызов</th>
+<th>Текущее время <code>t</code></th>
+<th>Длительность <code>h</code></th>
+<th>Состояние на входе</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Первый</td>
+<td>$0$</td>
+<td>$0.1$</td>
+<td>Начальные положения</td>
+</tr>
+<tr>
+<td>Второй</td>
+<td>$0.1$</td>
+<td>$0.1$</td>
+<td>Результат первого шага</td>
+</tr>
+<tr>
+<td>Третий</td>
+<td>$0.2$</td>
+<td>$0.1$</td>
+<td>Результат второго шага</td>
+</tr>
+</tbody>
+</table>
+<p>Для неравномерной сетки <code>h</code> может меняться: цикл вычисляет разность соседних времён. Обозначения <code>dt</code> в абстрактном методе и <code>h</code> в наследниках здесь имеют один смысл — конечная длительность шага.</p>
+<p><strong>В задании 1.1 нужно реализовать только один шаг.</strong> Цикл, обновление времени и сохранение траектории уже сделаны. <code>step</code> должен вернуть новый тензор положений; не нужно менять <code>t</code>, добавлять второй цикл или возвращать всю траекторию. Если внутри <code>step</code> написать только выражение без <code>return</code>, Python вернёт <code>None</code>, и моделирование не сможет продолжиться.</p>
+<p><code>simulate</code> хранит только последний результат. <code>simulate_with_trajectory</code> хранит также начальную точку: для <code>N</code> узлов времени делает <code>N-1</code> шагов и возвращает форму <code>(batch_size, N, dim)</code>. Например, четыре узла из таблицы дают три обновления и четыре сохранённых состояния.</p>
 </div>
 </div>
 </div>
@@ -8126,13 +8268,51 @@ X_{t+h}=X_t+h\,u_t(X_t)+\sqrt h\,\sigma_t z_t,\qquad z_t\sim N(0,I_d).$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BE%D1%82-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D1%8B-%D0%BA-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B0%D0%BC-%D0%BA%D0%BE%D0%B4%D0%B0">Дополнение проекта: от формулы к строкам кода<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BE%D1%82-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D1%8B-%D0%BA-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B0%D0%BC-%D0%BA%D0%BE%D0%B4%D0%B0">¶</a></h3><ol>
-<li>Получите снос методом <code>drift_coefficient(xt, t)</code>.</li>
-<li>Умножьте его на <code>h</code> и прибавьте к текущему состоянию.</li>
-<li>Для СДУ отдельно получите коэффициент диффузии и <code>torch.randn_like(xt)</code>.</li>
-<li>Умножьте шум на <code>torch.sqrt(h)</code>: приращение $W_{t+h}-W_t$ имеет дисперсию $h$, а не $h^2$.</li>
+<h3 id="%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BF%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0-%D0%BA-%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9-%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8">Дополнение проекта: подготовка к самостоятельной реализации<a class="anchor-link" href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0:-%D0%BF%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0-%D0%BA-%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9-%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8">¶</a></h3><h4 id="%D0%9E%D1%82%D0%BA%D1%83%D0%B4%D0%B0-%D0%B1%D1%80%D0%B0%D1%82%D1%8C-%D0%BF%D0%BE%D0%BB%D0%B5-%D0%B8-%D0%BA%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82%D1%8B">Откуда брать поле и коэффициенты<a class="anchor-link" href="#%D0%9E%D1%82%D0%BA%D1%83%D0%B4%D0%B0-%D0%B1%D1%80%D0%B0%D1%82%D1%8C-%D0%BF%D0%BE%D0%BB%D0%B5-%D0%B8-%D0%BA%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82%D1%8B">¶</a></h4><p>В <code>EulerSimulator.__init__</code> строка <code>self.ode = ode</code> сохраняет переданный объект уравнения. Поэтому для вычисления поля обращаются к методу <strong>этого объекта</strong>: <code>self.ode.drift_coefficient(xt, t)</code>. В <code>EulerMaruyamaSimulator</code> уравнение хранится в <code>self.sde</code>, у которого доступны оба метода: <code>drift_coefficient</code> и <code>diffusion_coefficient</code>.</p>
+<p>Симулятор должен работать с разными уравнениями: поле может быть $-x$, $-\theta x$ или зависеть от времени. Поэтому в методе <code>step</code> не нужно самостоятельно задавать конкретное поле — нужно запросить его у переданного уравнения. Возвращаемый снос уже является тензором чисел; дифференцировать <code>xt</code> для его получения не требуется.</p>
+<h4 id="%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D1%81-%D1%82%D0%B5%D0%BD%D0%B7%D0%BE%D1%80%D0%B0%D0%BC%D0%B8-%D0%BF%D0%BE%D0%BD%D0%B0%D0%B4%D0%BE%D0%B1%D1%8F%D1%82%D1%81%D1%8F">Какие операции с тензорами понадобятся<a class="anchor-link" href="#%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D1%81-%D1%82%D0%B5%D0%BD%D0%B7%D0%BE%D1%80%D0%B0%D0%BC%D0%B8-%D0%BF%D0%BE%D0%BD%D0%B0%D0%B4%D0%BE%D0%B1%D1%8F%D1%82%D1%81%D1%8F">¶</a></h4><table>
+<thead>
+<tr>
+<th>Операция PyTorch</th>
+<th>Смысл в задании</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a + b</code></td>
+<td>Сложение соответствующих координат</td>
+</tr>
+<tr>
+<td><code>a * b</code></td>
+<td>Поэлементное умножение; скаляр масштабирует все элементы</td>
+</tr>
+<tr>
+<td><code>torch.sqrt(h)</code></td>
+<td>Квадратный корень из длительности шага</td>
+</tr>
+<tr>
+<td><code>torch.randn_like(xt)</code></td>
+<td>Новая выборка стандартного нормального шума формы <code>xt</code>, с теми же <code>device</code> и <code>dtype</code></td>
+</tr>
+</tbody>
+</table>
+<p>Для этих формул используется поэлементное умножение <code>*</code>. Матричное умножение <code>@</code> здесь не требуется. Если <code>xt</code> имеет форму <code>(500, 2)</code>, снос, коэффициенты диффузии, шум и результат имеют ту же форму; скалярные <code>h</code> и <code>sqrt(h)</code> автоматически применяются ко всем элементам.</p>
+<p>Нельзя использовать одно случайное число на всю пачку: это дало бы общее возмущение всем частицам. <code>torch.randn_like(xt)</code> создаёт отдельные независимые значения по частицам и координатам. Новую выборку получают внутри каждого вызова <code>step</code>; перезапускать <code>set_seed()</code> внутри метода не нужно, иначе последовательность шума будет повторяться.</p>
+<h4 id="%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D1%81%D0%BC%D1%8B%D1%81%D0%BB%D0%B0-%D0%BD%D0%B0-%D1%87%D0%B8%D1%81%D0%BB%D0%B0%D1%85">Проверка смысла на числах<a class="anchor-link" href="#%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D1%81%D0%BC%D1%8B%D1%81%D0%BB%D0%B0-%D0%BD%D0%B0-%D1%87%D0%B8%D1%81%D0%BB%D0%B0%D1%85">¶</a></h4><p>Рассмотрим одну двумерную точку $x=(2,-1)$, снос $u_t(x)=(-2,1)$ и шаг $h=0.1$. Направленное перемещение:
+$$h\,u_t(x)=(-0.2,0.1).$$
+После шага Эйлера положение должно стать $(1.8,-0.9)$. <strong>Снос и перемещение — разные величины:</strong> снос сначала умножается на время, и лишь затем прибавляется к положению.</p>
+<p>Для СДУ пусть дополнительно $\sigma_t=0.5$, а при одном вызове выпал вектор $z_t=(1,-2)$. Случайное перемещение:
+$$\sigma_t\sqrt h\,z_t\approx(0.1581,-0.3162).$$
+Добавляя его к результату направленного шага, получаем примерно $(1.9581,-1.2162)$. При другом $z_t$ результат будет другим. Этот пример проверяет арифметику с заданной выборкой; при обычном запуске случайные числа заранее неизвестны.</p>
+<h4 id="%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-%D0%BD%D0%B0%D0%B4-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC">Порядок работы над заданием<a class="anchor-link" href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-%D0%BD%D0%B0%D0%B4-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC">¶</a></h4><ol>
+<li>Сначала выпишите на бумаге три величины: текущее положение, снос, направленное перемещение. Определите, что из них должен вернуть <code>step</code>.</li>
+<li>Реализуйте шаг ОДУ, используя сохранённый объект <code>self.ode</code>.</li>
+<li>Для СДУ отдельно обозначьте коэффициенты диффузии, стандартный нормальный шум и случайное перемещение. После этого соедините направленную и случайную части с текущим положением.</li>
+<li>Сохраните форму <code>(batch_size, dim)</code> и возвращайте новый тензор; не изменяйте входное состояние операциями вроде <code>+=</code>.</li>
+<li>Выполните ячейки с классами после редактирования. Если меняли определение класса, создайте его экземпляр заново.</li>
 </ol>
-<p><code>simulate</code> хранит только последний результат. <code>simulate_with_trajectory</code> хранит и начальную точку, поэтому для <code>N</code> узлов делает <code>N-1</code> шагов и возвращает форму <code>(batch_size, N, dim)</code>. Чем больше частиц и узлов, тем больше памяти нужно.</p>
+<p><strong>Вопросы для самопроверки:</strong> при нулевом сносе шаг ОДУ должен оставить точку на месте; при нулевой диффузии шаг СДУ должен совпасть с шагом ОДУ. При нулевом сносе и ненулевой диффузии остаётся только случайное перемещение. Результат должен содержать новое положение, а не только приращение и не пару из положения и времени.</p>
+<p>После реализации обоих методов выполните следующий эксперимент с точным решением ОДУ. Для следующих опытов с броуновским движением и OU потребуется заполнить соответствующие методы в части 2. Остальные незавершённые задания могут пока оставаться заготовками.</p>
 </div>
 </div>
 </div>
@@ -42906,7 +43086,7 @@ $$\frac{\sigma^2}{2}\nabla\log p(X_t)
 </ul>
 <p><strong>Мини-отчёт:</strong> для каждого этапа сохраните параметры, рисунок, теоретическое ожидание, наблюдение и возможную причину расхождения. Не ограничивайтесь фразой «получилось похоже».</p>
 <p><strong>Связь с остальным репозиторием.</strong> Ноутбук <code>Diffusion_DDPM_Research.ipynb</code> изучает добавление и удаление шума на CIFAR-10 с нейросетями. Здесь подготовлены основы непрерывного времени и численного семплирования. Следующий шаг курса — научиться задавать подходящие поля с помощью обучения.</p>
-<p><strong>Готовность:</strong> перезапустите ядро и выполните все ячейки сверху вниз. В версии с решениями должны появиться все статические графики и пройти численные проверки; анимация включается отдельно. Дополнительные проверки можно запустить из корня репозитория: <code>python -m pytest lecture_01/tests -q</code>.</p>
+<p><strong>Готовность:</strong> перезапустите ядро и выполните все ячейки сверху вниз. В версии с решениями должны появиться все статические графики и пройти численные проверки; анимация включается отдельно. Дополнительные проверки можно запустить из корня репозитория: <code>uv run --locked pytest lecture_01/tests -q</code>.</p>
 </div>
 </div>
 </div>

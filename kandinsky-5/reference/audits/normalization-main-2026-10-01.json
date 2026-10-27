@@ -1,0 +1,63 @@
+{
+  "checked_at_utc": "2026-09-30T21:13:59Z",
+  "main_commit": "3a74261b957df0446c1969c5cedf8bbb07969ac2",
+  "main_commit_date": "2026-01-19T10:32:24Z",
+  "commit_api": "https://api.github.com/repos/kandinskylab/kandinsky-5/commits/main",
+  "tree_api": "https://api.github.com/repos/kandinskylab/kandinsky-5/git/trees/3a74261b957df0446c1969c5cedf8bbb07969ac2?recursive=1",
+  "files": [
+    {
+      "path": "kandinsky/generation_utils.py",
+      "git_blob_sha1": "19f71b6c22a37bf6e604d88a01538e283252b1ef",
+      "sha256": "519e757db38fe1f3894c2266e9bb6c0deceec210c557515081729f37b10d285b",
+      "bytes": 18972
+    },
+    {
+      "path": "kandinsky/i2i_pipeline.py",
+      "git_blob_sha1": "2ef2a6ad2a229982e3cb3dfc6bd5a2496c1e2165",
+      "sha256": "4e4cd54d9cf0a1d48a9e71ba1305e8f7ba5e53bdcd0ac96117e7740381272d2b",
+      "bytes": 14901
+    },
+    {
+      "path": "kandinsky/i2v_pipeline.py",
+      "git_blob_sha1": "741922f1df29e74534bc7428cf24b9b477131d25",
+      "sha256": "8d525deb1390f729460688ced6433ff985bc3ac976ebbd3a4208c9846a5dedf6",
+      "bytes": 14154
+    },
+    {
+      "path": "kandinsky/models/vae.py",
+      "git_blob_sha1": "9d6931edd8427e5e6d6289f68ff58156a9210b54",
+      "sha256": "980b70ea6f38160e964bc185c031227f1a5cd028cdad9735694fadb91bd3f47d",
+      "bytes": 44437
+    },
+    {
+      "path": "kandinsky/t2i_pipeline.py",
+      "git_blob_sha1": "0fce26d778a61fd75ac7842c0bbb6f5ed95aef89",
+      "sha256": "7482baa7714b8381ede9888005f509ce0104d5a11c309bd44bee0c04d2860b29",
+      "bytes": 3836
+    },
+    {
+      "path": "kandinsky/t2v_pipeline.py",
+      "git_blob_sha1": "2d4e4cda17585b11a4b69d95e8d778b69afd402f",
+      "sha256": "6deb110de0f3b23b072908023bbfb5505eff6e7c241ad9f0db3cecfea746f055",
+      "bytes": 16015
+    },
+    {
+      "path": "kandinsky/utils.py",
+      "git_blob_sha1": "229eb19ed93fa30a4d5d40a712b8446a1a2e734f",
+      "sha256": "a19c64de1b4216236fbd8abaa13ed6e4f8d56a5c33c7a83db6792121fef408d6",
+      "bytes": 14924
+    },
+    {
+      "path": "comfyui/nodes_kandinsky.py",
+      "git_blob_sha1": "9437af215dbf29b087f85a5d3f1dbdf045a29f15",
+      "sha256": "63fe659aff1339ba93a6304f857d6041cccbc5659200e967206ba01120876cba",
+      "bytes": 26222
+    },
+    {
+      "path": "examples/inference_examples_i2v.ipynb",
+      "git_blob_sha1": "4f55fceb7acc0bd811e0c4793ca6b83b8737afea",
+      "sha256": "91e318409317c1a76f9528e878239c07be88a8a868b05196dd2ee1a1e6e18eb1",
+      "bytes": 2685
+    }
+  ]
+}

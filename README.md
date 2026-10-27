@@ -1,6 +1,6 @@
 # Generative AI Research
 
-Учебный репозиторий по генеративным моделям: от численного решения ОДУ и СДУ до обучения DDPM на изображениях. Материалы снабжены русскими пояснениями, формулами и экспериментами.
+Учебный репозиторий по генеративным моделям: от численного решения ОДУ и СДУ до обучения DDPM на изображениях и исследования текстовой генерации видео Kandinsky 5 Lite. Материалы снабжены русскими пояснениями, формулами и экспериментами.
 
 ## С чего начать
 
@@ -12,21 +12,33 @@
 | [Lab One: оригинал (EN)](lecture_01/references/lab_one_original.ipynb) | Исходная лабораторная MIT | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/lecture_01/references/lab_one_original.ipynb) |
 | [Lab One: HTML](lecture_01/outputs/lab_one_ru.html) | Выполненная работа без запуска Python | — |
 | [DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb) | Добавление шума, MLP, простая CNN и обратная генерация | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/applehawk/generative-ai-research/blob/main/Diffusion_DDPM_Research.ipynb) |
+| [Kandinsky: карта архитектуры](kandinsky-5/notebooks/00_start_and_training_map.ipynb) | Training map, frozen weights, маршрут из 14 лабораторных | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/00_start_and_training_map.ipynb) |
+| [Kandinsky: теория VAE](kandinsky-5/notebooks/02_vae.ipynb) | ELBO, reparameterization, обучение mini-VAE и видео latent | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/02_vae.ipynb) |
+| [Kandinsky: DiT и Flow Matching](kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb) | Velocity field, обучение и настоящий уменьшенный DiT | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb) |
+| [Kandinsky: Distill 5s CUDA](kandinsky-5/notebooks/10_colab_cuda_distill.ipynb) | Официальный T2V pipeline; полный pretrained запуск пока не проверен | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/10_colab_cuda_distill.ipynb) |
+| [Kandinsky: функции генерации](kandinsky-5/notebooks/12_generation_utils.ipynb) | Все 10 функций generation_utils.py: tensor contracts, CFG, sampling, conditioning и offload | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/12_generation_utils.ipynb) |
+| [Kandinsky: аудит normalization и VAE](kandinsky-5/notebooks/13_normalization_and_vae_contract_audit.ipynb) | Проверка main, численных граничных случаев и достижимости через реальные callers | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-5/notebooks/13_normalization_and_vae_contract_audit.ipynb) |
 
 Порядок: **конспект → Lab One с пояснениями → упражнения → DDPM**. Lecture 1 посвящена механике потоков и диффузий. Обучение DDPM идёт дальше первой лекции и служит отдельным продолжением.
 
+## Kandinsky 5 Lite: устройство и инференс
+
+[Полный курс и все 14 кнопок Open in Colab](kandinsky-5/README.md) продолжает темы потоков и диффузий: Qwen/CLIP conditioning, теория VAE, attention, CrossDiT, Flow Matching, sampling и отдельный KVAE. Каждая лабораторная объясняет шаги на небольшом примере и связывает их с закреплённой версией официального кода.
+
+Учебные эксперименты выполняются на CPU; MPS проверен на уменьшенных моделях. Цель полного инференса — Kandinsky 5.0 T2V Lite distilled16steps 5s на CUDA. Полная генерация с pretrained-весами пока не проверена. [Отчёт о проверке](kandinsky-5/reports/VALIDATION.md), [сторонние исходники и лицензии](kandinsky-5/THIRD_PARTY.md).
+
+Colab notebooks автоматически загружают вспомогательный код и устанавливают зависимости. У Kandinsky отдельные `pyproject.toml`, `uv.lock` и `.venv`: запуск описан в его README.
+
 ## Установка
 
-Python **3.11 или 3.12**. Выполните из корня репозитория:
+Установите [uv](https://docs.astral.sh/uv/getting-started/installation/) и выполните из корня репозитория. Python **3.12** выбирается через `.python-version`, зависимости — через `uv.lock`:
 
 ```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-python -m jupyterlab
+uv sync --locked
+uv run --locked jupyter lab
 ```
 
-Также можно открыть ноутбуки в [Google Colab](https://colab.research.google.com/).
+Для DDPM: `uv sync --locked --extra ddpm`, затем `uv run --locked --extra ddpm jupyter lab`. В VS Code выберите kernel **Python Environments → `.venv`** из корня репозитория. Активация окружения не нужна. Также можно открыть ноутбуки в [Google Colab](https://colab.research.google.com/).
 
 ## Lecture 1 / Lab One
 
@@ -57,8 +69,8 @@ python -m jupyterlab
 ## Проверка
 
 ```bash
-python -m pytest lecture_01/tests tests -q
-python lecture_01/scripts/execute_notebook.py --animation
+uv run --locked --extra ddpm pytest lecture_01/tests tests -q
+uv run --locked python lecture_01/scripts/execute_notebook.py --animation
 ```
 
 Тесты используют аналитические формулы и синтетические данные, без полноценного обучения на CIFAR-10. Вторая команда выполняет Lab One в чистом ядре и обновляет результаты и HTML. [Отчёт о проверке](VALIDATION.md) описывает проверенную функциональность и ограничения.
@@ -67,7 +79,9 @@ python lecture_01/scripts/execute_notebook.py --animation
 
 ```text
 Diffusion_DDPM_Research.ipynb    DDPM: комментарии и формулы
-requirements.txt               Общее окружение
+pyproject.toml                 Зависимости; DDPM — extra ddpm
+uv.lock                        Зафиксированные версии зависимостей
+.python-version                Python 3.12
 VALIDATION.md                  Результаты проверки
 tests/                         Проверки DDPM
 lecture_01/
@@ -75,7 +89,6 @@ lecture_01/
   LECTURE_01_RU.md              Конспект
   lab_one_ru.ipynb              Выполненный разбор
   lab_one_ru_exercises.ipynb    Самостоятельная работа
-  requirements.txt             Зависимости Lab One
   references/                  Оригинал и атрибуция
   scripts/                     Сборка перевода и выполнение
   tests/                       Проверки численных методов

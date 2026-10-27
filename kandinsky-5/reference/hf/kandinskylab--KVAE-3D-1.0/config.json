@@ -1,0 +1,24 @@
+{
+  "common": {
+    "experiment_name": "vae_ch16_488"
+  },
+  "data": {
+    "input_norm": "m11"
+  },
+  "model": {
+    "decoder_params": {
+      "ch": 128,
+      "num_res_blocks": 2,
+      "out_ch": 3,
+      "temporal_compress_times": 4,
+      "z_channels": 16
+    },
+    "encoder_params": {
+      "ch": 128,
+      "in_channels": 3,
+      "num_res_blocks": 2,
+      "temporal_compress_times": 4,
+      "z_channels": 16
+    }
+  }
+}
