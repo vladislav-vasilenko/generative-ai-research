@@ -413,3 +413,7 @@ Video-ветка encode_video несовместима с posterior-returning Hu
 ## Углубление HunyuanVideo VAE
 
 [Девять отдельных лабораторных](../vae/README.md) продолжают lab 02: ELBO/KL, causal Conv3D, shapes, spatial/temporal tiling, original free-VRAM heuristic и measurements. Используют корневое окружение стенда; не запускайте их в K5 environment автоматически.
+
+## Углубление DiT и текстового CrossDiT
+
+[Общий курс DiT → CrossDiT → π-Flow](../dit/README.md) дополняет lab06: [native K5 block](../dit/notebooks/02_single_stream_crossdit_k5.ipynb) с ручным SA→CA→FFN и сравнением с K6 single-stream counterpart в одинаковой точности. Whole-checkpoint/BF16/sparse parity не заявляется.

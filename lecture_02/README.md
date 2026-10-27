@@ -49,3 +49,7 @@ p(z \mid X_t = x).
 ## Дополнительный разбор
 
 После linear path Lab 2 Part 4: Rectified Flow, coupling и reflow (опыт B). [Материалы, первичные источники и CPU-контроли](../curriculum/SUPPLEMENTARY_READING.md). Основной порядок лекций/labs не меняется.
+
+## Продолжение CFM: DiT и policy imitation
+
+[DiT lab00](../dit/notebooks/00_probability_path_and_learning_route.ipynb) выводит time reversal, posterior marginal velocity и Gaussian score bridge. [Lab09](../dit/notebooks/09_miniature_policy_imitation_distillation.ipynb) сравнивает CFM regression с frozen-teacher target на detached student rollout; это учебное дополнение по π-Flow, а не исходный MIT training task.

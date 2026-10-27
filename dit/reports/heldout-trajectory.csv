@@ -1,0 +1,4 @@
+fraction_of_segment,state_MSE,network_calls_per_source_segment,policy_density
+0.25,5.705319381377194e-06,1,128
+0.5,1.1749631994462106e-05,1,128
+0.9,0.00010342366294935346,1,128

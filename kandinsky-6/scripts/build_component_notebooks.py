@@ -61,7 +61,7 @@ def start(stem, title, goal, prerequisites, sources, section, k5):
         checkout=Path('/content/generative-ai-research-k6-components')
         if not checkout.exists():
             subprocess.run(['git','clone','--depth','1','--branch',
-                os.environ.get('K6_LABS_REF','kandinsky-6-components'),
+                os.environ.get('K6_LABS_REF','main'),
                 'https://github.com/vladislav-vasilenko/generative-ai-research.git',str(checkout)],check=True)
         ROOT=checkout/'kandinsky-6'
         if not (ROOT/'labkit/components.py').is_file():

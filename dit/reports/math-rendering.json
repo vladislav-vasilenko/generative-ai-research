@@ -1,0 +1,65 @@
+{
+  "renderer": "KaTeX 0.16.25",
+  "strict": true,
+  "scope": "Formula parse/render only; no GitHub/Colab browser parity claim",
+  "files": [
+    {
+      "notebook": "00_probability_path_and_learning_route.ipynb",
+      "source_sha256": "56a1f779e1c8329478166022c31a4cd5c701974ce21d1212d2faa5cbfeaacc3d",
+      "formulas": 6
+    },
+    {
+      "notebook": "01_dit_primitives_and_tensor_geometry.ipynb",
+      "source_sha256": "d9e77c15e1da754fa843d300d9f401291e08d6a3f6b5e338a469226db093a7d3",
+      "formulas": 8
+    },
+    {
+      "notebook": "02_single_stream_crossdit_k5.ipynb",
+      "source_sha256": "652150c3830b6049c85a05a9adf138b6acc2b1a8908acbf94b4e977a0d9b750f",
+      "formulas": 3
+    },
+    {
+      "notebook": "03_dual_stream_crossdit_k6.ipynb",
+      "source_sha256": "3c68c4fc82b3285cf819b4ebfc01a91a5713ba3bf5f5b7995db09b00b9c507cb",
+      "formulas": 5
+    },
+    {
+      "notebook": "04_conditioning_text_and_clean_modalities.ipynb",
+      "source_sha256": "1321ac55ff283e3d6885b40c843a9181522b16dad24ed99a385754391cd0c925",
+      "formulas": 3
+    },
+    {
+      "notebook": "05_visual_conditioning_references_and_rope.ipynb",
+      "source_sha256": "a4e15465ac5645cd73300525271ecc9a37a692e1e219fe00d24a4c8b49806f38",
+      "formulas": 3
+    },
+    {
+      "notebook": "06_denoise_loop_euler_cfg_and_partial_sampling.ipynb",
+      "source_sha256": "9c50403dae46489cfae287e4bba6bfff66208369b561c3e04528ff78629757b9",
+      "formulas": 3
+    },
+    {
+      "notebook": "07_piflow_math_dx_policy.ipynb",
+      "source_sha256": "637cd69b43aeaa3143aa455c97228d40ee5906538dd370c1063268f6e1f641b2",
+      "formulas": 11
+    },
+    {
+      "notebook": "08_piflow_grid_head_and_native_sampler.ipynb",
+      "source_sha256": "a7c9b2c2f077e92924c23c65cc6757881597764c289e745b34564e2bbcae98d7",
+      "formulas": 2
+    },
+    {
+      "notebook": "09_miniature_policy_imitation_distillation.ipynb",
+      "source_sha256": "006e45520feddcecec648b5b24ca22d808fda254a81fcc4478285a9c85206198",
+      "formulas": 3
+    },
+    {
+      "notebook": "10_comfyui_and_manual_research_protocol.ipynb",
+      "source_sha256": "1fc4ba2cbe928cdeb069f3be6a705c9c6dd907417513edc12673fc19cb700545",
+      "formulas": 0
+    }
+  ],
+  "errors": [],
+  "total_formulas": 47,
+  "passed": true
+}

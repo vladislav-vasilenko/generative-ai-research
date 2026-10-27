@@ -96,6 +96,22 @@
     {
       "file": "vae/reports/VALIDATION.md",
       "display_blocks": 0
+    },
+    {
+      "file": "dit/MIT_BRIDGE.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "dit/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "dit/SOURCE_MAP.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "dit/reports/VALIDATION.md",
+      "display_blocks": 0
     }
   ],
   "errors": [],

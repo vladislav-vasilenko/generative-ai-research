@@ -47,3 +47,7 @@ Tokenizer обычно означает фиксированные правил�
 ## Углубление: HunyuanVideo VAE и tiling
 
 После VAE части исходного Lab 3 используйте [пошаговый маршрут 00–08](../vae/README.md): вывод ELBO/KL → causal Conv3D → encoder/decoder geometry → spatial/temporal tiling → free-memory policy → CPU measurement → ComfyUI. Это дополнительная практическая ветвь; [стр. 5–6 отчёта v6](https://arxiv.org/pdf/2412.03603v6) связывают теорию с промышленным кодеком.
+
+## Углубление DiT / CrossDiT / π-Flow
+
+После Q3.1–Q3.5 пройдите [DiT primitives](../dit/notebooks/01_dit_primitives_and_tensor_geometry.ipynb), [one-stream K5](../dit/notebooks/02_single_stream_crossdit_k5.ipynb), [dual Audio/Video K6](../dit/notebooks/03_dual_stream_crossdit_k6.ipynb), затем conditioning и sampler. [Полная последовательность](../dit/README.md) связывает 11 labs с MIT questions и отдельными промышленными extensions.

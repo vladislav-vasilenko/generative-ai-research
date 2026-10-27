@@ -83,3 +83,11 @@ python lecture_01/scripts/execute_notebook.py --animation
 [Общий VAE маршрут](vae/README.md), [точная связь с MIT Lab 3 Q4.1–Q5.1](vae/MIT_LAB3_BRIDGE.md), [измеренный отчёт](vae/reports/VALIDATION.md). Девять notebooks / 51 code cells выполнены в fresh CPU kernels; [JSON](vae/reports/execution.json) содержит hashes. Все 32 display formulas прошли strict KaTeX parse/render; осмотрены два local HTML previews и benchmark plots. Это не проверка GitHub/Colab runtime.
 
 Проверены analytic ELBO/KL/NLL/gradient, original native tiny encoder/decoder, exact coordinate oracles, spatial/temporal coverage, synthetic CUDA-budget planner и 12 paired tiny benchmark runs. Pretrained weights, CUDA peak, MPS kernels и ComfyUI jobs не запускались. K6 lab 12 исправлена по фактическому posterior return contract и отдельно [перепроверена](kandinsky-6/reports/component-validation-12.json). Пользовательские Lecture 1 answers и third-party source snapshots сохранены без изменений.
+
+## DiT / CrossDiT / conditioning / π-Flow, 2026-10-27
+
+[Общий маршрут](dit/README.md), [MIT questions/cells](dit/MIT_BRIDGE.md), [каждый source class/method](dit/SOURCE_MAP.md). Все 11 новых notebooks / 66 code cells исполнены в свежих CPU kernels; 47 display formulas прошли strict KaTeX parse/render. [Отчёт](dit/reports/VALIDATION.md), [execution hashes](dit/reports/execution.json), [формулы](dit/reports/math-rendering.json). Осмотрены local HTML previews и научные графики; GitHub/Colab renderer/runtime parity не заявляется.
+
+Проверены original K5/K6 dense tiny block parity, точная manual AV fusion, directional Jacobians, conditioning/layout/masks/cache, native Euler convergence/CFG counts, DX math/grid/warp/copy/detach, native π sampler и miniature frozen-teacher policy imitation. В fixed held-out toy probe MSE снизился с 1.93777 до 0.0472855; это один seed на 2D field, не pretrained Kandinsky training. Реальные weights/AV quality/VRAM/MPS/ComfyUI jobs не запускались.
+
+После разрешённого merge VAE PR #6 ссылки Colab и default checkout K6/VAE/DiT направлены на main. K6 bootstrap change синхронизирован с generators; полный component execution report обновлён после проверки всех 14 notebooks. User answer notebooks и original source snapshots сохраняются отдельно от commits.

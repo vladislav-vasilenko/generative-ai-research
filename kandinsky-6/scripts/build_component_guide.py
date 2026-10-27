@@ -24,7 +24,7 @@ uv run --locked jupyter lab kandinsky-6/notebooks/01_system_and_training_map.ipy
 
 Для этих CPU-лаб достаточно основного `uv.lock`; отдельная установка Diffusers/Transformers, окружения ComfyUI или MLX не требуется. Существующие оригинальные исходники читаются из `reference/`. Веса моделей не загружаются. На Mac используйте kernel корневой `.venv`; CPU выбран по умолчанию. [Проверенные результаты](reports/COMPONENT_VALIDATION.md).
 
-В Colab выберите CPU runtime. Первая ячейка получает исходники курса из ветки `kandinsky-6-components`, если checkout отсутствует, и использует предустановленный PyTorch; pretrained-веса не скачиваются. Сравнение чисел Colab и Mac требует записи версии Torch, не bitwise равенства. В обычном локальном запуске сеть не требуется. Badges ниже ведут в ветку с этим курсом до её слияния; файлы можно открывать и локально.
+В Colab выберите CPU runtime. Первая ячейка получает исходники курса из ветки `main`, если checkout отсутствует, и использует предустановленный PyTorch; pretrained-веса не скачиваются. Сравнение чисел Colab и Mac требует записи версии Torch, не bitwise равенства. В обычном локальном запуске сеть не требуется. Badges и checkout используют основную ветку main; файлы можно открывать и локально.
 
 ## Учебный маршрут
 
@@ -32,7 +32,7 @@ uv run --locked jupyter lab kandinsky-6/notebooks/01_system_and_training_map.ipy
 |---|---|---|---|
 '''
 for r in rows:
-    stem=r['stem'];url=f'https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/kandinsky-6-components/kandinsky-6/notebooks/{stem}.ipynb'
+    stem=r['stem'];url=f'https://colab.research.google.com/github/vladislav-vasilenko/generative-ai-research/blob/main/kandinsky-6/notebooks/{stem}.ipynb'
     readme+=f"| {stem[:2]} | [{r['title'][4:]}](notebooks/{stem}.ipynb) | {r['goal']} | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)]({url}) |\n"
 readme+='''
 Основная последовательность: **01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09 → 10 → 11 → 12 → 13 → 14**. Если основы K5 уже пройдены, прочитайте контракты 01–06, затем выполните 07–12. Для исследования голоса после этого переходите к [ручному журналу эксперимента](notebooks/00_manual_experiment_comfy_mlx_film.ipynb).

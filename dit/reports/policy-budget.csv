@@ -1,0 +1,5 @@
+network_NFE,grid_points_example,policy_density,policy_evaluations_per_modality
+1,10,128,128
+2,10,128,128
+4,10,128,129
+10,10,128,124

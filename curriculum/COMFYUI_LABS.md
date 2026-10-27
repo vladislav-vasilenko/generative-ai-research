@@ -95,3 +95,7 @@ Graph: `LoadImage → VAEEncode → VAEDecode → SaveImage`, второй SaveI
 ## Продолжение C4: теория и tiling HunyuanVideo VAE
 
 [Новый курс по VAE](../vae/README.md) связывает reconstruction graph с ELBO, BCTHW/posterior и spatial/temporal tiles. [Lab 08](../vae/notebooks/08_pretrained_and_comfyui_protocol.ipynb) объясняет запись dtype/tile/overlap, обход кэша, float/PNG measurements и ограничения image-only graph для temporal VAE. Pretrained запуск остаётся ручным после SSD gate.
+
+## Продолжение C2/C3/C5: разобрать hidden sampler и CrossDiT
+
+[DiT route lab10](../dit/notebooks/10_comfyui_and_manual_research_protocol.ipynb) сопоставляет UI graph с projections, AV fusion, denoise loop, grid-head и policy. ComfyUI nodes не раскрывают каждый transformer block; для parity/градентов используются labs01–09. Actual NFE измеряется separately от UI steps и cheap policy counts. Pretrained/ComfyUI jobs не запускались.

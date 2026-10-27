@@ -1,0 +1,208 @@
+{
+  "files": [
+    {
+      "family": "k6",
+      "path": "core/components/dit.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/components/dit.py",
+      "sha256": "8d0154c8c069889c6e7b3b07ffef36b8caa16b1ee2ceecb9cbd2d1ebb35e9df7",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/dit.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/components/piflow_dit.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/components/piflow_dit.py",
+      "sha256": "d15767c76530c7c641065bbadee5931a6f39f2e838cccf25465ad0ee8d71ddbb",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/piflow_dit.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/components/rope.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/components/rope.py",
+      "sha256": "c8c4b0695b12972704d1e73808315b9cea560ab90d8d170dff3afc3f5d34295a",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/rope.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/tensors.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/tensors.py",
+      "sha256": "36bd2c13d5efd99a71a28adfef22e3da911b2581c57ba9fe8f12630153ed9193",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/tensors.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/types.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/types.py",
+      "sha256": "b3807828214c57cd4c0d390a2f97a2db75070a6e04ac795ca710823dfbc629a0",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/types.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/conditioning.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/conditioning.py",
+      "sha256": "563c64609061547cc98fe067b9513efa605cd50c93daa44b2993fc5f663bb578",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/conditioning.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/visual_conditioning.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/visual_conditioning.py",
+      "sha256": "4b85bf1e1ad67072fc61b05858172218434fa68943011ce8ba3296269f2fd0bc",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/visual_conditioning.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/denoise_loop.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/denoise_loop.py",
+      "sha256": "b3a42518de5a6eee8b751d25f3d0576e8c89b1a57c2e2f33cb3dc42b7beb32f6",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/denoise_loop.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/piflow_math.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/piflow_math.py",
+      "sha256": "2a1376505420121a0cfcb4066d9816f97b57402d85ddc5be829f585d8122e6a3",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_math.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/piflow_sampler.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/piflow_sampler.py",
+      "sha256": "56a90aa2d7b005af89d015332fa31eb4825fc9ffa19b36072ccee372d80343f4",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_sampler.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/flow_matching.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/flow_matching.py",
+      "sha256": "7931c423fc44bb868ef3c3a8f3c9d84a08623186f2b08b3dabde3cf920e059fe",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/flow_matching.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/guidance.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/guidance.py",
+      "sha256": "d0f3ad9de5055c335510fad7a31f3b4e625b64a819ab68cf80433a471333d8b8",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/guidance.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/prepare_latents.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/prepare_latents.py",
+      "sha256": "edd9cdef58ce31a20442eea568621578fd129722325992850b31cdaa95751ee2",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/prepare_latents.py"
+    },
+    {
+      "family": "k6",
+      "path": "core/algo/prepare_ropes.py",
+      "repository_path": "kandinsky-6/reference/kandinsky-6/kandinsky/core/algo/prepare_ropes.py",
+      "sha256": "6184122b9d0024e003463d251090d39fd79c09d57452c8fc7d02dc68de1ed64e",
+      "url": "https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/prepare_ropes.py"
+    },
+    {
+      "family": "k5",
+      "path": "dit.py",
+      "repository_path": "kandinsky-5/reference/kandinsky-5/kandinsky/models/dit.py",
+      "sha256": "3f43e405978e0ddfcc3de1d74400bec089da46dbeb60ce0ffb25402cecf5b43a"
+    },
+    {
+      "family": "k5",
+      "path": "nn.py",
+      "repository_path": "kandinsky-5/reference/kandinsky-5/kandinsky/models/nn.py",
+      "sha256": "c281551b8b9d564544ac1bbd11c1e94ef74190aebfe983d1b5392f41acd3fbc8"
+    },
+    {
+      "family": "k5",
+      "path": "attention.py",
+      "repository_path": "kandinsky-5/reference/kandinsky-5/kandinsky/models/attention.py",
+      "sha256": "b5264c0c2bec4c04f222b195fa727e7874ef66e7bc58b82f8779a3ff3f17243c"
+    },
+    {
+      "family": "hf",
+      "path": "transformer/config.json",
+      "repository_path": "kandinsky-6/reference/hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/transformer/config.json",
+      "sha256": "4de144f71528df712a020dabc79001aa4d353fd807a6456930397b115567992c"
+    }
+  ],
+  "provided_files": [
+    {
+      "filename": "piflow_math.py",
+      "sha256": "2a1376505420121a0cfcb4066d9816f97b57402d85ddc5be829f585d8122e6a3",
+      "equals_pinned": true
+    },
+    {
+      "filename": "visual_conditioning.py",
+      "sha256": "4b85bf1e1ad67072fc61b05858172218434fa68943011ce8ba3296269f2fd0bc",
+      "equals_pinned": true
+    },
+    {
+      "filename": "piflow_sampler.py",
+      "sha256": "56a90aa2d7b005af89d015332fa31eb4825fc9ffa19b36072ccee372d80343f4",
+      "equals_pinned": true
+    },
+    {
+      "filename": "denoise_loop.py",
+      "sha256": "b3a42518de5a6eee8b751d25f3d0576e8c89b1a57c2e2f33cb3dc42b7beb32f6",
+      "equals_pinned": true
+    },
+    {
+      "filename": "conditioning.py",
+      "sha256": "563c64609061547cc98fe067b9513efa605cd50c93daa44b2993fc5f663bb578",
+      "equals_pinned": true
+    },
+    {
+      "filename": "dit.py",
+      "sha256": "8d0154c8c069889c6e7b3b07ffef36b8caa16b1ee2ceecb9cbd2d1ebb35e9df7",
+      "equals_pinned": true
+    }
+  ],
+  "pasted_variants": [
+    {
+      "attachment_id": "053ab2d5-5945-48c8-91df-217d9d45607e",
+      "sha256": "b28de8ef95b7fb59719ed9cda1d02e7dd29ccb8ccb2ee985d9e87f76bd3db634",
+      "AST_equal_to_dit": true,
+      "difference": "trailing newline only",
+      "source_duplicated": false
+    },
+    {
+      "attachment_id": "7d661f94-cbc1-4d54-ae1a-433c77ae7fba",
+      "sha256": "b28de8ef95b7fb59719ed9cda1d02e7dd29ccb8ccb2ee985d9e87f76bd3db634",
+      "AST_equal_to_dit": true,
+      "difference": "trailing newline only",
+      "source_duplicated": false
+    }
+  ],
+  "mit_originals": [
+    {
+      "path": "lecture_01/references/lab_one_original.ipynb",
+      "sha256": "7f2cbaa8edc229f241cc74061f4fc7d0fbf4e554184175f49578d38ea24d5730",
+      "cells": 49,
+      "indexing": "zero-based"
+    },
+    {
+      "path": "lecture_02/references/lab_two_original.ipynb",
+      "sha256": "37e38db2c1dede124dda3ed0ac053c6f7c72ef3b53483a224cf2cd77e47c23e6",
+      "cells": 79,
+      "indexing": "zero-based"
+    },
+    {
+      "path": "lecture_04/references/lab_three_original.ipynb",
+      "sha256": "cdb50ba680593181b2880f63eb9fcdb7e9faedc293286ca95775d87fc9e245a4",
+      "cells": 80,
+      "indexing": "zero-based"
+    }
+  ],
+  "sources": {
+    "MIT": "https://diffusion.csail.mit.edu/2026/index.html",
+    "MIT_notes": "https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf",
+    "DiT": "https://arxiv.org/abs/2212.09748",
+    "Attention": "https://arxiv.org/abs/1706.03762",
+    "RoPE": "https://arxiv.org/abs/2104.09864",
+    "CrossDiT_text_conditioned_precedent": "https://arxiv.org/abs/2310.00426",
+    "SD3_comparison_not_first_claim": "https://arxiv.org/abs/2403.03206",
+    "Flow_Matching": "https://arxiv.org/abs/2210.02747",
+    "K5": "https://arxiv.org/abs/2511.14993",
+    "K6": "https://arxiv.org/html/2610.05608v1",
+    "piFlow": "https://arxiv.org/html/2510.14974v1"
+  },
+  "scope": "No checkpoint downloads; inference math and random tiny native experiments, not industrial training reproduction"
+}
