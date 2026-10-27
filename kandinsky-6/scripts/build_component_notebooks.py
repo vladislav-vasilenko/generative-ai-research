@@ -1564,10 +1564,13 @@ print('Tail condition shape:',inp.shape,'role ids:',roles)
 md('''
 ## 3. Проверяем encode wrapper без выдуманного VAE API
 
-Pinned custom Hunyuan encode возвращает tensor внутри tuple; Diffusers VAE может возвращать
-posterior object. Нельзя заменять одно другим, не посмотрев return contract.
-В учебном test double явно моделируем tuple[tensor]. Так проверяем layout/scaling wrapper,
-а не качество настоящего Hunyuan reconstruction.
+Pinned custom Hunyuan `encode` возвращает **posterior object**: `AutoencoderKLOutput.latent_dist`,
+либо tuple[posterior] при return_dict=False. Caller `prepare_latents.encode_video` ожидает tensor
+после `[0]`; это несовместимость контрактов закреплённой пары без дополнительного adapter.
+В следующем double моделируется **ожидаемый wrapper протокол tuple[tensor]**, а не настоящий
+VAE API. Проверяем только layout/scaling. Разбор фактического posterior и mode/sample —
+в [Hunyuan VAE lab 03](../../vae/notebooks/03_architecture_posterior_and_api.ipynb).
+Для реального codec нужен явный adapter `.latent_dist.mode()` или `.sample()` перед packing/scaling.
 ''')
 code('''
 from types import SimpleNamespace

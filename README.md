@@ -49,6 +49,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 - **[ComfyUI](curriculum/COMFYUI_LABS.md):** визуальные опыты, image IO без модели, отдельный VAE reconstruction, затем sampler/CFG/ресурсные эксперименты. JSON лежат в `curriculum/workflows/`.
 - **[Kandinsky 5 Lite](kandinsky-5/README.md):** 14 лабораторных по компонентам, Flow Matching и inference. У курса отдельные `pyproject.toml`, `uv.lock` и окружение.
 - **[Kandinsky 6 Lite](kandinsky-6/README.md):** 14 лабораторных по компонентам, отдельные DiT и Dual-stream Audio+Video CrossDiT, π-Flow, затем ручной voice-conditioning эксперимент и ComfyUI baseline.
+- **[VAE: MIT → HunyuanVideo](vae/README.md):** девять пошаговых labs по ELBO, causal Conv3D, архитектуре, spatial/temporal tiling и free-VRAM planner; CPU проверки, графики и отдельный ручной ComfyUI/pretrained протокол.
 - **[DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb):** дополнительный пример noise prediction. Для него: `uv sync --locked --extra ddpm`.
 
 ## Что проверено, а что остаётся экспериментальным
@@ -58,6 +59,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 | Вводный и CTMC notebooks | Выполнены на CPU; оригинальные Lab 2/3 остаются заданиями | [Отчёт](curriculum/reports/VALIDATION.md) |
 | K6 component labs | 14 CPU-лабораторных: native tiny DiT, AV ablations, FM и π-Flow | [Отчёт](kandinsky-6/reports/COMPONENT_VALIDATION.md) |
 | K6 manual notebook | Лёгкий маршрут выполнен без pretrained weights | [Отчёт K6](kandinsky-6/reports/VALIDATION.md) |
+| HunyuanVideo VAE labs | CPU: native tiny codec, oracle, planner sweep; pretrained не запускался | [9 labs и измерения](vae/reports/VALIDATION.md) |
 | ComfyUI graphs | Статические проверки связей/типов; runtime не заявлен | [Инструкция](curriculum/COMFYUI_LABS.md) |
 | MLX audio prototype | Подготовлен код; numerical/pretrained parity пока не пройден | [Статус K6](kandinsky-6/STATUS.md) |
 | Voice adapter / полный AV inference | План и проверки подготовлены; сквозной результат не получен | [Ручной протокол](kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md) |
@@ -80,6 +82,8 @@ lecture_04/       DiT/VAE/LDM и канонический original Lab 3
 lecture_05/       Дополнительная CTMC-лабораторная
 kandinsky-5/      Курс K5 с отдельным окружением
 kandinsky-6/      Экспериментальный K6 стенд
+vae/              Общая ветвь VAE: теория, связь с MIT, Hunyuan tiling
+hunyuan-video/    Навигация по промышленному семейству
 pyproject.toml    Зависимости основного курса
 uv.lock          Зафиксированные версии
 ```

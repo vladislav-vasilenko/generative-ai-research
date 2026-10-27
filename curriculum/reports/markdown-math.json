@@ -76,6 +76,26 @@
     {
       "file": "kandinsky-6/reports/COMPONENT_VALIDATION.md",
       "display_blocks": 0
+    },
+    {
+      "file": "hunyuan-video/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "vae/MIT_LAB3_BRIDGE.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "vae/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "vae/SOURCE_MAP.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "vae/reports/VALIDATION.md",
+      "display_blocks": 0
     }
   ],
   "errors": [],

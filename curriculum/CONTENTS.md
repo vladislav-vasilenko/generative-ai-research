@@ -16,7 +16,7 @@
 | 1. ODE/SDE | [Lecture 1 / Lab 1](../lecture_01/README.md) | Euler, Brownian/OU, [K5 sampling](../kandinsky-5/notebooks/07_sampling.ipynb) | C1 reproducibility, C2 solver | ошибка при уменьшении шага, моменты распределения |
 | 2. Flow Matching | [Lecture 2 / Lab 2](../lecture_02/README.md) | [K5 FM](../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb), [K6 joint FM](../kandinsky-6/notebooks/09_flow_matching_training.ipynb) | C2: steps/NFE на совместимом checkpoint | path/velocity/time conventions + held-out loss |
 | 3. Score / conditioning / CFG | [Lecture 3 / Lab 2–3](../lecture_03/README.md) | [K5 text](../kandinsky-5/notebooks/01_text_embedders.ipynb), [K6 text](../kandinsky-6/notebooks/02_text_conditioning.ipynb), [K6 CFG](../kandinsky-6/notebooks/11_sampling_cfg_and_nfe.ipynb) | C3 CFG; Distill CFG=1 не universal sweep | masks, encoder/refiner, branch count |
-| 4. VAE / codecs | [Lecture 4 / Lab 3](../lecture_04/README.md) | [K5 VAE theory](../kandinsky-5/notebooks/02_vae.ipynb), [K6 video](../kandinsky-6/notebooks/03_video_vae.ipynb), [K6 audio/vocoder](../kandinsky-6/notebooks/04_audio_vae_and_vocoder.ipynb) | C4 standalone reconstruction | ELBO/posterior/scale, реконструкция отдельно от генерации |
+| 4. VAE / codecs | [Lecture 4 / Lab 3](../lecture_04/README.md) | [VAE MIT → video](../vae/README.md), [K5 VAE theory](../kandinsky-5/notebooks/02_vae.ipynb), [K6 video](../kandinsky-6/notebooks/03_video_vae.ipynb), [K6 audio/vocoder](../kandinsky-6/notebooks/04_audio_vae_and_vocoder.ipynb) | C4 standalone reconstruction | ELBO/posterior/scale, реконструкция отдельно от генерации |
 | 5. DiT / CrossDiT | Lecture 4, Lab 3 Part 3 | [K5 nn/DiT](../kandinsky-5/notebooks/03_nn_building_blocks.ipynb), [K6 DiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb), [K6 dual AV CrossDiT](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb) | C5 token budget, Lite graph | Q/K/V, gates, shapes, directional ablation |
 | 6. Discrete branch | [Lecture 5](../lecture_05/README.md) | [CTMC lab](../lecture_05/05_ctmc_and_discrete_flow.ipynb) | C6 visualizes Python result | rates, positivity, exact law vs simulation |
 | 7. Distillation / deployment | [Industrial map](INDUSTRY_BRIDGE.md) | [K6 π-Flow](../kandinsky-6/notebooks/10_piflow_distillation.ipynb), [runtime/MLX](../kandinsky-6/notebooks/13_runtime_memory_and_mlx.ipynb) | [K6 UI component lab](../kandinsky-6/notebooks/14_comfyui_component_experiments.ipynb) | policy/NFE distinction, resource baseline |
@@ -107,13 +107,29 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 | [13_runtime_memory_and_mlx.ipynb](../kandinsky-6/notebooks/13_runtime_memory_and_mlx.ipynb) | 1. Offload, quantization и cache делают разные вещи; 2. Измеряем только то, что действительно запущено; 3. Parity gates: по слоям, затем по pipeline |
 | [14_comfyui_component_experiments.ipynb](../kandinsky-6/notebooks/14_comfyui_component_experiments.ipynb) | 1. UI показывает wiring, а не все внутренние слои; 2. Последовательность опытов и измерений; 3. Как перейти к исследованию голоса |
 
+## VAE: MIT Lab 3 → HunyuanVideo → tiling
+
+[Порядок и запуск](../vae/README.md); [Связь с MIT заданиями](../vae/MIT_LAB3_BRIDGE.md); [Все классы и методы](../vae/SOURCE_MAP.md); [CPU измерения и ограничения](../vae/reports/VALIDATION.md).
+
+| Notebook | Теория, эксперимент и упражнения |
+|---|---|
+| [00_route_and_source_contracts.ipynb](../vae/notebooks/00_route_and_source_contracts.ipynb) | 1. Четыре разных объекта исследования; 2. Геометрия и единицы; 3. План накопления знаний |
+| [01_elbo_and_probabilistic_codec.ipynb](../vae/notebooks/01_elbo_and_probabilistic_codec.ipynb) | 1. Почему нельзя просто интегрировать decoder; 2. Gaussian posterior: вывод KL по координатам; 3. Как gradient проходит через sample; 4. От likelihood к loss HunyuanVideo; 5. Возвращаемся в MIT Q4.7: reconstruction с learned variance |
+| [02_causal_convolution_and_geometry.ipynb](../vae/notebooks/02_causal_convolution_and_geometry.ipynb) | 1. Дискретная причинная свёртка; 2. Проверяем условия реализации, а не имя класса; 3. Почему special first frame меняет inverse geometry; 4. Receptive field и GroupNorm: где теряется локальность |
+| [03_architecture_posterior_and_api.ipynb](../vae/notebooks/03_architecture_posterior_and_api.ipynb) | 1. Полный путь encoder и decoder; 1b. Mid attention: из feature volume в Q/K/V; 2. Return contract: encode не возвращает готовый tensor; 3. Scaling: смена единиц перед DiT; 4. Dispatch и stateful настройки |
+| [04_spatial_tiling_and_blending.ipynb](../vae/notebooks/04_spatial_tiling_and_blending.ipynb) | 1. Зачем overlap и как устроен blend; 2. Exact coordinate oracle: сначала доказываем индексы; 3. Покрытие правого/нижнего края — отдельное условие; 3b. Точный halo+crop на локальной свёртке; 4. Почему overlap не гарантирует full equivalence |
+| [05_temporal_tiling_and_first_frame.ipynb](../vae/notebooks/05_temporal_tiling_and_first_frame.ipynb) | 1. Temporal lattice; 2. Frame-count audit: F=4k+1 ещё недостаточно; 3. Проверяем decoder отдельно; 4. Reset history и временные швы |
+| [06_free_vram_planner.ipynb](../vae/notebooks/06_free_vram_planner.ipynb) | 1. Что на самом деле моделирует heuristic; 2. От числа tiles к двум осям; 3. Memory guard ≠ OOM guarantee |
+| [07_controlled_benchmark.ipynb](../vae/notebooks/07_controlled_benchmark.ipynb) | 1. Гипотеза, контроль и метрики; 2. Графики и диагностическая локализация; 3. Overlap work и retained buffers |
+| [08_pretrained_and_comfyui_protocol.ipynb](../vae/notebooks/08_pretrained_and_comfyui_protocol.ipynb) | 1. Исследовательская карточка; 2. Команда ручного запуска после resource gate; 3. ComfyUI как визуальный контроль; 4. Как сделать вывод, когда появятся реальные числа |
+
 ## Промышленные семейства и архитектурные блоки
 
 [Сводная industrial map с закреплёнными official sources](INDUSTRY_BRIDGE.md) — общий вход. Ниже это кейсы для переноса знаний; самостоятельных полноценных pretrained labs для каждого семейства пока нет.
 
 | Семейство | Что искать после MIT | Материал стенда |
 |---|---|---|
-| HunyuanVideo | causal VAE, dual/single stream, flow scheduler | [Pinned source map](INDUSTRY_BRIDGE.md#tencent-hunyuanhunyuanvideo), K5 02 / K6 03, ComfyUI C4 |
+| HunyuanVideo | causal VAE, dual/single stream, flow scheduler | [Pinned source map](INDUSTRY_BRIDGE.md#tencent-hunyuanhunyuanvideo), [9 VAE labs](../vae/README.md), K5 02 / K6 03, ComfyUI C4 |
 | Wan 2.1 | T5, Wan-VAE, time modulation, FM solver | [Pinned source map](INDUSTRY_BRIDGE.md#wan-videowan21) |
 | Wan 2.2 | A14B noise experts vs dense TI2V-5B, codec contracts | [Pinned source map](INDUSTRY_BRIDGE.md#wan-videowan22) |
 | Kandinsky 5 | Qwen/CLIP, CrossDiT, VAE, generation_utils | [14 labs](../kandinsky-5/README.md) |
@@ -165,6 +181,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [curriculum/SUPPLEMENTARY_READING.md](SUPPLEMENTARY_READING.md) — Дополнительные материалы к основному курсу.
 - [curriculum/references/README.md](references/README.md) — Источники и границы адаптации.
 - [curriculum/reports/VALIDATION.md](reports/VALIDATION.md) — Проверка учебного маршрута, 27 октября 2026.
+- [hunyuan-video/README.md](../hunyuan-video/README.md) — HunyuanVideo: архитектурные лабораторные.
 - [kandinsky-5/MODEL_CATALOG.md](../kandinsky-5/MODEL_CATALOG.md) — Каталог моделей Kandinsky Lab.
 - [kandinsky-5/README.md](../kandinsky-5/README.md) — KandinskyLab — учебные Jupyter-лабораторные по Kandinsky 5 Lite.
 - [kandinsky-5/THIRD_PARTY.md](../kandinsky-5/THIRD_PARTY.md) — Сторонние материалы.
@@ -184,6 +201,10 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [lecture_03/README.md](../lecture_03/README.md) — Lecture 3A / 3B: score matching, stochastic sampling и CFG.
 - [lecture_04/README.md](../lecture_04/README.md) — Lecture 4 → Lab 3: DiT, VAE и обучение в latent space.
 - [lecture_05/README.md](../lecture_05/README.md) — Lecture 5: CTMC и дискретный Flow Matching.
+- [vae/MIT_LAB3_BRIDGE.md](../vae/MIT_LAB3_BRIDGE.md) — MIT Lab 3 → VAE → промышленный видеокодек.
+- [vae/README.md](../vae/README.md) — VAE: от MIT Lab 3 до промышленного видеокодека.
+- [vae/SOURCE_MAP.md](../vae/SOURCE_MAP.md) — HunyuanVideo VAE: карта источников, компонентов и границ выводов.
+- [vae/reports/VALIDATION.md](../vae/reports/VALIDATION.md) — HunyuanVideo VAE: проверка и измеренные результаты.
 
 **Индексы источников:** [PDF/lab manifest](references/materials_manifest.json), [industrial revisions](references/industry_manifest.json), [дополнительные статьи/репозитории](references/additional_sources.json), [K6 source hashes](../kandinsky-6/reference/source-manifest.json).
 
@@ -241,6 +262,14 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [torch_parity_reference.py](../kandinsky-6/scripts/torch_parity_reference.py) — Generate a PyTorch numerical reference; never label random fixtures pretrained.
 - [validate_component_notebooks.py](../kandinsky-6/scripts/validate_component_notebooks.py) — Validate K6 teaching labs; --execute uses fresh CPU kernels, no downloads.
 - [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route.
+
+### `vae/scripts`
+
+- [benchmark_local_codec.py](../vae/scripts/benchmark_local_codec.py) — Dry-run by default; manually benchmark a LOCAL Diffusers Hunyuan VAE, no downloads.
+- [build_notebooks.py](../vae/scripts/build_notebooks.py) — Generate the sequential HunyuanVideo VAE course; preserve notebook code in this source.
+- [summarize_labs.py](../vae/scripts/summarize_labs.py) — Publish compact measured CPU results, CSV and selected plots after successful execution.
+- [validate_labs.py](../vae/scripts/validate_labs.py) — Check all Hunyuan VAE labs; --execute runs fresh CPU kernels, no weights/downloads.
+- [check_math.cjs](../vae/scripts/check_math.cjs) — optional strict KaTeX parse/render; dependency setup in vae README.
 
 ## Как поддерживать содержание
 

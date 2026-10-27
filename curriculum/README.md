@@ -157,3 +157,7 @@ Probability path задаёт распределения в каждый мом�
 ## Покомпонентное продолжение Kandinsky 6
 
 После P7: [14 новых CPU labs](../kandinsky-6/README.md), включая отдельные [DiT / text CrossDiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb) и [Dual-stream Audio+Video CrossDiT](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb). [Карта файлов/классов/методов](../kandinsky-6/COMPONENT_GUIDE.md) связывает отчёт K6, native code и упражнения. Затем UI baseline и отдельный voice experiment, с прежним resource gate для pretrained запуска.
+
+## Подробная ветвь HunyuanVideo VAE
+
+После Lecture 4 / Lab 3 пройдите [девять VAE labs](../vae/README.md): ELBO → Conv3D/GroupNorm → архитектура/posterior → spatial/temporal tiling → memory planner → контролируемый benchmark → ручной ComfyUI/pretrained protocol. [Измерения](../vae/reports/VALIDATION.md) отдельно описывают CPU tiny и ещё не выполненный pretrained этап.

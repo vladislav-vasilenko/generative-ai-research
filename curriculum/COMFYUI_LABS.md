@@ -91,3 +91,7 @@ Graph: `LoadImage → VAEEncode → VAEDecode → SaveImage`, второй SaveI
 ## Общий журнал
 
 Используйте [карточку опыта](EXPERIMENT_TEMPLATE.md). Каждый вывод сопровождайте config, individual runs и артефактами. Статусы `prepared`, `static_checked`, `executed`, `measured` различаются. В этом наборе ComfyUI graphs пока `static_checked`.
+
+## Продолжение C4: теория и tiling HunyuanVideo VAE
+
+[Новый курс по VAE](../vae/README.md) связывает reconstruction graph с ELBO, BCTHW/posterior и spatial/temporal tiles. [Lab 08](../vae/notebooks/08_pretrained_and_comfyui_protocol.ipynb) объясняет запись dtype/tile/overlap, обход кэша, float/PNG measurements и ограничения image-only graph для temporal VAE. Pretrained запуск остаётся ручным после SSD gate.

@@ -39,7 +39,7 @@ text='''# Полное содержание и единый маршрут об�
 | 1. ODE/SDE | [Lecture 1 / Lab 1](../lecture_01/README.md) | Euler, Brownian/OU, [K5 sampling](../kandinsky-5/notebooks/07_sampling.ipynb) | C1 reproducibility, C2 solver | ошибка при уменьшении шага, моменты распределения |
 | 2. Flow Matching | [Lecture 2 / Lab 2](../lecture_02/README.md) | [K5 FM](../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb), [K6 joint FM](../kandinsky-6/notebooks/09_flow_matching_training.ipynb) | C2: steps/NFE на совместимом checkpoint | path/velocity/time conventions + held-out loss |
 | 3. Score / conditioning / CFG | [Lecture 3 / Lab 2–3](../lecture_03/README.md) | [K5 text](../kandinsky-5/notebooks/01_text_embedders.ipynb), [K6 text](../kandinsky-6/notebooks/02_text_conditioning.ipynb), [K6 CFG](../kandinsky-6/notebooks/11_sampling_cfg_and_nfe.ipynb) | C3 CFG; Distill CFG=1 не universal sweep | masks, encoder/refiner, branch count |
-| 4. VAE / codecs | [Lecture 4 / Lab 3](../lecture_04/README.md) | [K5 VAE theory](../kandinsky-5/notebooks/02_vae.ipynb), [K6 video](../kandinsky-6/notebooks/03_video_vae.ipynb), [K6 audio/vocoder](../kandinsky-6/notebooks/04_audio_vae_and_vocoder.ipynb) | C4 standalone reconstruction | ELBO/posterior/scale, реконструкция отдельно от генерации |
+| 4. VAE / codecs | [Lecture 4 / Lab 3](../lecture_04/README.md) | [VAE MIT → video](../vae/README.md), [K5 VAE theory](../kandinsky-5/notebooks/02_vae.ipynb), [K6 video](../kandinsky-6/notebooks/03_video_vae.ipynb), [K6 audio/vocoder](../kandinsky-6/notebooks/04_audio_vae_and_vocoder.ipynb) | C4 standalone reconstruction | ELBO/posterior/scale, реконструкция отдельно от генерации |
 | 5. DiT / CrossDiT | Lecture 4, Lab 3 Part 3 | [K5 nn/DiT](../kandinsky-5/notebooks/03_nn_building_blocks.ipynb), [K6 DiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb), [K6 dual AV CrossDiT](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb) | C5 token budget, Lite graph | Q/K/V, gates, shapes, directional ablation |
 | 6. Discrete branch | [Lecture 5](../lecture_05/README.md) | [CTMC lab](../lecture_05/05_ctmc_and_discrete_flow.ipynb) | C6 visualizes Python result | rates, positivity, exact law vs simulation |
 | 7. Distillation / deployment | [Industrial map](INDUSTRY_BRIDGE.md) | [K6 π-Flow](../kandinsky-6/notebooks/10_piflow_distillation.ipynb), [runtime/MLX](../kandinsky-6/notebooks/13_runtime_memory_and_mlx.ipynb) | [K6 UI component lab](../kandinsky-6/notebooks/14_comfyui_component_experiments.ipynb) | policy/NFE distinction, resource baseline |
@@ -76,13 +76,19 @@ for family,title in [('kandinsky-5','Kandinsky 5 Lite: 14 лабораторны
         text+=f'| {link(p)} | {description} |\n'
     text+='\n'
 
+text+='## VAE: MIT Lab 3 → HunyuanVideo → tiling\n\n'+link('vae/README.md','Порядок и запуск')+'; '+link('vae/MIT_LAB3_BRIDGE.md','Связь с MIT заданиями')+'; '+link('vae/SOURCE_MAP.md','Все классы и методы')+'; '+link('vae/reports/VALIDATION.md','CPU измерения и ограничения')+'.\n\n'
+text+='| Notebook | Теория, эксперимент и упражнения |\n|---|---|\n'
+for p in sorted((ROOT/'vae/notebooks').glob('*.ipynb')):
+    text+=f'| {link(p)} | {nb_sections(p)} |\n'
+text+='\n'
+
 text+='''## Промышленные семейства и архитектурные блоки
 
 [Сводная industrial map с закреплёнными official sources](INDUSTRY_BRIDGE.md) — общий вход. Ниже это кейсы для переноса знаний; самостоятельных полноценных pretrained labs для каждого семейства пока нет.
 
 | Семейство | Что искать после MIT | Материал стенда |
 |---|---|---|
-| HunyuanVideo | causal VAE, dual/single stream, flow scheduler | [Pinned source map](INDUSTRY_BRIDGE.md#tencent-hunyuanhunyuanvideo), K5 02 / K6 03, ComfyUI C4 |
+| HunyuanVideo | causal VAE, dual/single stream, flow scheduler | [Pinned source map](INDUSTRY_BRIDGE.md#tencent-hunyuanhunyuanvideo), [9 VAE labs](../vae/README.md), K5 02 / K6 03, ComfyUI C4 |
 | Wan 2.1 | T5, Wan-VAE, time modulation, FM solver | [Pinned source map](INDUSTRY_BRIDGE.md#wan-videowan21) |
 | Wan 2.2 | A14B noise experts vs dense TI2V-5B, codec contracts | [Pinned source map](INDUSTRY_BRIDGE.md#wan-videowan22) |
 | Kandinsky 5 | Qwen/CLIP, CrossDiT, VAE, generation_utils | [14 labs](../kandinsky-5/README.md) |
@@ -121,10 +127,10 @@ text+='''## Промышленные семейства и архитектур�
 ## Все руководства, источники и результаты
 
 '''
-folders=[ROOT,ROOT/'curriculum',*sorted(ROOT.glob('lecture_*')),ROOT/'kandinsky-5',ROOT/'kandinsky-6']
+folders=[ROOT,ROOT/'curriculum',*sorted(ROOT.glob('lecture_*')),ROOT/'kandinsky-5',ROOT/'kandinsky-6',ROOT/'hunyuan-video',ROOT/'vae']
 extra=[ROOT/'curriculum/references/README.md',ROOT/'curriculum/reports/VALIDATION.md',ROOT/'kandinsky-5/reference/course_materials/README.md',
        ROOT/'kandinsky-5/reports/VALIDATION.md',ROOT/'kandinsky-6/reports/VALIDATION.md',
-       ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',ROOT/'kandinsky-6/reference/README.md']
+       ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',ROOT/'kandinsky-6/reference/README.md',ROOT/'vae/reports/VALIDATION.md']
 paths=sorted({p for folder in folders for p in folder.glob('*.md')}|{p for p in extra if p.exists()})
 for p in paths:
     if p==OUT:continue
@@ -140,12 +146,13 @@ text+='''
 Это служебные точки входа для воспроизведения и развития материалов. Для чтения курса они не являются дополнительными обязательными лабораторными. Third-party source trees навигируются через manifests/COMPONENT_GUIDE, а не смешиваются с авторскими файлами.
 
 '''
-for family in ['curriculum','lecture_01','kandinsky-5','kandinsky-6']:
+for family in ['curriculum','lecture_01','kandinsky-5','kandinsky-6','vae']:
     text+=f'### `{family}/scripts`\n\n'
     for p in sorted((ROOT/family/'scripts').glob('*.py')):
         doc=ast.get_docstring(ast.parse(p.read_text())) or ''
         summary=doc.splitlines()[0] if doc else 'См. аргументы и назначение в исходнике'
         text+='- '+link(p)+' — '+summary.rstrip('.')+'.\n'
+    if family=='vae':text+='- '+link('vae/scripts/check_math.cjs')+' — optional strict KaTeX parse/render; dependency setup in vae README.\n'
     text+='\n'
 text+='''## Как поддерживать содержание
 

@@ -1,0 +1,77 @@
+{
+  "created_utc": "2026-10-27T16:40:45.029656+00:00",
+  "mode": "static",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "pinned_source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+  "helper_sha256": "6bef5d5ca05de31182beeb9af8fb375a5bce9e2322742cf506aa408ee85b8176",
+  "notebooks": [
+    {
+      "notebook": "00_route_and_source_contracts.ipynb",
+      "source_sha256": "24940d6b3a7b10f153625da2652c7f61ee488a32eb80b2c254ed1bc2864ca771",
+      "cells": 11,
+      "code_cells": 4,
+      "executed": false
+    },
+    {
+      "notebook": "01_elbo_and_probabilistic_codec.ipynb",
+      "source_sha256": "18f69d9b544dc5cf6f2ee901f3400d01cf46f7ecb43d039ce5b948698d6c731f",
+      "cells": 16,
+      "code_cells": 7,
+      "executed": false
+    },
+    {
+      "notebook": "02_causal_convolution_and_geometry.ipynb",
+      "source_sha256": "1712f4f911fa272a540932fa2d61d9b112e25b573918ea379b5ac897b8da7a86",
+      "cells": 14,
+      "code_cells": 6,
+      "executed": false
+    },
+    {
+      "notebook": "03_architecture_posterior_and_api.ipynb",
+      "source_sha256": "dd35a0ee389fb3a51a612c323c977194e7b24220c83e873007d4cb90cb513ca4",
+      "cells": 16,
+      "code_cells": 7,
+      "executed": false
+    },
+    {
+      "notebook": "04_spatial_tiling_and_blending.ipynb",
+      "source_sha256": "5ddb93c45ab94320f467177108064f7b4f8486de4fef51faff39019b7662a173",
+      "cells": 16,
+      "code_cells": 7,
+      "executed": false
+    },
+    {
+      "notebook": "05_temporal_tiling_and_first_frame.ipynb",
+      "source_sha256": "6c81b0ecc34486134d8170318bea90730439d552c0ef47501f57c2cddade47bd",
+      "cells": 14,
+      "code_cells": 6,
+      "executed": false
+    },
+    {
+      "notebook": "06_free_vram_planner.ipynb",
+      "source_sha256": "9967db39417851a28fe4570f9cea2fee5f0436232013b8b7f8d0d5ebd8efec52",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "07_controlled_benchmark.ipynb",
+      "source_sha256": "33e9d1efd9fedf8caa242b51bdf562b7b7ace46046653219f3eca1d02c7697da",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": false
+    },
+    {
+      "notebook": "08_pretrained_and_comfyui_protocol.ipynb",
+      "source_sha256": "09188ca4b82502a86800c18925fca0f5f947b016bb94c80ee631e1698daccebf",
+      "cells": 12,
+      "code_cells": 4,
+      "executed": false
+    }
+  ],
+  "passed": true,
+  "errors": [],
+  "pretrained_weights_loaded": false,
+  "GPU_peak_measured": false,
+  "comfyui_jobs_submitted": 0
+}

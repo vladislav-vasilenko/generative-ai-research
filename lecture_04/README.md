@@ -43,3 +43,7 @@ Tokenizer обычно означает фиксированные правил�
 ## Дополнительный разбор
 
 После VAE/DiT: temporal metrics и causal Conv3d, опыт C. [Материалы, первичные источники и CPU-контроли](../curriculum/SUPPLEMENTARY_READING.md). Основной порядок лекций/labs не меняется.
+
+## Углубление: HunyuanVideo VAE и tiling
+
+После VAE части исходного Lab 3 используйте [пошаговый маршрут 00–08](../vae/README.md): вывод ELBO/KL → causal Conv3D → encoder/decoder geometry → spatial/temporal tiling → free-memory policy → CPU measurement → ComfyUI. Это дополнительная практическая ветвь; [стр. 5–6 отчёта v6](https://arxiv.org/pdf/2412.03603v6) связывают теорию с промышленным кодеком.

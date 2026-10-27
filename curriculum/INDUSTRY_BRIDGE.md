@@ -118,3 +118,7 @@ Revision: `7ad6a96a135feb81f755c84fb391818718f6beb2`.
 - [opensora/utils/sampling.py](https://github.com/hpcaitech/Open-Sora/blob/7ad6a96a135feb81f755c84fb391818718f6beb2/opensora/utils/sampling.py).
 
 Mochi 1: прежний URL `genmoai/models` перенаправляется на `genmoai/mochi`. Для LTX выбран LTX-Video, а не отдельное семейство LTX-2. Open-Sora здесь означает проект HPC-AI Tech. Ни одно из новых семейств в этом стенде не запускалось с pretrained weights.
+
+## Исполняемая ветвь HunyuanVideo VAE
+
+[Девять подробных labs](../vae/README.md) дополняют source map: вывод ELBO/KL, native tiny encoder/decoder, causal normalization caveat, coverage spatial/temporal loops и synthetic free-VRAM planner. [Source provenance](../vae/SOURCE_MAP.md) различает Tencent paper v6, приложенную Kandinsky адаптацию и Diffusers runtime.
