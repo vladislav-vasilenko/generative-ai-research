@@ -85,7 +85,7 @@ CFM даёт доступные targets с известным endpoint, а sampl
 **MIT: от шума к данным.** Начальное состояние — Gaussian noise, конечное — чистый объект. Обозначим чистый endpoint через `x_data`, а шум через epsilon:
 
 $$
-x_s = (1-s)\epsilon + s\,x_{\mathrm{data}}, \qquad s \in [0,1].
+x_s = (1-s)\epsilon + s x_{\mathrm{data}}, \qquad s \in [0,1].
 $$
 
 Sampling идёт от `s = 0` к `s = 1`. Target для линейного path:
