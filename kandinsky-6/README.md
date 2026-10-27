@@ -158,3 +158,7 @@ artifacts/          Локальные outputs/cache/data; ignored Git
 Исходники закреплены на `7ceeefad7fb625011f7db602c43893a989f19c15`, HF Lite Distill config — на `4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81`. [Manifest и SHA-256](reference/source-manifest.json), [атрибуция](THIRD_PARTY.md). Для пересборки: `build_component_notebooks.py`, `build_component_guide.py`, затем `sync_study_navigation.py --write`.
 
 Первичные статьи: [K6](https://huggingface.co/papers/2610.05608), [DiT](https://arxiv.org/abs/2212.09748), [K5](https://arxiv.org/abs/2511.14993), [Flow Matching](https://arxiv.org/abs/2210.02747), [π-Flow](https://arxiv.org/abs/2510.14974), [Ovi](https://arxiv.org/abs/2510.01284), [LTX-2](https://arxiv.org/abs/2601.03233), [MMAudio](https://arxiv.org/abs/2412.15322), [BigVGAN](https://arxiv.org/abs/2206.04658). Сравнения не означают, что разные архитектуры/кодеки взаимозаменяемы.
+
+## Углубление video VAE: HunyuanVideo
+
+[Курс 00–08 по HunyuanVideo VAE](../vae/README.md) расширяет component lab 03: от ELBO до оригинальных spatial/temporal tile loops и free-VRAM planner. [Карта исходников](../vae/SOURCE_MAP.md) указывает ограничения конкретной адаптации, posterior contract и различие CPU tiny / pretrained measurements.

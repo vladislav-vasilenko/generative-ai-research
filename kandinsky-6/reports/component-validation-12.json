@@ -1,0 +1,51 @@
+{
+  "created_utc": "2026-10-27T16:38:44.084726+00:00",
+  "mode": "execute",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "no_pretrained_weights": true,
+  "comfyui_jobs_submitted": 0,
+  "pinned_source_hashes_checked": 243,
+  "colab_bootstrap_executed": false,
+  "helper_sha256": "2b942ab7f666bbd92af989dd2e5d7437de44e70b73782a6a7c0b00725fc118c7",
+  "notebooks": [
+    {
+      "notebook": "12_latents_conditioning_and_output.ipynb",
+      "source_sha256": "1f1cef464dc576ddbeeda68de9741454013e47a0dbd53fee961294590b2faf38",
+      "cells": 13,
+      "code_cells": 5,
+      "executed": true,
+      "elapsed_seconds": 1.162178291939199,
+      "measurements": {
+        "packed_shapes": [
+          [
+            6,
+            4,
+            4,
+            4
+          ],
+          [
+            14,
+            4
+          ]
+        ],
+        "audio_positions_reset_each_sequence": true,
+        "tail_condition_shape": [
+          1,
+          4,
+          4,
+          4,
+          9
+        ],
+        "reference_restore_error": 0.0,
+        "encode_wrapper_output_shape": [
+          6,
+          4,
+          4,
+          16
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "errors": []
+}

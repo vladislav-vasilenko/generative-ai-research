@@ -1,0 +1,958 @@
+{
+  "created_utc": "2026-10-27T16:36:45.770334+00:00",
+  "mode": "execute",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "pinned_source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+  "helper_sha256": "6bef5d5ca05de31182beeb9af8fb375a5bce9e2322742cf506aa408ee85b8176",
+  "notebooks": [
+    {
+      "notebook": "00_route_and_source_contracts.ipynb",
+      "source_sha256": "24940d6b3a7b10f153625da2652c7f61ee488a32eb80b2c254ed1bc2864ca771",
+      "cells": 11,
+      "code_cells": 4,
+      "executed": true,
+      "elapsed_seconds": 1.0764573330525309,
+      "measurements": {
+        "lab": "00_route_and_source_contracts",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "attached_source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "example": {
+          "BCTHW": [
+            1,
+            3,
+            121,
+            480,
+            864
+          ],
+          "latent": [
+            1,
+            16,
+            31,
+            60,
+            108
+          ],
+          "scalar_compression": 46.83870967741935,
+          "input_fp32_MiB": 574.27734375,
+          "latent_fp32_MiB": 12.2607421875
+        }
+      }
+    },
+    {
+      "notebook": "01_elbo_and_probabilistic_codec.ipynb",
+      "source_sha256": "18f69d9b544dc5cf6f2ee901f3400d01cf46f7ecb43d039ce5b948698d6c731f",
+      "cells": 16,
+      "code_cells": 7,
+      "executed": true,
+      "elapsed_seconds": 1.8144842078909278,
+      "measurements": {
+        "lab": "01_elbo_and_probabilistic_codec",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "elbo": {
+          "MC": -2.119223135755895,
+          "standard_error": 0.004661712974274357,
+          "exact_log_marginal": -1.2043554323155334,
+          "gap": 0.9148677034403614
+        },
+        "kl_max_error": 0.0,
+        "gradient_max_error": 4.437242240307171e-12,
+        "linear_vae": {
+          "first_30_mean": 0.21300640553236008,
+          "last_30_mean": 0.04140442485610644,
+          "beta": 0.01
+        },
+        "MIT_Q4_7_NLL_max_error": 2.842170943040401e-14
+      }
+    },
+    {
+      "notebook": "02_causal_convolution_and_geometry.ipynb",
+      "source_sha256": "1712f4f911fa272a540932fa2d61d9b112e25b573918ea379b5ac897b8da7a86",
+      "cells": 14,
+      "code_cells": 6,
+      "executed": true,
+      "elapsed_seconds": 1.170193042140454,
+      "measurements": {
+        "lab": "02_causal_convolution_and_geometry",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "causal_conv_prefix_error": 0.0,
+        "constructor_limits": "anisotropic kernel and dilation require a separate padding audit; default isotropic path tested",
+        "groupnorm_future_prefix_error": 2.912174701690674,
+        "example_conv_path": {
+          "receptive_field": 9,
+          "jump": 4
+        }
+      }
+    },
+    {
+      "notebook": "03_architecture_posterior_and_api.ipynb",
+      "source_sha256": "dd35a0ee389fb3a51a612c323c977194e7b24220c83e873007d4cb90cb513ca4",
+      "cells": 16,
+      "code_cells": 7,
+      "executed": true,
+      "elapsed_seconds": 1.1763650830835104,
+      "measurements": {
+        "lab": "03_architecture_posterior_and_api",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "stage_shapes": [
+          [
+            "enc.0",
+            [
+              1,
+              4,
+              9,
+              16,
+              16
+            ]
+          ],
+          [
+            "enc.1",
+            [
+              1,
+              8,
+              5,
+              8,
+              8
+            ]
+          ],
+          [
+            "enc.2",
+            [
+              1,
+              8,
+              3,
+              4,
+              4
+            ]
+          ],
+          [
+            "enc.3",
+            [
+              1,
+              8,
+              3,
+              4,
+              4
+            ]
+          ],
+          [
+            "dec.0",
+            [
+              1,
+              8,
+              3,
+              8,
+              8
+            ]
+          ],
+          [
+            "dec.1",
+            [
+              1,
+              8,
+              5,
+              16,
+              16
+            ]
+          ],
+          [
+            "dec.2",
+            [
+              1,
+              8,
+              9,
+              32,
+              32
+            ]
+          ],
+          [
+            "dec.3",
+            [
+              1,
+              4,
+              9,
+              32,
+              32
+            ]
+          ]
+        ],
+        "tiny_parameters": 58989,
+        "attention_formula_sdpa_max_error": 1.1920928955078125e-07,
+        "posterior_contract": {
+          "getitem_is_tensor": false,
+          "mode_shape": [
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "mode_sample_MSE": 1.4147588014602661
+        },
+        "correct_scale_roundtrip": {
+          "mse": 0.0,
+          "max_abs": 0.0,
+          "psnr_db": 306.0205999132796
+        },
+        "missing_inverse_scale": {
+          "mse": 0.015059275552630424,
+          "max_abs": 0.5413016080856323,
+          "psnr_db": 24.242559113001075
+        },
+        "dispatch_notes": "_encode uses use_framewise_decoding; public decode recomputes tile policy"
+      }
+    },
+    {
+      "notebook": "04_spatial_tiling_and_blending.ipynb",
+      "source_sha256": "5ddb93c45ab94320f467177108064f7b4f8486de4fef51faff39019b7662a173",
+      "cells": 16,
+      "code_cells": 7,
+      "executed": true,
+      "elapsed_seconds": 1.3187898329924792,
+      "measurements": {
+        "lab": "04_spatial_tiling_and_blending",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "native_blend_values": [
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          6.0,
+          6.0,
+          6.0,
+          6.0
+        ],
+        "aligned_oracle_encode_max_error": 0.0,
+        "aligned_oracle_decode_max_error": 0.0,
+        "tail_counterexample": {
+          "coverage": {
+            "starts": [
+              0,
+              24,
+              48
+            ],
+            "covered": 80,
+            "missing": 8,
+            "valid": false
+          },
+          "expected_latent_width": 11,
+          "actual": 10
+        },
+        "halo_local_conv": {
+          "with_halo_max_error": 0.0,
+          "without_halo_max_error": 0.3361241817474365
+        },
+        "native_tiny_spatial_difference": {
+          "mse": 0.008461606688797474,
+          "max_abs": 0.36429914832115173,
+          "psnr_db": 26.7460715667808
+        }
+      }
+    },
+    {
+      "notebook": "05_temporal_tiling_and_first_frame.ipynb",
+      "source_sha256": "6c81b0ecc34486134d8170318bea90730439d552c0ef47501f57c2cddade47bd",
+      "cells": 14,
+      "code_cells": 6,
+      "executed": true,
+      "elapsed_seconds": 1.2439129590056837,
+      "measurements": {
+        "lab": "05_temporal_tiling_and_first_frame",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "aligned_temporal_oracle": {
+          "F": 33,
+          "Fz": 9,
+          "encode_max_error": 0.0,
+          "decode_max_error": 0.0
+        },
+        "temporal_encode_lengths": [
+          {
+            "frames": 1,
+            "expected_Fz": 1,
+            "actual_Fz": 1,
+            "same_shape": true
+          },
+          {
+            "frames": 9,
+            "expected_Fz": 3,
+            "actual_Fz": 3,
+            "same_shape": true
+          },
+          {
+            "frames": 17,
+            "expected_Fz": 5,
+            "actual_Fz": 5,
+            "same_shape": true
+          },
+          {
+            "frames": 21,
+            "expected_Fz": 6,
+            "actual_Fz": 3,
+            "same_shape": false
+          },
+          {
+            "frames": 25,
+            "expected_Fz": 7,
+            "actual_Fz": 7,
+            "same_shape": true
+          },
+          {
+            "frames": 29,
+            "expected_Fz": 8,
+            "actual_Fz": 7,
+            "same_shape": false
+          },
+          {
+            "frames": 33,
+            "expected_Fz": 9,
+            "actual_Fz": 9,
+            "same_shape": true
+          },
+          {
+            "frames": 37,
+            "expected_Fz": 10,
+            "actual_Fz": 9,
+            "same_shape": false
+          },
+          {
+            "frames": 41,
+            "expected_Fz": 11,
+            "actual_Fz": 11,
+            "same_shape": true
+          },
+          {
+            "frames": 49,
+            "expected_Fz": 13,
+            "actual_Fz": 13,
+            "same_shape": true
+          }
+        ],
+        "temporal_decode_lengths": [
+          {
+            "Fz": 1,
+            "expected_frames": 1,
+            "actual_frames": 1
+          },
+          {
+            "Fz": 3,
+            "expected_frames": 9,
+            "actual_frames": 9
+          },
+          {
+            "Fz": 5,
+            "expected_frames": 17,
+            "actual_frames": 17
+          },
+          {
+            "Fz": 6,
+            "expected_frames": 21,
+            "actual_frames": 21
+          },
+          {
+            "Fz": 7,
+            "expected_frames": 25,
+            "actual_frames": 25
+          },
+          {
+            "Fz": 8,
+            "expected_frames": 29,
+            "actual_frames": 29
+          },
+          {
+            "Fz": 9,
+            "expected_frames": 33,
+            "actual_frames": 33
+          },
+          {
+            "Fz": 10,
+            "expected_frames": 37,
+            "actual_frames": 37
+          },
+          {
+            "Fz": 11,
+            "expected_frames": 41,
+            "actual_frames": 41
+          },
+          {
+            "Fz": 13,
+            "expected_frames": 49,
+            "actual_frames": 49
+          }
+        ],
+        "native_tiny_temporal_difference": {
+          "mse": 0.050821319222450256,
+          "max_abs": 1.0646578073501587,
+          "psnr_db": 18.960140570285194
+        }
+      }
+    },
+    {
+      "notebook": "06_free_vram_planner.ipynb",
+      "source_sha256": "9967db39417851a28fe4570f9cea2fee5f0436232013b8b7f8d0d5ebd8efec52",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": true,
+      "elapsed_seconds": 1.391998249804601,
+      "measurements": {
+        "lab": "06_free_vram_planner",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "non_cuda_policy": "infinite budget; temporal tile 17, no free-unified-memory query",
+        "synthetic_budget_sweep": [
+          {
+            "synthetic_free_GiB": 0.125,
+            "tile": [
+              1,
+              17,
+              80,
+              80
+            ],
+            "stride": [
+              8,
+              48,
+              48
+            ],
+            "height_missing": 16,
+            "width_missing": 16,
+            "valid_spatial_grid": false,
+            "tile_formula_GiB": 0.20751953125
+          },
+          {
+            "synthetic_free_GiB": 0.25,
+            "tile": [
+              1,
+              17,
+              96,
+              104
+            ],
+            "stride": [
+              8,
+              64,
+              72
+            ],
+            "height_missing": 0,
+            "width_missing": 40,
+            "valid_spatial_grid": false,
+            "tile_formula_GiB": 0.32373046875
+          },
+          {
+            "synthetic_free_GiB": 0.5,
+            "tile": [
+              1,
+              17,
+              136,
+              144
+            ],
+            "stride": [
+              8,
+              104,
+              112
+            ],
+            "height_missing": 32,
+            "width_missing": 48,
+            "valid_spatial_grid": false,
+            "tile_formula_GiB": 0.635009765625
+          },
+          {
+            "synthetic_free_GiB": 1,
+            "tile": [
+              1,
+              17,
+              176,
+              160
+            ],
+            "stride": [
+              8,
+              144,
+              128
+            ],
+            "height_missing": 16,
+            "width_missing": 64,
+            "valid_spatial_grid": false,
+            "tile_formula_GiB": 0.9130859375
+          },
+          {
+            "synthetic_free_GiB": 2,
+            "tile": [
+              1,
+              17,
+              256,
+              232
+            ],
+            "stride": [
+              8,
+              224,
+              200
+            ],
+            "height_missing": 0,
+            "width_missing": 32,
+            "valid_spatial_grid": false,
+            "tile_formula_GiB": 1.92578125
+          },
+          {
+            "synthetic_free_GiB": 4,
+            "tile": [
+              1,
+              17,
+              256,
+              304
+            ],
+            "stride": [
+              8,
+              224,
+              272
+            ],
+            "height_missing": 0,
+            "width_missing": 16,
+            "valid_spatial_grid": false,
+            "tile_formula_GiB": 2.5234375
+          },
+          {
+            "synthetic_free_GiB": 8,
+            "tile": [
+              1,
+              17,
+              256,
+              448
+            ],
+            "stride": [
+              8,
+              224,
+              416
+            ],
+            "height_missing": 0,
+            "width_missing": 0,
+            "valid_spatial_grid": true,
+            "tile_formula_GiB": 3.71875
+          },
+          {
+            "synthetic_free_GiB": 16,
+            "tile": [
+              1,
+              17,
+              480,
+              864
+            ],
+            "stride": [
+              8,
+              480,
+              864
+            ],
+            "height_missing": 0,
+            "width_missing": 0,
+            "valid_spatial_grid": true,
+            "tile_formula_GiB": 13.447265625
+          }
+        ],
+        "very_low_budget_policy": {
+          "tile": [
+            1,
+            17,
+            24,
+            24
+          ],
+          "stride": [
+            8,
+            -8,
+            -8
+          ]
+        },
+        "dense_attention_mask_fp32_GiB": 150.32579898834229
+      }
+    },
+    {
+      "notebook": "07_controlled_benchmark.ipynb",
+      "source_sha256": "33e9d1efd9fedf8caa242b51bdf562b7b7ace46046653219f3eca1d02c7697da",
+      "cells": 12,
+      "code_cells": 5,
+      "executed": true,
+      "elapsed_seconds": 3.7681310831103474,
+      "measurements": {
+        "lab": "07_controlled_benchmark",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "runs": [
+          {
+            "seed": 0,
+            "policy": "full",
+            "seconds_median": 0.020825083134695888,
+            "seconds_samples": [
+              0.020542874932289124,
+              0.02137141698040068,
+              0.020825083134695888
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.0,
+              "max_abs": 0.0,
+              "psnr_db": 306.0205999132796
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.34662866592407227,
+              "max_abs": 2.7249374389648438,
+              "psnr_db": 10.62195515645249
+            },
+            "seam_MSE": 0.0,
+            "interior_MSE": 0.0
+          },
+          {
+            "seed": 0,
+            "policy": "spatial",
+            "seconds_median": 0.04487341712228954,
+            "seconds_samples": [
+              0.04487341712228954,
+              0.04492491693235934,
+              0.04457075009122491
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.08816951513290405,
+              "max_abs": 2.102773666381836,
+              "psnr_db": 16.56741538827433
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.28782886266708374,
+              "max_abs": 1.9002835750579834,
+              "psnr_db": 11.429256497171455
+            },
+            "seam_MSE": 0.13440178334712982,
+            "interior_MSE": 0.0793815553188324
+          },
+          {
+            "seed": 0,
+            "policy": "temporal",
+            "seconds_median": 0.03512133308686316,
+            "seconds_samples": [
+              0.03507683309726417,
+              0.035295584006235003,
+              0.03512133308686316
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.030603455379605293,
+              "max_abs": 1.6462007761001587,
+              "psnr_db": 21.162895266903586
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.3295796513557434,
+              "max_abs": 2.737536907196045,
+              "psnr_db": 10.840996013390555
+            },
+            "seam_MSE": 0.03471977636218071,
+            "interior_MSE": 0.029821015894412994
+          },
+          {
+            "seed": 0,
+            "policy": "combined",
+            "seconds_median": 0.06992149981670082,
+            "seconds_samples": [
+              0.06997979106381536,
+              0.06949645793065429,
+              0.06992149981670082
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.08817266672849655,
+              "max_abs": 2.020627975463867,
+              "psnr_db": 16.567260153654832
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.2835853397846222,
+              "max_abs": 1.8729994297027588,
+              "psnr_db": 11.493762155052602
+            },
+            "seam_MSE": 0.12226012349128723,
+            "interior_MSE": 0.08169323205947876
+          },
+          {
+            "seed": 1,
+            "policy": "full",
+            "seconds_median": 0.020893583074212074,
+            "seconds_samples": [
+              0.020961083006113768,
+              0.020489624934270978,
+              0.020893583074212074
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.0,
+              "max_abs": 0.0,
+              "psnr_db": 306.0205999132796
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.3844224214553833,
+              "max_abs": 2.908186197280884,
+              "psnr_db": 10.17251281347133
+            },
+            "seam_MSE": 0.0,
+            "interior_MSE": 0.0
+          },
+          {
+            "seed": 1,
+            "policy": "spatial",
+            "seconds_median": 0.04472033283673227,
+            "seconds_samples": [
+              0.04631495801731944,
+              0.04423408303409815,
+              0.04472033283673227
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.08714686334133148,
+              "max_abs": 1.9596893787384033,
+              "psnr_db": 16.618082310703194
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.3629891574382782,
+              "max_abs": 2.379288911819458,
+              "psnr_db": 10.421663385647209
+            },
+            "seam_MSE": 0.09266816079616547,
+            "interior_MSE": 0.086097352206707
+          },
+          {
+            "seed": 1,
+            "policy": "temporal",
+            "seconds_median": 0.03506066603586078,
+            "seconds_samples": [
+              0.03544241702184081,
+              0.03506066603586078,
+              0.03499512514099479
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.03358808904886246,
+              "max_abs": 1.64146089553833,
+              "psnr_db": 20.758746954095567
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.38007229566574097,
+              "max_abs": 2.9440457820892334,
+              "psnr_db": 10.221937772839137
+            },
+            "seam_MSE": 0.025892965495586395,
+            "interior_MSE": 0.03505080193281174
+          },
+          {
+            "seed": 1,
+            "policy": "combined",
+            "seconds_median": 0.06950562493875623,
+            "seconds_samples": [
+              0.06950562493875623,
+              0.06943408399820328,
+              0.07100108312442899
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.08133246749639511,
+              "max_abs": 1.8488126993179321,
+              "psnr_db": 16.917960430311005
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.35831308364868164,
+              "max_abs": 3.0112853050231934,
+              "psnr_db": 10.477973247954449
+            },
+            "seam_MSE": 0.08223244547843933,
+            "interior_MSE": 0.08116140216588974
+          },
+          {
+            "seed": 2,
+            "policy": "full",
+            "seconds_median": 0.020857166964560747,
+            "seconds_samples": [
+              0.02104595908895135,
+              0.020857166964560747,
+              0.02076208288781345
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.0,
+              "max_abs": 0.0,
+              "psnr_db": 306.0205999132796
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.48222416639328003,
+              "max_abs": 3.2873454093933105,
+              "psnr_db": 9.18811020317094
+            },
+            "seam_MSE": 0.0,
+            "interior_MSE": 0.0
+          },
+          {
+            "seed": 2,
+            "policy": "spatial",
+            "seconds_median": 0.04540479090064764,
+            "seconds_samples": [
+              0.044813791988417506,
+              0.04540479090064764,
+              0.04665616690181196
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.14889438450336456,
+              "max_abs": 3.8028178215026855,
+              "psnr_db": 14.291816725226646
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.5067398548126221,
+              "max_abs": 2.9761805534362793,
+              "psnr_db": 8.972749286703674
+            },
+            "seam_MSE": 0.13591167330741882,
+            "interior_MSE": 0.15136218070983887
+          },
+          {
+            "seed": 2,
+            "policy": "temporal",
+            "seconds_median": 0.03690670896321535,
+            "seconds_samples": [
+              0.03579041711054742,
+              0.03690670896321535,
+              0.03693708288483322
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.07715816795825958,
+              "max_abs": 3.0060625076293945,
+              "psnr_db": 17.14678084111744
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.4749237895011902,
+              "max_abs": 3.053351402282715,
+              "psnr_db": 9.25436066870544
+            },
+            "seam_MSE": 0.08886045217514038,
+            "interior_MSE": 0.07493375241756439
+          },
+          {
+            "seed": 2,
+            "policy": "combined",
+            "seconds_median": 0.07922712503932416,
+            "seconds_samples": [
+              0.07932287501171231,
+              0.07922712503932416,
+              0.07841258286498487
+            ],
+            "device": "cpu",
+            "memory_metric": "not measured; CPU time is not VRAM",
+            "difference_to_full": {
+              "mse": 0.14923249185085297,
+              "max_abs": 3.1584596633911133,
+              "psnr_db": 14.281966005287867
+            },
+            "reconstruction_vs_input": {
+              "mse": 0.4774042069911957,
+              "max_abs": 2.9019229412078857,
+              "psnr_db": 9.231737495415764
+            },
+            "seam_MSE": 0.15610478818416595,
+            "interior_MSE": 0.1479261815547943
+          }
+        ],
+        "asymptotic_processed_volume_ratio": 8.5,
+        "conclusion": {
+          "shape_invariance_on_test_grid": true,
+          "tiling_is_full_equivalent": false,
+          "native_mid_attention_tested": false,
+          "pretrained_quality_tested": false,
+          "peak_VRAM_tested": false,
+          "CPU_timing_is_production_latency": false
+        }
+      }
+    },
+    {
+      "notebook": "08_pretrained_and_comfyui_protocol.ipynb",
+      "source_sha256": "09188ca4b82502a86800c18925fca0f5f947b016bb94c80ee631e1698daccebf",
+      "cells": 12,
+      "code_cells": 4,
+      "executed": true,
+      "elapsed_seconds": 1.0478668329305947,
+      "measurements": {
+        "lab": "08_pretrained_and_comfyui_protocol",
+        "source_sha256": "f5e8dd402aba625f23aef86ab7d5324dc6a4e8585b72917a3bf27bd46745bbaf",
+        "torch_version": "2.14.1",
+        "evidence": "CPU; synthetic inputs; random tiny weights or exact coordinate oracle",
+        "manual_plan": {
+          "execute": false,
+          "codec": "local Diffusers-format Hunyuan VAE directory",
+          "input": "local BCTHW float tensor saved as .npy, RGB [-1,1]",
+          "policies": [
+            "full",
+            "spatial",
+            "temporal",
+            "combined"
+          ],
+          "device": "cpu for smoke / mps experimental / cuda for measured VRAM",
+          "no_network": true,
+          "no_weights_loaded": true
+        },
+        "measurement_columns": [
+          "run_id",
+          "implementation",
+          "revision",
+          "checkpoint_sha256",
+          "input_sha256",
+          "device",
+          "dtype",
+          "F",
+          "H",
+          "W",
+          "policy",
+          "tile_F",
+          "tile_H",
+          "tile_W",
+          "stride_F",
+          "stride_H",
+          "stride_W",
+          "posterior",
+          "warmup",
+          "repeats",
+          "seconds_median",
+          "peak_allocated_bytes",
+          "peak_reserved_bytes",
+          "mps_current_before",
+          "mps_current_after",
+          "mse_input",
+          "psnr_input",
+          "mse_full",
+          "seam_mse",
+          "interior_mse",
+          "output_F",
+          "output_H",
+          "output_W",
+          "status",
+          "notes"
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "errors": [],
+  "pretrained_weights_loaded": false,
+  "GPU_peak_measured": false,
+  "comfyui_jobs_submitted": 0
+}

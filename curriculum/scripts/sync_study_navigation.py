@@ -23,7 +23,7 @@ def insert(source,header):
 
 rows=[]
 mds=[ROOT/'README.md',*sorted(ROOT.glob('lecture_*/*.md')),*sorted((ROOT/'curriculum').glob('*.md')),
-     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md']
+     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md',ROOT/'hunyuan-video/README.md',ROOT/'vae/README.md',ROOT/'vae/SOURCE_MAP.md',ROOT/'vae/MIT_LAB3_BRIDGE.md']
 for path in mds:
     match=re.match(r'lecture_(\d+)',path.parent.name)
     lectures=[int(match.group(1))] if match else []
@@ -32,11 +32,12 @@ for path in mds:
     rows.append({'file':str(path.relative_to(ROOT)),'kind':'markdown','needs_update':new!=old})
 notebooks=[*sorted((ROOT/'curriculum/notebooks').glob('*.ipynb')),
            *sorted((ROOT/'lecture_05').glob('*.ipynb')),*sorted((ROOT/'kandinsky-5/notebooks').glob('*.ipynb')),
-           *sorted((ROOT/'kandinsky-6/notebooks').glob('*.ipynb'))]
+           *sorted((ROOT/'kandinsky-6/notebooks').glob('*.ipynb')),*sorted((ROOT/'vae/notebooks').glob('*.ipynb'))]
 for path in notebooks:
     nb=json.loads(path.read_text());cell=next(c for c in nb['cells'] if c['cell_type']=='markdown')
     before=json.dumps([c['source'] for c in nb['cells'] if c['cell_type']=='code'])
     lectures=[5] if path.parent.name=='lecture_05' else [1,2,3,4]
+    if 'vae' in path.parts:lectures=[4]
     if 'kandinsky-5' in path.parts:lectures=K5[int(path.name[:2])]
     if 'kandinsky-6' in path.parts:
         number=int(path.name[:2])

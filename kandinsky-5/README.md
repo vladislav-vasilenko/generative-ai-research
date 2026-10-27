@@ -409,3 +409,7 @@ requirements-labs.txt      экспорт uv.lock для Colab
 Уточнение прежних формулировок: изменение первых четырёх латентов — явное поведение, а не самостоятельное доказательство ошибки. T=2…4 дают пустой reference, но обычный Python I2V 5s использует T=31. Для предусмотренной кодом ветки time_length=0 обнаружен tuple/reshape conflict; официальные примеры используют 5s, поэтому поддержку полноценного image-инференса этим фактом не подтверждаем. T2V Distill normalizer не вызывает.
 
 Video-ветка encode_video несовместима с posterior-returning Hunyuan API, однако обычный I2V получает .latent_dist.sample() напрямую, а I2I выбирает image_vae=True. Нельзя заключать об отказе этих маршрутов только по helper-контрпримеру. В notebook есть положительные контроли и явно обозначенная учебная защитная policy; upstream code не изменён.
+
+## Углубление HunyuanVideo VAE
+
+[Девять отдельных лабораторных](../vae/README.md) продолжают lab 02: ELBO/KL, causal Conv3D, shapes, spatial/temporal tiling, original free-VRAM heuristic и measurements. Используют корневое окружение стенда; не запускайте их в K5 environment автоматически.

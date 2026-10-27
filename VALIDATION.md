@@ -77,3 +77,9 @@ python lecture_01/scripts/execute_notebook.py --animation
 - Кодовые ячейки, заготовки упражнений и сохранённые результаты Lab One не менялись. Обновлены только инструкции окружения; HTML повторно экспортирован из сохранённых результатов. Полная лабораторная после смены зависимостей не выполнялась заново.
 - У Kandinsky 5 отдельный `pyproject.toml` и `uv.lock`, сохраняющие torch 2.8.0 / torchvision 0.23.0, transformers 4.56.2 и diffusers 0.35.1. Проверен план `uv sync --locked --dry-run`; новое окружение курса и полный инференс не запускались.
 - `kandinsky-5/requirements-labs.txt` теперь является автоматически созданным экспортом lock-файла для существующих Colab-ноутбуков. Его обновляют через `uv export`, а не вручную.
+
+## VAE branch / HunyuanVideo, 2026-10-27
+
+[Общий VAE маршрут](vae/README.md), [точная связь с MIT Lab 3 Q4.1–Q5.1](vae/MIT_LAB3_BRIDGE.md), [измеренный отчёт](vae/reports/VALIDATION.md). Девять notebooks / 51 code cells выполнены в fresh CPU kernels; [JSON](vae/reports/execution.json) содержит hashes. Все 32 display formulas прошли strict KaTeX parse/render; осмотрены два local HTML previews и benchmark plots. Это не проверка GitHub/Colab runtime.
+
+Проверены analytic ELBO/KL/NLL/gradient, original native tiny encoder/decoder, exact coordinate oracles, spatial/temporal coverage, synthetic CUDA-budget planner и 12 paired tiny benchmark runs. Pretrained weights, CUDA peak, MPS kernels и ComfyUI jobs не запускались. K6 lab 12 исправлена по фактическому posterior return contract и отдельно [перепроверена](kandinsky-6/reports/component-validation-12.json). Пользовательские Lecture 1 answers и third-party source snapshots сохранены без изменений.

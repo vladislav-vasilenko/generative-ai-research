@@ -1,0 +1,55 @@
+{
+  "renderer": "KaTeX 0.16.25",
+  "strict": true,
+  "scope": "Formula parse/render only; no GitHub/Colab browser parity claim",
+  "files": [
+    {
+      "notebook": "00_route_and_source_contracts.ipynb",
+      "source_sha256": "24940d6b3a7b10f153625da2652c7f61ee488a32eb80b2c254ed1bc2864ca771",
+      "formulas": 3
+    },
+    {
+      "notebook": "01_elbo_and_probabilistic_codec.ipynb",
+      "source_sha256": "18f69d9b544dc5cf6f2ee901f3400d01cf46f7ecb43d039ce5b948698d6c731f",
+      "formulas": 12
+    },
+    {
+      "notebook": "02_causal_convolution_and_geometry.ipynb",
+      "source_sha256": "1712f4f911fa272a540932fa2d61d9b112e25b573918ea379b5ac897b8da7a86",
+      "formulas": 5
+    },
+    {
+      "notebook": "03_architecture_posterior_and_api.ipynb",
+      "source_sha256": "dd35a0ee389fb3a51a612c323c977194e7b24220c83e873007d4cb90cb513ca4",
+      "formulas": 2
+    },
+    {
+      "notebook": "04_spatial_tiling_and_blending.ipynb",
+      "source_sha256": "5ddb93c45ab94320f467177108064f7b4f8486de4fef51faff39019b7662a173",
+      "formulas": 3
+    },
+    {
+      "notebook": "05_temporal_tiling_and_first_frame.ipynb",
+      "source_sha256": "6c81b0ecc34486134d8170318bea90730439d552c0ef47501f57c2cddade47bd",
+      "formulas": 1
+    },
+    {
+      "notebook": "06_free_vram_planner.ipynb",
+      "source_sha256": "9967db39417851a28fe4570f9cea2fee5f0436232013b8b7f8d0d5ebd8efec52",
+      "formulas": 4
+    },
+    {
+      "notebook": "07_controlled_benchmark.ipynb",
+      "source_sha256": "33e9d1efd9fedf8caa242b51bdf562b7b7ace46046653219f3eca1d02c7697da",
+      "formulas": 2
+    },
+    {
+      "notebook": "08_pretrained_and_comfyui_protocol.ipynb",
+      "source_sha256": "09188ca4b82502a86800c18925fca0f5f947b016bb94c80ee631e1698daccebf",
+      "formulas": 0
+    }
+  ],
+  "errors": [],
+  "total_formulas": 32,
+  "passed": true
+}
