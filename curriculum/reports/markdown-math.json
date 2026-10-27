@@ -2,7 +2,15 @@
   "scope": "source style and delimiters; GitHub rendering is verified separately",
   "files": [
     {
+      "file": "curriculum/CLAUDE_REVIEW_BRIEF.md",
+      "display_blocks": 0
+    },
+    {
       "file": "curriculum/COMFYUI_LABS.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "curriculum/CONTENTS.md",
       "display_blocks": 0
     },
     {
@@ -55,6 +63,18 @@
     },
     {
       "file": "lecture_05/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "kandinsky-6/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "kandinsky-6/COMPONENT_GUIDE.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "kandinsky-6/reports/COMPONENT_VALIDATION.md",
       "display_blocks": 0
     }
   ],

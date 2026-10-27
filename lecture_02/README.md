@@ -1,7 +1,7 @@
 # Lecture 2 → Lab 2: от probability path к обучаемому полю
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md) · [Полное содержание](../curriculum/CONTENTS.md).
 
 **Связанные лекции:** [Lecture 2](https://diffusion.csail.mit.edu/2026/docs/20260122_Lecture_02.pdf).
 <!-- study-navigation:end -->

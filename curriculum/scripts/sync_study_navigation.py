@@ -12,8 +12,9 @@ parser=argparse.ArgumentParser();parser.add_argument('--write',action='store_tru
 def navigation(path,lectures):
     import os
     roadmap=os.path.relpath(ROOT/'curriculum/README.md',path.parent).replace(os.sep,'/')
+    contents=os.path.relpath(ROOT/'curriculum/CONTENTS.md',path.parent).replace(os.sep,'/')
     links=' · '.join(f'[Lecture {n}](https://diffusion.csail.mit.edu/2026/docs/{SLIDES[n]})' for n in lectures)
-    return START+'\n'+f'**Основа:** [MIT 6.S184 / 2026]({COURSE}) · [Основной конспект]({NOTES}) · [Учебная карта]({roadmap}).'+('\n\n**Связанные лекции:** '+links+'.' if links else '')+'\n'+END
+    return START+'\n'+f'**Основа:** [MIT 6.S184 / 2026]({COURSE}) · [Основной конспект]({NOTES}) · [Учебная карта]({roadmap}) · [Полное содержание]({contents}).'+('\n\n**Связанные лекции:** '+links+'.' if links else '')+'\n'+END
 
 def insert(source,header):
     source=re.sub(re.escape(START)+r'.*?'+re.escape(END)+r'\n*','',source,flags=re.S)
@@ -22,7 +23,7 @@ def insert(source,header):
 
 rows=[]
 mds=[ROOT/'README.md',*sorted(ROOT.glob('lecture_*/*.md')),*sorted((ROOT/'curriculum').glob('*.md')),
-     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md']
+     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md']
 for path in mds:
     match=re.match(r'lecture_(\d+)',path.parent.name)
     lectures=[int(match.group(1))] if match else []
@@ -37,7 +38,9 @@ for path in notebooks:
     before=json.dumps([c['source'] for c in nb['cells'] if c['cell_type']=='code'])
     lectures=[5] if path.parent.name=='lecture_05' else [1,2,3,4]
     if 'kandinsky-5' in path.parts:lectures=K5[int(path.name[:2])]
-    if 'kandinsky-6' in path.parts:lectures=[2,3,4]
+    if 'kandinsky-6' in path.parts:
+        number=int(path.name[:2])
+        lectures={0:[2,3,4],1:[2,4],2:[3,4],3:[4],4:[4],5:[4],6:[4],7:[4],8:[4],9:[2],10:[1,2],11:[1,2,3],12:[4],13:[4],14:[1,2,3,4]}[number]
     source=cell['source'];text=''.join(source) if isinstance(source,list) else source
     new=insert(text,navigation(path,lectures));changed=new!=text
     if changed:

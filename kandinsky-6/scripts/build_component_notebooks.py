@@ -1,0 +1,1438 @@
+"""Build the K6 component course. Only source generation, no network/weights."""
+from pathlib import Path
+from textwrap import dedent
+import json
+
+ROOT = Path(__file__).resolve().parents[1]
+CELLS = []
+CATALOG = []
+REV = '7ceeefad7fb625011f7db602c43893a989f19c15'
+PAPER = 'https://huggingface.co/papers/2610.05608'
+ARXIV = 'https://arxiv.org/html/2610.05608v1'
+
+
+def md(text):
+    CELLS.append({'cell_type': 'markdown', 'metadata': {}, 'source': dedent(text).strip()+'\n'})
+
+
+def code(text):
+    CELLS.append({'cell_type': 'code', 'metadata': {}, 'source': dedent(text).strip()+'\n',
+                  'execution_count': None, 'outputs': []})
+
+
+def start(stem, title, goal, prerequisites, sources, section, k5):
+    CELLS.clear()
+    CATALOG.append({'stem': stem, 'title': title, 'goal': goal, 'sources': sources,
+                    'paper_section': section, 'prerequisites': prerequisites})
+    links = '\n'.join(f'- [`{p}`](https://github.com/kandinskylab/kandinsky-6/blob/{REV}/kandinsky/{p})' for p in sources)
+    md(f'''# {title}
+
+    **Результат:** {goal}
+
+    **Перед началом:** {prerequisites}. [Порядок всех материалов](../../curriculum/CONTENTS.md).
+    [Курс K6](../README.md) · [Покомпонентная карта](../COMPONENT_GUIDE.md) · [Предыдущий опыт K5]({k5}).
+
+    Основной архитектурный источник: [Kandinsky 6 на Hugging Face Papers]({PAPER}),
+    [полный отчёт, §{section}]({ARXIV}). Открывайте статью рядом с notebook.
+    Мы различаем опубликованную архитектуру, конкретный checkpoint config и результат нашего опыта.
+
+    **Код для сравнения (закреплённая revision `{REV[:8]}`):**
+    {links}
+
+    Run All выполняет небольшие CPU-опыты. Случайная уменьшенная сеть проверяет вычисления;
+    pretrained генерацию, качество голоса и производительность M3 она не измеряет.
+    Большие веса не скачиваются, ComfyUI jobs не отправляются. В Colab первая ячейка получает
+    исходники курса из GitHub, если их ещё нет; пакеты не устанавливает. На Mac используется существующий checkout.
+    Ниже объяснение идёт перед каждым опытом.
+    '''.replace('\n    ', '\n'))
+    code(f'''
+    from pathlib import Path
+    import json, sys, os, math
+    for parent in (Path.cwd(), *Path.cwd().parents):
+        candidates = (parent, parent / 'kandinsky-6')
+        found = next((p for p in candidates if (p / 'labkit/components.py').is_file()), None)
+        if found is not None:
+            ROOT = found.resolve()
+            break
+    else:
+        if not Path('/content').is_dir():
+            raise FileNotFoundError('Откройте notebook внутри checkout generative-ai-research.')
+        import subprocess
+        checkout=Path('/content/generative-ai-research-k6-components')
+        if not checkout.exists():
+            subprocess.run(['git','clone','--depth','1','--branch',
+                os.environ.get('K6_LABS_REF','kandinsky-6-components'),
+                'https://github.com/vladislav-vasilenko/generative-ai-research.git',str(checkout)],check=True)
+        ROOT=checkout/'kandinsky-6'
+        if not (ROOT/'labkit/components.py').is_file():
+            raise FileNotFoundError('В выбранной revision нет component labs; проверьте K6_LABS_REF.')
+    sys.path.insert(0, str(ROOT))
+    os.environ.setdefault('MPLCONFIGDIR', str(ROOT / 'artifacts/component_labs/mpl-cache'))
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import torch
+    from torch import nn
+    import torch.nn.functional as F
+    from labkit.components import (config, native, show_source, native_causal_conv,
+        tiny_model, tiny_inputs, activate_gates, fresh_forward, write_metrics, figure_path)
+    torch.set_num_threads(2)
+    torch.manual_seed(42)
+    np.random.seed(42)
+    LAB = {stem!r}
+    metrics = {{}}
+    print('CPU teaching mode; PyTorch', torch.__version__)
+    ''')
+
+
+def finish(exercises, conclusion):
+    md('## Самостоятельное исследование\n\n'+dedent(exercises).strip()+
+       '\n\nПеред изменением запишите гипотезу. Сохраните baseline, меняйте один фактор и повторяйте по 3–5 seeds. '
+       'Файл metrics.json содержит измерение конкретного запуска, а не статистическую оценку качества модели.')
+    code('write_metrics(LAB, metrics)')
+    md('## Критерий понимания\n\n'+dedent(conclusion).strip()+
+       '\n\n[Вернуться к маршруту K6](../README.md) · [Полное содержание](../../curriculum/CONTENTS.md) · '
+       '[Шаблон отчёта](../../curriculum/EXPERIMENT_TEMPLATE.md).')
+    item=CATALOG[-1]
+    for i,cell in enumerate(CELLS):cell['id']=f'cell-{i:03d}'
+    nb={'nbformat':4,'nbformat_minor':5,'metadata':{
+        'kernelspec':{'display_name':'Python 3 (K6 CPU labs)','language':'python','name':'python3'},
+        'language_info':{'name':'python','version':'3.12'},
+        'k6_component_lab':{'source_revision':REV,'pretrained':False,'paper':PAPER}},'cells':list(CELLS)}
+    (ROOT/'notebooks'/f"{item['stem']}.ipynb").write_text(json.dumps(nb,ensure_ascii=False,indent=1)+'\n')
+
+
+start('01_system_and_training_map', '01. K6 Lite: вся система и training map',
+      'восстановить состав checkpoint и посчитать параметры каждого потока без выделения памяти под 3B весов',
+      'вводный probability notebook; K5 00',
+      ['core/components/dit.py','core/components/piflow_dit.py','runtime/sampler.py'], '3.1–3.2, 4',
+      '../../kandinsky-5/notebooks/00_start_and_training_map.ipynb')
+md(r'''
+## 1. Модель из 3B параметров — это ещё не весь pipeline
+
+Сначала текст превращается в Qwen token states и CLIP pooled state. Два **разных обучаемых projection/refiner**
+внутри DiT готовят их для видео и аудио. Gaussian noise живёт в двух разных latent spaces.
+CrossDiT обновляет оба состояния; затем Hunyuan VAE декодирует видео, MMAudio VAE — mel,
+а отдельный vocoder — waveform. Mux только объединяет результаты.
+
+Это совместная модель распределения видео и аудио при данном тексте. Отдельный audio-forward
+не содержит межмодального обмена. Он полезен для контроля кода, но не воспроизводит полную AV систему.
+
+### Что именно обучается
+
+В нашем полном FM-опыте обучаем DiT; внешние Qwen/CLIP/кодеки frozen. Это явный контракт опыта.
+Исторические стадии в статье отличаются: separate → joint pretraining → SFT → RL → distillation.
+Особенно сравните §4.3: в SFT stage 1 заморожены audio и fusion, в stage 2 DiT-модули размораживаются.
+Не переносите слово «frozen» с одного этапа на всю историю модели. Inference вообще не имеет optimizer.
+''')
+code('''
+index = json.loads((ROOT/'reference/hf/Kandinsky-6.0-Lite-distill-5s-Diffusers/model_index.json').read_text())
+for name in ['transformer','text_encoder','tokenizer','text_encoder_2','tokenizer_2','vae','audio_vae','vocoder','scheduler']:
+    print(f'{name:16s}', index[name])
+cfg=config(); print('video/audio widths:',cfg['model_dim'],cfg['model_dim_a'])
+assert cfg['out_visual_dim']==160 and cfg['out_audio_dim']==400
+assert cfg['out_visual_dim']//cfg['in_visual_dim']==cfg['out_audio_dim']//cfg['in_audio_dim']==10
+''')
+md(r'''
+## 2. Считать параметры можно без загрузки весов
+
+`meta` хранит формы без значений. Конструктор создаёт правильную структуру, а `numel()` считает элементы.
+Из checkpoint config убираем `scale_factor`: это параметр RoPE при вызове, не аргумент конструктора.
+Используем **обычный native DiT с уже расширенными выходами 160/400**. Если передать эти выходы
+PiFlow-wrapper, который сам умножает на 10, получится ошибочное двойное расширение.
+
+Всё, что начинается с `audio_` или принадлежит `audio_dec_block`, относим к аудиотракту;
+`va_`/`av_` — к fusion; остальное — к видео. Это прозрачная группировка state_dict,
+а не заявление о независимых файлах весов. В опубликованном transformer они объединены.
+Обзорные 2B/0.6B/0.4B из статьи — округлённые архитектурные оценки. Наш numel включает
+все instantiated parameters и явно относит cross-modal modulation к fusion; эти группировки не тождественны.
+''')
+code('''
+kwargs={k:v for k,v in cfg.items() if k!='scale_factor'}
+kwargs['attention_engine']='sdpa'
+with torch.device('meta'):
+    full=native().DiffusionTransformer3D(**kwargs)
+counts={'video':0,'audio':0,'fusion':0}
+for name,p in full.named_parameters():
+    group=('fusion' if any(s in name for s in ['.va_','.av_']) else
+           'audio' if name.startswith('audio_') or '.audio_dec_block.' in name else 'video')
+    counts[group]+=p.numel()
+print('Exact parameter count:',counts,'total=',sum(counts.values()))
+metrics['parameters']=counts;metrics['total_parameters']=sum(counts.values())
+metrics['bf16_transformer_only_GiB']=sum(counts.values())*2/2**30
+print('BF16 weights only GiB:',metrics['bf16_transformer_only_GiB'])
+fig,ax=plt.subplots(figsize=(7,3));ax.bar(counts.keys(),[n/1e9 for n in counts.values()])
+ax.set_ylabel('B parameters');ax.set_title('Lite Distill: counted from native constructor')
+fig.tight_layout();fig.savefig(figure_path(LAB,'parameter_groups'));plt.show()
+del full
+''')
+md('''
+## 3. Связь с ресурсами
+
+BF16-байты параметров — только нижняя оценка хранения DiT. Активации, attention, Qwen,
+VAE, allocator и optimizer добавляют память. Unified Memory — общий бюджет GPU/CPU,
+а не сумма независимых VRAM и RAM. Adam training может быть существенно тяжелее inference.
+SR и prompt beautifier — дополнительные ветви, не обязательные для минимального Lite baseline.
+''')
+finish('''
+1. Сравните plain Lite и Distill configs: какие формы головы изменились, какие backbone widths остались?
+2. Составьте три optimizer maps: полный FM, SFT stage 1, наш frozen-FiLM эксперимент.
+3. Добавьте память gradients и двух Adam moments в FP32; подпишите, что активации ещё не учтены.
+''','''
+Вы можете пройти путь от prompt до MP4 и назвать для каждого узла источник весов,
+вход/выход, trainable/frozen статус в выбранном опыте. Число «3B» не является оценкой размера всего pipeline.
+''')
+
+start('02_text_conditioning', '02. Текст: tokenizer, Qwen, CLIP и два refiner',
+      'различать IDs, hidden states, pooled condition и padding mask; проверить crop и text-projection cache',
+      'K6 01; attention из Lecture 4', ['core/components/text_embedder.py','core/components/dit.py'], '3.1–3.2',
+      '../../kandinsky-5/notebooks/01_text_embedders.ipynb')
+md(r'''
+## 1. Четыре разных представления текста
+
+Tokenizer возвращает целые IDs; embedding lookup превращает ID в вектор; Qwen contextualizes
+вектор с учётом других токенов; CLIP даёт pooled representation. K6 использует Qwen states ширины 3584
+и CLIP pooled 768. После crop доступно до 1024 токенов; CLIP ограничен 77.
+Текстовый VLM используется как encoder. Для T2AV его image/video inputs пустые.
+
+У frozen Qwen один набор весов, но DiT содержит **два собственных trainable refiner**:
+`video_text_transformer_blocks` и `audio_text_transformer_blocks`. Выход общего encoder
+не равен выходу этих refiner. `text_embedder.py` native пути передаёт Qwen attention mask.
+
+Ниже искусственные IDs показывают только crop/padding. Это **не реализация Qwen tokenizer**:
+мы не имитируем его BPE/byte vocabulary обычным split по пробелу.
+''')
+code('''
+crop,max_length=129,8
+ids=torch.arange(2*(crop+max_length)).reshape(2,crop+max_length)
+valid_lengths=torch.tensor([crop+6,crop+3])
+mask=torch.arange(crop+max_length)[None,:]<valid_lengths[:,None]
+kept_ids=ids[:,crop:];kept_mask=mask[:,crop:]
+assert kept_ids.shape==(2,8) and kept_mask.sum(1).tolist()==[6,3]
+print('IDs after crop:',kept_ids);print('valid:',kept_mask)
+fig,ax=plt.subplots(figsize=(7,2));ax.imshow(kept_mask,cmap='Blues',vmin=0,vmax=1)
+ax.set_xlabel('Token after system-template crop');ax.set_yticks([0,1]);plt.show()
+metrics['valid_tokens_after_crop']=kept_mask.sum(1).tolist()
+''')
+md(r'''
+## 2. Маска ограничивает доступ к K/V
+
+В PyTorch SDPA boolean `True` означает разрешённый key. Мы изменим padded value на очень большое
+число. С правильной маской результат не меняется. Это проверка контракта downstream attention,
+не достаточная проверка tokenizer/template: реальный crop зависит от конкретных processor assets.
+''')
+code('''
+q=torch.randn(2,2,3,4);k=torch.randn(2,2,8,4);v=torch.randn(2,2,8,4)
+attention_mask=kept_mask[:,None,None,:]
+a=F.scaled_dot_product_attention(q,k,v,attn_mask=attention_mask)
+v2=v+((~kept_mask)[:,None,:,None])*1000
+b=F.scaled_dot_product_attention(q,k,v2,attn_mask=attention_mask)
+error=(a-b).abs().max().item();assert error==0
+metrics['masked_value_perturbation_max_error']=error
+print('Masked value perturbation error:',error)
+show_source('core/components/text_embedder.py','encode_qwen')
+''')
+md('''
+## 3. Что можно кэшировать, а что зависит от времени
+
+Native DiT кэширует time-independent token/pooled projections, затем на каждом шаге
+прибавляет time embedding и выполняет time-modulated text blocks. Проверим hit по hooks.
+Ключ использует data pointer и shape: нельзя менять cached tensor in-place и ожидать автоматической
+инвалидации. Кэш очищают перед новой генерацией. В учебном training очищаем перед каждым forward,
+чтобы не переиспользовать старый autograd graph.
+''')
+code('''
+model=tiny_model().eval();_,_,kw=tiny_inputs(model)
+hits=[]
+hook=model.video_text_embeddings.register_forward_hook(lambda *args:hits.append(1))
+with torch.no_grad():
+    model.clear_text_proj_cache()
+    p1=model._project_text_tokens('video',kw['text_embed'],kw['pooled_text_embed'])
+    p2=model._project_text_tokens('video',kw['text_embed'],kw['pooled_text_embed'])
+    time1=model._time_embed('video',torch.tensor([200.]),p1[1])
+    time2=model._time_embed('video',torch.tensor([800.]),p2[1])
+hook.remove()
+assert len(hits)==1 and torch.equal(p1[0],p2[0])
+metrics['projection_calls_two_reads']=len(hits)
+metrics['time_condition_change']=(time1-time2).abs().max().item()
+print('projection calls:',len(hits),'time delta:',metrics['time_condition_change'])
+''')
+finish('''
+1. Уберите mask, повторите padded-value perturbation и объясните изменение результата.
+2. Найдите в исходнике поведение при одном и при нескольких prompts: packed и padded shapes.
+3. Почему `eval()` само по себе не замораживает веса? Покажите разницу с `requires_grad_(False)`.
+''','''
+Вы отличаете frozen text encoder от trainable text-refiner внутри DiT. Можете указать,
+какая маска требуется для прямоугольного batch и какие части text conditioning зависят от diffusion time.
+''')
+
+start('03_video_vae', '03. Видео VAE: posterior, compression, causality и scaling',
+      'вывести VAE objective, обучить маленький codec и проверить causal Conv3d/latent normalization',
+      'Lecture 4 / Lab 3; подробная теория VAE в K5 02',
+      ['core/components/hunyuan_vae.py','core/components/vae_video.py','core/algo/postprocess_video.py'], '3.1',
+      '../../kandinsky-5/notebooks/02_vae.ipynb')
+md(r'''
+## 1. Зачем распределение вместо одной точки
+
+Encoder оценивает Gaussian posterior с диагональной covariance. Декодер задаёт likelihood наблюдения.
+Reparameterization отделяет случайность от обучаемых mean/std:
+
+$$
+q_\phi(z\mid x)=\mathcal N(\mu_\phi(x),\mathrm{diag}(\exp(\ell_\phi(x)))),\qquad
+z=\mu_\phi(x)+\exp(\ell_\phi(x)/2)\epsilon.
+$$
+
+Negative ELBO состоит из reconstruction NLL и KL к prior. Для standard Gaussian prior:
+
+$$
+\mathrm{KL}(q\Vert p)=\frac12\sum_j\left(\mu_j^2+\exp(\ell_j)-1-\ell_j\right).
+$$
+
+MSE соответствует Gaussian reconstruction likelihood при фиксированной дисперсии с соответствующим
+коэффициентом и константой. Меняя вес KL или редукцию MSE, вы меняете objective. Ниже честно используем
+**учебный beta-VAE objective** `mean_MSE + 0.001 * mean_batch(sum_latent_KL)`,
+а не утверждаем, что воспроизвели все perceptual/adversarial losses промышленного Hunyuan VAE.
+''')
+code('''
+vae_cfg=config('vae')
+T,H,W=121,480,864
+latent_shape=((T-1)//4+1,H//8,W//8,vae_cfg['latent_channels'])
+assert latent_shape==(31,60,108,16)
+print('RGB video -> latent THWC:',(T,H,W,3),'->',latent_shape)
+metrics['full_video_latent_shape']=list(latent_shape)
+print('Scaling factor:',vae_cfg['scaling_factor'])
+''')
+md('''
+## 2. Миниатюрное обучение с известными данными
+
+Создадим 12 коротких клипов движущегося Gaussian blob. Encoder/decoder — маленькие MLP,
+чтобы видеть posterior и loss на CPU. Они не заменяют causal convolutional Hunyuan architecture.
+Разделение цели и реализации позволяет сначала проверить математику.
+''')
+code('''
+y,x=torch.meshgrid(torch.linspace(-1,1,8),torch.linspace(-1,1,8),indexing='ij')
+clips=torch.stack([torch.stack([torch.exp(-((x-(t/4-0.5)*0.8)**2+(y-s)**2)/0.12)
+                               for t in range(5)]) for s in torch.linspace(-.5,.5,12)])
+flat=clips.flatten(1)
+class MiniVAE(nn.Module):
+    def __init__(self):
+        super().__init__();self.encoder=nn.Sequential(nn.Linear(320,32),nn.SiLU(),nn.Linear(32,16))
+        self.decoder=nn.Sequential(nn.Linear(8,32),nn.SiLU(),nn.Linear(32,320),nn.Sigmoid())
+    def forward(self,x):
+        mu,logvar=self.encoder(x).chunk(2,-1)
+        z=mu+torch.exp(logvar/2)*torch.randn_like(mu)
+        return self.decoder(z),mu,logvar
+vae=MiniVAE();opt=torch.optim.Adam(vae.parameters(),lr=.01);history=[]
+for step in range(100):
+    recon,mu,logvar=vae(flat)
+    reconstruction=F.mse_loss(recon,flat)
+    kl=.5*(mu.square()+logvar.exp()-1-logvar).sum(-1).mean()
+    loss=reconstruction+.001*kl
+    opt.zero_grad();loss.backward();opt.step()
+    history.append([loss.item(),reconstruction.item(),kl.item()])
+assert np.isfinite(history).all() and history[-1][0]<history[0][0]
+metrics['toy_objective_initial']=history[0][0];metrics['toy_objective_final']=history[-1][0]
+with torch.no_grad():
+    mu,logvar=vae.encoder(flat).chunk(2,-1);mean_recon=vae.decoder(mu).reshape_as(clips)
+fig,axes=plt.subplots(1,3,figsize=(10,3));axes[0].plot(np.array(history)[:,:2])
+axes[0].legend(['objective','MSE']);axes[1].imshow(clips[0,2]);axes[2].imshow(mean_recon[0,2])
+axes[1].set_title('Input');axes[2].set_title('Decode posterior mean')
+fig.tight_layout();fig.savefig(figure_path(LAB,'vae_training'));plt.show()
+''')
+md('''
+## 3. Causal Conv3d и нормализация латентов
+
+Кодек с causal temporal padding не использует будущие кадры. Возьмём **оригинальное определение**
+`HunyuanVideoCausalConv3d`, изолированно от тяжёлых Diffusers imports, и изменим только будущее.
+Проверяем конкретный слой при kernel=3/stride=1; это не доказательство causality всего генератора:
+video attention в DiT может видеть всю последовательность.
+
+DiT обучен на масштабированных латентах. При encode умножаем на scale, перед decode делим.
+Пропущенный scale меняет distribution, хотя shape остаётся правильной.
+''')
+code('''
+Causal=native_causal_conv();conv=Causal(1,1,kernel_size=3,bias=False)
+video=torch.randn(1,1,6,5,5);future=video.clone();future[:,:,4:]+=100
+with torch.no_grad():
+    left=conv(video);right=conv(future)
+causal_error=(left[:,:,:4]-right[:,:,:4]).abs().max().item();assert causal_error==0
+z=torch.randn(1,16,3,4,4);scale=vae_cfg['scaling_factor']
+roundtrip=((z*scale)/scale-z).abs().max().item()
+metrics['native_causal_conv_past_error']=causal_error;metrics['latent_scale_roundtrip_error']=roundtrip
+print('Causal past error:',causal_error,'scale roundtrip:',roundtrip)
+''')
+finish('''
+1. Сравните beta=0, 0.001, 0.1: MSE, KL, posterior variance. Не делайте вывод по одному loss.
+2. Сопоставьте 33/121 RGB frames с latent frames. Почему формула содержит T-1, а не просто T/4?
+3. Измените последний кадр и сравните past outputs causal и обычной symmetric convolution.
+4. Для настоящего VAE reconstruction используйте ComfyUI C4 и существующий Hunyuan codec после resource gate.
+''','''
+Вы различаете posterior mean/sample, reconstruction loss/KL, pixel/latent space и причинность кодека/DiT.
+Другой VAE с теми же размерами не гарантирует совместимость с pretrained CrossDiT.
+''')
+
+start('04_audio_vae_and_vocoder', '04. Аудио: waveform → mel → VAE → vocoder',
+      'понять частотное представление, роль audio VAE и vocoder, проверить duration/scaling/clipping',
+      'K6 03; базовая вероятность Gaussian',
+      ['core/components/vae_audio.py','core/components/mmaudio/features_utils.py','core/algo/postprocess_audio.py'], '3.1',
+      '../../kandinsky-5/notebooks/11_kvae_separate.ipynb')
+md(r'''
+## 1. Три пространства и три разные задачи
+
+Первичные статьи компонентов: [MMAudio](https://arxiv.org/abs/2412.15322),
+[BigVGAN](https://arxiv.org/abs/2206.04658). Их полный generation backbone не загружается вместо K6.
+
+Waveform — амплитуда во времени. STFT — комплексная частотно-временная матрица; mel-проекция
+сжимает частотные полосы. VAE преобразует mel в 40-channel latent. Decoder VAE восстанавливает mel,
+но не waveform: эту задачу решает BigVGAN-style vocoder.
+
+Код K6: `FeaturesUtils.wrapped_encode` возвращает mean posterior; `wrapped_decode` — mel.
+Режим checkpoint — 44100 Hz, downsample factor 1024, scale Lite Distill=0.417.
+Обычный Lite config использует другой scale (0.5302). Не копируйте нормализацию между checkpoints.
+KVAE-Audio — отдельный codec, не автоматическая замена MMAudio latent contract.
+
+### Почему STFT inverse ещё не vocoder
+
+Если сохранить phase, inverse STFT может точно вернуть синтетический waveform.
+Mel magnitude сам по себе фазу не сохраняет; обученный vocoder восполняет недостающую информацию.
+Наш опыт ниже не воспроизводит MMAudio preprocessing целиком.
+''')
+code('''
+sr=44100;time=torch.arange(sr//4)/sr
+wave=.2*torch.sin(2*torch.pi*440*time)+.1*torch.sin(2*torch.pi*880*time)
+window=torch.hann_window(1024)
+stft=torch.stft(wave,n_fft=1024,hop_length=256,window=window,return_complex=True)
+inverse=torch.istft(stft,n_fft=1024,hop_length=256,window=window,length=wave.numel())
+error=(wave-inverse).abs().max().item();assert error<1e-5
+# Educational triangular mel filters; not the exact checkpoint feature extractor.
+freqs=torch.linspace(0,sr/2,513);mel=lambda f:2595*torch.log10(1+f/700)
+points=700*(10**(torch.linspace(0,mel(torch.tensor(sr/2)).item(),130)/2595)-1)
+left=(freqs[None,:]-points[:-2,None])/(points[1:-1,None]-points[:-2,None])
+right=(points[2:,None]-freqs[None,:])/(points[2:,None]-points[1:-1,None])
+bank=torch.minimum(left,right).clamp(min=0)
+mel_power=bank@stft.abs().square()
+metrics['stft_inverse_max_error']=error
+fig,axes=plt.subplots(1,2,figsize=(10,3));axes[0].plot(time[:500],wave[:500])
+axes[0].set_title('Synthetic waveform');axes[1].imshow(torch.log1p(mel_power),origin='lower',aspect='auto')
+axes[1].set_title('Educational mel energy, 128 bands');fig.tight_layout()
+fig.savefig(figure_path(LAB,'audio_spaces'));plt.show()
+''')
+md('''
+## 2. Сколько audio tokens соответствует видео
+
+Длительность код вычисляет через число RGB frames/fps, затем берёт ceil(samples/1024).
+Это даёт запас меньше одного audio latent step; он нужен для decoder/mux boundaries.
+Интервал между первым и последним video timestamp и длительность хранения N frames/fps отличаются.
+''')
+code('''
+prepare=native('core.algo.prepare_latents')
+rows=[]
+for latent_frames in [1,9,31]:
+    frames=(latent_frames-1)*4+1
+    n=prepare.audio_latent_duration(latent_frames)
+    delta=n*1024/44100-frames/24
+    assert 0<=delta<1024/44100
+    rows.append({'video_frames':frames,'audio_latents':n,'padding_seconds':delta})
+print(rows);metrics['duration_contract']=rows
+''')
+md('''
+## 3. Настоящий postprocess с явно учебными decoder/vocoder
+
+Перед decoder выполняется обратная нормализация. Чтобы проверить эту обвязку без весов,
+подставим test doubles: mel decoder возвращает вход, vocoder — заданный waveform.
+Так исполняется настоящий `postprocess_audio`, но нет заявления о качестве звука.
+`clip` сохраняет масштаб до насыщения; `normalize` меняет громкость всего примера по peak.
+''')
+code('''
+post=native('core.algo.postprocess_audio');Bundle=native('core.types').LatentBundle
+class DecoderDouble:
+    scaling_factor=.417
+    def wrapped_decode(self,z):
+        self.seen=z.clone();return z
+class VocoderDouble:
+    def __call__(self,mel):return torch.tensor([[[-2.,-.2,0.,.2,2.]]])
+decoder=DecoderDouble();bundle=Bundle(None,torch.ones(1,5,40)*.417,None,torch.tensor([0,5],dtype=torch.int32))
+clipped=post.postprocess_audio(bundle,decoder,VocoderDouble(),'clip')[0]
+normalized=post.postprocess_audio(bundle,decoder,VocoderDouble(),'normalize')[0]
+assert torch.allclose(decoder.seen,torch.ones_like(decoder.seen))
+assert clipped[1]!=normalized[1]
+metrics['clip_pcm']=clipped.tolist();metrics['normalize_pcm']=normalized.tolist()
+print('clip:',clipped,'normalize:',normalized)
+''')
+finish('''
+1. Удалите phase и объясните, почему mel→waveform не единственное обратное преобразование.
+2. Измените scale с .417 на .5302 в одном месте и измерьте ошибку latent roundtrip.
+3. Сравните peak и RMS до/после normalize. Почему peak normalization осложняет A/B громкости?
+''','''
+Вы можете назвать, что возвращает каждый audio component. 400 выходов DiT — не 400 channels audio VAE:
+это 10 grid points × 40 channels, которые разберём в π-Flow лабораторной.
+''')
+
+start('05_nn_patches_and_modulation', '05. Строительные блоки: patches, time, AdaLN и gates',
+      'воспроизвести patch layout и проверить native modulation/residual на маленьких тензорах',
+      'K6 01–03; linear layers и broadcasting',
+      ['core/components/dit.py','core/tensors.py'], '3.2',
+      '../../kandinsky-5/notebooks/03_nn_building_blocks.ipynb')
+md(r'''
+## 1. Из локальной ячейки latent в visual token
+
+Visual input содержит state, conditioning channels и mask: 16+16+1=33.
+Patch 1×2×2 собирает 4 ячейки в вектор длины 132, затем Linear переводит его в width 1792.
+Audio tokens не проходят spatial patching: 40→896. В tiny опыте ширины меньше, операции те же.
+
+Unpatchify в output голове имеет собственный порядок C/patch axes. Нельзя предположить,
+что inverse input permutation восстанавливает output без проверки порядка выходных features.
+''')
+code('''
+D=native();x=torch.arange(1*2*4*4*3,dtype=torch.float32).reshape(1,2,4,4,3)
+layer=D.VisualEmbeddings(3,12,(1,2,2))
+with torch.no_grad():layer.in_layer.weight.copy_(torch.eye(12));layer.in_layer.bias.zero_()
+y=layer(x)
+manual=x.reshape(1,2,1,2,2,2,2,3).permute(0,1,3,5,2,4,6,7).flatten(4,7)
+assert torch.equal(y,manual)
+print('Native patches:',tuple(y.shape),'first vector:',y[0,0,0,0])
+metrics['visual_patch_max_error']=(y-manual).abs().max().item()
+''')
+md(r'''
+## 2. AdaLN — condition управляет обработкой state
+
+Time sinusoid проходит MLP. CLIP pooled projection прибавляется к time representation.
+Modulation выдаёт shift, scale и residual gate:
+
+$$
+h' = h + g(c) F\left((1+s(c))\mathrm{LN}(h)+b(c)\right).
+$$
+
+При нулевом gate residual branch не меняет h. Это свойство forward; градиенты gate всё ещё могут
+быть ненулевыми. Нельзя сказать «нулевой слой никогда не учится». Если занулить и предшествующее
+представление, градиент может исчезнуть по другой причине.
+''')
+code('''
+tensors=native('core.tensors');h=torch.randn(2,5,8);condition=torch.randn(2,6)
+mod=D.Modulation(6,8,3);shift,scale,gate=mod(condition).chunk(3,-1)
+branch=nn.Linear(8,8);norm=nn.LayerNorm(8,elementwise_affine=False)
+out=tensors.apply_gate_sum(h,branch(tensors.apply_scale_shift_norm(norm,h,scale,shift)),gate)
+identity=(out-h).abs().max().item();assert identity==0
+out.square().mean().backward()
+metrics['zero_gate_identity_error']=identity
+metrics['modulation_gradient_norm']=mod.out_layer.weight.grad.norm().item()
+assert metrics['modulation_gradient_norm']>0
+print(metrics)
+''')
+md('''
+## 3. OutLayerAudio и маленькие на вид особенности
+
+Audio output выполняет modulated LayerNorm, затем ещё одну LayerNorm, затем Linear.
+Это буквальное поведение pinned source. Удалять второй norm «для красоты» при переносе нельзя:
+проверка parity должна сравнивать именно вычисляемую функцию.
+''')
+code('''
+audio=D.OutLayerAudio(8,6,4);a=torch.randn(1,5,8);t=torch.randn(1,1,6)
+with torch.no_grad():
+    actual=audio(a,t)
+    shift,scale=audio.modulation(t).chunk(2,-1)
+    m=tensors.apply_scale_shift_norm(audio.norm,a,scale,shift)
+    expected=audio.out_layer(audio.norm(m))
+assert torch.allclose(actual,expected)
+metrics['audio_output_manual_max_error']=(actual-expected).abs().max().item()
+print('Audio output shape:',actual.shape)
+''')
+finish('''
+1. Посчитайте input projection dimensions для 16-channel и 33-channel входа.
+2. Сравните gradient modulation и gradient residual branch на первом zero-init шаге.
+3. Найдите в DiT FFN две bias-free Linears и GELU; посчитайте их параметры вручную.
+''','''
+Вы прослеживаете формы от latent cells до tokens и обратно, не смешивая число heads,
+model width, latent channels и число grid points. Нулевой gate и frozen parameters — разные понятия.
+''')
+
+start('06_attention_and_rope', '06. Attention и RoPE: текст, видео и аудио',
+      'сравнить ручной attention с SDPA, измерить память и проверить геометрию вращений',
+      'K6 05; матричное умножение и softmax',
+      ['core/components/dit.py','core/components/rope.py','core/tensors.py','runtime/kernels/sdpa.py'], '3.2',
+      '../../kandinsky-5/notebooks/04_attention.ipynb')
+md(r'''
+## 1. Attention — выбор источников информации
+
+$$
+\mathrm{Attention}(Q,K,V)=\mathrm{softmax}\left(QK^\top/\sqrt{d_k}+M\right)V.
+$$
+
+Q определяет, **какие tokens обновляем**. K/V определяют, **откуда берём информацию**.
+Поэтому video queries + audio K/V дают обновление video, независимо от имени `va_cross_attention`.
+У asymmetric widths проекции K/V переводят 896→1792 для video-query ветви и 1792→896 для audio-query.
+K6 также делает RMSNorm Q/K до RoPE. Ниже проверяем само attention на уже готовых Q/K/V.
+
+[Attention Is All You Need](https://arxiv.org/abs/1706.03762),
+[RoFormer / RoPE](https://arxiv.org/abs/2104.09864) — первичные источники операций.
+''')
+code('''
+q=torch.randn(1,2,7,8,dtype=torch.float64);k=torch.randn(1,2,5,8,dtype=torch.float64);v=torch.randn_like(k)
+weights=(q@k.transpose(-1,-2)/math.sqrt(8)).softmax(-1)
+manual=weights@v;sdpa=F.scaled_dot_product_attention(q,k,v)
+error=(manual-sdpa).abs().max().item();assert error<1e-12
+metrics['manual_sdpa_max_error']=error
+fig,ax=plt.subplots(figsize=(6,3));ax.imshow(weights[0,0],aspect='auto');ax.set_xlabel('Source K/V token')
+ax.set_ylabel('Updated Q token');plt.show()
+''')
+md(r'''
+## 2. Вращение сохраняет норму; позиции меняют сравнение
+
+RoPE поворачивает пары feature coordinates, а не переставляет tokens.
+Общий сдвиг позиций Q и K сохраняет их inner product в 1D случае; относительный сдвиг меняет его.
+В K6 video RoPE разделяет head_dim=16+24+24=64 на T/H/W, audio использует 1D RoPE,
+а `audio_freqs_scaling=0.144` задаётся checkpoint config. Позиционный scale — не sampler shift.
+''')
+code('''
+R=native('core.components.rope');rot=native('core.tensors').apply_rotary
+rope=R.RoPE1D(8,max_pos=64);q=torch.randn(4,1,8);k=torch.randn_like(q)
+qr=rot(q,rope(torch.arange(4)));kr=rot(k,rope(torch.arange(4)+2))
+qshift=rot(q,rope(torch.arange(4)+5));kshift=rot(k,rope(torch.arange(4)+7))
+norm_error=(qr.norm(dim=-1)-q.norm(dim=-1)).abs().max().item()
+shift_error=((qr*kr).sum(-1)-(qshift*kshift).sum(-1)).abs().max().item()
+assert norm_error<2e-6 and shift_error<2e-6
+metrics['rope_norm_error']=norm_error;metrics['rope_relative_shift_error']=shift_error
+r3=R.RoPE3D((2,2,4));grid=r3((2,3,4),[torch.arange(2),torch.arange(3),torch.arange(4)])
+print('3D rotary matrices shape:',grid.shape,'not a learnable embedding table')
+''')
+md('''
+## 3. Почему video attention дорого
+
+Считаем логическую score matrix, не выделяя её память. 121 RGB frames при 480×864 дают
+31×30×54=50220 visual tokens. Аудио — около 218 tokens. Self-attention video квадратично по Nv;
+cross-modal attention пропорционально Nv×Na. FlashAttention меняет способ вычисления и хранения,
+не автоматически pattern связей. Это не оценка реальной peak memory конкретного backend.
+''')
+code('''
+Nv=31*30*54;Na=native('core.algo.prepare_latents').audio_latent_duration(31)
+logical={'video self':28*Nv*Nv*2/2**30,'video queries/audio keys':28*Nv*Na*2/2**30,
+         'audio queries/video keys':14*Na*Nv*2/2**30}
+metrics['logical_bf16_score_GiB']=logical
+print('Nv,Na:',Nv,Na,'logical BF16 score matrices GiB:',logical)
+fig,ax=plt.subplots(figsize=(8,3));ax.bar(logical.keys(),logical.values());ax.set_yscale('log')
+ax.set_ylabel('Logical score storage GiB, not SDPA peak');fig.tight_layout()
+fig.savefig(figure_path(LAB,'attention_budget'));plt.show()
+''')
+finish('''
+1. Покажите на shape, почему Q длиной Nv и K длиной Na возвращают Nv output tokens.
+2. Удвойте H/W и посчитайте рост Nv и логической self-attention matrix.
+3. Сравните audio RoPE scales 1 и .144 на одинаковых позициях; это не качество AV синхронизации.
+''','''
+Вы объясняете источник и получателя cross-attention по Q и K/V. Causal VAE, dense attention,
+masking и memory-efficient attention решают разные задачи.
+''')
+
+start('07_dit_and_text_crossdit', '07. От DiT к CrossDiT: как denoiser устроен изнутри',
+      'проследить путь latent→patches→DiT blocks→output и отличить time-modulation от text cross-attention',
+      'K6 05–06; Lecture 4 / Lab 3',
+      ['core/components/dit.py','core/tensors.py'], '3.2',
+      '../../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb')
+md(r'''
+## 1. Что означает DiT
+
+В [оригинальной статье DiT — Peebles & Xie](https://arxiv.org/abs/2212.09748) transformer обрабатывает
+patches latent image вместо U-Net. Ключевой механизм conditioning — adaLN/adaLN-Zero.
+Transformer architecture и training target — разные решения: image diffusion может предсказывать noise,
+Kandinsky FM — velocity, distilled K6 — grid policy. Смена target не отменяет transformer backbone.
+
+Сначала рассмотрим блок с self-attention и FFN. Затем добавим отдельный источник K/V — text.
+Именно это различие делает архитектурное чтение понятнее, чем одно общее слово «Transformer».
+
+[Технический отчёт K5](https://arxiv.org/abs/2511.14993), §architecture, связывает этот шаг с CrossDiT
+Kandinsky. Термин здесь не означает image-classification CrossViT с patches двух размеров.
+''')
+code('''
+D=native();tokens=torch.randn(1,8,48)
+time_encoder=D.TimeEmbeddings(48,16);t=time_encoder(torch.tensor([500.]))
+self_ff=D.TransformerEncoderBlock(48,16,96,8,engine='sdpa')
+rope=native('core.components.rope').RoPE1D(8)(torch.arange(8))
+with torch.no_grad():identity=self_ff(tokens,t,rope)
+assert torch.equal(identity,tokens)
+activate_gates(self_ff)
+with torch.no_grad():changed=self_ff(tokens,t,rope)
+metrics['self_ff_zero_gate_identity_error']=(identity-tokens).abs().max().item()
+metrics['self_ff_active_change']=(changed-tokens).abs().mean().item()
+print('Same native self-attention/FFN primitives; random weights:',metrics)
+''')
+md(r'''
+## 2. CrossDiT K5/K6: visual query, text K/V
+
+Текст сначала проходит собственный refiner. Visual decoder block делает три residual updates:
+self-attention, cross-attention к тексту, FFN. На каждую ветвь нужны shift/scale/gate — всего 9 векторов.
+Text refiner использует две ветви и 6 векторов. Time+pooled conditioning управляет modulation,
+а token-level Qwen context поступает в K/V cross-attention. Эти каналы нельзя подменять друг другом.
+
+Ниже **настоящий native video-only CrossDiT**, с уменьшенными размерами и случайными весами.
+Это T2V-ветвь того же класса, не претензия на полную реализацию оригинального ImageNet DiT.
+''')
+code('''
+from labkit.torch_reference import tiny_config
+cfg=tiny_config();cfg.update(is_multimodal=False,out_audio_dim=4)
+model=D.DiffusionTransformer3D(**cfg).eval();activate_gates(model)
+video=torch.randn(1,2,4,4,4)
+kw=dict(x_video=torch.cat((video,torch.zeros_like(video),torch.zeros_like(video[...,:1])),-1),
+        x_audio=None,text_embed=torch.randn(1,5,12),pooled_text_embed=torch.randn(1,8),
+        time=torch.tensor([500.]),visual_rope=model.visual_rope((2,2,2),[torch.arange(2)]*3),
+        audio_rope=None,text_rope=model.text_rope(torch.arange(5)),
+        attention_mask=torch.ones(1,5,dtype=torch.bool))
+shapes={};hooks=[]
+def capture(name):
+    def hook(module,inputs,output):
+        shapes[name]=list(output.shape)
+    return hook
+for name,mod in [('patches',model.visual_embeddings),('text_projection',model.text_embeddings),
+                 ('text_refiner',model.text_blocks[0]),('visual_block',model.visual_transformer_blocks[0]),
+                 ('out_layer',model.out_layer)]:
+    hooks.append(mod.register_forward_hook(capture(name)))
+with torch.no_grad():out=fresh_forward(model,kw)
+for h in hooks:h.remove()
+assert out.shape==video.shape
+metrics['native_shapes']=shapes
+print(json.dumps(shapes,indent=2))
+''')
+md('''
+## 3. Проверяем, что текст реально влияет через нужную ветвь
+
+При zero-init gates влияние cross-attention может быть нулевым — это ожидаемая инициализация,
+а не ошибка архитектуры. Мы уже включили небольшие случайные modulation weights для sensitivity probe.
+Изменим Qwen-like token states, оставив CLIP-like pooled state неизменным.
+Потом отключим только text cross-attention output через hook и повторим perturbation.
+Так отделяется token-level путь от pooled/time modulation.
+''')
+code('''
+kw2=dict(kw);kw2['text_embed']=kw['text_embed']+torch.randn_like(kw['text_embed'])
+with torch.no_grad():
+    base=fresh_forward(model,kw);perturbed=fresh_forward(model,kw2)
+active_delta=(base-perturbed).abs().max().item()
+handles=[b.cross_attention.register_forward_hook(lambda m,i,o:torch.zeros_like(o))
+         for b in model.visual_transformer_blocks]
+with torch.no_grad():
+    cut_base=fresh_forward(model,kw);cut_perturbed=fresh_forward(model,kw2)
+for h in handles:h.remove()
+cut_delta=(cut_base-cut_perturbed).abs().max().item()
+assert active_delta>0 and cut_delta<1e-6
+metrics['token_condition_active_delta']=active_delta;metrics['token_condition_cut_delta']=cut_delta
+print('Token perturbation: active=',active_delta,'text CA cut=',cut_delta)
+''')
+md(r'''
+## 4. Сопоставление архитектур по контрактам
+
+| Архитектура | Обновляемые tokens | Где condition | Какое сравнение корректно |
+|---|---|---|---|
+| Original DiT | image latent patches | timestep/class conditioning, adaLN variants | patching, time conditioning, residual gating |
+| Kandinsky text CrossDiT | video patches + отдельный text refiner | Qwen tokens → text cross-attention; pooled → time | native video-only forward выше |
+| K6 dual-stream | video tokens и audio tokens разной width | два text-refiner + двунаправленная AV fusion | следующая лабораторная |
+| SD3 MMDiT | modality-specific weights с совместным attention | совместное text/image token взаимодействие | сравнение дизайна, не буквальный K6 код |
+
+[SD3 / Scaling Rectified Flow Transformers](https://arxiv.org/abs/2403.03206) полезен для сравнения
+multimodal choices. Слово «multimodal» само по себе не доказывает одинаковый порядок операций.
+''')
+finish('''
+1. Нарисуйте полный diagram shapes из hooks и подпишите, где число video tokens меняется.
+2. При фиксированном token context измените pooled condition; какой путь останется даже после cut text CA?
+3. Сравните 6 и 9 modulation vectors. В каких residual branches они используются?
+4. Откройте DiT paper, K5 paper и native class: отметьте общие primitives и разные prediction heads.
+''','''
+Вы можете самостоятельно написать self-attention+AdaLN residual block и объяснить,
+какие дополнительные модули превращают его в text-conditioned Kandinsky CrossDiT.
+Архитектура блока не определяет ни solver, ни noise/velocity/grid target.
+''')
+
+start('08_dual_stream_audio_video_crossdit', '08. Dual-stream CrossDiT K6: два потока Audio + Video',
+      'воспроизвести оба направления fusion, проверить gates и измерить межмодальную чувствительность/градиент',
+      'K6 07; Q/K/V и RoPE из 06',
+      ['core/components/dit.py','core/components/rope.py'], '3.2, Figures 1–2',
+      '../../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb')
+md(r'''
+## 1. Dual-stream — два набора tokens, не stereo audio
+
+Здесь «два канала» означают **две модальности**. Video hidden width=1792, audio=896,
+heads соответственно 28 и 14 при head_dim=64; у каждого потока 32 блока.
+Два потока имеют свои text-refiner, timestep embeddings, self-attention и FFN.
+Они обмениваются контекстом в каждом `FusedTransformerDecoderBlock`.
+
+Основное чтение: [K6 §3.2 / Figures 1–2](https://arxiv.org/html/2610.05608v1#S3.SS2),
+[страница статьи](https://huggingface.co/papers/2610.05608).
+Сравнение с первичными работами: [DiT](https://arxiv.org/abs/2212.09748),
+[Ovi: Twin Backbone Cross-Modal Fusion](https://arxiv.org/abs/2510.01284),
+[LTX-2: Efficient Joint Audio-Visual Foundation Model](https://arxiv.org/abs/2601.03233).
+У этих систем близкая идея blockwise fusion, но свои codec/text/normalization contracts.
+
+### Направление определяется по query
+
+$$
+\Delta V = \mathrm{Attention}(V W_Q^v, A W_K^{a\to v}, A W_V^{a\to v}),\qquad
+\Delta A = \mathrm{Attention}(A W_Q^a, V W_K^{v\to a}, V W_V^{v\to a}).
+$$
+
+Первая операция обновляет V, вторая A. В native коде `va_cross_attention` имеет video Q,
+`av_cross_attention` — audio Q. Названия направлений в diagrams легко прочитать наоборот;
+проверяйте destination по shape Q, а не по буквам имени.
+''')
+code('''
+D=native()
+v_from_a=D.MultiheadCrossAttention(48,8,32,engine='sdpa')
+a_from_v=D.MultiheadCrossAttention(32,8,48,engine='sdpa')
+v=torch.randn(1,8,48);a=torch.randn(1,6,32)
+with torch.no_grad():dv=v_from_a(v,a);da=a_from_v(a,v)
+assert dv.shape==v.shape and da.shape==a.shape
+metrics['fusion_projection_shapes']={
+    'video_Q':list(v_from_a.to_query.weight.shape),'audio_K_to_video':list(v_from_a.to_key.weight.shape),
+    'audio_Q':list(a_from_v.to_query.weight.shape),'video_K_to_audio':list(a_from_v.to_key.weight.shape)}
+print(json.dumps(metrics['fusion_projection_shapes'],indent=2))
+from matplotlib.patches import FancyBboxPatch
+fig,ax=plt.subplots(figsize=(11,4.3));ax.set_xlim(0,12);ax.set_ylim(0,5);ax.axis('off')
+for y,label,color in [(3.4,'VIDEO: width 1792 / 28 heads','#d8eafa'),(1.2,'AUDIO: width 896 / 14 heads','#fbe3cc')]:
+    ax.text(.15,y+.8,label,fontsize=10,weight='bold')
+    for i,title in enumerate(['Self-attn','Text CA','AV fusion','FFN']):
+        x=.3+2.9*i
+        ax.add_patch(FancyBboxPatch((x,y),2.3,.65,boxstyle='round,pad=.1',facecolor=color,edgecolor='#555555'))
+        ax.text(x+1.15,y+.32,title,ha='center',va='center')
+        if i<3:ax.annotate('',xy=(x+2.8,y+.32),xytext=(x+2.3,y+.32),arrowprops={'arrowstyle':'->'})
+ax.annotate('audio K/V -> video Q',xy=(7.25,3.35),xytext=(5.15,2.45),fontsize=9,
+            arrowprops={'arrowstyle':'->','color':'#986b43'})
+ax.annotate('video K/V -> audio Q',xy=(7.25,1.95),xytext=(8.3,2.45),fontsize=9,
+            arrowprops={'arrowstyle':'->','color':'#426b98'})
+ax.text(.15,.35,'Separate text refiners and time modulation; two cross outputs use saved pre-CA states.',fontsize=10)
+fig.tight_layout();fig.savefig(figure_path(LAB,'dual_stream_architecture'));plt.show()
+''')
+md('''
+## 2. Точный порядок внутри FusedTransformerDecoderBlock
+
+1. Video: modulated self-attention, затем вычисление text CA из `vis_pre_ca`.
+2. Audio: modulated self-attention, text CA из `aud_pre_ca`, text residual update.
+3. Video text residual update; подготовка modulated query states для двух cross-modal attentions.
+4. Video queries читают **audio pre-text-CA normalized state**, audio queries — **video pre-text-CA state**.
+   Оба cross outputs вычисляются до их residual application; это не последовательное V→A→V с новым output.
+5. Cross residual gates, затем отдельные FFN двух потоков.
+
+`ca_rope=True` добавляет позиции к Q/K fusion. `fix_modulation=True` выбирает timestep
+соответствующего query-потока. `cross_gates=True` меняет ширины/источник gate vectors:
+video-sized gate берётся из `av_modulation`, audio-sized — из `va_modulation`.
+Следующий вывод показывает **полное оригинальное тело блока**, чтобы эти детали были проверяемыми.
+''')
+code("show_source('core/components/dit.py','FusedTransformerDecoderBlock')")
+md('''
+## 3. Zero-init invariance, затем причинное отключение связей
+
+Сначала проверим identity на только что созданном блоке: residual gates нулевые.
+Затем явно заменим modulation weights малыми случайными значениями, чтобы связь стала наблюдаемой.
+Это исследование функции, не синхронизации pretrained звука.
+
+Для одного блока изменение A должно влиять на V при активной `va`-ветви;
+при `va_gate_scale=0` это влияние исчезает. Аналогично проверяем обратное направление.
+Отключение одной ветви в одном блоке не изолирует путь через другие блоки полной модели.
+''')
+code('''
+model=tiny_model().eval();block=model.visual_transformer_blocks[0]
+vr=model.visual_rope((2,2,2),[torch.arange(2)]*3).flatten(0,2)
+ar=model.audio_rope(torch.arange(6))
+v=torch.randn(1,8,48);a=torch.randn(1,6,32)
+tv=torch.randn(1,1,16);ta=torch.randn(1,1,16)
+text_v=torch.randn(1,5,48);text_a=torch.randn(1,5,32)
+def run(vv,aa,va=1.,av=1.):
+    return block(vv,aa,text_v,text_a,(tv,ta),vr,ar,
+                 va_gate_scale=va,av_gate_scale=av)
+with torch.no_grad():v0,a0=run(v,a)
+identity=max((v0-v).abs().max().item(),(a0-a).abs().max().item());assert identity==0
+activate_gates(block)
+perturb_a=torch.randn_like(a);perturb_v=torch.randn_like(v)
+with torch.no_grad():
+    base_v,base_a=run(v,a)
+    changed_v,_=run(v,a+perturb_a)
+    _,changed_a=run(v+perturb_v,a)
+    off_v,_=run(v,a,va=0);off_v2,_=run(v,a+perturb_a,va=0)
+    _,off_a=run(v,a,av=0);_,off_a2=run(v+perturb_v,a,av=0)
+rows={'A affects V: active':(changed_v-base_v).abs().max().item(),
+      'A affects V: cut':(off_v2-off_v).abs().max().item(),
+      'V affects A: active':(changed_a-base_a).abs().max().item(),
+      'V affects A: cut':(off_a2-off_a).abs().max().item()}
+assert rows['A affects V: active']>0 and rows['V affects A: active']>0
+assert rows['A affects V: cut']==0 and rows['V affects A: cut']==0
+metrics['zero_gate_identity_error']=identity;metrics['directional_perturbations']=rows
+fig,ax=plt.subplots(figsize=(8,3));ax.barh(list(rows),list(rows.values()));ax.set_xlabel('Max output perturbation')
+fig.tight_layout();fig.savefig(figure_path(LAB,'cross_modal_ablation'));plt.show();print(rows)
+''')
+md(r'''
+## 4. Gradient показывает путь обучения, не качество синхронизации
+
+Пусть scalar loss зависит только от audio output. При открытом fusion он может дать gradient
+на video input. Это объясняет, почему совместное обучение отличается от независимых T2V/T2A.
+Но наличие gradient само по себе не доказывает lip-sync или голосовое сходство.
+''')
+code('''
+vg=v.clone().requires_grad_()
+_,audio_on=run(vg,a)
+g_on=torch.autograd.grad(audio_on.square().mean(),vg)[0]
+_,audio_off=run(vg,a,av=0)
+g_off=torch.autograd.grad(audio_off.square().mean(),vg)[0]
+metrics['audio_loss_gradient_to_video_on']=g_on.norm().item()
+metrics['audio_loss_gradient_to_video_off']=g_off.norm().item()
+assert g_on.norm()>0 and g_off.norm()==0
+joint=tiny_model().eval();_,_,kw=tiny_inputs(joint)
+with torch.no_grad():out=fresh_forward(joint,kw)
+metrics['joint_native_output_shapes']=[list(x.shape) for x in out]
+print('Joint shapes:',metrics['joint_native_output_shapes'],'gradient norms:',g_on.norm().item(),g_off.norm().item())
+''')
+md(r'''
+## 5. Joint probability не означает одинаковые clocks
+
+Video latent positions и audio latent positions имеют разную частоту. Cross-attention матрица
+прямоугольная Nv×Na; ей не нужен один audio token на один video token.
+Два noise times могут быть разными: задаём `[t_v,t_a]`. Чистая известная модальность при t=0
+может выступать условием для второй. Native audio-only forward при `x_video=None` пропускает fusion;
+stock base-model π-Flow sampler требует оба latent tensors даже при частичном sampling.
+''')
+finish('''
+1. Повторите ablation при `ca_rope=False`: измерьте sensitivity, не делайте вывода о lip-sync без pretrained eval.
+2. Выведите shapes всех split vectors при `cross_gates=True`. Почему swapped gate имеет правильную width?
+3. Переставьте audio tokens и их RoPE одновременно, затем только tokens: какие инвариантности вы ожидаете?
+4. На бумаге сравните K6, Ovi и LTX-2: codec, text encoder, widths, fusion Q/KV, time conditioning.
+5. Для voice-FiLM гипотезы отметьте insertion point и проверьте путь gradient к адаптеру при frozen backbone.
+''','''
+Вы можете нарисовать два полных потока, подписать Q/K/V и timestep каждого attention,
+воспроизвести directional cut и объяснить, почему toy sensitivity не равна AV synchronization metric.
+''')
+
+start('09_flow_matching_training', '09. Joint Flow Matching: path, velocity и учебное обучение',
+      'вывести target в noise→data sampling convention и обучить настоящий tiny joint CrossDiT',
+      'Lecture 2 / Lab 2; K6 08',
+      ['core/components/dit.py','core/algo/flow_matching.py','core/algo/denoise_loop.py'], '4.2',
+      '../../kandinsky-5/notebooks/06_dit_and_flow_matching.ipynb')
+md(r'''
+## 1. Сначала соглашение о времени
+
+В этом опыте t=0 — data, t=1 — noise; sampler идёт от 1 к 0.
+
+$$
+x_t=(1-t)x_0+t\epsilon,\qquad u^*(x_t,t\mid x_0,\epsilon)=\epsilon-x_0.
+$$
+
+Target задан для каждой пары endpoints. Модель видит только current state, time и condition;
+минимум MSE соответствует усреднённому conditional target при данном current state.
+
+$$
+\mathcal L=\lambda_v\mathbb E\|u_\theta^v-u_v^*\|^2+
+\lambda_a\mathbb E\|u_\theta^a-u_a^*\|^2.
+$$
+
+Модальности могут иметь разные t. `model_time=1000*t` — input convention сети,
+но Euler update использует разности **нормированного t**, без дополнительного множителя 1000.
+[Flow Matching](https://arxiv.org/abs/2210.02747) и
+[Rectified Flow](https://arxiv.org/abs/2209.03003) — первичные математические источники.
+''')
+code('''
+x0=torch.randn(4,3);eps=torch.randn_like(x0);t=torch.tensor(.4);h=1e-3
+path=lambda time:(1-time)*x0+time*eps
+fd=(path(t+h)-path(t-h))/(2*h);target=eps-x0
+error=(fd-target).abs().max().item();assert error<3e-4
+metrics['finite_difference_target_error']=error
+print('dx/dt error:',error,'sampler dt sign:',float(torch.tensor(0.)-torch.tensor(1.)))
+''')
+md('''
+## 2. Данные с известной общей причиной
+
+Создадим синтетические video/audio latents от scalar c; text embeddings также несут c.
+Это позволяет учить conditioning без dataset/codec weights. Все данные — случайные числа,
+не речь и не изображения. Веса внешних encoders здесь вообще не создаются.
+
+Учебные lambda_v=lambda_a=0.5 относятся только к этому toy objective. Мы не воспроизводим
+исторический industrial trainer, face loss, RL, model soup или distillation.
+Native text projection cache очищается **перед каждым training forward**.
+''')
+code('''
+model=tiny_model().train();_,_,template=tiny_inputs(model,batch=8)
+opt=torch.optim.Adam(model.parameters(),lr=.002)
+def batch(seed):
+    g=torch.Generator().manual_seed(seed);B=8
+    c=torch.randn(B,1,generator=g)
+    v0=c.view(B,1,1,1,1)+.1*torch.randn(B,2,4,4,4,generator=g)
+    a0=c.view(B,1,1)+.1*torch.randn(B,6,4,generator=g)
+    ev=torch.randn(v0.shape,generator=g);ea=torch.randn(a0.shape,generator=g)
+    tv=.1+.8*torch.rand(B,generator=g);ta=.1+.8*torch.rand(B,generator=g)
+    vt=tv.view(B,1,1,1,1);at=ta.view(B,1,1)
+    v=(1-vt)*v0+vt*ev;a=(1-at)*a0+at*ea
+    kw=dict(template,x_video=torch.cat((v,torch.zeros_like(v),torch.zeros_like(v[...,:1])),-1),
+            x_audio=a,text_embed=c[:,None,:].expand(B,5,12).clone(),
+            pooled_text_embed=c.expand(B,8).clone(),time=[tv*1000,ta*1000])
+    return kw,(ev-v0,ea-a0)
+def losses(seed):
+    kw,target=batch(seed);v,a=fresh_forward(model,kw)
+    return F.mse_loss(v,target[0]),F.mse_loss(a,target[1])
+with torch.no_grad():initial=[x.item() for x in losses(999)]
+history=[]
+for step in range(100):
+    lv,la=losses(step+100);loss=.5*lv+.5*la
+    opt.zero_grad();loss.backward();nn.utils.clip_grad_norm_(model.parameters(),1.)
+    opt.step();history.append([lv.item(),la.item()])
+with torch.no_grad():final=[x.item() for x in losses(999)]
+assert np.isfinite(history).all() and sum(final)<sum(initial)
+metrics['heldout_initial_video_audio']=initial;metrics['heldout_final_video_audio']=final
+metrics['trainable_parameters']=sum(p.numel() for p in model.parameters() if p.requires_grad)
+fig,ax=plt.subplots(figsize=(8,3));ax.plot(np.array(history));ax.legend(['video MSE','audio MSE'])
+ax.set_xlabel('Toy training step');ax.set_ylabel('MSE');fig.tight_layout()
+fig.savefig(figure_path(LAB,'joint_fm_training'));plt.show();print('Held-out:',initial,'->',final)
+''')
+md('''
+## 3. Почему шумы и времена требуют отдельного контроля
+
+Сходные значения MSE двух ветвей ещё не означают одинаковое perceptual качество:
+одна ошибка измерена на 16-channel video latents, другая — на 40-channel audio latents,
+масштаб и размерность зависят от codecs. При смене codec scale velocity target тоже меняется.
+Для полной модели нужны waveform/video metrics и resource logs; toy validation проверяет только обучение функции.
+''')
+finish('''
+1. Сравните shared t и independent t при фиксированных data/seeds/optimizer.
+2. Заморозьте audio backbone и fusion: что останется trainable и какие loss имеют gradient?
+3. Смените время s=1-t и выведите знак нового velocity, прежде чем менять код sampler.
+4. Почему endpoint x0 можно использовать в target при training, но нельзя передавать sampler как неизвестное условие?
+''','''
+Вы можете выписать training batch и optimizer contract, назвать model inputs и target,
+а также объяснить, почему маленький native CrossDiT учится без загрузки pretrained weights.
+''')
+
+start('10_piflow_distillation', '10. Lite Distill: grid-head, DX policy и π-Flow',
+      'разобрать 160/400 outputs, выполнить native grid forward и отдельно network-free policy rollout',
+      'K6 08–09; ODE и Euler',
+      ['core/components/piflow_dit.py','core/algo/piflow_math.py','core/algo/piflow_sampler.py','runtime/sampler.py'], '4.5, 5',
+      '../../kandinsky-5/notebooks/07_sampling.ipynb')
+md(r'''
+## 1. Distillation меняет контракт головы
+
+Обычный FM backbone возвращает один velocity per modality. PiFlow wrapper предсказывает
+G grid outputs: video G×16, audio G×40. При G=10 это 160/400, но физическое состояние остаётся 16/40.
+Wrapper делает reshape и movedim: `[B,G,...,C]`.
+
+**Два способа конфигурации нельзя смешивать:** HF config уже хранит расширенные 160/400;
+native PiFlow constructor принимает per-grid 16/40 и сам умножает на G. Наш tiny constructor
+использует per-grid 4/4 и G=3; это другой размер, но тот же native wrapper.
+
+Первичный источник: [π-Flow / Policy-Based Few-Step Generation](https://arxiv.org/abs/2510.14974).
+Distillation обучает student воспроизводить поведение teacher. Простое уменьшение числа Euler steps
+без обучения student не является distillation. История K6 §4.5 включает π-Flow и adversarial post-training;
+здесь исследуем released inference math, не воспроизводим industrial distillation training.
+''')
+code('''
+model=tiny_model(grid=3).eval();v,a,kw=tiny_inputs(model)
+with torch.no_grad():pv,pa=fresh_forward(model,kw)
+assert pv.shape==(1,3,2,4,4,4) and pa.shape==(1,3,6,4)
+metrics['native_grid_shapes']=[list(pv.shape),list(pa.shape)]
+print('Physical state:',v.shape,a.shape,'Grid predictions:',pv.shape,pa.shape)
+show_source('core/components/piflow_dit.py','PiFlowDiffusionTransformer3D')
+''')
+md(r'''
+## 2. Из grid prediction в DX policy
+
+Network вычисляется один раз на начале сегмента. Для каждого grid output строится candidate clean endpoint:
+
+$$
+\widehat x_0^{(g)}=x_{\sigma_s}-\sigma_s\widehat u^{(g)}.
+$$
+
+`DXPolicy` интерполирует эти endpoints по **raw time** внутри сегмента и возвращает velocity:
+
+$$
+\pi(x,\sigma)=\frac{x-\widehat x_0(\tau)}{\max(\sigma,\varepsilon)},\qquad
+\sigma=s(\tau)=\frac{a\tau}{1+(a-1)\tau}.
+$$
+
+Raw tau и shifted sigma — разные координаты времени. `policy_rollout_fm` делает много дешёвых
+подшагов этой функции **без нового transformer forward на каждом подшаге**.
+Число model NFE, grid points и policy substeps — три разных числа.
+''')
+code('''
+mathmod=native('core.algo.piflow_math')
+x0=torch.tensor([[.3,-.2]],dtype=torch.float64);noise=torch.tensor([[1.2,.8]],dtype=torch.float64)
+u=noise-x0;grid=u[:,None,:].expand(1,10,2).clone()
+policy=mathmod.DXPolicy(grid,noise,torch.ones(1,dtype=torch.float64),segment_size=1.,shift=5.)
+end,_,_=mathmod.policy_rollout_fm(noise,torch.ones(1,dtype=torch.float64),
+     torch.ones(1,dtype=torch.float64),torch.zeros(1,dtype=torch.float64),128,policy)
+error=(end-x0).abs().max().item();assert error<1e-10
+metrics['oracle_constant_grid_endpoint_error']=error
+raw=torch.linspace(0,1,101);shifted=mathmod.shift_timesteps(raw,5.)
+fig,ax=plt.subplots(figsize=(6,3));ax.plot(raw,raw,label='raw');ax.plot(raw,shifted,label='shifted sigma')
+ax.legend();ax.set_xlabel('Raw tau');fig.tight_layout();fig.savefig(figure_path(LAB,'policy_time'));plt.show()
+print('Oracle grid control endpoint error:',error)
+''')
+md('''
+## 3. Native sampler + настоящий случайный tiny grid-DiT
+
+Теперь исполним полный released **tensor sampler**, но на уменьшенной сети и случайных весах.
+Это проверяет стыковку grid layout, двух policies и state shapes; осмысленное видео/аудио не синтезируется.
+Stock loop проверяет, что присутствуют оба latent tensors. Отключить обновление video не равнозначно
+удалить video input и fusion. Runtime запрещает PiFlow + CFG != 1 и PiFlow + MagCache/NaviCache.
+''')
+code('''
+Bundle=native('core.types').LatentBundle
+bundle=Bundle(v.clone(),a.clone(),torch.tensor([0,2],dtype=torch.int32),torch.tensor([0,6],dtype=torch.int32))
+count=[];hook=model.register_forward_hook(lambda *args:count.append(1))
+model.clear_text_proj_cache()
+result=native('core.algo.piflow_sampler').piflow_denoise_loop(
+    bundle,model,{'text_embeds':kw['text_embed'],'pooled_embed':kw['pooled_text_embed']},
+    kw['visual_rope'],kw['audio_rope'],kw['text_rope'],num_steps=2,scheduler_scale=5.,
+    attention_mask=kw['attention_mask'],num_policy_substeps=16)
+hook.remove()
+assert result.video.shape==v.shape and result.audio.shape==a.shape
+assert torch.isfinite(result.video).all() and torch.isfinite(result.audio).all() and len(count)==2
+metrics['native_tiny_sampler_model_NFE']=len(count)
+metrics['native_tiny_sampler_finite']=True
+print('2 transformer calls; policy substeps are not extra transformer calls')
+''')
+finish('''
+1. В oracle опыте сделайте grid points различными и нарисуйте интерполируемый x0(tau).
+2. Сравните 1, 16, 128 policy substeps при фиксированных network predictions; запишите NFE отдельно.
+3. Объясните, почему переключить обычный Lite checkpoint на PiFlow scheduler недостаточно.
+4. Найдите в sampler final_step_size_scale=.5: почему последний сегмент короче остальных?
+''','''
+Вы отличаете физические latent channels, expanded output-head width, grid axis, network NFE
+и network-free substeps. Для distill checkpoint используете соответствующий sampler contract.
+''')
+
+start('11_sampling_cfg_and_nfe', '11. Sampling: Euler, CFG, schedules и NFE',
+      'измерить ошибки solver и фактическое число calls в настоящем native denoise_loop',
+      'K6 09–10; Lecture 1 и Lecture 3',
+      ['core/algo/flow_matching.py','core/algo/guidance.py','core/algo/denoise_loop.py'], '5',
+      '../../kandinsky-5/notebooks/07_sampling.ipynb')
+md(r'''
+## 1. Solver интегрирует поле, но не обучает его
+
+$$
+x_{t+\Delta t}=x_t+\Delta t\,u_\theta(x_t,t,c),\qquad \Delta t<0.
+$$
+
+Для u(x,t)=x, x(1)=1, точное x(0)=exp(-1). Это удобный контроль: известны поле и ответ,
+поэтому вся ошибка здесь — numerical integration. Для trained модели появится ещё approximation error.
+Scheduler shift меняет узлы интегрирования; он не создаёт новую обученную модель.
+''')
+code('''
+schedule=native('core.algo.flow_matching').flow_match_timesteps
+rows=[]
+for shift in [1.,5.]:
+    for steps in [4,8,16,32,64]:
+        ts=schedule(steps,shift,'cpu').double();x=torch.tensor(1.,dtype=torch.float64)
+        for dt in torch.diff(ts):x=x+dt*x
+        rows.append({'shift':shift,'NFE':steps,'error':abs(x.item()-math.exp(-1))})
+fig,ax=plt.subplots(figsize=(7,3))
+for shift in [1.,5.]:
+    sel=[r for r in rows if r['shift']==shift]
+    ax.loglog([r['NFE'] for r in sel],[r['error'] for r in sel],'o-',label=f'shift={shift}')
+ax.legend();ax.set_xlabel('Field evaluations');ax.set_ylabel('Known-ODE endpoint error')
+fig.tight_layout();fig.savefig(figure_path(LAB,'euler_error'));plt.show();metrics['known_ode_errors']=rows
+''')
+md(r'''
+## 2. Guidance — комбинация двух predictions
+
+$$
+u_{\mathrm{cfg}}=u_{\varnothing}+w(u_c-u_{\varnothing}).
+$$
+
+w=0 возвращает unconditional, w=1 — conditional. Native non-distilled Euler loop при w=1
+пропускает второй forward. При w!=1 выполняет оба. Мы проверим это **настоящим loop**,
+подставив явно аналитический constant predictor: он не умеет генерировать AV.
+Для Lite Distill используем π-Flow из предыдущей лабораторной; CFG sweep ниже относится к обычному FM loop.
+''')
+code('''
+Bundle=native('core.types').LatentBundle
+class ConstantFieldDouble(nn.Module):
+    visual_cond=True
+    def __init__(self):super().__init__();self.calls=0
+    def forward(self,**kw):
+        self.calls+=1
+        level=kw['text_embed'].mean()
+        return torch.ones_like(kw['x_video'][...,:4])*level,torch.ones_like(kw['x_audio'])*level
+base_v=torch.zeros(1,2,4,4,4);base_a=torch.zeros(1,6,4)
+cu_v=torch.tensor([0,2],dtype=torch.int32);cu_a=torch.tensor([0,6],dtype=torch.int32)
+cond={'text_embeds':torch.ones(1,3,12),'pooled_embed':torch.zeros(1,8)}
+null={'text_embeds':torch.ones(1,3,12)*.25,'pooled_embed':torch.zeros(1,8)}
+results=[]
+for w in [0.,1.,3.]:
+    field=ConstantFieldDouble();bundle=Bundle(base_v.clone(),base_a.clone(),cu_v,cu_a)
+    out=native('core.algo.denoise_loop').denoise_loop(bundle,field,cond,null,None,None,
+        torch.empty(3,1),torch.empty(3,1),num_steps=4,guidance_weight=w,scheduler_scale=5.)
+    expected=-(.25+w*(1-.25))
+    error=max((out.video-expected).abs().max().item(),(out.audio-expected).abs().max().item())
+    assert error<1e-5 and field.calls==(4 if w==1 else 8)
+    results.append({'guidance':w,'model_NFE':field.calls,'endpoint_error':error})
+metrics['native_euler_cfg_checks']=results;print(results)
+''')
+md('''
+## 3. Что замерять в промышленном опыте
+
+Указывайте checkpoint, sampler implementation, steps, model NFE, shift, dtype и cache.
+Отдельно измеряйте weight loading, text encoding, denoising, VAE decode, vocoder и mux.
+Warmup/compile не смешивайте с steady-state generation; median нескольких прогонов лучше одного числа.
+Наш constant-field контроль не оценивает speedup большого checkpoint и не подбирает оптимальный CFG.
+''')
+finish('''
+1. При одной trained модели меняйте только solver steps; затем при одном solver сравните training checkpoints.
+2. Добавьте отдельный счетчик policy.pi evaluations в π-Flow и сравните с model NFE.
+3. На constant field проверьте, почему Euler точен для любого partition времени, а на u=x — уже нет.
+''','''
+Вы различаете solver error, model error, guidance strength и число transformer calls.
+Фраза «10 steps» без названия checkpoint/sampler не определяет вычислительный эксперимент.
+''')
+
+start('12_latents_conditioning_and_output', '12. Latents, I2AV references, decode и output contracts',
+      'проверить shapes/offsets, воспроизвести visual reference channels и разобрать encode/decode API',
+      'K6 03–04, 08 и 11',
+      ['core/algo/prepare_latents.py','core/algo/visual_conditioning.py','core/algo/postprocess_video.py',
+       'core/algo/postprocess_audio.py','core/algo/mux.py'], '4.2.3, 5',
+      '../../kandinsky-5/notebooks/12_generation_utils.ipynb')
+md('''
+## 1. Shape сам по себе не задаёт смысл
+
+Video codec ожидает BCTHW, native DiT — BTHWC или packed THWC. Audio decoder ожидает BCA,
+DiT — BAC или packed AC. `cu_seqlens` содержит границы последовательностей, а не всегда token counts:
+у video это latent frames, которые после spatial patching разворачиваются в большее число tokens.
+Native helpers создают reproducible CPU noise; межплатформенная RNG parity отдельно не предполагается.
+''')
+code('''
+p=native('core.algo.prepare_latents');Bundle=native('core.types').LatentBundle
+b=p.prepare_video_latents(2,3,4,4,4,42,'cpu',dtype=torch.float32)
+b=p.prepare_audio_latents(b,7,4,42,'cpu',dtype=torch.float32)
+b2=p.prepare_video_latents(2,3,4,4,4,42,'cpu',dtype=torch.float32)
+assert torch.equal(b.video,b2.video)
+positions=p.prepare_audio_rope_pos(b.audio_cu_seqlens)
+assert positions.tolist()==list(range(7))*2
+print('Packed shapes:',b.video.shape,b.audio.shape,'video offsets:',b.video_cu_seqlens)
+metrics['packed_shapes']=[list(b.video.shape),list(b.audio.shape)]
+metrics['audio_positions_reset_each_sequence']=True
+''')
+md('''
+## 2. Tail conditioning и token roles
+
+I2AV reference может добавляться **во временной оси**, а не только в каналах.
+K6 помечает generated/reference frame через channel mask и Token Role Embedding.
+RoPE задаёт позиционный смысл reference; TRE — дополнительный обучаемый сигнал.
+Проверим append и restore на настоящих tensor helpers. Сам restore не доказывает,
+что reference уже повлиял на denoising других кадров: это задача learned attention.
+''')
+code('''
+visual=native('core.algo.visual_conditioning')
+video=torch.randn(1,3,4,4,4);refs=torch.randn(1,1,4,4,4)
+appended,roles,generated=visual.append_visual_references(video,refs,1,3)
+assert appended.shape==(1,4,4,4,4) and roles.reshape(1,-1).tolist()==[[0,0,0,1]]
+cu=torch.tensor([0,4],dtype=torch.int32)
+inp=visual.build_tail_condition(appended.clone(),refs,cu)
+assert inp.shape[-1]==9 and inp[0,-1,...,-1].eq(1).all()
+assert inp[0,:-1,...,-1].eq(0).all()
+corrupted=appended+10;visual.restore_tail_references(corrupted,refs,cu)
+assert torch.equal(corrupted[:,-1:],refs)
+metrics['tail_condition_shape']=list(inp.shape);metrics['reference_restore_error']=0.
+print('Tail condition shape:',inp.shape,'role ids:',roles)
+''')
+md('''
+## 3. Проверяем encode wrapper без выдуманного VAE API
+
+Pinned custom Hunyuan encode возвращает tensor внутри tuple; Diffusers VAE может возвращать
+posterior object. Нельзя заменять одно другим, не посмотрев return contract.
+В учебном test double явно моделируем tuple[tensor]. Так проверяем layout/scaling wrapper,
+а не качество настоящего Hunyuan reconstruction.
+''')
+code('''
+from types import SimpleNamespace
+class TupleEncoderDouble:
+    config=SimpleNamespace(scaling_factor=.476986)
+    def encode(self,frames):
+        B,C,T,H,W=frames.shape
+        return (torch.ones(B,16,(T-1)//4+1,H//8,W//8),)
+encoded=p.encode_video(torch.zeros(2,3,9,32,32),TupleEncoderDouble())
+assert encoded.shape==(6,4,4,16)
+assert torch.allclose(encoded,torch.full_like(encoded,.476986))
+metrics['encode_wrapper_output_shape']=list(encoded.shape)
+print('Packed wrapper output:',encoded.shape)
+show_source('core/algo/postprocess_video.py','postprocess_video')
+''')
+md('''
+## 4. Последний этап — mux
+
+Decode возвращает video uint8 и audio PCM; mux принимает уже сгенерированные streams.
+Container fps, sample rate, число frames/samples и trimming определяют длительность файла.
+Рассинхрон может появиться на этом этапе даже при корректных neural outputs.
+Поэтому сохраняйте raw durations до mux и после чтения MP4; существующий ручной протокол содержит команды.
+''')
+finish('''
+1. Нарисуйте BCTHW→BTHWC→packed THWC и обратный путь для batch=2; подпишите offsets.
+2. Добавьте два references first/last и проверьте role mask, restore и positional correspondence.
+3. Подставьте posterior object вместо tuple[tensor] и сформулируйте нужный adapter, не меняя source snapshot.
+4. Перед полноценным MP4 запишите video/audio durations и допуск меньше одного audio latent step.
+''','''
+Вы можете обнаружить shape/API mismatch до загрузки больших весов и объяснить,
+какой helper меняет layout, какой нормализует значения, а какой только объединяет streams.
+''')
+
+start('13_runtime_memory_and_mlx', '13. Runtime: память, offload, cache и путь к Apple MLX',
+      'составить ресурсный бюджет и план переноса с измеримыми parity gates',
+      'K6 01, 07–12',
+      ['runtime/offload/block.py','runtime/offload/module.py','runtime/cache/magcache.py',
+       'runtime/sampler.py','runtime/weights.py'], '6',
+      '../../kandinsky-5/notebooks/09_local_m3_max.ipynb')
+md('''
+## 1. Offload, quantization и cache делают разные вещи
+
+Offload перемещает веса между памятью/устройствами; quantization меняет представление весов;
+approximate cache пропускает часть вычислений. Сравнивать их надо при одинаковом output contract.
+CPU tensor parallel algebra не означает наличие distributed runtime на одном Apple GPU.
+40 GPU cores — внутренние вычислительные блоки M3 Max, не 40 отдельных CUDA devices.
+
+Apple MLX порт не требует обучения весов с нуля. Он требует воспроизвести операции, layouts,
+normalization, time/grid semantics и загрузку конвертированных весов, затем пройти parity.
+До этого нельзя объявлять полный pretrained K6 MLX inference работающим.
+''')
+code('''
+N=3_000_000_000
+rows={
+ 'BF16 weights GiB':N*2/2**30,
+ 'FP32 weights GiB':N*4/2**30,
+ 'FP32 gradients GiB':N*4/2**30,
+ 'Two FP32 Adam moments GiB':N*8/2**30}
+metrics['illustrative_3B_memory_terms']=rows
+print('Illustrative exact-3B terms; excludes Qwen, activations, allocator, copies:',rows)
+fig,ax=plt.subplots(figsize=(8,3));ax.barh(list(rows),list(rows.values()));ax.set_xlabel('GiB')
+fig.tight_layout();fig.savefig(figure_path(LAB,'memory_terms'));plt.show()
+''')
+md('''
+## 2. Измеряем только то, что действительно запущено
+
+Ниже native tiny **CPU** forward, 2 warmups и 5 измерений. Эти числа описывают данный CPU-процесс,
+не latency M3 GPU, не прогноз времени pretrained модели и не результат MLX.
+При GPU-замерах нужна synchronization перед/после интервала; lazy MLX требует явного evaluation.
+''')
+code('''
+import time,statistics,importlib.util,shutil
+model=tiny_model().eval();_,_,kw=tiny_inputs(model)
+with torch.no_grad():
+    for _ in range(2):fresh_forward(model,kw)
+    elapsed=[]
+    for _ in range(5):
+        start=time.perf_counter();fresh_forward(model,kw);elapsed.append(time.perf_counter()-start)
+metrics['tiny_cpu_forward_median_seconds']=statistics.median(elapsed)
+metrics['mps_available']=torch.backends.mps.is_available()
+metrics['mlx_installed']=importlib.util.find_spec('mlx') is not None
+metrics['pretrained_or_mlx_parity_run']=False
+free=shutil.disk_usage(ROOT).free
+print('CPU median:',statistics.median(elapsed),'seconds; free SSD GB:',free/1e9)
+print('Weight-download gate >=50 GB:',free>=50_000_000_000,'(does not trigger a download)')
+''')
+md('''
+## 3. Parity gates: по слоям, затем по pipeline
+
+| Gate | Сравниваем | Что сохраняем |
+|---|---|---|
+| P0 | Linear, LayerNorm/RMSNorm, GELU/SiLU | max abs + relative L2, dtype |
+| P1 | patch/unpatch, 1D/3D RoPE | roundtrip и позиционные tensors |
+| P2 | text/video/audio block | inputs, outputs, gate states |
+| P3 | joint CrossDiT + grid-head | оба outputs, одинаковые noise tensors |
+| P4 | DXPolicy + rollout | raw tau, sigma, grid axis, endpoint |
+| P5 | VAE/vocoder + end-to-end | decoded raw streams и fixed-seed baseline |
+
+`labkit/mlx_audio.py` и `scripts/mlx_parity.py` — существующий audio-only прототип.
+Он не выполняет P3–P5 полного совместного pipeline. Даже если локальные audio weights можно прочитать
+из общего safetensors, удаление video/fusion меняет модель. Оптимизацию добавляют после reference parity.
+''')
+code("show_source('runtime/sampler.py','reject_incompatible_cache')")
+finish('''
+1. Составьте таблицу resident modules по стадиям encode text / denoise / decode; добавьте activation budget.
+2. Для MLX переноса выберите 3 primitives и выпишите tolerances до первого сравнения.
+3. Объясните, почему независимые RNG seeds недостаточны для межфреймворковой parity: нужны одинаковые input tensors.
+4. Почему PiFlow checkpoint нельзя включить с calibrated MagCache обычного Lite без отдельной проверки?
+''','''
+Вы отличаете перенос вычислений от обучения, model memory от полной peak memory и
+CPU microbenchmark от pretrained latency. Следующий шаг после освобождения SSD — controlled baseline,
+а не установка сразу всех Pro/SR моделей.
+''')
+
+start('14_comfyui_component_experiments', '14. ComfyUI: от визуального baseline к отдельному исследованию',
+      'связать UI nodes с кодовыми компонентами и подготовить измеряемые однородные A/B опыты',
+      'K6 01–13; ComfyUI C0–C5 общего маршрута',
+      ['core/components/dit.py','core/algo/piflow_sampler.py','core/algo/postprocess_video.py','core/algo/postprocess_audio.py'], '5–6',
+      '../../kandinsky-5/notebooks/10_colab_cuda_distill.ipynb')
+md('''
+## 1. UI показывает wiring, а не все внутренние слои
+
+Loader DiT подключает joint transformer; DualCLIP loader — Qwen+CLIP; VAE video и audio-vocoder
+обслуживают разные decoding paths. Один sampler node скрывает много CrossDiT forwards и policy updates.
+Внутренние gates нельзя честно «выключить» простым отсоединением audio decoder:
+decoder находится **после** совместного denoising.
+
+Наши Smoke/Baseline workflows используют Lite Distill без SR/beautifier/MagCache.
+Node names/widgets зависят от версии ComfyUI и extension. Перед исполнением сверяйте template/node implementation.
+Следующая ячейка только читает локальный JSON; в ComfyUI ничего не отправляет.
+''')
+code('''
+workflow=json.loads((ROOT/'workflows/k6_lite_distill_smoke.json').read_text())
+rows=[{'id':n['id'],'type':n['type'],'title':n.get('title',n['type']),
+       'widgets':n.get('widgets_values',[])} for n in workflow['nodes']]
+for row in rows:print(row)
+metrics['smoke_node_count']=len(rows);metrics['smoke_link_count']=len(workflow['links'])
+assert len(rows)==12 and len(workflow['links'])==14
+''')
+md('''
+## 2. Последовательность опытов и измерений
+
+| Опыт | Что меняем | Что фиксируем | Что измеряем |
+|---|---|---|---|
+| C0 | Только image IO без моделей | PNG размеры/цвета | exact roundtrip / MSE |
+| C4 | Video VAE encode→decode | input, codec scale, dtype | reconstruction MSE/PSNR, decode time |
+| K6-S | Первый Lite Smoke | seed=42, 432×240, 33 frames, 10 steps | success, stage times, system memory |
+| K6-B | Полный Baseline 5s | 864×480, 121 frames; те же weights | время/память, frames/audio samples |
+| K6-A | Только один prompt factor | все остальные widgets/seeds | text adherence, failures, audio transcript |
+| K6-R | Адаптер speaker condition | held-out speaker/text protocol | SECS/WER/CER, no-reference regression |
+
+[C0/C4 workflows и инструкции](../../curriculum/COMFYUI_LABS.md),
+[ручной K6 notebook](00_manual_experiment_comfy_mlx_film.ipynb),
+[протокол измерений](../COMFYUI_AND_EXPERIMENT_RU.md).
+K6-S и дальше выполняются **после выбранного SSD gate и проверки моделей**, вручную.
+До этого таблицы содержат `not_run`, не выдуманные числа.
+''')
+code('''
+import csv
+folder=ROOT/'artifacts/component_labs'/LAB;folder.mkdir(parents=True,exist_ok=True)
+columns=['run_id','experiment','checkpoint','workflow','seed','steps','width','height','frames',
+         'load_s','text_s','denoise_s','video_decode_s','audio_decode_s','mux_s','peak_memory_bytes','status','notes']
+path=folder/'manual_runs.csv'
+if not path.exists():
+    with path.open('w',newline='') as handle:
+        writer=csv.DictWriter(handle,fieldnames=columns);writer.writeheader()
+        writer.writerow({'run_id':'smoke-42','experiment':'K6-S','checkpoint':'Lite-distill-5s',
+             'workflow':'k6_lite_distill_smoke.json','seed':42,'steps':10,'width':432,'height':240,
+             'frames':33,'status':'not_run','notes':'Await SSD/model gate; empty metrics are not zero'})
+print('Локальная таблица:',path)
+metrics['prepared_experiments']=['C0','C1','C4','K6-S','K6-B','K6-A','K6-R']
+metrics['comfyui_jobs_submitted']=0
+''')
+md('''
+## 3. Как перейти к исследованию голоса
+
+Для адаптера нужны прочитанные codec/conditioning/fusion contracts, baseline исходной модели,
+разделение VCTK по текстам и схема insertion point. Zero-init должен сохранять исходную функцию
+на шаге 0; frozen backbone не означает запрет gradient через него к адаптеру.
+
+[Наш исследовательский протокол](../../curriculum/RESEARCH_PROTOCOL.md) и
+[K6 status](../STATUS.md) перечисляют незавершённые части. Статья о voice adaptation
+[arXiv:2608.15690](https://arxiv.org/abs/2608.15690) обучает также audio backbone;
+наш frozen-FiLM вариант — отдельная гипотеза. Toy sensitivity из notebook 08 помогает проверить
+wiring, но не заменяет SECS/WER и не подтверждает voice cloning.
+''')
+finish('''
+1. На скриншоте workflow подпишите, где text encoder, DiT, policy, video codec, mel codec и vocoder.
+2. Составьте A/B из 3 одинаковых seeds и одного изменённого prompt factor; заранее определите метрики.
+3. Почему выключение mux audio input не является audio-stream ablation внутри CrossDiT?
+4. Укажите stop rule: ресурсный лимит, недостоверная метрика или regression исходной модели.
+''','''
+У вас есть маршрут от формулы и native CPU опыта к UI baseline и отдельной исследовательской гипотезе,
+с явным разделением выполненных численных контролей и будущих pretrained замеров.
+''')
+
+for index,item in enumerate(CATALOG):
+    path=ROOT/'notebooks'/f"{item['stem']}.ipynb"
+    nb=json.loads(path.read_text())
+    nav=[]
+    if index:nav.append(f"[← {CATALOG[index-1]['title']}]({CATALOG[index-1]['stem']}.ipynb)")
+    if index+1<len(CATALOG):nav.append(f"[{CATALOG[index+1]['title']} →]({CATALOG[index+1]['stem']}.ipynb)")
+    else:nav.append('[Далее: отдельное исследование →](00_manual_experiment_comfy_mlx_film.ipynb)')
+    nb['cells'].append({'cell_type':'markdown','id':'cell-navigation','metadata':{},'source':' · '.join(nav)+'\n'})
+    path.write_text(json.dumps(nb,ensure_ascii=False,indent=1)+'\n')
+
+(ROOT/'reports/component-catalog.json').write_text(json.dumps({
+    'source_revision':REV,'paper':PAPER,'notebooks':CATALOG},ensure_ascii=False,indent=2)+'\n')
+print('Built',len(CATALOG),'K6 component notebooks')

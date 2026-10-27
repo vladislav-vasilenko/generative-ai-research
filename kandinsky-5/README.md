@@ -1,7 +1,7 @@
 # KandinskyLab — учебные Jupyter-лабораторные по Kandinsky 5 Lite
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](../curriculum/README.md) · [Полное содержание](../curriculum/CONTENTS.md).
 <!-- study-navigation:end -->
 
 [Общий учебный маршрут Lecture 1–5 / Lab 1–3](../curriculum/README.md) связывает математические предпосылки, PyTorch и ComfyUI с этими исследованиями. Начните с него, если важно понимать порядок и критерии готовности.
@@ -12,11 +12,11 @@
 
 ## Продолжение: Kandinsky 6 Lite
 
-[Отдельная пошаговая лабораторная](../kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb) связывает знакомые FiLM/attention/Flow Matching с подготовкой ComfyUI baseline и будущим экспериментом клонирования голоса. [Lite workflow, ручной протокол и статус](../kandinsky-6/README.md). Учебные примеры работают без больших весов; pretrained запуск отложен до освобождения 50 GB+ на SSD.
+[Покомпонентный курс K6 из 14 лабораторных](../kandinsky-6/README.md) продолжает K5: audio codec/vocoder, DiT, Dual-stream CrossDiT, joint FM и π-Flow. Затем [ручной журнал исследования](../kandinsky-6/notebooks/00_manual_experiment_comfy_mlx_film.ipynb) связывает FiLM с ComfyUI baseline и будущим экспериментом голоса. Учебные примеры работают без больших весов; pretrained запуск отложен до освобождения 50 GB+ на SSD.
 
 ## Запуск в Google Colab
 
-Кнопки открывают notebooks из main; после слияния PR они доступны напрямую. До слияния для проверки замените `/blob/main/` в Colab URL на `/blob/kandinsky-5-labs/`. Первая ячейка автоматически загружает код курса и устанавливает зависимости; архив вручную загружать не требуется. Тяжёлые веса и генерация включаются отдельными флагами.
+Кнопки открывают notebooks из `main`. Первая ячейка автоматически загружает код курса и устанавливает зависимости; архив вручную загружать не требуется. Тяжёлые веса и генерация включаются отдельными флагами.
 
 | Лабораторная | Запуск |
 |---|---|
@@ -82,40 +82,18 @@ uv run --locked python -m ipykernel install --user --name kandinsky-labs --displ
 
 В каждой лабораторной есть цель, объяснение перед кодом, наблюдаемые формы/числа, связь с upstream и задания. Для самостоятельных опытов записывайте гипотезу, изменяйте один фактор, сохраняйте исходный результат.
 
-## Google Colab
+## Зависимости Colab
 
-Архив [KandinskyLab-colab.zip](KandinskyLab-colab.zip) содержит notebooks, `labkit`, `pyproject.toml`, `uv.lock`, экспорт зависимостей для Colab и зафиксированные исходники; в нём **нет весов и virtualenv**.
+Кнопки выше открывают опубликованные notebooks; первая ячейка получает исходники курса и устанавливает зависимости. После смены версии PyTorch перезапустите runtime. Для CPU-уроков GPU не требуется; notebook 10 содержит отдельный CUDA route и флаги тяжёлого запуска.
 
-1. Откройте [Google Colab](https://colab.research.google.com/), выберите Upload notebook и загрузите нужный `.ipynb` из `notebooks/`.
-2. Через панель Files загрузите `KandinskyLab-colab.zip` в `/content`.
-3. Добавьте перед первой ячейкой notebook следующую подготовку:
-
-```python
-from pathlib import Path
-import zipfile
-with zipfile.ZipFile('/content/KandinskyLab-colab.zip') as archive:
-    archive.extractall('/content')
-```
-
-4. Для новой CPU-среды установите зависимости **до импортов**:
-
-```python
-%pip install -r /content/KandinskyLab/requirements-labs.txt
-```
-
-После смены версии PyTorch перезапустите runtime и затем выполняйте notebook. Colab использует собственную CUDA-среду: соответствие версий Torch/Torchvision обязательно. Для CPU-лаб GPU не требуется. Для notebook 10 выберите GPU runtime, установите дополнительные зависимости отдельной предусмотренной ячейкой.
-
-`requirements-labs.txt` — автоматически созданный экспорт `uv.lock` для Colab; вручную его не редактируют. После изменения зависимостей в `pyproject.toml` обновите lock и экспорт из папки `kandinsky-5`:
+`requirements-labs.txt` — экспорт `uv.lock`, вручную его не редактируют. После изменения зависимостей из папки `kandinsky-5`:
 
 ```bash
 uv lock
 uv export --locked --no-dev --no-hashes --no-emit-project --output-file requirements-labs.txt
-uv run --locked python scripts/package_colab.py
 ```
 
-Бесплатная GPU-сессия не гарантирует полный запуск. Официальный BF16 маршрут notebook 10 требует BF16-capable GPU; T4 не удовлетворяет этой проверке. На A100/L4 остаются ограничения VRAM, RAM и доступности runtime. Уроки 00–08 можно пройти независимо от этого. Шарды Qwen занимают существенную часть RAM при загрузке; CPU offload экономит VRAM, но не системную память.
-
-Прямых `Open in Colab` badges нет, поскольку курс ещё не размещён в GitHub. Upload работает без публикации. Скачайте MP4, JSON и latent artifacts до завершения временной сессии.
+Бесплатная Colab GPU-сессия не гарантирует полный запуск. Официальный BF16 маршрут notebook 10 требует BF16-capable GPU; T4 не удовлетворяет этой проверке. Учитывайте RAM для Qwen и копий при offload. Скачайте результаты до завершения временной сессии. Упаковка через `scripts/package_colab.py` — дополнительный локальный способ, не обязательный для кнопок Colab.
 
 ## Официальный T2V example и выбор платформы
 

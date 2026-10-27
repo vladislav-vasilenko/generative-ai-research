@@ -1,10 +1,12 @@
 # Generative AI Research
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](curriculum/README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](curriculum/README.md) · [Полное содержание](curriculum/CONTENTS.md).
 <!-- study-navigation:end -->
 
 Учебный и исследовательский стенд по генеративным моделям: **многомерные вероятности → ODE/SDE → Flow Matching и score → CFG → DiT/VAE → видео и аудио**. Материалы на русском; исходные MIT labs и официальный код моделей сохранены отдельно.
+
+**[Полное содержание: лекции → labs → компоненты → ComfyUI → исследование](curriculum/CONTENTS.md)**
 
 **Начните с [учебной карты](curriculum/README.md).** Она указывает страницы лекций, задания, эксперименты и критерии готовности. Для внешнего review сначала прочитайте этот README, затем [результаты проверок](curriculum/reports/VALIDATION.md) и [границы K6-эксперимента](kandinsky-6/STATUS.md).
 
@@ -46,7 +48,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 
 - **[ComfyUI](curriculum/COMFYUI_LABS.md):** визуальные опыты, image IO без модели, отдельный VAE reconstruction, затем sampler/CFG/ресурсные эксперименты. JSON лежат в `curriculum/workflows/`.
 - **[Kandinsky 5 Lite](kandinsky-5/README.md):** 14 лабораторных по компонентам, Flow Matching и inference. У курса отдельные `pyproject.toml`, `uv.lock` и окружение.
-- **[Kandinsky 6 Lite](kandinsky-6/README.md):** ручной notebook, Smoke/Baseline workflow, подготовка VCTK и постановка будущего voice-conditioning эксперимента.
+- **[Kandinsky 6 Lite](kandinsky-6/README.md):** 14 лабораторных по компонентам, отдельные DiT и Dual-stream Audio+Video CrossDiT, π-Flow, затем ручной voice-conditioning эксперимент и ComfyUI baseline.
 - **[DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb):** дополнительный пример noise prediction. Для него: `uv sync --locked --extra ddpm`.
 
 ## Что проверено, а что остаётся экспериментальным
@@ -54,6 +56,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 | Компонент | Статус | Доказательства |
 |---|---|---|
 | Вводный и CTMC notebooks | Выполнены на CPU; оригинальные Lab 2/3 остаются заданиями | [Отчёт](curriculum/reports/VALIDATION.md) |
+| K6 component labs | 14 CPU-лабораторных: native tiny DiT, AV ablations, FM и π-Flow | [Отчёт](kandinsky-6/reports/COMPONENT_VALIDATION.md) |
 | K6 manual notebook | Лёгкий маршрут выполнен без pretrained weights | [Отчёт K6](kandinsky-6/reports/VALIDATION.md) |
 | ComfyUI graphs | Статические проверки связей/типов; runtime не заявлен | [Инструкция](curriculum/COMFYUI_LABS.md) |
 | MLX audio prototype | Подготовлен код; numerical/pretrained parity пока не пройден | [Статус K6](kandinsky-6/STATUS.md) |
@@ -90,3 +93,5 @@ uv.lock          Зафиксированные версии
 Для архитектур используются ссылки на конкретные official repository revisions; лицензии стороннего кода сохраняются. Поясняющие обзоры дополняют первичные статьи и код, не заменяя их.
 
 [Дополнительные чтения по месту в курсе](curriculum/SUPPLEMENTARY_READING.md): Rectified Flow, обзоры diffusion/video и небольшие CPU-контроли.
+
+[Задание Claude для методической и редакторской полировки](curriculum/CLAUDE_REVIEW_BRIEF.md).

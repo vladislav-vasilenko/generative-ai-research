@@ -1,7 +1,7 @@
 # Уточнения к исходным материалам
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md) · [Полное содержание](CONTENTS.md).
 <!-- study-navigation:end -->
 
 Оригиналы сохраняются побайтово; этот файл не исправляет их молча. Для источников даны SHA-256 и zero-based cell indexes в [manifest](references/materials_manifest.json). Ни одна исходная лабораторная автоматически не исполняется.

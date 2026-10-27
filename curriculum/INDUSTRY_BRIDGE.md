@@ -1,7 +1,7 @@
 # Как читать промышленный pipeline после Lab 1–3
 
 <!-- study-navigation:start -->
-**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md).
+**Основа:** [MIT 6.S184 / 2026](https://diffusion.csail.mit.edu/2026/index.html) · [Основной конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [Учебная карта](README.md) · [Полное содержание](CONTENTS.md).
 <!-- study-navigation:end -->
 
 Цель — переносить понятия и проверяемые контракты. Сначала проследите один prompt/noise до decoder, затем выберите один компонент. Одновременный полный запуск всех семейств не нужен.
@@ -19,7 +19,7 @@
 | Wan2.2 A14B | После Wan2.1 | High-noise/low-noise experts и switching по timestep/config boundary | Логировать выбранный expert по шагам; active и stored parameters различаются |
 | Wan2.2 TI2V-5B | После codec/shape maps | Это dense вариант, не A14B two-expert architecture; иной high-compression codec | Отдельный graph/model+codec, не подмена VAE в Wan2.1 |
 | Kandinsky 5 | P3–P7 + [14 labs](../kandinsky-5/README.md) | Qwen/CLIP, Hunyuan VAE, DiT, LTF/cross-attention и generation utilities | Сравнить non-distilled vs distilled по разным profile; не смешивать objectives |
-| Kandinsky 6 Lite | После K5 и baseline | Audio/video/cross-modal parts общей модели, MMAudio/Hunyuan codecs, PiFlow Distill | [Подготовленные Lite graphs](../kandinsky-6/README.md), затем измерения AV |
+| Kandinsky 6 Lite | После K5 или P6–P7 | [14 компонентных labs](../kandinsky-6/README.md): [DiT](../kandinsky-6/notebooks/07_dit_and_text_crossdit.ipynb), [dual AV fusion](../kandinsky-6/notebooks/08_dual_stream_audio_video_crossdit.ipynb), MMAudio/Hunyuan, PiFlow | [Подготовленные Lite graphs](../kandinsky-6/README.md), затем измерения AV |
 | LTX-Video | После P7 | Собственные codec/Transformer/RF scheduler contracts; выбрать конкретную revision | Сопоставить shape map с её VAE, не подменять его Hunyuan/Wan codec |
 | Mochi 1 | После P6–P7 | Asymmetric visual/text streams, VAE и pipeline | Сначала интерфейсы блоков, затем отдельный совместимый workflow |
 | Open-Sora, HPC-AI Tech | После P7 | Конкретный release/config: MMDiT, codec и sampling path | Фиксировать release и graph; это не Open-Sora-Plan |
