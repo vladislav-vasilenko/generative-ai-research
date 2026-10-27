@@ -22,8 +22,8 @@
 | Visual codec | vae, lab 02/11 | [03: HunyuanVideo](notebooks/03_video_vae.ipynb) | ComfyUI VAE reconstruction C4 |
 | Audio codec | Новый канал относительно K5 T2V | [04: MMAudio + vocoder](notebooks/04_audio_vae_and_vocoder.ipynb) | mel/latent/waveform и durations |
 | Строительные блоки | nn, attention, utils | [05](notebooks/05_nn_patches_and_modulation.ipynb), [06](notebooks/06_attention_and_rope.ipynb) | numeric identity/parity |
-| DiT / CrossDiT | K5 lab 06 | [07: DiT и текстовая CA](notebooks/07_dit_and_text_crossdit.ipynb) | hooks, token-condition cut |
-| AV fusion | Новый joint backbone | [08: Dual-stream CrossDiT](notebooks/08_dual_stream_audio_video_crossdit.ipynb) | directional cut, gradient |
+| DiT / CrossDiT | K5 lab 06 | [07: DiT и текстовая CA](notebooks/07_dit_and_text_crossdit.ipynb) | shapes from config, adaLN-Zero invariants, token vs pooled path, velocity vs grid head |
+| AV fusion | Новый joint backbone | [08: Dual-stream CrossDiT](notebooks/08_dual_stream_audio_video_crossdit.ipynb) | manual block = native, flag routing, directional cut, unimodal = joint with cut |
 | Обучение | K5 FM lab 06 | [09: joint FM](notebooks/09_flow_matching_training.ipynb) | synthetic held-out loss |
 | Distillation | K5 sampling 07 | [10: π-Flow](notebooks/10_piflow_distillation.ipynb) | grid policy / NFE |
 | Solver | K5 generation_utils, sampling | [11](notebooks/11_sampling_cfg_and_nfe.ipynb), [12](notebooks/12_latents_conditioning_and_output.ipynb) | Euler/CFG/layout contracts |
@@ -32,9 +32,9 @@
 
 ## По одному fused блоку K6
 
-Внутри каждого потока: self-attention → text cross-attention → cross-modal exchange → FFN, с отдельными residual gates. Video/audio widths различаются. Video queries читают audio K/V и обновляют video; audio queries читают video K/V и обновляют audio. Номер позиции в каждой модальности выражен собственным RoPE. Обе cross-modal ветви используют сохранённые pre-text-CA states противоположной модальности, а не новый output уже обновлённой cross-ветви. Полное тело класса и ablations исполняются в notebook 08.
+Внутри каждого потока: self-attention → text cross-attention → cross-modal exchange → FFN, с отдельными residual gates. Video/audio widths различаются. Video queries читают audio K/V и обновляют video; audio queries читают video K/V и обновляют audio. Номер позиции в каждой модальности выражен собственным RoPE. Q каждой cross-modal ветви берётся из потока-получателя **после** его text update, K/V — из сохранённого pre-text-CA state (`vis_pre_ca`/`aud_pre_ca`) другого потока. Оба cross outputs вычисляются до применения любого из них. Полное тело класса и ablations исполняются в notebook 08.
 
-`cross_gates=True` даёт video-sized gate из av-modulation и audio-sized gate из va-modulation. `fix_modulation=True` выбирает соответствующий query timestep. Zero-init выключает residual-влияние на шаге 0; параметры при этом могут обучаться. `OutLayerAudio` содержит второй norm; его нельзя убрать при переносе без изменения функции.
+`cross_gates=True` даёт video-sized gate из av-modulation и audio-sized gate из va-modulation. `fix_modulation=True` подаёт в va/av-modulation время потока-получателя. В released Lite/Pro (оба флага True) shift/scale query задаёт время получателя, а gate его обновления — время источника; таблица всех четырёх комбинаций проверяется в notebook 08. Zero-init выключает residual-влияние на шаге 0; параметры при этом могут обучаться. `OutLayerAudio` содержит второй norm; его нельзя убрать при переносе без изменения функции.
 
 ## Границы исходников и воспроизведения
 
@@ -46,7 +46,7 @@
 
 ### `core/algo/denoise_loop.py`
 
-[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/denoise_loop.py) · Лабы: [09](notebooks/09_flow_matching_training.ipynb) · [11](notebooks/11_sampling_cfg_and_nfe.ipynb).
+[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/denoise_loop.py) · Лабы: [08](notebooks/08_dual_stream_audio_video_crossdit.ipynb) · [09](notebooks/09_flow_matching_training.ipynb) · [11](notebooks/11_sampling_cfg_and_nfe.ipynb).
 
 - `_build_video_input`.
 - `_resolve_null_embeds`.
@@ -87,7 +87,7 @@
 
 ### `core/algo/piflow_sampler.py`
 
-[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_sampler.py) · Лабы: [10](notebooks/10_piflow_distillation.ipynb) · [14](notebooks/14_comfyui_component_experiments.ipynb).
+[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/algo/piflow_sampler.py) · Лабы: [08](notebooks/08_dual_stream_audio_video_crossdit.ipynb) · [10](notebooks/10_piflow_distillation.ipynb) · [14](notebooks/14_comfyui_component_experiments.ipynb).
 
 - `_normalize_grid_prediction`.
 - `piflow_denoise_loop`.
@@ -176,13 +176,13 @@
 
 ### `core/components/piflow_dit.py`
 
-[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/piflow_dit.py) · Лабы: [01](notebooks/01_system_and_training_map.ipynb) · [10](notebooks/10_piflow_distillation.ipynb).
+[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/piflow_dit.py) · Лабы: [01](notebooks/01_system_and_training_map.ipynb) · [07](notebooks/07_dit_and_text_crossdit.ipynb) · [08](notebooks/08_dual_stream_audio_video_crossdit.ipynb) · [10](notebooks/10_piflow_distillation.ipynb).
 
 - **`PiFlowDiffusionTransformer3D`**: `__init__`, `forward`.
 
 ### `core/components/rope.py`
 
-[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/rope.py) · Лабы: [06](notebooks/06_attention_and_rope.ipynb) · [08](notebooks/08_dual_stream_audio_video_crossdit.ipynb).
+[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/core/components/rope.py) · Лабы: [06](notebooks/06_attention_and_rope.ipynb).
 
 - **`RoPE1D`**: `__init__`, `forward`, `reset_parameters`.
 - **`RoPE3D`**: `__init__`, `forward`, `reset_parameters`.
@@ -218,6 +218,27 @@
 - `apply_scale_shift_norm`.
 - `apply_gate_sum`.
 - `apply_rotary`.
+
+### `pipeline/config.py`
+
+[Код](https://github.com/kandinskylab/kandinsky-6/blob/7ceeefad7fb625011f7db602c43893a989f19c15/kandinsky/pipeline/config.py) · Лабы: [07](notebooks/07_dit_and_text_crossdit.ipynb).
+
+- **`BeautifierConfig`**: typed data structure.
+- **`PathsConfig`**: typed data structure.
+- **`DiTConfig`**: `_as_tuple`.
+- **`GenerationConfig`**: `_as_tuple`.
+- **`TextEmbedderConfig`**: typed data structure.
+- **`AudioVAEConfig`**: typed data structure.
+- **`VocoderConfig`**: typed data structure.
+- **`PipelineConfig`**: `_audio_components_together`.
+- `_read_mapping`.
+- `_deep_merge`.
+- `_checkpoint_file`.
+- `_module_file`.
+- `_per_grid_overrides`.
+- `_expand_dit`.
+- `_compose`.
+- `load_config`.
 
 ### `runtime/cache/magcache.py`
 

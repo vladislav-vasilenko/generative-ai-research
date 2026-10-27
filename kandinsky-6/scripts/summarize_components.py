@@ -34,7 +34,10 @@ text=f'''# K6 component labs: проверка 27 октября 2026
 | Visual patch manual/native | max error {metric('05','visual_patch_max_error'):.1g} | Порядок patch features |
 | Zero residual gate | identity max error {metric('05','zero_gate_identity_error'):.1g} | При этом modulation gradient ненулевой |
 | Manual attention / SDPA | max error {metric('06','manual_sdpa_max_error'):.3g} | FP64, small unmasked case |
-| Text perturbation after text-CA cut | max change {metric('07','token_condition_cut_delta'):.1g} | Изолирован token-level condition path |
+| Fresh native CrossDiT (zero modulation) | text/pooled/time sensitivity {metric('07','fresh_model_invariants')['text tokens']:.1g}/{metric('07','fresh_model_invariants')['pooled']:.1g}/{metric('07','fresh_model_invariants')['time']:.1g} | adaLN-Zero: при init condition не влияет на output |
+| Text perturbation after text-CA cut | max change {metric('07','condition_paths')['tokens, CA cut']:.1g}; pooled после cut {metric('07','condition_paths')['pooled, CA cut']:.3g} | Token path только через cross-attention; pooled — через modulation |
+| Manual fused block vs native | max error {max(metric('08','manual_block_vs_native')['source'].values()):.1g}; post-text K/V {max(metric('08','manual_block_vs_native')['post-text K/V'].values()):.3g} | Порядок операций и источник K/V подтверждены на random weights |
+| Video-only vs joint with video-query cut | max error {metric('08','forward_modes')['joint with video-query cut vs video-only']:.1g} | Unimodal forward = joint без ветви audio→video |
 | AV directional cuts | оба cut deltas = 0; active deltas ненулевые | Проверка wiring одного native fused block |
 | Audio-output loss → video input | gradient norm {metric('08','audio_loss_gradient_to_video_on'):.6g} active / {metric('08','audio_loss_gradient_to_video_off'):.1g} cut | Межмодальный gradient path |
 | Tiny joint FM held-out video MSE | {metric('09','heldout_initial_video_audio')[0]:.6f} → {metric('09','heldout_final_video_audio')[0]:.6f} | {metric('09','trainable_parameters'):,} parameters, synthetic conditioning |
@@ -51,7 +54,7 @@ text=f'''# K6 component labs: проверка 27 октября 2026
 
 ![Dual-stream architecture](figures/components/dual_stream_architecture.png)
 
-Два потока имеют разные widths; стрелки определяют источник K/V и получателя Q. Детали snapshot states объясняются в notebook 08.
+Два потока имеют разные widths. Q берётся из потока-получателя после text update, K/V — из сохранённых `vis_pre_ca`/`aud_pre_ca` другого потока; подробности в notebook 08.
 
 ![Directional cross-modal ablation](figures/components/cross_modal_ablation.png)
 
