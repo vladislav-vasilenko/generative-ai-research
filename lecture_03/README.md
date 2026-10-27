@@ -7,10 +7,24 @@
 Читайте slides pp.6–23, notes §4 pp.25–33; затем [Lab 2](../lecture_02/references/lab_two_original.ipynb) Q2.4 (cells 31–36), Q3.2 (50–58), Q3.3 (59–63).
 
 - Определите score как gradient **по x**, а не по t или weights.
-- Для Gaussian получите $\nabla_x\log p(x)=-\Sigma^{-1}(x-\mu)$ и сравните с autograd.
+- Для Gaussian выведите score и сравните с autograd; формула приведена ниже.
 - Conditional score при известном clean endpoint — доступный target; marginal score требует усреднения с posterior weights.
-- Для scalar diffusion sigma(t), не зависящей от x, drift $v_t+\sigma_t^2\nabla\log p_t/2$ сохраняет заданные marginals при выполнении регулярности. Если diffusion зависит от x, нужны дополнительные члены; эту формулу нельзя переносить автоматически.
+- Для scalar diffusion `sigma(t)`, не зависящей от `x`, используйте drift из формулы ниже. Если diffusion зависит от `x`, нужны дополнительные члены; переносить формулу автоматически нельзя.
 - Выведите Fokker–Planck и выделите continuity term. Различайте Gaussian denoising objective, stochastic sampler и reverse-time interpretation.
+
+**Gaussian score:**
+
+$$
+\nabla_x\log p(x) = -\Sigma^{-1}(x-\mu).
+$$
+
+**SDE drift, сохраняющий заданные marginals:**
+
+$$
+b_t(x) = v_t(x) + \frac{\sigma_t^2}{2}\nabla_x\log p_t(x).
+$$
+
+Здесь `v_t` — marginal ODE field, `b_t` — SDE drift. Утверждение предполагает регулярность плотности/полей и spatially constant diffusion.
 
 Опыт: одна target density, одинаковый time horizon и initial distribution, несколько diffusion coefficients. Сравнить moments/distribution distance и Monte Carlo uncertainty; равенство paths не требуется. Не называйте дополнительный шум автоматически улучшением качества. Прочитайте [уточнение Q3.3](../curriculum/SOURCE_NOTES.md).
 
@@ -20,7 +34,9 @@
 
 Сначала class-conditioned MLP и label dropout, затем guidance:
 
-$$u_w(x,t,y)=u_\varnothing(x,t)+w\bigl(u_y(x,t)-u_\varnothing(x,t)\bigr).$$
+$$
+u_w(x,t,y) = u_{\varnothing}(x,t) + w\left(u_y(x,t)-u_{\varnothing}(x,t)\right).
+$$
 
 Проверьте w=0 и w=1. При w>1 это heuristic extrapolation, а не обещание точного sampling из исходного conditional data distribution. Unconditional branch появляется благодаря training dropout, а не благодаря пустому тексту в новом UI.
 

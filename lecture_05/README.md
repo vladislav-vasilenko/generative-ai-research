@@ -14,7 +14,7 @@
 6. Выполнить маленькое обучение denoising categorical posterior с cross-entropy; сравнить с аналитическим Bayes posterior игрушечного примера.
 7. Объяснить, как posterior parametrizes off-diagonal rates; не объявлять one-step denoising полным CTMC sampler.
 
-В notebook используем строки: `Q[i,j]` — rate из i в j, `p` — row vector, `dp/dt = p @ Q`. В notes запись $Q_t(y\mid x)$ фиксирует destination/source; при column-vector representation появляется transpose. Всегда сначала выпишите индексы.
+В notebook используем строки: `Q[i,j]` — rate из i в j, `p` — row vector, `dp/dt = p @ Q`. В notes обозначение `Q_t(y ∣ x)` фиксирует destination/source; при column-vector representation появляется transpose. Всегда сначала выпишите индексы.
 
 ## Связь с предыдущими темами
 

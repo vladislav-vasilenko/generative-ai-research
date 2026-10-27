@@ -1,0 +1,55 @@
+{
+  "scope": "source style and delimiters; GitHub rendering is verified separately",
+  "files": [
+    {
+      "file": "curriculum/COMFYUI_LABS.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "curriculum/EXPERIMENT_TEMPLATE.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "curriculum/INDUSTRY_BRIDGE.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "curriculum/PROGRESS.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "curriculum/README.md",
+      "display_blocks": 5
+    },
+    {
+      "file": "curriculum/RESEARCH_PROTOCOL.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "curriculum/SOURCE_NOTES.md",
+      "display_blocks": 2
+    },
+    {
+      "file": "lecture_01/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "lecture_02/README.md",
+      "display_blocks": 2
+    },
+    {
+      "file": "lecture_03/README.md",
+      "display_blocks": 3
+    },
+    {
+      "file": "lecture_04/README.md",
+      "display_blocks": 0
+    },
+    {
+      "file": "lecture_05/README.md",
+      "display_blocks": 0
+    }
+  ],
+  "errors": [],
+  "passed": true
+}
