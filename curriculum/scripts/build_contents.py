@@ -128,7 +128,7 @@ text+='''## Промышленные семейства и архитектур�
 6. [Baseline measurement table](../kandinsky-6/reports/templates/baseline_runs.csv) и [voice evaluation table](../kandinsky-6/reports/templates/voice_evaluation.csv).
 7. [VCTK preparation](../kandinsky-6/scripts/prepare_vctk.py), [PyTorch fixture](../kandinsky-6/scripts/torch_parity_reference.py), [MLX parity prototype](../kandinsky-6/scripts/mlx_parity.py).
 
-Первое запланированное исследование: speaker-conditioned zero-init FiLM на замороженном K6 audio backbone, VCTK и held-out texts; baseline/regression проверяются отдельно. Это гипотеза, а не уже полученное voice cloning. Pretrained этапы остаются отложены до выбранного пользователем SSD gate 50 GB+.
+Первое запланированное исследование: speaker-conditioned zero-init FiLM на замороженном K6 audio backbone, VCTK и held-out texts; baseline/regression проверяются отдельно. Это гипотеза, а не уже полученное voice cloning. Desktop AV Baseline с tiled VAE проверен 30 октября; Kaggle/T4, voice adapter и MLX остаются отдельными этапами с собственными критериями.
 
 ## Все руководства, источники и результаты
 

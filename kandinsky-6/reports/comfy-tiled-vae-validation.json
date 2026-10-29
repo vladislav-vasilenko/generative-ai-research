@@ -1,0 +1,83 @@
+{
+  "created_date": "2026-10-30",
+  "device": "Apple M3 Max / MPS",
+  "torch": "2.12.1",
+  "comfy_revision": "086099f5d8886163ef77dc354f8382cb7431582a",
+  "source_error": {
+    "node_id": 9,
+    "node_type": "VAEDecode",
+    "exception": "Invalid buffer size: 75.16 GiB",
+    "baseline_rgb_shape": [
+      121,
+      480,
+      864
+    ],
+    "latent_grid": [
+      31,
+      60,
+      108
+    ],
+    "full_bf16_score_matrix_gib": 75.16289949417114
+  },
+  "graph_change": {
+    "node_id": 9,
+    "new_type": "VAEDecodeTiled",
+    "tile_size": 256,
+    "overlap": 64,
+    "temporal_size": 16,
+    "temporal_overlap": 4,
+    "sampler_inputs_unchanged": true,
+    "server_restarted": false,
+    "active_desktop_graph_verified": true
+  },
+  "pretrained_vae_test": {
+    "input_kind": "zero latent; not a generated clip",
+    "latent_shape": [
+      1,
+      16,
+      5,
+      32,
+      32
+    ],
+    "rgb_shape": [
+      17,
+      256,
+      256,
+      3
+    ],
+    "dtype": "torch.bfloat16",
+    "finite": true,
+    "decode_seconds": 9.411268790950999
+  },
+  "full_baseline_tested": true,
+  "kaggle_or_cuda_tested": false,
+  "cached_baseline_continuation": {
+    "prompt_id": "3fb75b32-ef8e-4cec-bc53-ccd3627c0ae9",
+    "sampler_cache_confirmed": true,
+    "new_sampler_executions": 0,
+    "executed_nodes": [
+      "9",
+      "11",
+      "12"
+    ],
+    "continuation_seconds": 563.5093684170861,
+    "vae_tiles": 150,
+    "result": {
+      "filename": "baseline_00001_.mp4",
+      "width": 864,
+      "height": 480,
+      "fps": 24.0,
+      "audio_sample_rate": 44100,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "seconds": 5.041678,
+      "decoded_frames": 121,
+      "decoded_audio_samples": 222338,
+      "sha256": "fb09fd7d28e866782b410bee741c3c47e647ca996ba6af1aa59d8f80961c4677",
+      "bytes": 503360
+    },
+    "full_model_latency_measured": false,
+    "subjective_quality_evaluated": false
+  },
+  "generation_used_unmodified_core": true
+}

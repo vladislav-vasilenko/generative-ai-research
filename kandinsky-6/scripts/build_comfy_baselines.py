@@ -8,7 +8,7 @@ import copy,json,uuid
 ROOT=Path(__file__).resolve().parents[1]
 source=ROOT/'reference/kandinsky-6/comfyui/example_workflows/Kandinsky 6.0 Text to Video+Audio.json'
 base=json.loads(source.read_text());out=ROOT/'workflows';out.mkdir(exist_ok=True)
-for profile,width,height,frames in [('smoke',432,240,33),('baseline',864,480,121)]:
+for profile,width,height,frames in [('smoke',432,256,33),('baseline',864,480,121)]:
     workflow=copy.deepcopy(base)
     nodes={n['id']:n for n in workflow['nodes'] if 1<=n['id']<=12}
     nodes[1]['widgets_values'][0]='Kandinsky-6.0-Lite-distill-5s-Diffusers/transformer/diffusion_pytorch_model.safetensors'
@@ -24,6 +24,13 @@ for profile,width,height,frames in [('smoke',432,240,33),('baseline',864,480,121
         'Clean English speech, one speaker, no music, no background noise.']
     nodes[7]['widgets_values']=[width,height,frames,24,1]
     nodes[8]['widgets_values']=[42,'fixed',10,1,'euler','simple',1]
+    nodes[9]['type']='VAEDecodeTiled'
+    nodes[9]['title']='Video VAE — tiled decode'
+    nodes[9]['properties']['Node name for S&R']='VAEDecodeTiled'
+    nodes[9]['widgets_values']=[256,64,16,4]
+    nodes[9]['size']=[300,180]
+    for name in ['tile_size','overlap','temporal_size','temporal_overlap']:
+        nodes[9]['inputs'].append({'name':name,'type':'INT','widget':{'name':name},'link':None})
     nodes[12]['widgets_values'][0]=f'kandinsky6_research/{profile}'
     for n in nodes.values():
         for inp in n.get('inputs',[]):inp['link']=None

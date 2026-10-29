@@ -48,7 +48,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 
 - **[ComfyUI](curriculum/COMFYUI_LABS.md):** визуальные опыты, image IO без модели, отдельный VAE reconstruction, затем sampler/CFG/ресурсные эксперименты. JSON лежат в `curriculum/workflows/`.
 - **[Kandinsky 5 Lite](kandinsky-5/README.md):** 14 лабораторных по компонентам, Flow Matching и inference. У курса отдельные `pyproject.toml`, `uv.lock` и окружение.
-- **[Kandinsky 6 Lite](kandinsky-6/README.md):** 14 лабораторных по компонентам, отдельные DiT и Dual-stream Audio+Video CrossDiT, π-Flow, затем ручной voice-conditioning эксперимент и ComfyUI baseline.
+- **[Kandinsky 6 Lite](kandinsky-6/README.md):** 14 лабораторных по компонентам, отдельные DiT и Dual-stream Audio+Video CrossDiT, π-Flow, затем ручной voice-conditioning эксперимент и ComfyUI baseline. [Запуск Lite в Kaggle: 2×T4 / 32 GB RAM](kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb).
 - **[DiT → CrossDiT → π-Flow](dit/README.md):** 11 углублённых labs: DiT primitives, K5/K6 streams, conditioning, visual references, native denoise loop, policy math и маленькое imitation-исследование; [точная связь с MIT](dit/MIT_BRIDGE.md).
 - **[VAE: MIT → HunyuanVideo](vae/README.md):** девять пошаговых labs по ELBO, causal Conv3D, архитектуре, spatial/temporal tiling и free-VRAM planner; CPU проверки, графики и отдельный ручной ComfyUI/pretrained протокол.
 - **[DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb):** дополнительный пример noise prediction. Для него: `uv sync --locked --extra ddpm`.
@@ -64,7 +64,8 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 | HunyuanVideo VAE labs | CPU: native tiny codec, oracle, planner sweep; pretrained не запускался | [9 labs и измерения](vae/reports/VALIDATION.md) |
 | ComfyUI graphs | Статические проверки связей/типов; runtime не заявлен | [Инструкция](curriculum/COMFYUI_LABS.md) |
 | MLX audio prototype | Подготовлен код; numerical/pretrained parity пока не пройден | [Статус K6](kandinsky-6/STATUS.md) |
-| Voice adapter / полный AV inference | План и проверки подготовлены; сквозной результат не получен | [Ручной протокол](kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md) |
+| K6 Desktop AV Baseline | MPS: 121 кадр со звуком; tiled decode продолжен из Sampler cache | [Отчёт](kandinsky-6/reports/comfy-tiled-vae-validation.json) |
+| Voice adapter / MLX / Kaggle T4 inference | Отдельные этапы; сквозные результаты пока не получены | [Ручной протокол](kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md) |
 
 Синтетические loss/score проверки не являются результатом клонирования голоса. Скорость и память H100 не переносятся на Mac без измерения. Полный запуск на текущей M3 Max станции отложен до освобождения 50 GB+ на SSD; это локальное ограничение, не универсальное требование моделей.
 
