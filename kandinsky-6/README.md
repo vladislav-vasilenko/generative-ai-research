@@ -123,18 +123,18 @@ flowchart TB
 
 | Workflow | Размеры | Назначение |
 |---|---|---|
-| [Lite Smoke](workflows/k6_lite_distill_smoke.json) | 432×240, 33 frames | Проверить установку и ресурсы |
+| [Lite Smoke](workflows/k6_lite_distill_smoke.json) | 432×256, 33 frames | Проверить установку и ресурсы |
 | [Lite Baseline](workflows/k6_lite_distill_baseline.json) | 864×480, 121 frames | Воспроизводимые 5s замеры |
 
 Оба: seed=42 fixed, 10 steps, CFG=1, audio scale=.417, 12 nodes / 14 links, без Pro/SR/beautifier/MagCache. [Общий ComfyUI маршрут C0–C6](../curriculum/COMFYUI_LABS.md) → [K6 component UI lab 14](notebooks/14_comfyui_component_experiments.ipynb) → [ручной K6 журнал](notebooks/00_manual_experiment_comfy_mlx_film.ipynb) → [подробный протокол](COMFYUI_AND_EXPERIMENT_RU.md).
 
-**Полные загрузки и generation по-прежнему отложены до освобождения 50 GB+ на SSD по вашему решению.** Qwen, Lite DiT, codecs и vocoder — разные зависимости. Ветка SR с KVAE и дополнительные beautifiers не нужны для первого Lite baseline. Автоматические CPU проверки не отправляют ComfyUI prompts.
+После разрешения пользователя 30 октября необходимые Lite веса установлены в Desktop. Untiled video decode baseline упал на MPS с буфером 75.16 GiB; графы переведены на **VAEDecodeTiled: 256 / 64 / 16 / 4**. [Проверка на MPS](reports/comfy-tiled-vae-validation.json): baseline 864×480 / 121 кадр успешно декодирован и сохранён со звуком. Продолжение заняло 563.51 s (~9 min 24 s), Sampler и audio decode взяты из cache; это время постобработки, не полной генерации. Ветка SR с KVAE и beautifier не нужны для Lite baseline. Учебные CPU проверки не отправляют ComfyUI prompts.
 
 ## Что реально проверено
 
 [Отчёт component labs](reports/COMPONENT_VALIDATION.md) содержит measured shapes, errors, gradient controls и learning curves; [машиночитаемый отчёт](reports/component-validation.json) — результаты свежих CPU kernels. Native tiny DiT использует оригинальные class bodies через явный локальный SDPA adapter. Полный VAE не загружается: causal convolution проверяется отдельным оригинальным определением, VAE теория — маленьким учебным codec. В отдельных sampler/codec обвязках predictor/decoder test doubles подписаны явно.
 
-[Ранее выполненный ручной notebook](reports/VALIDATION.md) и [состояние voice/MLX](STATUS.md) сохраняют отдельный смысл. Pretrained AV inference, MLX joint parity и voice-adapter training/evaluation ещё не пройдены. Успех random-weight forward или снижение synthetic loss не объявляются результатом клонирования голоса.
+[Ранее выполненный ручной notebook](reports/VALIDATION.md) и [состояние voice/MLX](STATUS.md) сохраняют отдельный смысл. AV baseline Desktop с tiled decode проверен отдельно; MLX joint parity и voice-adapter training/evaluation ещё не пройдены. Успех random-weight forward или снижение synthetic loss не объявляются результатом клонирования голоса.
 
 Повторить проверки из корня:
 
@@ -143,10 +143,18 @@ uv run --locked python kandinsky-6/scripts/validate_component_notebooks.py --exe
 uv run --locked python curriculum/scripts/sync_study_navigation.py --check
 ```
 
+## Запуск pretrained Lite в Kaggle: 2 × T4 и 32 GB RAM
+
+[Самостоятельный notebook 15](notebooks/15_kaggle_t4_lite_distill.ipynb) воспроизводит ComfyUI Lite pipeline в коде: установка зависимостей в отдельную среду, точечная загрузка семи pinned файлов, Qwen/CLIP conditioning, joint DX π-Flow, video VAE, TOD-VAE + BigVGAN и MP4 со звуком. Импортируйте один `.ipynb` в Kaggle, выберите GPU T4 ×2, включите Internet и выполняйте ячейки по порядку.
+
+Две T4 не образуют одну GPU с 32 GB: text worker использует GPU 1 с CPU offload, остальные GPU-стадии — GPU 0. Процессы выполняются последовательно и освобождают память; промежуточные conditioning/latents сохраняются. Для T4 задан FP16 DiT, штатный ComfyUI text path (BF16 storage / FP32 forward) и FP32 tiled VAE; parity с BF16 DiT не заявляется. Поэтапная загрузка позволяет не держать одновременно все 25.4 GB весов на scratch-диске; Kaggle Input веса переиспользуются без копии.
+
+Сначала smoke 432×256 / 33 кадра; baseline 864×480 / 121 кадр включается после него отдельным флагом. Notebook пишет фактические timings, NFE, RAM/VRAM counters, logs и проверяет наличие декодируемых видео/аудио. [Проверки кода и native CPU API](reports/kaggle-t4-validation.json) прошли; pretrained запуск на Kaggle T4 ещё не выполнен. Это deployment notebook, отдельный от 14 лёгких CPU-лабораторных; не запускайте его в основном локальном kernel через Run All.
+
 ## Структура и источники
 
 ```text
-notebooks/          01–14 component labs + ручной журнал исследования
+notebooks/          01–14 component labs, ручной журнал, 15 Kaggle deployment
 labkit/             Native CPU adapter, учебные helpers, MLX audio prototype
 scripts/            Сборка notebooks, проверки, ComfyUI/VCTK/parity инструменты
 workflows/          Lite Smoke/Baseline JSON

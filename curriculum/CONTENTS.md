@@ -106,6 +106,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 | [12_latents_conditioning_and_output.ipynb](../kandinsky-6/notebooks/12_latents_conditioning_and_output.ipynb) | 1. Shape сам по себе не задаёт смысл; 2. Tail conditioning и token roles; 3. Проверяем encode wrapper без выдуманного VAE API; 4. Последний этап — mux |
 | [13_runtime_memory_and_mlx.ipynb](../kandinsky-6/notebooks/13_runtime_memory_and_mlx.ipynb) | 1. Offload, quantization и cache делают разные вещи; 2. Измеряем только то, что действительно запущено; 3. Parity gates: по слоям, затем по pipeline |
 | [14_comfyui_component_experiments.ipynb](../kandinsky-6/notebooks/14_comfyui_component_experiments.ipynb) | 1. UI показывает wiring, а не все внутренние слои; 2. Последовательность опытов и измерений; 3. Как перейти к исследованию голоса |
+| [15_kaggle_t4_lite_distill.ipynb](../kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb) | 1. Подготовка Kaggle и порядок запуска; 2. Почему память освобождается между стадиями; 3. Код и зависимости: отдельная среда, существующий CUDA PyTorch; 4. Все модели: точные файлы, revisions, размеры и контрольные суммы; 5. Настройки эксперимента и контракты тензоров; 6. Общая часть worker: ComfyUI loaders и безопасные промежуточные файлы |
 
 ## VAE: MIT Lab 3 → HunyuanVideo → tiling
 
@@ -181,7 +182,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 6. [Baseline measurement table](../kandinsky-6/reports/templates/baseline_runs.csv) и [voice evaluation table](../kandinsky-6/reports/templates/voice_evaluation.csv).
 7. [VCTK preparation](../kandinsky-6/scripts/prepare_vctk.py), [PyTorch fixture](../kandinsky-6/scripts/torch_parity_reference.py), [MLX parity prototype](../kandinsky-6/scripts/mlx_parity.py).
 
-Первое запланированное исследование: speaker-conditioned zero-init FiLM на замороженном K6 audio backbone, VCTK и held-out texts; baseline/regression проверяются отдельно. Это гипотеза, а не уже полученное voice cloning. Pretrained этапы остаются отложены до выбранного пользователем SSD gate 50 GB+.
+Первое запланированное исследование: speaker-conditioned zero-init FiLM на замороженном K6 audio backbone, VCTK и held-out texts; baseline/regression проверяются отдельно. Это гипотеза, а не уже полученное voice cloning. Desktop AV Baseline с tiled VAE проверен 30 октября; Kaggle/T4, voice adapter и MLX остаются отдельными этапами с собственными критериями.
 
 ## Все руководства, источники и результаты
 
@@ -212,7 +213,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md](../kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md) — Kandinsky 6: ручной запуск и протокол исследования.
 - [kandinsky-6/COMPONENT_GUIDE.md](../kandinsky-6/COMPONENT_GUIDE.md) — K6: карта архитектурных компонентов и оригинального кода.
 - [kandinsky-6/README.md](../kandinsky-6/README.md) — Kandinsky 6 Lite — по-компонентный учебный курс.
-- [kandinsky-6/STATUS.md](../kandinsky-6/STATUS.md) — Состояние эксперимента, 27 октября 2026.
+- [kandinsky-6/STATUS.md](../kandinsky-6/STATUS.md) — Состояние эксперимента, 30 октября 2026.
 - [kandinsky-6/THIRD_PARTY.md](../kandinsky-6/THIRD_PARTY.md) — Source provenance.
 - [kandinsky-6/reference/README.md](../kandinsky-6/reference/README.md) — Закреплённые сторонние исходники.
 - [kandinsky-6/reports/COMPONENT_VALIDATION.md](../kandinsky-6/reports/COMPONENT_VALIDATION.md) — K6 component labs: проверка 27 октября 2026.
@@ -273,6 +274,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [build_comfy_baselines.py](../kandinsky-6/scripts/build_comfy_baselines.py) — Derive minimal Lite workflows from the pinned official graph.
 - [build_component_guide.py](../kandinsky-6/scripts/build_component_guide.py) — Build README navigation and an AST-based component/source index.
 - [build_component_notebooks.py](../kandinsky-6/scripts/build_component_notebooks.py) — Build the K6 component course. Only source generation, no network/weights.
+- [build_kaggle_notebook.py](../kandinsky-6/scripts/build_kaggle_notebook.py) — Build the standalone, staged Kaggle 2xT4 Kandinsky 6 Lite deployment notebook.
 - [build_manual_notebook.py](../kandinsky-6/scripts/build_manual_notebook.py) — Build the lightweight manual experiment notebook; no model downloads.
 - [extract_audio_local.py](../kandinsky-6/scripts/extract_audio_local.py) — Copy original audio tensor bytes from a local ComfyUI checkpoint.
 - [inspect_comfy_models.py](../kandinsky-6/scripts/inspect_comfy_models.py) — Read model paths and safetensors headers, without importing ComfyUI or loading weights.
@@ -283,6 +285,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [summarize_components.py](../kandinsky-6/scripts/summarize_components.py) — Publish a concise evidence report and selected figures from successful local executions.
 - [torch_parity_reference.py](../kandinsky-6/scripts/torch_parity_reference.py) — Generate a PyTorch numerical reference; never label random fixtures pretrained.
 - [validate_component_notebooks.py](../kandinsky-6/scripts/validate_component_notebooks.py) — Validate K6 teaching labs; --execute uses fresh CPU kernels, no downloads.
+- [validate_kaggle_notebook.py](../kandinsky-6/scripts/validate_kaggle_notebook.py) — Validate the Kaggle deployment notebook without model downloads; optional native CPU API checks.
 - [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route.
 
 ### `vae/scripts`

@@ -1,0 +1,69 @@
+{
+  "source": "ComfyUI comfy/sd.py VAE.decode_tiled_3d",
+  "tests": [
+    {
+      "shape": [
+        1,
+        3,
+        31,
+        60,
+        108
+      ],
+      "total": 150,
+      "final_event": [
+        150,
+        150
+      ],
+      "output_unchanged": true
+    },
+    {
+      "shape": [
+        1,
+        3,
+        4,
+        32,
+        32
+      ],
+      "total": 1,
+      "final_event": [
+        1,
+        1
+      ],
+      "output_unchanged": true
+    },
+    {
+      "shape": [
+        2,
+        3,
+        4,
+        32,
+        32
+      ],
+      "total": 2,
+      "final_event": [
+        2,
+        2
+      ],
+      "output_unchanged": true
+    },
+    {
+      "shape": [
+        1,
+        3,
+        7,
+        7,
+        7
+      ],
+      "total": 8,
+      "final_event": [
+        8,
+        8
+      ],
+      "output_unchanged": true
+    }
+  ],
+  "live_backend_restarted": false,
+  "active_ui_progress_tested": false,
+  "weights_loaded": false,
+  "scope": "native tiler + identity decoder on CPU; verifies callback totals and blending output"
+}

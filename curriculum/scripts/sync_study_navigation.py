@@ -42,7 +42,7 @@ for path in notebooks:
     if 'kandinsky-5' in path.parts:lectures=K5[int(path.name[:2])]
     if 'kandinsky-6' in path.parts:
         number=int(path.name[:2])
-        lectures={0:[2,3,4],1:[2,4],2:[3,4],3:[4],4:[4],5:[4],6:[4],7:[4],8:[4],9:[2],10:[1,2],11:[1,2,3],12:[4],13:[4],14:[1,2,3,4]}[number]
+        lectures={0:[2,3,4],1:[2,4],2:[3,4],3:[4],4:[4],5:[4],6:[4],7:[4],8:[4],9:[2],10:[1,2],11:[1,2,3],12:[4],13:[4],14:[1,2,3,4],15:[1,2,3,4]}[number]
     source=cell['source'];text=''.join(source) if isinstance(source,list) else source
     new=insert(text,navigation(path,lectures));changed=new!=text
     if changed:

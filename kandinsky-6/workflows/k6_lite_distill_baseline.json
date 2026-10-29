@@ -380,14 +380,14 @@
     },
     {
       "id": 9,
-      "type": "VAEDecode",
+      "type": "VAEDecodeTiled",
       "pos": [
         1900,
         80
       ],
       "size": [
-        220,
-        70
+        300,
+        180
       ],
       "flags": {},
       "order": 16,
@@ -402,6 +402,38 @@
           "name": "vae",
           "type": "VAE",
           "link": 8
+        },
+        {
+          "name": "tile_size",
+          "type": "INT",
+          "widget": {
+            "name": "tile_size"
+          },
+          "link": null
+        },
+        {
+          "name": "overlap",
+          "type": "INT",
+          "widget": {
+            "name": "overlap"
+          },
+          "link": null
+        },
+        {
+          "name": "temporal_size",
+          "type": "INT",
+          "widget": {
+            "name": "temporal_size"
+          },
+          "link": null
+        },
+        {
+          "name": "temporal_overlap",
+          "type": "INT",
+          "widget": {
+            "name": "temporal_overlap"
+          },
+          "link": null
         }
       ],
       "outputs": [
@@ -415,10 +447,16 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "VAEDecode",
+        "Node name for S&R": "VAEDecodeTiled",
         "cnr_id": "comfy-core"
       },
-      "widgets_values": []
+      "widgets_values": [
+        256,
+        64,
+        16,
+        4
+      ],
+      "title": "Video VAE — tiled decode"
     },
     {
       "id": 10,

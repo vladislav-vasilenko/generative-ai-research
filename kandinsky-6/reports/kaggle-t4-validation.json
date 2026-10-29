@@ -1,0 +1,47 @@
+{
+  "notebook": "kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb",
+  "source_sha256": "feab50790d0749eb1a4a2e8503e62e156b9d759b004a43b7f19fbed1b3d6e205",
+  "cells": 40,
+  "code_cells": 21,
+  "worker_sha256": "323ceaf9a408c5d8645891bf7ddd6130f8f3e6d137939a935bd1230ccc94c8dd",
+  "all_cells_and_embedded_scripts_parsed": true,
+  "local_links_checked": true,
+  "pinned_model_files": 7,
+  "pinned_model_bytes": 25416128714,
+  "kaggle_execution": false,
+  "cuda_t4_inference": false,
+  "pretrained_downloads_during_validation": false,
+  "pretrained_generation_during_validation": false,
+  "native_cpu_checks": {
+    "video_latent_shape": [
+      1,
+      16,
+      9,
+      32,
+      54
+    ],
+    "audio_latent_shape": [
+      1,
+      60,
+      40
+    ],
+    "conditioning_roundtrip": true,
+    "stale_cache_rejected": true,
+    "nan_rejected": true,
+    "synthetic_mp4": {
+      "mux_seconds": 0.0073431250639259815,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "audio_sample_rate": 44100,
+      "fps": 24.0,
+      "output_bytes": 5707,
+      "decoded_video_frames": 9,
+      "decoded_audio_samples": 16538
+    },
+    "dataset_not_modified": true,
+    "owned_temporary_cleanup": true,
+    "pretrained_models_loaded": false,
+    "torch_version": "2.12.1",
+    "comfy_revision": "086099f5d8886163ef77dc354f8382cb7431582a"
+  }
+}

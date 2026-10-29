@@ -11,20 +11,20 @@
 | Этап | Состояние |
 |---|---|
 | Официальные источники и model configs | Закреплены revisions и SHA-256 в reference/source-manifest.json |
-| Два Lite workflow | JSON и связи узлов проверены; генерация не проверена |
+| Два Lite workflow | JSON/links проверены; Baseline 864×480 / 121 кадр сохранён на MPS через tiled decode, Sampler cache переиспользован |
 | VCTK pilot | 120 клипов, четыре спикера; reference/train/validation/test; глобальная проверка пересечений текстов |
 | PyTorch reference | Малый настоящий K6 класс выполнен на CPU, 50 632 audio-параметра; случайные веса, не pretrained |
 | MLX numerical parity | Скрипт подготовлен; результат определяется только reports/mlx-*-parity.json с passed=true |
-| Pretrained audio weights | Используем локальный полный checkpoint ComfyUI после завершения загрузки |
+| Pretrained audio weights | Локальный полный Lite checkpoint установлен; отдельный joint-equivalent audio checkpoint не заявляется |
 | Полное FiLM обучение и оценка голоса | Следующий исследовательский этап; готовый train/inference pipeline не заявляется |
 
 Не называйте loss на случайной сети, header inspection или импорт workflow доказательством клонирования голоса.
 
-## Решение о запуске: сначала 50 GB+ на диске
+## Память и диск перед запуском
 
-По решению пользователя загрузка больших весов и генерация **отложены до освобождения 50 GB+**. Последний read-only замер: около 24.2 GiB свободно. Показанные в Desktop Qwen 15.45 GB и Lite 5.94 GB составляют ещё 21.39 GB по оценке интерфейса; это оставляет слишком маленький запас для swap и временных файлов. GB интерфейса не следует без проверки считать точными GiB или оценкой RAM.
+Первоначально запуск был отложен до освобождения 50 GB+ SSD. **30 октября 2026 пользователь разрешил загрузку необходимых моделей**: семь файлов Lite workflow теперь доступны в локальной ComfyUI, включая TOD-VAE и оба файла BigVGAN. Baseline в Desktop затем успешно продолжен из Sampler cache и сохранён с видео и звуком; Kaggle/T4 запуск ещё не проверен.
 
-Проверяйте свободное место повторно; можно разместить библиотеку моделей на внешнем SSD. В этом случае отдельно нужен запас системного диска для swap. Автоматического удаления моделей и изменения Desktop configuration нет.
+Проверьте свободное место для swap и временных файлов перед новым запуском. Локальная библиотека моделей и CUDA/Kaggle окружение — отдельные установки; файлы Mac автоматически в Kaggle не передаются. [Kaggle notebook для 2×T4 / 32 GB RAM](notebooks/15_kaggle_t4_lite_distill.ipynb) скачивает только нужные файлы либо использует Kaggle Input.
 
 Начните с [пошагового notebook](notebooks/00_manual_experiment_comfy_mlx_film.ipynb): 33 ячейки, лёгкие примеры FiLM/attention/Flow Matching, проверка файлов, таблицы измерений. Run All не скачивает модели и не запускает генерацию. Для запуска из корня репозитория:
 
@@ -72,7 +72,7 @@ workflows/k6_lite_distill_smoke.json
 | Параметр | Smoke | Baseline |
 |---|---|---|
 | Transformer | Kandinsky-6.0-Lite-distill-5s-Diffusers | тот же |
-| Width × height | 432 × 240 | 864 × 480 |
+| Width × height | 432 × 256 | 864 × 480 |
 | RGB frames | 33 | 121 |
 | FPS | 24 | 24 |
 | Batch | 1 | 1 |
@@ -85,6 +85,24 @@ workflows/k6_lite_distill_smoke.json
 Smoke — только уменьшенная проверка работоспособности. Его качество и время нельзя приписывать штатному 5s режиму: изменены разрешение и длительность. Размеры кратны 16, длина удовлетворяет T=4k+1. Baseline находится в `workflows/k6_lite_distill_baseline.json`.
 
 Для distill узел Kandinsky6Sampler автоматически выбирает PiFlow. Видимые selectors euler/simple не означают, что здесь запущен обычный Euler sampler; они относятся к non-distilled моделям. Сохраняйте точную версию плагина.
+
+### Если Sampler уже выполнен, а VAE decode упал
+
+Baseline 121 frames / 864×480 с обычным `VAEDecode` на MPS запросил attention buffer **75.16 GiB**. В новом графе node 9 — **VAEDecodeTiled**: tile_size=256, overlap=64, temporal_size=16, temporal_overlap=4. Проверьте этот тип и четыре значения в открытом workflow; копии в Templates и Workflows обновлены. [Отчёт проверки](reports/comfy-tiled-vae-validation.json).
+
+Меняйте только decoder и его downstream-часть. Сохраните ID и входы Sampler (модель, seed, captions, steps, CFG, размеры/length/fps); **не перезапускайте backend и не очищайте cache**. Тогда при следующем Run ComfyUI сможет взять joint latent из cache, если тот ещё сохранён. Сам факт завершённого Sampler в History не гарантирует наличие tensor в RAM: cache может быть вытеснен. Идентичные upstream inputs и сохранённый cache важнее положения узлов на canvas.
+
+Для надёжного восстановления между сессиями сохраняйте совместные video/audio latents отдельно. Kaggle notebook делает это в `joint-latents.safetensors`: video/audio/export можно повторять без Qwen и DiT. В текущем Desktop графе отдельного сохранения latents нет, поэтому после перезапуска сервера один JSON workflow не восстанавливает вычисленный tensor.
+
+Tiled decoder отдельно проверен на MPS с реальными video VAE weights: нулевой latent `[1,16,5,32,32]` → 17 RGB кадров 256×256 без NaN/Inf. Затем полный Baseline 864×480 / 121 кадр успешно продолжен из cache: выполнены только nodes 9, 11, 12, подтверждены H.264, AAC 44100 Hz, 24 FPS и 121 декодируемый кадр. Продолжение заняло 563.51 s; quality/lip-sync и сравнение untiled/tiled отдельно не оценивались.
+
+### Прогресс 3D VAE tiler
+
+В текущей конфигурации Baseline: **150 3D-тайлов = 10 temporal × 3 height × 5 width**. Веса не загружаются 150 раз: один decoder последовательно обрабатывает участки latent volume. Overlap смешивается на границах. Это число VAE вызовов, не DiT NFE.
+
+Добавлен узкий [patch штатного `VAE.decode_tiled_3d`](patches/comfyui-3d-vae-progress.patch): подсчёт тайлов по фактическому правилу `range(0, length-overlap, tile-overlap)` и передача `ProgressBar` в уже существующий tiler. [Native CPU checks](reports/comfy-3d-progress-validation.json) проверили totals 150/1/2/8, batch и неизменность результата identity decoder.
+
+Patch уже установлен в локальный `comfy/sd.py`, но **backend не перезапускался**, чтобы сохранить cache. Прогресс станет доступен после обычного следующего перезапуска. Это не checkpointing тайлов: незавершённый VAE decode после остановки придётся выполнить заново. Для другой установки сначала проверьте применимость patch к версии ComfyUI, затем из её корня выполните `git apply --check <path-to-patch>` и `git apply <path-to-patch>`; обновление ComfyUI может потребовать перенести этот patch.
 
 ## 3. Проверьте обязательные модели
 
