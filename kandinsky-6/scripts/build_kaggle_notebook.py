@@ -425,7 +425,9 @@ def build(root: Path):
     ''')
     md('''## 3. Код и зависимости: отдельная среда, существующий CUDA PyTorch
 
-    Закреплены точные revisions исходников, соответствующие исследованному расширению. Среда worker создаётся с `--system-site-packages`: она видит уже установленный Kaggle PyTorch, а дополнительные зависимости устанавливаются в свою папку. Kernel не импортирует ComfyUI и не держит веса.
+    Закреплены точные revisions исходников, соответствующие исследованному расширению. Среда worker создаётся с `--without-pip --system-site-packages`: она видит уже установленный Kaggle PyTorch, а дополнительные зависимости устанавливаются в свою папку. Kernel не импортирует ComfyUI и не держит веса.
+
+    Установка не вызывает `ensurepip`: доступный pip ≥22.3 управляет целевой средой через `--python`. Частично созданная папка после ошибки восстанавливается повторным выполнением этой ячейки без удаления скачанных исходников/весов. Установщик не запускается в глобальную среду. [Механизм pip](https://pip.pypa.io/en/stable/topics/python-option/).
 
     Ограничения для `torch`, `torchvision`, `torchaudio` предотвращают их незаметную замену установщиком. Если resolver сообщает несовместимость, не удаляйте ограничения наугад: сохраните лог и используйте совместимый Kaggle image/runtime. Фактический набор библиотек будет записан в `worker-environment.txt`; это не заявление, что все будущие Kaggle images эквивалентны.''')
     code(f'''COMFY_REV = {COMFY_REV!r}
@@ -449,9 +451,27 @@ def build(root: Path):
     if not extension.exists():
         shutil.copytree(K6_SOURCE / "comfyui", extension)
     # No ComfyUI server, Manager, remote tunnel, or full-bundle downloader is started.
-    if not (VENV / "bin/python").exists():
-        subprocess.run([sys.executable, "-m", "venv", "--system-site-packages", str(VENV)], check=True)
-    PYTHON = str(VENV / "bin/python")
+    def prepare_worker_environment(base_python, venv_path):
+        venv_path = Path(venv_path)
+        # Run on every retry: an ensurepip failure can leave bin/python behind.
+        subprocess.run([str(base_python), "-m", "venv", "--without-pip",
+                        "--system-site-packages", str(venv_path)], check=True)
+        worker_python = str(venv_path / "bin/python")
+        candidates = [[str(base_python), "-m", "pip"]]
+        for name in ("pip", "pip3"):
+            executable = shutil.which(name)
+            if executable:
+                candidates.append([executable])
+        for candidate in candidates:
+            probe = subprocess.run(candidate + ["--help"], text=True, capture_output=True)
+            if probe.returncode == 0 and "--python" in probe.stdout:
+                pip_command = candidate + ["--python", worker_python]
+                subprocess.run(pip_command + ["--version"], check=True)
+                return worker_python, pip_command
+        raise RuntimeError("Нужен доступный pip >=22.3 с опцией --python. Сохраните лог и проверьте Kaggle runtime; ensurepip здесь не требуется.")
+
+    PYTHON, PIP = prepare_worker_environment(sys.executable, VENV)
+    subprocess.run([PYTHON, "-c", "import sys, torch; print('Worker:', sys.executable); print('Inherited torch:', torch.__version__, 'CUDA:', torch.version.cuda)"], check=True)
     from importlib.metadata import version, PackageNotFoundError
     constraints = []
     for name in ["torch", "torchvision", "torchaudio"]:
@@ -460,11 +480,11 @@ def build(root: Path):
         except PackageNotFoundError:
             pass
     (SCRATCH / "torch-constraints.txt").write_text("\\n".join(constraints) + "\\n")
-    subprocess.run([PYTHON, "-m", "pip", "install", "--disable-pip-version-check",
+    subprocess.run(PIP + ["install", "--disable-pip-version-check",
                     "--upgrade-strategy", "only-if-needed", "-c", str(SCRATCH / "torch-constraints.txt"),
                     "-r", str(COMFY / "requirements.txt"), "-r", str(extension / "requirements.txt"),
                     "imageio-ffmpeg>=0.6.0,<0.7"], check=True)
-    freeze = subprocess.check_output([PYTHON, "-m", "pip", "freeze"], text=True)
+    freeze = subprocess.check_output(PIP + ["freeze"], text=True)
     (RESULTS / "worker-environment.txt").write_text(freeze)
     subprocess.run([PYTHON, "-c", "import torch, av, safetensors; print(torch.__version__, torch.version.cuda); print('Dependencies import OK')"], check=True)
     dependency_probe = "import sys; from pathlib import Path; root=Path(sys.argv[1]); sys.path[:0]=[str(root),str(root/'custom_nodes/kandinsky6')]; sys.argv=['probe','--cpu','--disable-dynamic-vram']; import comfy.options; comfy.options.enable_args_parsing(); import nodes; from kandinsky6.nodes import Kandinsky6Sampler, Kandinsky6AudioVAELoader; from comfy_extras.nodes_video import CreateVideo, SaveVideo; print('ComfyUI/K6 API imports OK; no weights loaded')"
@@ -850,6 +870,7 @@ if __name__ == "__main__":
 
     | Признак | Действие |
     |---|---|
+    | `ensurepip` завершился с ошибкой при создании venv | Замените setup cell обновлённой версией и выполните её снова: `--without-pip` и внешний `pip --python` восстанавливают частичную среду; перезапуск kernel и удаление весов не нужны |
     | Internet / Hugging Face 403 | Проверьте Internet/доступ аккаунта и URL конкретного файла; не запускайте общий Pro/SR downloader |
     | No space left | Оставьте staged text cleanup, подключите веса как Input или выберите scratch с достаточным местом; пользовательские datasets не удаляются |
     | Text worker exit −9 | Проверьте RAM graph/monitor; не запускайте стадии параллельно. Закройте другие notebook workloads. При persistent OOM нужен меньший/quantized text checkpoint с отдельной проверкой conditioning |

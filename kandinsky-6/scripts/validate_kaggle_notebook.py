@@ -6,8 +6,10 @@ import ast
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import tempfile
+import zipfile
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -109,7 +111,60 @@ print("NATIVE_CPU_CHECKS_OK", json.dumps({"video_latent_shape": list(video.shape
 '''
 
 
-def validate(root: Path, comfy_root: Path | None, python: str | None):
+def check_environment_bootstrap(notebook, base_python):
+    """Reproduce ensurepip failure, repair its partial venv, and install an offline wheel only there."""
+    setup = next(c.source for c in notebook.cells if c.cell_type == "code" and "def prepare_worker_environment(" in c.source)
+    definition = next(n for n in ast.parse(setup).body if isinstance(n, ast.FunctionDef) and n.name == "prepare_worker_environment")
+    namespace = dict(Path=Path, subprocess=subprocess, shutil=shutil)
+    exec(compile(ast.Module(body=[definition], type_ignores=[]), "notebook-bootstrap", "exec"), namespace)
+    with tempfile.TemporaryDirectory(prefix="k6-bootstrap-check-") as folder:
+        folder = Path(folder)
+        wrapper = folder / "python-with-disabled-ensurepip"
+        # The original venv command must fail after creating its interpreter.
+        wrapper.write_text("#!" + str(base_python) + "\n" +
+            "import os, runpy, sys, venv\n"
+            "if sys.argv[1:3] == ['-m', 'venv']:\n"
+            "    def disabled(self, context): raise RuntimeError('ensurepip disabled for regression test')\n"
+            "    venv.EnvBuilder._setup_pip = disabled\n"
+            "    sys.argv = ['venv', *sys.argv[3:]]\n"
+            "    runpy.run_module('venv', run_name='__main__')\n"
+            "else:\n"
+            "    os.execv(" + repr(str(base_python)) + ", [" + repr(str(base_python)) + ", *sys.argv[1:]])\n")
+        wrapper.chmod(0o755)
+        target = folder / "partial-venv"
+        failure = subprocess.run([str(wrapper), "-m", "venv", "--system-site-packages", str(target)], text=True, capture_output=True)
+        assert failure.returncode and 'ensurepip disabled for regression test' in failure.stderr
+        assert (target / "bin/python").exists()
+        sentinel = target / "preserve-on-retry.txt"
+        sentinel.write_text("keep existing environment files")
+        prepare = namespace["prepare_worker_environment"]
+        worker_python, pip_command = prepare(str(wrapper), target)
+        probe = "import importlib.util; assert importlib.util.find_spec('k6_env_probe') is None"
+        subprocess.run([str(base_python), "-I", "-c", probe], check=True)
+        wheel = folder / "k6_env_probe-0.0.1-py3-none-any.whl"
+        metadata = "k6_env_probe-0.0.1.dist-info/"
+        files = {"k6_env_probe/__init__.py": "VALUE = 'venv-only'\n",
+                 metadata + "METADATA": "Metadata-Version: 2.1\nName: k6-env-probe\nVersion: 0.0.1\n",
+                 metadata + "WHEEL": "Wheel-Version: 1.0\nGenerator: k6-bootstrap-check\nRoot-Is-Purelib: true\nTag: py3-none-any\n"}
+        files[metadata + "RECORD"] = "".join(name + ",,\n" for name in [*files, metadata + "RECORD"])
+        with zipfile.ZipFile(wheel, "w") as archive:
+            for name, contents in files.items():
+                archive.writestr(name, contents)
+        subprocess.run(pip_command + ["--disable-pip-version-check", "install", "--no-index", "--no-deps", "--no-cache-dir", str(wheel)], check=True, capture_output=True, text=True)
+        installed = "import json,sys,k6_env_probe; assert k6_env_probe.VALUE=='venv-only'; print(json.dumps({'prefix':sys.prefix,'module':k6_env_probe.__file__,'python':sys.version.split()[0]}))"
+        result = json.loads(subprocess.check_output([worker_python, "-I", "-c", installed], text=True))
+        assert Path(result["prefix"]) == target and Path(result["module"]).is_relative_to(target)
+        worker_python, _ = prepare(str(wrapper), target)
+        subprocess.run([worker_python, "-I", "-c", installed], check=True, capture_output=True)
+        subprocess.run([str(base_python), "-I", "-c", probe], check=True)
+        assert sentinel.read_text() == "keep existing environment files"
+        return dict(python=result["python"], original_ensurepip_failure_reproduced=True,
+                    partial_environment_repaired=True, offline_wheel_installed_only_in_venv=True,
+                    second_run_preserved_installed_package=True, global_environment_unchanged=True,
+                    network_downloads=False, kaggle_runtime=False)
+
+
+def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_python: str | None = None):
     path = root / "kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb"
     notebook = nbformat.read(path, as_version=4)
     nbformat.validate(notebook)
@@ -150,6 +205,7 @@ def validate(root: Path, comfy_root: Path | None, python: str | None):
                   local_links_checked=True, pinned_model_files=7, pinned_model_bytes=sum(m["size"] for m in models),
                   kaggle_execution=False, cuda_t4_inference=False, pretrained_downloads_during_validation=False,
                   pretrained_generation_during_validation=False, native_cpu_checks=False)
+    report["venv_bootstrap_checks"] = check_environment_bootstrap(notebook, bootstrap_python) if bootstrap_python else False
     if comfy_root:
         with tempfile.TemporaryDirectory(prefix="k6-kaggle-check-") as temp:
             temp = Path(temp)
@@ -179,5 +235,6 @@ if __name__ == "__main__":
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--comfy-root", type=Path)
     parser.add_argument("--python")
+    parser.add_argument("--bootstrap-python", help="Existing Python with pip; run offline partial-venv repair regression check")
     options = parser.parse_args()
-    validate(options.root, options.comfy_root, options.python)
+    validate(options.root, options.comfy_root, options.python, options.bootstrap_python)
