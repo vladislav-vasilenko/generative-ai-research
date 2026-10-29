@@ -1,6 +1,6 @@
 {
   "notebook": "kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb",
-  "source_sha256": "a8664dd35a49ed11be4823d26fc82447b07a1325068a742e4312ef34677b43c5",
+  "source_sha256": "097d455dc45ffa54324c6b50881f50692781696e037993ac0e4d97d22749d764",
   "cells": 40,
   "code_cells": 21,
   "worker_sha256": "323ceaf9a408c5d8645891bf7ddd6130f8f3e6d137939a935bd1230ccc94c8dd",
@@ -29,7 +29,7 @@
     "stale_cache_rejected": true,
     "nan_rejected": true,
     "synthetic_mp4": {
-      "mux_seconds": 0.009542208164930344,
+      "mux_seconds": 0.007068291073665023,
       "video_codec": "h264",
       "audio_codec": "aac",
       "audio_sample_rate": 44100,
@@ -40,9 +40,20 @@
     },
     "dataset_not_modified": true,
     "owned_temporary_cleanup": true,
+    "external_model_root_resolved": true,
+    "text_dit_video_audio_paths_resolved": true,
     "pretrained_models_loaded": false,
     "torch_version": "2.12.1",
     "comfy_revision": "086099f5d8886163ef77dc354f8382cb7431582a"
+  },
+  "stage_preflight_checks": {
+    "missing_file_diagnostic": true,
+    "wrong_size_rejected": true,
+    "broken_input_link_rejected": true,
+    "latest_cfg_used_on_retry": true,
+    "explicit_cfg_respected": true,
+    "workers_started": 0,
+    "pretrained_models_loaded": false
   },
   "venv_bootstrap_checks": {
     "python": "3.13.12",

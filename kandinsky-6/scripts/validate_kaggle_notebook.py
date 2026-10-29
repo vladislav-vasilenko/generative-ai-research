@@ -27,13 +27,30 @@ worker_path, download_path, comfy_root, check_root = map(Path, sys.argv[1:])
 spec = importlib.util.spec_from_file_location("k6_worker_check", worker_path)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
-cfg = dict(comfy_root=str(comfy_root), model_root=str(comfy_root / "models"),
+cfg = dict(comfy_root=str(comfy_root), model_root=str(check_root / "worker-models"),
            output_root=str(check_root / "videos"), run_root=str(check_root / "run"),
            cpu_threads=2, width=64, height=64, frames=9, fps=24.0, run_name="synthetic-api-check")
 Path(cfg["output_root"]).mkdir(parents=True)
 Path(cfg["run_root"]).mkdir(parents=True)
+model_root = Path(cfg["model_root"])
+path_fixtures = {"text_encoders": "qwen_2.5_vl_7b.safetensors",
+                 "diffusion_models": "bundle/transformer/diffusion_pytorch_model.safetensors",
+                 "vae": "hunyuan_video_vae_bf16.safetensors",
+                 "audio_vae": "v1-44.pth"}
+for folder, name in path_fixtures.items():
+    fixture = model_root / folder / name
+    fixture.parent.mkdir(parents=True, exist_ok=True)
+    fixture.write_bytes(b"path fixture only; never load")
 torch, nodes, mm = module.bootstrap(cfg, "check", cpu=True)
+import folder_paths
+assert Path(folder_paths.models_dir).resolve() == model_root.resolve()
+for folder, name in path_fixtures.items():
+    key = "kandinsky6_audio_vae" if folder == "audio_vae" else folder
+    # Kandinsky audio folders register when its nodes are imported below.
+    if folder != "audio_vae":
+        assert Path(folder_paths.get_full_path_or_raise(key, name)).resolve() == (model_root / folder / name).resolve()
 from kandinsky6.nodes import Kandinsky6EmptyLatent
+assert Path(folder_paths.get_full_path_or_raise("kandinsky6_audio_vae", "v1-44.pth")).resolve() == (model_root / "audio_vae/v1-44.pth").resolve()
 latent, fps = Kandinsky6EmptyLatent().build(432, 256, 33, 24.0, 1)
 video, audio = latent["samples"].unbind()
 assert tuple(video.shape) == (1, 16, 9, 32, 54), video.shape
@@ -106,6 +123,7 @@ print("NATIVE_CPU_CHECKS_OK", json.dumps({"video_latent_shape": list(video.shape
       "audio_latent_shape": list(audio.shape), "conditioning_roundtrip": True,
       "stale_cache_rejected": True, "nan_rejected": True, "synthetic_mp4": metrics,
       "dataset_not_modified": True, "owned_temporary_cleanup": True,
+      "external_model_root_resolved": True, "text_dit_video_audio_paths_resolved": True,
       "pretrained_models_loaded": False, "torch_version": torch.__version__,
       "comfy_revision": __import__('subprocess').check_output(['git','rev-parse','HEAD'],cwd=comfy_root,text=True).strip()}))
 '''
@@ -164,6 +182,64 @@ def check_environment_bootstrap(notebook, base_python):
                     network_downloads=False, kaggle_runtime=False)
 
 
+
+def check_stage_preflight(notebook):
+    source = next(c.source for c in notebook.cells if c.cell_type == "code" and "def validate_stage_models(" in c.source)
+    functions = [n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name in ("validate_stage_models", "run_stage")]
+    with tempfile.TemporaryDirectory(prefix="k6-stage-preflight-") as folder:
+        root = Path(folder)
+        actual = root / "selected-models"
+        current = dict(model_root=str(actual))
+        old = dict(model_root=str(root / "old-models"))
+        models = [dict(role="qwen", path="text_encoders/qwen.safetensors", size=7),
+                  dict(role="clip", path="text_encoders/clip.safetensors", size=7)]
+        namespace = dict(Path=Path, MODELS=models, CFG=old)
+        exec(compile(ast.Module(body=functions, type_ignores=[]), "notebook-stage-preflight", "exec"), namespace)
+        validate = namespace["validate_stage_models"]
+        try:
+            validate("text", current)
+        except FileNotFoundError as error:
+            assert str(actual / models[0]["path"]) in str(error) and "ensure_models('text')" in str(error)
+        else:
+            raise AssertionError("Missing weights accepted")
+        for item in models:
+            file = actual / item["path"]
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_bytes(b"fixture")
+        validate("text", current)
+        file.write_bytes(b"wrong size")
+        try:
+            validate("text", current)
+        except FileNotFoundError as error:
+            assert "Size mismatch" in str(error)
+        else:
+            raise AssertionError("Wrong size accepted")
+        file.unlink()
+        file.symlink_to(root / "missing-input-file")
+        try:
+            validate("text", current)
+        except FileNotFoundError as error:
+            assert "broken symlink" in str(error)
+        else:
+            raise AssertionError("Broken Input symlink accepted")
+        seen = []
+        class StopBeforeWorker(Exception):
+            pass
+        def intercept(stage, cfg):
+            seen.append(cfg)
+            raise StopBeforeWorker()
+        namespace["validate_stage_models"] = intercept
+        namespace["CFG"] = current
+        for supplied, expected in [(None, current), (old, old)]:
+            try:
+                namespace["run_stage"]("text", supplied)
+            except StopBeforeWorker:
+                assert seen[-1] is expected
+        return dict(missing_file_diagnostic=True, wrong_size_rejected=True, broken_input_link_rejected=True,
+                    latest_cfg_used_on_retry=True, explicit_cfg_respected=True, workers_started=0,
+                    pretrained_models_loaded=False)
+
+
 def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_python: str | None = None):
     path = root / "kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb"
     notebook = nbformat.read(path, as_version=4)
@@ -205,6 +281,7 @@ def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_
                   local_links_checked=True, pinned_model_files=7, pinned_model_bytes=sum(m["size"] for m in models),
                   kaggle_execution=False, cuda_t4_inference=False, pretrained_downloads_during_validation=False,
                   pretrained_generation_during_validation=False, native_cpu_checks=False)
+    report["stage_preflight_checks"] = check_stage_preflight(notebook)
     report["venv_bootstrap_checks"] = check_environment_bootstrap(notebook, bootstrap_python) if bootstrap_python else False
     if comfy_root:
         with tempfile.TemporaryDirectory(prefix="k6-kaggle-check-") as temp:

@@ -709,14 +709,42 @@ if __name__ == "__main__":
 
     Устанавливаем `CUDA_VISIBLE_DEVICES` **до импорта PyTorch в worker**. Внутри процесса физическая GPU 1 видна как `cuda:0` — это нормальная перенумерация. Notebook kernel не вызывает `.to("cuda")`.
 
+    Перед запуском проверяются наличие и размер файлов именно в `cfg["model_root"]`; при отсутствии выводятся полные пути. `run_stage` получает актуальный CFG при каждом вызове. Если вы заменили CFG, старое значение не сохраняется в default argument. Явный вызов `run_stage("text", CFG)` удобен для ручного восстановления.
+
     Монитор опрашивает RSS дерева worker и доступную RAM. Worker дополнительно записывает peak PyTorch allocated/reserved и OS peak RSS. Allocator counters не равны полной VRAM, которую видит `nvidia-smi`; поэтому сохраняется также sample общей памяти GPU. Частота опроса может пропустить очень короткий пик; точная частота и raw samples остаются в JSON.''')
     code(r'''
-    def run_stage(stage, cfg=CFG):
+    def validate_stage_models(stage, cfg):
+        roles = {"text": {"qwen", "clip"}, "sample": {"dit"},
+                 "video": {"video_vae"}, "audio": {"audio_vae", "vocoder", "vocoder_config"},
+                 "export": set()}[stage]
+        model_root = Path(cfg["model_root"])
+        problems = []
+        for item in MODELS:
+            if item["role"] not in roles:
+                continue
+            location = model_root / item["path"]
+            if not location.is_file():
+                target = f" (broken symlink -> {location.resolve()})" if location.is_symlink() else ""
+                problems.append(f"Missing: {location}{target}")
+            elif location.stat().st_size != item["size"]:
+                problems.append(f"Size mismatch: {location}; expected {item['size']}, got {location.stat().st_size}")
+        if problems:
+            group = "text" if stage == "text" else "media"
+            raise FileNotFoundError(
+                "\n".join(problems) +
+                f"\nStage model_root: {model_root}. Align CFG['model_root'] with MODEL_ROOT, "
+                f"run ensure_models({group!r}), then retry run_stage({stage!r}, CFG). "
+                "The model worker has not been started."
+            )
+
+    def run_stage(stage, cfg=None):
+        cfg = CFG if cfg is None else cfg
+        validate_stage_models(stage, cfg)
         config_path = Path(cfg["run_root"]) / "config.json"
         config_path.write_text(json.dumps(cfg, indent=2))
         gpu = TEXT_GPU if stage == "text" else MEDIA_GPU
         env = worker_env.copy()
-        env["CUDA_VISIBLE_DEVICES"] = "" if stage == "export" or (stage == "text" and TEXT_DEVICE == "cpu") else str(gpu)
+        env["CUDA_VISIBLE_DEVICES"] = "" if stage == "export" or (stage == "text" and cfg["text_device"] == "cpu") else str(gpu)
         env["PYTHONUNBUFFERED"] = "1"
         # Bundle a ffmpeg binary only if the image lacks it; the worker sees this PATH.
         if not shutil.which("ffmpeg"):
@@ -789,7 +817,14 @@ if __name__ == "__main__":
     md('''## 8. Smoke: сначала получаем измеримый сквозной результат
 
     Выполняйте пять ячеек последовательно. После возврата каждой функции worker уже завершён: его веса и CUDA context освобождены. При ошибке продолжать к следующей стадии не нужно. Промежуточные файлы позволяют исправить decoder/export без повторного Qwen/sampling.''')
-    code('''TEXT_METRICS = run_stage("text")
+    code('''# Successful text stages may have purged temporary encoder weights.
+    # Restore them on retry only when files are absent; avoid another full hash pass otherwise.
+    if any(not (Path(CFG["model_root"]) / item["path"]).is_file()
+           for item in MODELS if item["group"] == "text"):
+        if Path(CFG["model_root"]).resolve() != MODEL_ROOT.resolve():
+            raise ValueError("CFG model_root differs from MODEL_ROOT; recreate CFG before restoring text weights")
+        ensure_models("text")
+    TEXT_METRICS = run_stage("text", CFG)
     assert Path(CFG["run_root"], "positive.safetensors").is_file()
     assert Path(CFG["run_root"], "negative.safetensors").is_file()
     if not KEEP_TEXT_WEIGHTS:
@@ -871,6 +906,8 @@ if __name__ == "__main__":
     | Признак | Действие |
     |---|---|
     | `ensurepip` завершился с ошибкой при создании venv | Замените setup cell обновлённой версией и выполните её снова: `--without-pip` и внешний `pip --python` восстанавливают частичную среду; перезапуск kernel и удаление весов не нужны |
+    | `FileNotFoundError` для Qwen/CLIP | Проверьте `CFG["model_root"]` и наличие файлов в `text_encoders`. После staged cleanup повторный text stage требует восстановления encoder weights; обновлённая ячейка text это делает. Для старой версии синхронизируйте корень, выполните `ensure_models("text")`, затем `run_stage("text", CFG)` |
+    | Предупреждение `cu130` | Относится к accelerated backend ComfyUI; само по себе не является `FileNotFoundError`. Не меняйте Torch ради исправления пути к модели; сохраняйте штатный Kaggle CUDA-стек и разберите отдельный traceback, если позднее возникнет CUDA error |
     | Internet / Hugging Face 403 | Проверьте Internet/доступ аккаунта и URL конкретного файла; не запускайте общий Pro/SR downloader |
     | No space left | Оставьте staged text cleanup, подключите веса как Input или выберите scratch с достаточным местом; пользовательские datasets не удаляются |
     | Text worker exit −9 | Проверьте RAM graph/monitor; не запускайте стадии параллельно. Закройте другие notebook workloads. При persistent OOM нужен меньший/quantized text checkpoint с отдельной проверкой conditioning |
