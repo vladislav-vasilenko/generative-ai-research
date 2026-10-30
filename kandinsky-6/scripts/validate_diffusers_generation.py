@@ -33,15 +33,18 @@ def validate_bootstrap(nb):
         socket=socket,Request=Request,HTTPError=HTTPError,URLError=URLError,urlopen=opener,
         sys=SimpleNamespace(executable=sys.executable,modules={}),subprocess=SimpleNamespace(run=run))
     exec(compile(ast.Module(body=nodes,type_ignores=[]),'bootstrap-unit-check','exec'),namespace)
-    required=['diffusers==0.42.1','pillow>=10.4,<13']
-    installed={'diffusers':'0.42.1','pillow':'12.3.0'}
+    required=['diffusers==0.42.1','pillow>=10.4']
+    assert required[1] in source and 'pillow>=10.4,<13' not in source
+    installed={'diffusers':'0.42.1','pillow':'13.0.0'}
+    # Kaggle preloads PIL from its image; Pillow 13 must not trigger a downgrade and a kernel restart.
     assert namespace['pending_dependencies'](required,installed.__getitem__)==[]
-    assert namespace['pending_dependencies'](required,lambda n:'13.0.0' if n=='pillow' else installed[n])==['pillow>=10.4,<13']
+    assert namespace['pending_dependencies'](required,lambda n:'12.3.0' if n=='pillow' else installed[n])==[]
+    assert namespace['pending_dependencies'](required,lambda n:'0.41.0' if n=='diffusers' else installed[n])==['diffusers==0.42.1']
     pending=MagicMock(return_value=[])
     namespace['pending_dependencies']=pending
     assert namespace['ensure_runtime_dependencies'](required,Path('constraints.txt')) is False
     opener.assert_not_called();run.assert_not_called()
-    pending.return_value=['pillow>=10.4,<13']
+    pending.return_value=['diffusers==0.42.1']
     for error,expected in [(URLError(socket.gaierror(-3,'Temporary failure in name resolution')),'DNS'),
                            (HTTPError('https://pypi.org',403,'Forbidden',{},None),'HTTP 403'),
                            (TimeoutError('fixture timeout'),'timed out')]:
@@ -55,18 +58,20 @@ def validate_bootstrap(nb):
     command=run.call_args.args[0]
     assert command[command.index('--retries')+1]=='1'
     assert command[command.index('--timeout')+1]=='15'
-    assert '-c' in command and 'pillow>=10.4,<13' in command and '--trusted-host' not in command
+    assert '-c' in command and 'diffusers==0.42.1' in command and '--trusted-host' not in command
     request=opener.call_args.args[0]
     assert request.full_url.startswith('https://pypi.org/') and opener.call_args.kwargs['timeout']==10
-    namespace['sys'].modules={'PIL':SimpleNamespace(__version__='13.0.0')}
     namespace['version']=installed.__getitem__
     pending.return_value=[]
+    namespace['sys'].modules={'PIL':SimpleNamespace(__version__='13.0.0')}
+    assert namespace['ensure_runtime_dependencies'](required,Path('constraints.txt')) is False
+    namespace['sys'].modules={'diffusers':SimpleNamespace(__version__='0.41.0')}
     try:namespace['ensure_runtime_dependencies'](required,Path('constraints.txt'))
     except RuntimeError as error:assert 'Restart the Python kernel' in str(error)
-    else:raise AssertionError('Stale imported Pillow was accepted')
-    return dict(pillow_13_requires_downgrade=True,compatible_dependencies_skip_network_and_pip=True,
+    else:raise AssertionError('Stale imported diffusers was accepted')
+    return dict(preloaded_pillow_13_kept_without_restart=True,compatible_dependencies_skip_network_and_pip=True,
         dns_http_timeout_stop_before_pip=True,limited_pip_retries_and_timeout=True,
-        tls_verification_preserved=True,stale_imported_pillow_requires_kernel_restart=True,
+        tls_verification_preserved=True,stale_imported_module_requires_kernel_restart=True,
         network_requests_during_tests=0,real_pip_installs_during_tests=0)
 
 

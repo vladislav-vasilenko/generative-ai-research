@@ -1,15 +1,15 @@
 {
   "date": "2026-10-30",
   "notebook": "kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb",
-  "notebook_sha256": "3e30b2ca9cf62a8b606693a4d67fd89ecc1d9407e450e4f4b3bd816d56a7a897",
+  "notebook_sha256": "c6ad0bf79c21a400831057746528b5e59150b188949770e5de55746ee6b118e2",
   "runtime_sha256": "ad32bb4b7a47b884b1f6abed387f808ec770691a7bf5a09502563d71b4e3cbeb",
   "bootstrap_checks": {
-    "pillow_13_requires_downgrade": true,
+    "preloaded_pillow_13_kept_without_restart": true,
     "compatible_dependencies_skip_network_and_pip": true,
     "dns_http_timeout_stop_before_pip": true,
     "limited_pip_retries_and_timeout": true,
     "tls_verification_preserved": true,
-    "stale_imported_pillow_requires_kernel_restart": true,
+    "stale_imported_module_requires_kernel_restart": true,
     "network_requests_during_tests": 0,
     "real_pip_installs_during_tests": 0
   },
@@ -42,7 +42,7 @@
         40,
         9
       ],
-      "seconds": 0.05284800007939339
+      "seconds": 0.03802008298225701
     },
     {
       "mode": "i2v",
@@ -59,7 +59,7 @@
         40,
         9
       ],
-      "seconds": 0.034059459110721946
+      "seconds": 0.03015479096211493
     }
   ],
   "reference_shapes": [
@@ -100,7 +100,7 @@
     "diffusers": "0.42.1",
     "transformers": "5.22.1",
     "accelerate": "1.13.0",
-    "pillow": "12.3.0"
+    "pillow": "13.0.0"
   },
   "pretrained_weights_downloaded": false,
   "pretrained_models_loaded": false,

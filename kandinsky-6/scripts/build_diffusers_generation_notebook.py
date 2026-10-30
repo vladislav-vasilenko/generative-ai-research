@@ -26,7 +26,7 @@ Smoke: 25 сгенерированных → 24 экспортированных
 Учебные материалы отдельно: [MIT 6.S184](https://diffusion.csail.mit.edu/2026/index.html) · [конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [оглавление проекта](https://github.com/vladislav-vasilenko/generative-ai-research/blob/main/curriculum/CONTENTS.md).''')
     md('''## 1. Среда
 
-В редакторе Kaggle включите **Internet → On**. Если `pypi.org` не разрешается, проверьте переключатель; при уже включённом Internet возможен временный DNS-сбой. Ячейка проверяет доступ к PyPI до pip и пропускает установку, когда версии уже подходят. Pillow ограничен `<13` для совместимости с Gradio. При изменении уже импортированной библиотеки потребуется Restart Python kernel, затем повтор с первой ячейки.''')
+В редакторе Kaggle включите **Internet → On**. Если `pypi.org` не разрешается, проверьте переключатель; при уже включённом Internet возможен временный DNS-сбой. Ячейка проверяет доступ к PyPI до pip и пропускает установку, когда версии уже подходят. Pillow не понижается: Pillow 13 из образа Kaggle подходит, поэтому на свежей сессии перезапуск ядра не нужен и «Save & Run All» проходит. pip может предупредить, что неиспользуемый здесь Gradio требует `pillow<13`; на запуск это не влияет. Если всё же изменилась уже импортированная библиотека, потребуется Restart Python kernel, затем повтор с первой ячейки.''')
     code('''import os, sys, subprocess, socket
 from pathlib import Path
 from importlib.metadata import version, PackageNotFoundError
@@ -103,7 +103,7 @@ def ensure_runtime_dependencies(requirements, constraint_file):
 
 
 requirements = [name+'=='+v for name,v in pins.items()] + [
-    'av>=18.0.0,<19', 'safetensors>=0.8.0', 'pillow>=10.4,<13']
+    'av>=18.0.0,<19', 'safetensors>=0.8.0', 'pillow>=10.4']
 constraints=[]
 for name in ['torch','torchvision','torchaudio']:
     try:constraints.append(name+'=='+version(name))

@@ -1,12 +1,11 @@
 {
   "date": "2026-10-30",
   "url": "https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation",
-  "version": 2,
+  "version": 6,
   "method": "Kaggle CLI --no-run",
   "public": true,
   "accelerator": "NvidiaTeslaT4",
-  "all_28_cells_match": true,
-  "source_sha256": "5a9eeda6444167d51759487caf72faf79bd521289ac1d6e48c2a0390cc62979b",
+  "source_sha256": "c6ad0bf79c21a400831057746528b5e59150b188949770e5de55746ee6b118e2",
   "pretrained_generation_run": false,
   "old_comfyui_notebook_modified": false,
   "user_images_uploaded": false,
@@ -15,9 +14,29 @@
     {
       "version": 1,
       "source_sha256": "b24970ee38640980f6ea2a771e4857d8f9741de9cdfa93fd702470573df6cc40"
+    },
+    {
+      "version": 2,
+      "source_sha256": "5a9eeda6444167d51759487caf72faf79bd521289ac1d6e48c2a0390cc62979b"
+    },
+    {
+      "version": 3,
+      "note": "same cell sources as the version 2 notebook (checked by Kaggle CLI pull)"
+    },
+    {
+      "version": 4,
+      "note": "nvidia-smi trace only; intermediate state, not committed separately"
+    },
+    {
+      "version": 5,
+      "source_sha256": "3e30b2ca9cf62a8b606693a4d67fd89ecc1d9407e450e4f4b3bd816d56a7a897",
+      "commit": "8eb4933"
     }
   ],
   "bootstrap_network_diagnostics": true,
-  "pillow_constraint": ">=10.4,<13",
-  "music_input_preview": true
+  "pillow_constraint": ">=10.4 (Kaggle image Pillow 13 kept; no kernel restart on a fresh session)",
+  "music_input_preview": true,
+  "nvidia_smi_denoise_trace": true,
+  "dit_placement_switch": true,
+  "all_33_cells_match": true
 }
