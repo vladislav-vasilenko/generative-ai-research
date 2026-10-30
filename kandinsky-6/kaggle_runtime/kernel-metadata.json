@@ -1,0 +1,17 @@
+{
+  "id": "applehawk/15-kaggle-t4-lite-distill",
+  "id_no": 141581100,
+  "code_file": "../notebooks/15_kaggle_t4_lite_distill.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}

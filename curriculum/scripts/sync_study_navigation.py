@@ -23,7 +23,7 @@ def insert(source,header):
 
 rows=[]
 mds=[ROOT/'README.md',*sorted(ROOT.glob('lecture_*/*.md')),*sorted((ROOT/'curriculum').glob('*.md')),
-     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md',ROOT/'kandinsky-6/SUPER_RESOLUTION_RU.md',ROOT/'hunyuan-video/README.md',ROOT/'vae/README.md',ROOT/'vae/SOURCE_MAP.md',ROOT/'vae/MIT_LAB3_BRIDGE.md',ROOT/'dit/README.md',ROOT/'dit/MIT_BRIDGE.md',ROOT/'dit/SOURCE_MAP.md']
+     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/kaggle_runtime/README.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md',ROOT/'kandinsky-6/SUPER_RESOLUTION_RU.md',ROOT/'hunyuan-video/README.md',ROOT/'vae/README.md',ROOT/'vae/SOURCE_MAP.md',ROOT/'vae/MIT_LAB3_BRIDGE.md',ROOT/'dit/README.md',ROOT/'dit/MIT_BRIDGE.md',ROOT/'dit/SOURCE_MAP.md']
 for path in mds:
     match=re.match(r'lecture_(\d+)',path.parent.name)
     lectures=[int(match.group(1))] if match else []
@@ -35,6 +35,12 @@ notebooks=[*sorted((ROOT/'curriculum/notebooks').glob('*.ipynb')),
            *sorted((ROOT/'kandinsky-6/notebooks').glob('*.ipynb')),*sorted((ROOT/'vae/notebooks').glob('*.ipynb')),*sorted((ROOT/'dit/notebooks').glob('*.ipynb'))]
 for path in notebooks:
     nb=json.loads(path.read_text());cell=next(c for c in nb['cells'] if c['cell_type']=='markdown')
+    if nb.get('metadata',{}).get('k6_deployment',{}).get('portable_navigation'):
+        text=''.join(cell['source']) if isinstance(cell['source'],list) else cell['source']
+        assert COURSE in text and NOTES in text
+        assert START not in text and END not in text
+        rows.append({'file':str(path.relative_to(ROOT)),'kind':'notebook','needs_update':False})
+        continue
     before=json.dumps([c['source'] for c in nb['cells'] if c['cell_type']=='code'])
     lectures=[5] if path.parent.name=='lecture_05' else [1,2,3,4]
     if 'vae' in path.parts:lectures=[4]

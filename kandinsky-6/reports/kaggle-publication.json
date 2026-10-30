@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-30",
+  "url": "https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill",
+  "version": 3,
+  "publication_method": "official Kaggle CLI 2.2.5: kernels push --no-run",
+  "public": true,
+  "accelerator": "NvidiaTeslaT4",
+  "internet_enabled": true,
+  "source_sha256": "5dc42e26db43f596335c24de8181d599fcb459d3f141a52213171c0da1461ec0",
+  "all_45_cell_sources_match_public_download": true,
+  "clean_cell_outputs": true,
+  "pretrained_generation_started": false,
+  "two_gpu_cuda_measured": false,
+  "status": "COMPLETE: Quick Save; this status does not indicate inference execution"
+}

@@ -4,6 +4,9 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import hashlib
+import os
+import re
 import pprint
 from pathlib import Path
 from textwrap import dedent
@@ -21,10 +24,8 @@ MODEL_MANIFEST = [
 ]
 
 COMMON = r'''
-import argparse
-import gc
-import hashlib
 import json
+import logging
 import os
 import resource
 import sys
@@ -38,6 +39,7 @@ def save_json(path, value):
 
 def bootstrap(cfg, stage, cpu=False):
     # Only this short-lived process imports ComfyUI and initializes CUDA.
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
     sys.path.insert(0, cfg["comfy_root"])
     sys.path.insert(0, str(Path(cfg["comfy_root"]) / "custom_nodes/kandinsky6"))
     sys.argv = [__file__, "--models-directory", cfg["model_root"],
@@ -58,6 +60,11 @@ def bootstrap(cfg, stage, cpu=False):
     torch.set_num_threads(cfg["cpu_threads"])
     folder_paths.set_output_directory(cfg["output_root"])
     device = mm.get_torch_device()
+    print("STAGE_DEVICE", json.dumps({"stage": stage, "comfy_device": str(device),
+          "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES", ""),
+          "torch_cuda": torch.version.cuda, "cuda_available": torch.cuda.is_available(),
+          "gpu_name": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
+          "text_device_requested": cfg.get("text_device")}), flush=True)
     if not cpu:
         if device.type != "cuda":
             raise RuntimeError("GPU stage needs an available CUDA GPU")
@@ -118,6 +125,8 @@ def load_conditioning(path, cache_key):
 
 def finish_report(cfg, stage, report, start):
     import torch
+    import comfy.model_management as mm
+    report["comfy_device"] = str(mm.get_torch_device())
     if torch.cuda.is_available():
         torch.cuda.synchronize()
         report.update(gpu_peak_allocated_gib=torch.cuda.max_memory_allocated() / 2**30,
@@ -139,6 +148,9 @@ def text_stage(cfg, report):
         "qwen_2.5_vl_7b.safetensors", "clip_l.safetensors", "kandinsky5",
         device=cfg["text_device"]))
     report["text_load_device"] = str(clip.patcher.load_device)
+    report["text_offload_device"] = str(clip.patcher.offload_device)
+    print("TEXT_PLACEMENT", json.dumps({"load_device": report["text_load_device"],
+          "offload_device": report["text_offload_device"]}), flush=True)
     report["text_storage_dtypes"] = sorted(str(d) for d in clip.cond_stage_model.dtypes)
     with torch.inference_mode():
         positive, = timed(report, "positive_encode", lambda: Kandinsky6TextEncode().encode(
@@ -203,7 +215,12 @@ def video_stage(cfg, report):
     latent = load_file(str(Path(cfg["run_root"]) / "joint-latents.safetensors"))["video"]
     vae, = timed(report, "model_load", lambda: nodes.VAELoader().load_vae("hunyuan_video_vae_bf16.safetensors"))
     with torch.inference_mode():
-        if cfg["tiled_decode"]:
+        if len(cfg.get("video_tile_gpus", [0])) == 2:
+            if not cfg["tiled_decode"]:
+                raise ValueError("Two-GPU video decode requires tiled_decode=True")
+            from kaggle_parallel_vae_tiles import decode_two_gpus
+            frames = timed(report, "decode", lambda: decode_two_gpus(cfg, vae, latent, report))
+        elif cfg["tiled_decode"]:
             frames, = timed(report, "decode", lambda: nodes.VAEDecodeTiled().decode(
                 vae, {"samples": latent}, tile_size=cfg["tile_size"], overlap=cfg["tile_overlap"],
                 temporal_size=cfg["temporal_size"], temporal_overlap=cfg["temporal_overlap"]))
@@ -286,6 +303,9 @@ def export_stage(cfg, report):
 '''
 
 ENTRY = r'''
+STAGES = {"text": text_stage, "sample": sample_stage, "video": video_stage,
+          "audio": audio_stage, "export": export_stage}
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
@@ -294,7 +314,7 @@ if __name__ == "__main__":
     configuration = json.loads(Path(arguments.config).read_text())
     started = time.perf_counter()
     measurements = {}
-    globals()[arguments.stage + "_stage"](configuration, measurements)
+    STAGES[arguments.stage](configuration, measurements)
     finish_report(configuration, arguments.stage, measurements, started)
 '''
 
@@ -348,9 +368,9 @@ def build(root: Path):
 
     **Цель:** повторить операции нашего ComfyUI Lite workflow программно: Qwen + CLIP → joint Audio/Video Lite DiT → DX π-Flow → HunyuanVideo VAE → TOD-VAE + BigVGAN → CreateVideo / SaveVideo → MP4 с аудио.
 
-    Две T4 — это **два отдельных адресных пространства по ~15 GiB**, не одна GPU на 32 GB. CPU RAM также отдельна. В этом notebook нет tensor parallelism, DDP или обучения: стадии запускаются последовательно, завершают процесс и передают небольшие результаты через файлы.
+    Две T4 — это **два отдельных адресных пространства по ~15 GiB**, не одна GPU на 32 GB. CPU RAM также отдельна. Один ролик использует обе карты на этапе video VAE: чётные и нечётные тайлы декодируются параллельно двумя процессами, затем собираются штатным ComfyUI tiler в исходном порядке. Это tile parallelism; DiT sampling остаётся на одной GPU. Между стадиями процессы завершаются и передают результаты через файлы.
 
-    **Граница проверки:** код подготовлен по закреплённым ComfyUI/K6 исходникам. Сквозной pretrained запуск именно на Kaggle T4 ещё должен дать ваши реальные замеры; успешная локальная проверка кода не доказывает качество или вместимость 5s режима на T4.''')
+    **Граница проверки:** код подготовлен по закреплённым ComfyUI/K6 исходникам. Пользователь уже сообщил успешные Text и Sample стадии на Kaggle T4; их логи отдельно сохранены в [отчёте](../reports/kaggle-t4-user-smoke-stages.json). Сквозной прогон новой версии и two-GPU VAE ещё требуют реальных замеров; успешная локальная проверка кода не доказывает качество или вместимость 5s режима на T4.''')
     md('''## 1. Подготовка Kaggle и порядок запуска
 
     1. Создайте Notebook → **File → Import Notebook** → загрузите этот файл.
@@ -398,11 +418,11 @@ def build(root: Path):
     |---|---|---|---|
     | Text | GPU 1 + CPU offload | Qwen + CLIP | conditioning `.safetensors` |
     | Sampling | GPU 0 + CPU offload при необходимости | Lite DiT | два совместно сэмплированных латента |
-    | Video decode | GPU 0 | video VAE, FP32 + tiles | RGB frames `.npy` |
+    | Video decode | GPU 0 + GPU 1 одновременно | По копии video VAE, FP32; разные тайлы одного ролика | Один RGB tensor `.npy` |
     | Audio decode | GPU 0 | TOD-VAE + BigVGAN, FP32 | mono waveform `.npy` |
     | Export | CPU | кодек MP4 | H.264 + AAC |
 
-    Все стадии **последовательны**. Вторая T4 используется text worker; это распределение стадий, а не ускорение одного DiT между GPU. При одной T4 text worker также может использовать GPU 0.
+    Между стадиями сохраняется порядок зависимостей. Внутри **video decode** два процесса одновременно вычисляют разные тайлы одного ролика. Сам DiT не делится между картами: его время и ускорение VAE измеряются отдельно. При одной T4 автоматически выбирается обычный однопроцессный decoder. `VIDEO_TILE_GPUS=[0]` даёт контрольный запуск для сравнения.
 
     Память весов первого приближения: число параметров × байт на параметр. Но пик включает activations, временные cast buffers, CPU copies и CUDA allocator. Поэтому номинальный размер файла не доказывает, что модель поместится; ниже записываются реальные peak counters и внешние замеры процесса.
 
@@ -420,12 +440,15 @@ def build(root: Path):
     TEXT_DEVICE = "default"  # Automatic GPU + CPU offload. "cpu" is a slower fallback.
     TEXT_GPU = min(1, GPU_COUNT - 1)
     MEDIA_GPU = 0
+    VIDEO_TILE_GPUS = list(range(min(2, GPU_COUNT)))  # One clip; its VAE tiles run concurrently.
     CPU_THREADS = min(4, os.cpu_count() or 1)
     print("Scratch free GiB:", round(shutil.disk_usage(SCRATCH).free / 2**30, 2))
     ''')
     md('''## 3. Код и зависимости: отдельная среда, существующий CUDA PyTorch
 
-    Закреплены точные revisions исходников, соответствующие исследованному расширению. Среда worker создаётся с `--system-site-packages`: она видит уже установленный Kaggle PyTorch, а дополнительные зависимости устанавливаются в свою папку. Kernel не импортирует ComfyUI и не держит веса.
+    Закреплены точные revisions исходников, соответствующие исследованному расширению. Среда worker создаётся с `--without-pip --system-site-packages`: она видит уже установленный Kaggle PyTorch, а дополнительные зависимости устанавливаются в свою папку. Kernel не импортирует ComfyUI и не держит веса.
+
+    Установка не вызывает `ensurepip`: доступный pip ≥22.3 управляет целевой средой через `--python`. Частично созданная папка после ошибки восстанавливается повторным выполнением этой ячейки без удаления скачанных исходников/весов. Установщик не запускается в глобальную среду. [Механизм pip](https://pip.pypa.io/en/stable/topics/python-option/).
 
     Ограничения для `torch`, `torchvision`, `torchaudio` предотвращают их незаметную замену установщиком. Если resolver сообщает несовместимость, не удаляйте ограничения наугад: сохраните лог и используйте совместимый Kaggle image/runtime. Фактический набор библиотек будет записан в `worker-environment.txt`; это не заявление, что все будущие Kaggle images эквивалентны.''')
     code(f'''COMFY_REV = {COMFY_REV!r}
@@ -449,9 +472,27 @@ def build(root: Path):
     if not extension.exists():
         shutil.copytree(K6_SOURCE / "comfyui", extension)
     # No ComfyUI server, Manager, remote tunnel, or full-bundle downloader is started.
-    if not (VENV / "bin/python").exists():
-        subprocess.run([sys.executable, "-m", "venv", "--system-site-packages", str(VENV)], check=True)
-    PYTHON = str(VENV / "bin/python")
+    def prepare_worker_environment(base_python, venv_path):
+        venv_path = Path(venv_path)
+        # Run on every retry: an ensurepip failure can leave bin/python behind.
+        subprocess.run([str(base_python), "-m", "venv", "--without-pip",
+                        "--system-site-packages", str(venv_path)], check=True)
+        worker_python = str(venv_path / "bin/python")
+        candidates = [[str(base_python), "-m", "pip"]]
+        for name in ("pip", "pip3"):
+            executable = shutil.which(name)
+            if executable:
+                candidates.append([executable])
+        for candidate in candidates:
+            probe = subprocess.run(candidate + ["--help"], text=True, capture_output=True)
+            if probe.returncode == 0 and "--python" in probe.stdout:
+                pip_command = candidate + ["--python", worker_python]
+                subprocess.run(pip_command + ["--version"], check=True)
+                return worker_python, pip_command
+        raise RuntimeError("Нужен доступный pip >=22.3 с опцией --python. Сохраните лог и проверьте Kaggle runtime; ensurepip здесь не требуется.")
+
+    PYTHON, PIP = prepare_worker_environment(sys.executable, VENV)
+    subprocess.run([PYTHON, "-c", "import sys, torch; print('Worker:', sys.executable); print('Inherited torch:', torch.__version__, 'CUDA:', torch.version.cuda)"], check=True)
     from importlib.metadata import version, PackageNotFoundError
     constraints = []
     for name in ["torch", "torchvision", "torchaudio"]:
@@ -460,11 +501,11 @@ def build(root: Path):
         except PackageNotFoundError:
             pass
     (SCRATCH / "torch-constraints.txt").write_text("\\n".join(constraints) + "\\n")
-    subprocess.run([PYTHON, "-m", "pip", "install", "--disable-pip-version-check",
+    subprocess.run(PIP + ["install", "--disable-pip-version-check",
                     "--upgrade-strategy", "only-if-needed", "-c", str(SCRATCH / "torch-constraints.txt"),
                     "-r", str(COMFY / "requirements.txt"), "-r", str(extension / "requirements.txt"),
                     "imageio-ffmpeg>=0.6.0,<0.7"], check=True)
-    freeze = subprocess.check_output([PYTHON, "-m", "pip", "freeze"], text=True)
+    freeze = subprocess.check_output(PIP + ["freeze"], text=True)
     (RESULTS / "worker-environment.txt").write_text(freeze)
     subprocess.run([PYTHON, "-c", "import torch, av, safetensors; print(torch.__version__, torch.version.cuda); print('Dependencies import OK')"], check=True)
     dependency_probe = "import sys; from pathlib import Path; root=Path(sys.argv[1]); sys.path[:0]=[str(root),str(root/'custom_nodes/kandinsky6')]; sys.argv=['probe','--cpu','--disable-dynamic-vram']; import comfy.options; comfy.options.enable_args_parsing(); import nodes; from kandinsky6.nodes import Kandinsky6Sampler, Kandinsky6AudioVAELoader; from comfy_extras.nodes_video import CreateVideo, SaveVideo; print('ComfyUI/K6 API imports OK; no weights loaded')"
@@ -490,7 +531,7 @@ def build(root: Path):
     В начале каждой группы проверяется свободное место для ещё отсутствующих байтов плюс запас 1 GiB. Наличие mounted Input файла проверяется по размеру и SHA256 перед созданием ссылки.''')
     code(r'''
     DOWNLOAD_CODE = r"""
-import argparse, hashlib, json, os, shutil
+import argparse, hashlib, json, shutil
 from pathlib import Path
 
 def sha256(path):
@@ -612,6 +653,7 @@ if __name__ == "__main__":
                    video_caption=VIDEO_CAPTION, audio_caption=AUDIO_CAPTION, negative_caption=NEGATIVE_CAPTION,
                    text_device=TEXT_DEVICE, cpu_threads=CPU_THREADS, text_cache_key=TEXT_CACHE_KEY,
                    tiled_decode=True, tile_size=256, tile_overlap=64, temporal_size=16, temporal_overlap=4,
+                   video_tile_gpus=VIDEO_TILE_GPUS, video_tile_timeout_seconds=300,
                    comfy_revision=COMFY_REV, k6_revision=K6_REV)
         Path(cfg["run_root"]).mkdir(parents=True, exist_ok=True)
         Path(cfg["output_root"]).mkdir(parents=True, exist_ok=True)
@@ -623,9 +665,9 @@ if __name__ == "__main__":
     ''')
     md('''## 6. Общая часть worker: ComfyUI loaders и безопасные промежуточные файлы
 
-    Следующие ячейки — исполняемый исходник стадий. Вызов `write_text` собирает его в файл, который Python запускает в изолированном процессе. Это даёт возможность измерить и освободить весь процесс, включая внутренние model caches.
+Следующие ячейки содержат обычный Python-код стадий. Стандартный Jupyter magic `%%writefile` сохраняет каждую ячейку как отдельный модуль: `k6_common.py`, `k6_text.py`, `k6_sample.py` и т.д. Переменных `*_CODE` и склейки строк в notebook нет. Небольшой `run_stage.py` импортирует эти модули и запускает выбранную стадию в изолированном процессе. Это даёт возможность измерить и освободить весь процесс, включая внутренние model caches.
 
-    `safetensors` используется для conditioning и joint latents. Формат conditioning сохраняет все tensor extras, включая pooled и K6 audio fields. Несовместимые metadata и устаревший prompt-cache останавливают запуск. Ни одного `torch.load` для промежуточных пользовательских объектов нет; официальные TOD/BigVGAN веса штатный загрузчик открывает с `weights_only=True`.''')
+`safetensors` используется для conditioning и joint latents. Формат conditioning сохраняет все tensor extras, включая pooled и K6 audio fields. Несовместимые metadata и устаревший prompt-cache останавливают запуск. Ни одного `torch.load` для промежуточных пользовательских объектов нет; официальные TOD/BigVGAN веса штатный загрузчик открывает с `weights_only=True`.''')
     code("COMMON_CODE = " + repr(dedent(COMMON).strip() + "\n"))
     md('''### 6.1. Qwen + CLIP и conditioning для Audio/Video
 
@@ -639,7 +681,7 @@ if __name__ == "__main__":
     code("SAMPLE_CODE = " + repr(dedent(SAMPLE).strip() + "\n"))
     md('''### 6.3. Video VAE: tiled decode
 
-    На отдельном процессе уже нет DiT и Qwen. Штатный `VAEDecodeTiled` получает tile size в **пикселях** и сам переводит его в latent units с учётом spatial/temporal compression. Tiling уменьшает peak, но overlap/blending могут менять результат относительно full decode. Такой прогон нельзя обозначать как bitwise parity с untiled BF16 baseline.''')
+    На этапе video decode уже нет DiT и Qwen. Штатный `VAEDecodeTiled` получает tile size в **пикселях** и сам переводит его в latent units с учётом spatial/temporal compression. Tiling уменьшает peak, но overlap/blending могут менять результат относительно full decode. Такой прогон нельзя обозначать как bitwise parity с untiled BF16 baseline.''')
     md(r'''#### Почему на Mac появился Invalid buffer size: 75.16 GiB
 
     В приложенном отчёте baseline уже дошёл до video decoder: 121 RGB кадр 864×480 превращаются в latent grid 31×60×108. В `normal_attention` выбранного VAE оси времени и пространства объединяются: N=200880. Одна полная матрица attention scores в BF16 занимает:
@@ -671,6 +713,16 @@ if __name__ == "__main__":
         assert total == {"smoke": 6, "baseline": 150}[profile]
         print(profile, "time × height × width:", counts, "VAE decode calls:", total)
     ''')
+    md('''#### Один ролик на двух GPU: распределяем VAE tiles
+
+    GPU 0 декодирует чётные тайлы, GPU 1 — нечётные. Для smoke это **3 + 3**, для baseline — **75 + 75** при текущих размерах. Оба получают те же сохранённые latents и одинаковый VAE checkpoint. Только координатор выполняет native feather blending и output normalization; поэтому порядок сборки и causal overlap сохраняются. Два отдельных полных видео здесь не генерируются.
+
+    IPC использует ограниченную очередь из двух атомарных NumPy-файлов, а не CUDA IPC или `/dev/shm`. При ошибке второй worker завершается; если координатор погибнет, watchdog освободит удалённый процесс. Новые pretrained веса не нужны. На Kaggle требуется измерить cold wall time, память обеих GPU, совместный RSS и отклонение от однокарточного tiled decode; ускорение заранее не обещается.
+
+    Следующая техническая ячейка сохраняет читаемый Python-модуль. Его можно изучать отдельно от пользовательских шагов запуска.''')
+    helper_source = (root / "kandinsky-6/kaggle_runtime/kaggle_parallel_vae_tiles.py").read_text()
+    cells.append(dict(cell_type="code", metadata={}, execution_count=None, outputs=[],
+                      source='%%writefile "{SCRATCH}/kaggle_parallel_vae_tiles.py"\n' + helper_source))
     code("VIDEO_CODE = " + repr(dedent(VIDEO).strip() + "\n"))
     md('''### 6.4. TOD-VAE + BigVGAN: audio decode
 
@@ -689,14 +741,46 @@ if __name__ == "__main__":
 
     Устанавливаем `CUDA_VISIBLE_DEVICES` **до импорта PyTorch в worker**. Внутри процесса физическая GPU 1 видна как `cuda:0` — это нормальная перенумерация. Notebook kernel не вызывает `.to("cuda")`.
 
+    Перед запуском проверяются наличие и размер файлов именно в `cfg["model_root"]`; при отсутствии выводятся полные пути. `run_stage` получает актуальный CFG при каждом вызове. Если вы заменили CFG, старое значение не сохраняется в default argument. Явный вызов `run_stage("text", CFG)` удобен для ручного восстановления.
+
+    Перед стартом выводится `START <stage>` с физической GPU через `CUDA_VISIBLE_DEVICES`. Worker пишет `STAGE_DEVICE` с выбранным устройством, а text stage — `TEXT_PLACEMENT` с load/offload devices. Каждые ~30 секунд notebook показывает загрузку обеих GPU, занятую VRAM и новые строки worker log. `load_device=cuda:0, offload_device=cpu` означает GPU-путь с выгрузкой весов; строка offload сама по себе не доказывает CPU inference. Короткий GPU=0% во время чтения весов также не показывает, где будет вычисляться DiT.
+
+    В setup cell проверка API намеренно запускается с `--cpu` без весов. Download/SHA-256 и MP4 export используют CPU; sample/video/audio требуют CUDA. Если на text stage вручную выбран `TEXT_DEVICE="cpu"`, CPU-вычисление ожидаемо. Сам номер раздела 8 не определяет текущую стадию: смотрите `START`/`STAGE_DEVICE` и имя `*.log`.
+
     Монитор опрашивает RSS дерева worker и доступную RAM. Worker дополнительно записывает peak PyTorch allocated/reserved и OS peak RSS. Allocator counters не равны полной VRAM, которую видит `nvidia-smi`; поэтому сохраняется также sample общей памяти GPU. Частота опроса может пропустить очень короткий пик; точная частота и raw samples остаются в JSON.''')
     code(r'''
-    def run_stage(stage, cfg=CFG):
+    def validate_stage_models(stage, cfg):
+        roles = {"text": {"qwen", "clip"}, "sample": {"dit"},
+                 "video": {"video_vae"}, "audio": {"audio_vae", "vocoder", "vocoder_config"},
+                 "export": set()}[stage]
+        model_root = Path(cfg["model_root"])
+        problems = []
+        for item in MODELS:
+            if item["role"] not in roles:
+                continue
+            location = model_root / item["path"]
+            if not location.is_file():
+                target = f" (broken symlink -> {location.resolve()})" if location.is_symlink() else ""
+                problems.append(f"Missing: {location}{target}")
+            elif location.stat().st_size != item["size"]:
+                problems.append(f"Size mismatch: {location}; expected {item['size']}, got {location.stat().st_size}")
+        if problems:
+            group = "text" if stage == "text" else "media"
+            raise FileNotFoundError(
+                "\n".join(problems) +
+                f"\nStage model_root: {model_root}. Align CFG['model_root'] with MODEL_ROOT, "
+                f"run ensure_models({group!r}), then retry run_stage({stage!r}, CFG). "
+                "The model worker has not been started."
+            )
+
+    def run_stage(stage, cfg=None):
+        cfg = CFG if cfg is None else cfg
+        validate_stage_models(stage, cfg)
         config_path = Path(cfg["run_root"]) / "config.json"
         config_path.write_text(json.dumps(cfg, indent=2))
-        gpu = TEXT_GPU if stage == "text" else MEDIA_GPU
+        gpu = TEXT_GPU if stage == "text" else (cfg.get("video_tile_gpus", [MEDIA_GPU])[0] if stage == "video" else MEDIA_GPU)
         env = worker_env.copy()
-        env["CUDA_VISIBLE_DEVICES"] = "" if stage == "export" or (stage == "text" and TEXT_DEVICE == "cpu") else str(gpu)
+        env["CUDA_VISIBLE_DEVICES"] = "" if stage == "export" or (stage == "text" and cfg["text_device"] == "cpu") else str(gpu)
         env["PYTHONUNBUFFERED"] = "1"
         # Bundle a ffmpeg binary only if the image lacks it; the worker sees this PATH.
         if not shutil.which("ffmpeg"):
@@ -709,7 +793,10 @@ if __name__ == "__main__":
             env["PATH"] = str(bindir) + os.pathsep + env.get("PATH", "")
         log_path = Path(cfg["run_root"]) / (stage + ".log")
         samples = []
+        log_offset = 0
         start = time.monotonic()
+        print(f"START {stage}: CUDA_VISIBLE_DEVICES={env['CUDA_VISIBLE_DEVICES']!r}; "
+              f"text_device={cfg['text_device']}; log={log_path}", flush=True)
         with log_path.open("w") as log:
             child = subprocess.Popen([PYTHON, str(WORKER), "--config", str(config_path), "--stage", stage],
                                      cwd=str(COMFY), env=env, stdout=log, stderr=subprocess.STDOUT)
@@ -722,16 +809,25 @@ if __name__ == "__main__":
                                   "host_available_gib": host_memory()["available_gib"]}
                         if shutil.which("nvidia-smi"):
                             try:
-                                smi = subprocess.run(["nvidia-smi", "--query-gpu=index,memory.used,memory.total", "--format=csv,noheader,nounits"],
+                                smi = subprocess.run(["nvidia-smi", "--query-gpu=index,name,utilization.gpu,memory.used,memory.total", "--format=csv,noheader,nounits"],
                                                      capture_output=True, text=True, timeout=5)
-                                sample["nvidia_smi_mib"] = smi.stdout.strip()
+                                sample["nvidia_smi"] = smi.stdout.strip()
+                                sample["nvidia_smi_columns"] = ["index", "name", "utilization_percent", "memory_used_mib", "memory_total_mib"]
                             except subprocess.TimeoutExpired:
                                 sample["nvidia_smi_timeout"] = True
                         samples.append(sample)
                     except (psutil.NoSuchProcess, psutil.AccessDenied):
                         pass
-                    if len(samples) % 15 == 0:
+                    if samples and len(samples) % 15 == 0:
                         print(f"{stage}: {time.monotonic()-start:.0f} s elapsed; log: {log_path}", flush=True)
+                        print("GPU index, name, utilization %, used MiB, total MiB:\n" +
+                              samples[-1].get("nvidia_smi", "nvidia-smi unavailable/timeout"), flush=True)
+                        with log_path.open(errors="replace") as live_log:
+                            live_log.seek(log_offset)
+                            update = live_log.read()
+                            log_offset = live_log.tell()
+                        if update:
+                            print(update[-4000:], flush=True)
                     time.sleep(2)
                 returncode = child.wait()
             except BaseException:
@@ -769,7 +865,14 @@ if __name__ == "__main__":
     md('''## 8. Smoke: сначала получаем измеримый сквозной результат
 
     Выполняйте пять ячеек последовательно. После возврата каждой функции worker уже завершён: его веса и CUDA context освобождены. При ошибке продолжать к следующей стадии не нужно. Промежуточные файлы позволяют исправить decoder/export без повторного Qwen/sampling.''')
-    code('''TEXT_METRICS = run_stage("text")
+    code('''# Successful text stages may have purged temporary encoder weights.
+    # Restore them on retry only when files are absent; avoid another full hash pass otherwise.
+    if any(not (Path(CFG["model_root"]) / item["path"]).is_file()
+           for item in MODELS if item["group"] == "text"):
+        if Path(CFG["model_root"]).resolve() != MODEL_ROOT.resolve():
+            raise ValueError("CFG model_root differs from MODEL_ROOT; recreate CFG before restoring text weights")
+        ensure_models("text")
+    TEXT_METRICS = run_stage("text", CFG)
     assert Path(CFG["run_root"], "positive.safetensors").is_file()
     assert Path(CFG["run_root"], "negative.safetensors").is_file()
     if not KEEP_TEXT_WEIGHTS:
@@ -810,6 +913,8 @@ if __name__ == "__main__":
                          "gpu_peak_allocated_gib": metric.get("gpu_peak_allocated_gib", 0),
                          "gpu_peak_reserved_gib": metric.get("gpu_peak_reserved_gib", 0),
                          "physical_gpu": metric["cuda_visible_devices"],
+                         "secondary_gpu_peak_allocated_gib": metric.get("tile_parallelism", {}).get("remote", {}).get("gpu_peak_allocated_gib", 0),
+                         "worker_tree_peak_sampled_gib": max((x["worker_tree_rss_gib"] for x in monitor.get("samples", [])), default=0),
                          "dit_nfe": metric.get("dit_nfe", 0), "cache_reused": metric.get("cache_reused", False)})
         with (run / "stage-summary.csv").open("w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
@@ -821,7 +926,10 @@ if __name__ == "__main__":
         fig, axes = plt.subplots(1, 2, figsize=(12, 4))
         labels = [r["stage"] for r in rows]
         axes[0].bar(labels, [r["wall_seconds"] for r in rows]); axes[0].set_ylabel("Stage wall time, s")
-        axes[1].bar(labels, [r["gpu_peak_allocated_gib"] for r in rows]); axes[1].set_ylabel("Worker CUDA allocated peak, GiB")
+        positions = list(range(len(rows)))
+        axes[1].bar([x-0.2 for x in positions], [r["gpu_peak_allocated_gib"] for r in rows], width=0.4, label="primary worker")
+        axes[1].bar([x+0.2 for x in positions], [r["secondary_gpu_peak_allocated_gib"] for r in rows], width=0.4, label="second VAE worker")
+        axes[1].set_xticks(positions, labels); axes[1].set_ylabel("CUDA allocated peak per worker, GiB"); axes[1].legend()
         fig.suptitle(cfg["run_name"] + " — measured staged pipeline")
         fig.tight_layout(); fig.savefig(run / "stage-measurements.png", dpi=140); plt.show()
         print("Total cold stage wall seconds:", round(sum(r["wall_seconds"] for r in rows), 2))
@@ -831,7 +939,7 @@ if __name__ == "__main__":
     ''')
     md('''## 10. Опционально: baseline 5s и повторные seeds
 
-    После просмотра smoke установите `RUN_BASELINE=True`. Для 121 кадра spatial/temporal attention и decode существенно тяжелее; успешный smoke не гарантирует вместимость baseline. Conditioning можно переиспользовать, поскольку текст не меняется. Стадии всё ещё последовательны; VRAM не суммируется.
+    После просмотра smoke установите `RUN_BASELINE=True`. Для 121 кадра spatial/temporal attention и decode существенно тяжелее; успешный smoke не гарантирует вместимость baseline. Conditioning можно переиспользовать, поскольку текст не меняется. Зависимости стадий сохраняются; внутри video decode две GPU обрабатывают тайлы одновременно. VRAM двух карт не складывается в одно адресное пространство.
 
     Для исследования запустите минимум три seed при фиксированных настройках. Сравнивайте FP16/tiled режим с тем же режимом, а не с опубликованным H100 BF16 временем. Не называйте первый сгенерированный голос voice cloning: в этом pipeline нет speaker reference или обученного voice adapter.''')
     code('''RUN_BASELINE = False
@@ -850,6 +958,9 @@ if __name__ == "__main__":
 
     | Признак | Действие |
     |---|---|
+    | `ensurepip` завершился с ошибкой при создании venv | Замените setup cell обновлённой версией и выполните её снова: `--without-pip` и внешний `pip --python` восстанавливают частичную среду; перезапуск kernel и удаление весов не нужны |
+    | `FileNotFoundError` для Qwen/CLIP | Проверьте `CFG["model_root"]` и наличие файлов в `text_encoders`. После staged cleanup повторный text stage требует восстановления encoder weights; обновлённая ячейка text это делает. Для старой версии синхронизируйте корень, выполните `ensure_models("text")`, затем `run_stage("text", CFG)` |
+    | Предупреждение `cu130` | Относится к accelerated backend ComfyUI; само по себе не является `FileNotFoundError`. Не меняйте Torch ради исправления пути к модели; сохраняйте штатный Kaggle CUDA-стек и разберите отдельный traceback, если позднее возникнет CUDA error |
     | Internet / Hugging Face 403 | Проверьте Internet/доступ аккаунта и URL конкретного файла; не запускайте общий Pro/SR downloader |
     | No space left | Оставьте staged text cleanup, подключите веса как Input или выберите scratch с достаточным местом; пользовательские datasets не удаляются |
     | Text worker exit −9 | Проверьте RAM graph/monitor; не запускайте стадии параллельно. Закройте другие notebook workloads. При persistent OOM нужен меньший/quantized text checkpoint с отдельной проверкой conditioning |
@@ -882,11 +993,76 @@ if __name__ == "__main__":
     - [MIT course](https://diffusion.csail.mit.edu/2026/index.html), [K6 по компонентам](../README.md), [подробные π-Flow labs](../../dit/README.md).
 
     Использование компонентов регулируется их собственными licenses/model cards: [TOD/MMAudio](https://huggingface.co/hkchengrex/MMAudio), [BigVGAN](https://huggingface.co/nvidia/bigvgan_v2_44khz_128band_512x), [THIRD_PARTY](../THIRD_PARTY.md). K6 MIT не заменяет лицензии всех сторонних весов.''')
+    # Present real Python modules as standard %%writefile cells, not quoted source payloads.
+    module_specs = {
+        "COMMON_CODE": ("k6_common.py", ""),
+        "TEXT_CODE": ("k6_text.py", "import json\nfrom pathlib import Path\nfrom k6_common import bootstrap, timed, save_conditioning\n\n"),
+        "SAMPLE_CODE": ("k6_sample.py", "from pathlib import Path\nfrom k6_common import bootstrap, timed, load_conditioning, finite\n\n"),
+        "VIDEO_CODE": ("k6_video.py", "from pathlib import Path\nfrom k6_common import bootstrap, timed, finite\n\n"),
+        "AUDIO_CODE": ("k6_audio.py", "from pathlib import Path\nfrom k6_common import bootstrap, timed, finite\n\n"),
+        "EXPORT_CODE": ("k6_export.py", "from pathlib import Path\nfrom k6_common import bootstrap, timed, save_json\n\n"),
+        "ENTRY_CODE": ("run_stage.py", "import argparse, json, time\nfrom pathlib import Path\nfrom k6_common import finish_report\nfrom k6_text import text_stage\nfrom k6_sample import sample_stage\nfrom k6_video import video_stage\nfrom k6_audio import audio_stage\nfrom k6_export import export_stage\n\n"),
+        "DOWNLOAD_CODE": ("download_models.py", ""),
+    }
+    classic, runtime_sources = [], {}
+    for cell in cells:
+        if cell["cell_type"] != "code" or cell["source"].startswith("%%writefile"):
+            classic.append(cell)
+            if cell["source"].startswith("%%writefile"):
+                runtime_sources["kaggle_parallel_vae_tiles.py"] = cell["source"].split("\n", 1)[1]
+            continue
+        assignments = []
+        for statement in ast.parse(cell["source"]).body:
+            if isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name):
+                name = statement.targets[0].id
+                if name in module_specs:
+                    assignments.append((name, ast.literal_eval(statement.value), statement.end_lineno))
+        if not assignments:
+            classic.append(cell)
+            continue
+        for name, body, end in assignments:
+            filename, prefix = module_specs[name]
+            source = prefix + body.strip() + "\n"
+            runtime_sources[filename] = source
+            classic.append(dict(cell_type="code", metadata={}, execution_count=None, outputs=[],
+                                source='%%writefile "{SCRATCH}/' + filename + '"\n' + source))
+        if assignments[0][0] == "DOWNLOAD_CODE":
+            tail = "\n".join(cell["source"].splitlines()[assignments[-1][2]:]) + "\n"
+            tail = tail.replace("DOWNLOAD_SCRIPT.write_text(DOWNLOAD_CODE)\n", "")
+            classic.append(dict(cell_type="code", metadata={}, execution_count=None, outputs=[], source=tail))
+        if assignments[-1][0] == "ENTRY_CODE":
+            classic.append(dict(cell_type="code", metadata={}, execution_count=None, outputs=[], source=
+                'WORKER = SCRATCH / "run_stage.py"\nsubprocess.run([PYTHON, str(WORKER), "--help"], check=True)\n'))
+    cells = classic
+    # Uploaded Kaggle notebooks cannot resolve repository-relative links.
+    for cell in cells:
+        if cell["cell_type"] != "markdown":
+            continue
+        cell["source"] = re.sub(r"<!-- study-navigation:(?:start|end) -->\n?", "", cell["source"])
+        def github_link(match):
+            label, target = match.groups()
+            if target.startswith(("https:", "http:", "#", "mailto:")):
+                return match.group(0)
+            filename, separator, anchor = target.partition("#")
+            resolved = (root / "kandinsky-6/notebooks" / filename).resolve()
+            assert resolved.exists(), target
+            relative = resolved.relative_to(root).as_posix()
+            return "[" + label + "](https://github.com/vladislav-vasilenko/generative-ai-research/blob/main/" + relative + (separator + anchor if separator else "") + ")"
+        cell["source"] = re.sub(r"\[([^]]+)\]\(([^)]+)\)", github_link, cell["source"])
+    runtime_dir = root / "kandinsky-6/kaggle_runtime"
+    runtime_manifest = {}
+    for filename, source in runtime_sources.items():
+        ast.parse(source, filename=filename)
+        (runtime_dir / filename).write_text(source)
+        runtime_manifest[filename] = hashlib.sha256(source.encode()).hexdigest()
+    (runtime_dir / "manifest.json").write_text(json.dumps(runtime_manifest, indent=2) + "\n")
+
     nb = dict(nbformat=4, nbformat_minor=5,
               metadata=dict(kernelspec=dict(display_name="Python 3", language="python", name="python3"),
                             language_info=dict(name="python", version="3.11"),
                             kaggle=dict(accelerator="nvidiaTeslaT4", isInternetEnabled=True, language="python", sourceType="notebook"),
                             k6_deployment=dict(target="2xT4_16GB_CPU_RAM_32GB", full_gpu_run_verified=False,
+                                               portable_navigation=True, code_layout="classic_writefile_modules",
                                                comfy_revision=COMFY_REV, k6_revision=K6_REV)), cells=cells)
     for index, cell in enumerate(cells):
         cell["id"] = f"k6-kaggle-{index:03d}"

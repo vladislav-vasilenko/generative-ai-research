@@ -1,0 +1,66 @@
+{
+  "reported_date": "2026-10-30",
+  "timezone": "Europe/Moscow",
+  "provenance": "User-pasted STAGE_OK logs; not independently executed by the local validation script",
+  "kaggle_notebook": "https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill",
+  "complete_mp4_verified": false,
+  "two_gpu_vae_verified": false,
+  "text": {
+    "model_load_seconds": 8.436718863999886,
+    "text_load_device": "cuda:0",
+    "text_storage_dtypes": [
+      "torch.bfloat16"
+    ],
+    "positive_encode_seconds": 6.4008662670003105,
+    "context_shape": [
+      1,
+      153,
+      3584
+    ],
+    "pooled_shape": [
+      1,
+      768
+    ],
+    "context_dtype": "torch.float32",
+    "pooled_dtype": "torch.float32",
+    "negative_encode_seconds": 1.404068413999994,
+    "gpu_peak_allocated_gib": 11.661760330200195,
+    "gpu_peak_reserved_gib": 11.994140625,
+    "stage": "text",
+    "elapsed_seconds": 39.602202522999505,
+    "worker_peak_rss_gib": 24.788646697998047,
+    "cuda_visible_devices": "1",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "pretrained": true
+  },
+  "sample": {
+    "model_load_seconds": 3.542967079999471,
+    "sampling_seconds": 15.601344821999191,
+    "video_latent_shape": [
+      1,
+      16,
+      9,
+      32,
+      54
+    ],
+    "audio_latent_shape": [
+      1,
+      60,
+      40
+    ],
+    "dit_nfe": 10,
+    "inference_dtype": "torch.float16",
+    "sampler": "DX PiFlow",
+    "guidance_scale": 1.0,
+    "gpu_peak_allocated_gib": 6.187031269073486,
+    "gpu_peak_reserved_gib": 6.40234375,
+    "stage": "sample",
+    "elapsed_seconds": 44.6978035230004,
+    "worker_peak_rss_gib": 12.913291931152344,
+    "cuda_visible_devices": "0",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "pretrained": true
+  }
+}
