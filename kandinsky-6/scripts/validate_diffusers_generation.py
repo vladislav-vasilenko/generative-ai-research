@@ -87,6 +87,35 @@ def check_supplied_soundtrack(runner,path):
         output_sample_rate=44100,verified_excerpts=clips,audio_file_published=False)
 
 
+def check_nvidia_smi_trace(runner,d):
+    import os
+    import matplotlib
+    matplotlib.use('Agg')
+    # Three polling ticks: GPU 0 busy, GPU 1 busy, then both busy.
+    csv=d/'trace.csv'
+    csv.write_text(''.join(f'2026/10/30 12:00:0{t}.000, {i}, {u}, {m}, [N/A]\n'
+        for t,ticks in enumerate([(97,3),(2,96),(80,70)]) for i,(u,m) in enumerate(zip(ticks,(9000,8000)))))
+    summary=runner.summarize_nvidia_smi(csv,200)
+    assert summary['samples']==3 and [g['busy_fraction'] for g in summary['gpu']]==[2/3,2/3]
+    assert summary['all_busy_fraction']==1/3 and summary['one_busy_fraction']==2/3 and summary['none_busy_fraction']==0
+    runner.plot_nvidia_smi(csv,d/'trace.png');assert (d/'trace.png').stat().st_size>0
+    # A fake nvidia-smi exercises the real Popen/terminate path on a machine without NVIDIA GPUs.
+    fake=d/'bin'/'nvidia-smi';fake.parent.mkdir()
+    fake.write_text('#!/bin/sh\nwhile true; do\n echo "2026/10/30 12:00:00.000, 0, 99, 9000, 60.0"\n'
+                    ' echo "2026/10/30 12:00:00.000, 1, 1, 8000, [N/A]"\n /bin/sleep 0.05\ndone\n')
+    fake.chmod(0o755)
+    saved=os.environ['PATH']
+    try:
+        os.environ['PATH']=str(fake.parent)+os.pathsep+saved
+        with runner.NvidiaSmiTrace(d/'live.csv') as trace:time.sleep(0.5)
+        assert trace.summary['samples']>=2 and trace.summary['one_busy_fraction']==1 and trace.process.poll() is not None
+        os.environ['PATH']=str(d/'empty')
+        with runner.NvidiaSmiTrace(d/'missing.csv') as trace:pass
+        assert trace.summary==dict(available=False)
+    finally:
+        os.environ['PATH']=saved
+    return True
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path);p.add_argument('--soundtrack',type=Path);args=p.parse_args()
     path=ROOT/'kandinsky-6/generation/diffusers_runner.py'
@@ -110,6 +139,12 @@ def main():
     compact=runner.compact_conditioning((tokens,torch.ones(1,3),mask))
     assert torch.equal(compact['prompt_embeds'],tokens[:,[0,2]])
     assert runner.mapped_gpu_indices({'blocks.0':0,'blocks.1':'cuda:1'})=={0,1}
+    assert runner.dit_load_options('balanced')==(dict(device_map='balanced',max_memory={0:'10GiB',1:'10GiB'}),{0,1})
+    assert runner.dit_load_options('cuda:1')==(dict(device_map='cuda:1'),{1})
+    assert runner.mapped_gpu_indices({'':str(torch.device('cuda:1'))})=={1}
+    try:runner.dit_load_options('auto')
+    except ValueError:pass
+    else:raise AssertionError('Unsupported DiT placement accepted')
     try:runner.compact_conditioning((torch.full((1,1,4),float('nan')),torch.ones(1,3),None))
     except FloatingPointError:pass
     else:raise AssertionError('NaN conditioning accepted')
@@ -174,6 +209,18 @@ def main():
         try:runner.sample_joint({'job_key':'stale'},'', '',d/'unused.safetensors',None,checkpoint)
         except ValueError:pass
         else:raise AssertionError('Stale joint latent accepted')
+        nvidia_smi_trace=check_nvidia_smi_trace(runner,d)
+        # Placement comparison reads only runs whose denoising actually ran.
+        for name,sample in [('a',dict(cache_reused=False,dit_placement='balanced',denoise_seconds=13.4,
+                                      stage=dict(gpu=[dict(allocated_peak_gib=3.0),dict(allocated_peak_gib=3.1)]),
+                                      nvidia_smi=dict(all_busy_fraction=0.03,one_busy_fraction=0.9))),
+                            ('b',dict(cache_reused=True))]:
+            (d/'runs'/name).mkdir(parents=True)
+            (d/'runs'/name/'sample.json').write_text(json.dumps(sample))
+            (d/'runs'/name/'config.json').write_text(json.dumps(dict(width=432,height=256,num_frames=25)))
+        rows=runner.compare_placements(d/'runs')
+        assert rows==[dict(run='a',placement='balanced',size='432x256x25',denoise_s=13.4,
+                           peak_alloc_gib=[3.0,3.1],all_busy=0.03,one_busy=0.9)]
     import diffusers,transformers,accelerate
     report=dict(date='2026-10-30',notebook=str(notebook.relative_to(ROOT)),
         notebook_sha256=hashlib.sha256(notebook.read_bytes()).hexdigest(),
@@ -184,6 +231,8 @@ def main():
         cached_conditioning_padding_removed=True,nan_rejected=True,
         local_soundtrack_mix_and_offset=True,short_soundtrack_rejected=True,
         joint_latent_cache_reused_without_models=True,stale_latent_rejected=True,
+        nvidia_smi_trace_summary_and_fallback=nvidia_smi_trace,
+        dit_placement_options_and_comparison=True,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
                       transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),

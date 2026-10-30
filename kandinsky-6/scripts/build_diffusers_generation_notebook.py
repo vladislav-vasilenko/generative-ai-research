@@ -130,6 +130,7 @@ AUDIO_MODE='generated'          # 'music' or 'mix' to use your own audio file
 MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning_down_the_house.aac'
 MUSIC_OFFSET_SECONDS=0.0
 MUSIC_GAIN=0.65
+DIT_PLACEMENT='balanced'        # 'balanced' (layer split over 2 GPUs), 'cuda:0' or 'cuda:1' (whole DiT on one T4)
 MODEL_ID='kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers'
 MODEL_REVISION='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
 ''')
@@ -137,7 +138,7 @@ MODEL_REVISION='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
     code('PRESETS = '+pprint.pformat(json.loads((BASE/'generation/prompt_presets.json').read_text()),width=110,sort_dicts=False))
     md('''## 3. Функции запуска
 
-Обычные Python-ячейки. Qwen/CLIP кодируют оба сценария и выгружаются; DiT размещается блоками на двух GPU. Это распределение памяти с передачей активаций, не обещание двукратного ускорения. Полный CPU-offload pipeline поверх этого device map не включается. Codecs используют FP32 и штатный Diffusers VAE tiling.''')
+Обычные Python-ячейки. Qwen/CLIP кодируют оба сценария и выгружаются. По умолчанию (`DIT_PLACEMENT='balanced'`) DiT размещается блоками на двух GPU: это распределение памяти с передачей активаций, GPU работают поочерёдно, двукратного ускорения нет. `'cuda:0'`/`'cuda:1'` держит весь DiT на одной T4 для сравнения. Полный CPU-offload pipeline поверх этого device map не включается. Codecs используют FP32 и штатный Diffusers VAE tiling.''')
     source=(BASE/'generation/diffusers_runner.py').read_text()
     for section in source.split('# %% '):
         if section.startswith('"""'):continue
@@ -150,11 +151,12 @@ PROMPT,NEGATIVE=compile_prompt(preset,PROFILE)
 REFERENCE,REFERENCE_SHA,WIDTH,HEIGHT=reference_and_size(preset,PROFILE,IMAGE_PATH,ASPECT)
 CFG=dict(model_id=MODEL_ID,revision=MODEL_REVISION,local_model_dir=LOCAL_MODEL_DIR,
     scratch=str(SCRATCH),results=str(RESULTS),media_cache=str(SCRATCH/'media-cache'),
-    packages=pins,max_sequence_length=1024,seed=SEED,profile=PROFILE,
+    packages=pins,max_sequence_length=1024,seed=SEED,profile=PROFILE,dit_placement=DIT_PLACEMENT,
     width=WIDTH,height=HEIGHT,**PROFILES[PROFILE])
 CFG['job_key']=digest(dict(model=MODEL_ID,revision=MODEL_REVISION,packages=pins,prompt=PROMPT,
     seed=SEED,width=WIDTH,height=HEIGHT,num_frames=CFG['num_frames'],image=REFERENCE_SHA,
-    steps=10,cfg=1.0,dtype='float16',placement='balanced-two-gpu'))
+    steps=10,cfg=1.0,dtype='float16',
+    placement='balanced-two-gpu' if DIT_PLACEMENT=='balanced' else DIT_PLACEMENT))
 RUN_DIR=RESULTS/(PRESET_NAME+'-'+PROFILE+'-'+CFG['job_key'][:12])
 RUN_DIR.mkdir(exist_ok=True)
 LATENTS=RUN_DIR/'joint-latents.safetensors'
@@ -179,9 +181,25 @@ if AUDIO_MODE in ('music','mix'):
 ''')
     md('''## 5. Текст и joint sampling
 
-Оба prompt-cache сохраняются в Output. Скачать text-веса потребуется снова только при новом/изменённом preset; private text cache удаляется после encoding. Самплирование сохраняет joint latents. При ошибке decoder повторяйте раздел 6: Qwen и DiT заново не нужны.''')
+Оба prompt-cache сохраняются в Output. Скачать text-веса потребуется снова только при новом/изменённом preset; private text cache удаляется после encoding. Самплирование сохраняет joint latents и фоновую трассировку `nvidia-smi`. При ошибке decoder повторяйте раздел 6: Qwen и DiT заново не нужны.''')
     code("CONDITIONING=measured('text',lambda:encode_texts(PROMPTS,CFG),REPORTS)")
-    code("SAMPLE=measured('sample',lambda:sample_joint(CFG,PROMPT,NEGATIVE,CONDITIONING[PROFILE],REFERENCE,LATENTS),REPORTS)\n(RUN_DIR/'sample.json').write_text(json.dumps(SAMPLE,indent=2,default=str))\nprint(SAMPLE)")
+    code("GPU_TRACE=RUN_DIR/('nvidia-smi-denoise-'+str(time.time_ns())+'.csv')\nSAMPLE=measured('sample',lambda:sample_joint(CFG,PROMPT,NEGATIVE,CONDITIONING[PROFILE],REFERENCE,LATENTS,GPU_TRACE),REPORTS)\n(RUN_DIR/'sample.json').write_text(json.dumps(dict(SAMPLE,stage=REPORTS['sample']),indent=2,default=str))\nprint(SAMPLE)")
+    md('''### Загрузка GPU во время denoising
+
+`nvidia-smi` опрашивается каждые 200 ms в фоне только на время вызова pipeline (без загрузки весов). Summary попадает в `sample.json` и `metrics.json`, CSV и PNG — в Output. `all_busy_fraction` — доля отсчётов, где обе GPU загружены ≥ 50 %: при `device_map='balanced'` и batch 1 ожидается, что GPU работают поочерёдно. Это `utilization.gpu` драйвера (доля времени с активным kernel), не FLOPs. При повторном использовании сохранённых latents трассировки нет.''')
+    code('''if SAMPLE.get('nvidia_smi',{}).get('samples'):
+    from IPython.display import display
+    import matplotlib.pyplot as plt
+    display(plot_nvidia_smi(GPU_TRACE,GPU_TRACE.with_suffix('.png')))
+    plt.close('all')
+    print(json.dumps(SAMPLE['nvidia_smi'],indent=2))
+else:
+    print('No nvidia-smi samples:',SAMPLE.get('nvidia_smi','latents reused, denoising skipped'))''')
+    md('''### Сравнение размещений DiT
+
+Запустите разделы 4–5 с `DIT_PLACEMENT='balanced'`, затем с `'cuda:0'` при том же preset, profile и seed: placement входит в `job_key`, поэтому второй прогон заново выполняет denoising, а не берёт latents из кэша. `denoise_s` измеряет только вызов pipeline после синхронизации CUDA; `peak_alloc_gib` — пик PyTorch allocator за всю стадию sample, включая загрузку. Один прогон на вариант — ориентир, не статистика.''')
+    code('''for row in compare_placements(RESULTS):
+    print(json.dumps(row))''')
     md('## 6. Video / audio decode из сохранённых latents')
     code("import numpy as np\nFRAMES=measured('video',lambda:decode_video(CFG,LATENTS),REPORTS)\nnp.save(RUN_DIR/'frames.npy',FRAMES,allow_pickle=False)\nrelease_memory()")
     code("(WAVEFORM,SAMPLE_RATE)=measured('audio',lambda:decode_audio(CFG,LATENTS),REPORTS)\nnp.save(RUN_DIR/'waveform.npy',WAVEFORM.numpy(),allow_pickle=False)\nrelease_memory()")

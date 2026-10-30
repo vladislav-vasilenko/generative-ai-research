@@ -67,7 +67,9 @@ MUSIC_GAIN = 0.65
 
 Qwen/CLIP сначала кодируют оба prompt и полностью выгружаются. При удалённой загрузке text weights лежат в приватном временном каталоге, который очищается после encoding; нужно примерно 18 GiB свободного scratch. Media cache сохраняется отдельно. Полный read-only Diffusers snapshot из Input задаётся `LOCAL_MODEL_DIR` и не изменяется.
 
-DiT загружается через `device_map='balanced'`, budget 10 GiB на каждую T4. Runner требует фактические размещения на обеих GPU и печатает карту модулей; CPU/disk spill для DiT останавливает запуск. Это model sharding для **одного ролика**, не две независимые генерации и не sequence parallelism. Передача activations добавляет накладные расходы; ускорение не обещается. `pipe.to(...)` и full-pipeline `enable_model_cpu_offload()` поверх карты не вызываются. Для I2V video VAE кодирует reference на GPU 0; после sampling весь pipeline освобождается. Video decode затем работает на GPU 1, audio decode на GPU 0.
+DiT загружается через `device_map='balanced'`, budget 10 GiB на каждую T4. Runner требует фактические размещения на обеих GPU и печатает карту модулей; CPU/disk spill для DiT останавливает запуск. Это model sharding для **одного ролика**, не две независимые генерации и не sequence parallelism. Передача activations добавляет накладные расходы; ускорение не обещается. `pipe.to(...)` и full-pipeline `enable_model_cpu_offload()` поверх карты не вызываются. Для I2V video VAE кодирует reference на GPU 0; после sampling весь pipeline освобождается.
+
+`DIT_PLACEMENT='cuda:0'` или `'cuda:1'` загружает весь DiT на одну T4 (без `max_memory`) для сравнения со split. Placement входит в `job_key`, поэтому смена режима заново запускает denoising. `sample.json` записывает `denoise_seconds` (только вызов pipeline) и сводку фонового `nvidia-smi` (200 ms); ячейка сравнения собирает эти прогоны в таблицу. Smoke-трасса split-режима на 2×T4: GPU работают поочерёдно, одновременно заняты 3 % отсчётов, около 3,4 GiB на карту. Однокарточный режим и Baseline на Kaggle ещё не измерены. Video decode затем работает на GPU 1, audio decode на GPU 0.
 
 ## Исходники и проверка
 
