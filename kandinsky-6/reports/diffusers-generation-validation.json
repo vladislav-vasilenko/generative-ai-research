@@ -1,8 +1,8 @@
 {
   "date": "2026-10-30",
   "notebook": "kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb",
-  "notebook_sha256": "e4afa5b0177ac756dec4f9836359cf6dd1110d73868147c68adf33002f3a2759",
-  "runtime_sha256": "3776c66a8d5fb14a8f5112b11c820df311695f3c42ffbf8acb8425f09e103528",
+  "notebook_sha256": "ebb0afebb7e305e6157cd3e98c8b56163f066f417510bdd7494bd13dcf605cb0",
+  "runtime_sha256": "58e98afa8e493eb182ccd701725a1a7f04e882652198f552600b29d2c690f0d5",
   "bootstrap_checks": {
     "preloaded_pillow_13_kept_without_restart": true,
     "compatible_dependencies_skip_network_and_pip": true,
@@ -29,6 +29,7 @@
   "placement_measurement_mode_records_oom": true,
   "parallel_clips_two_gpu_queues_overlap_and_oom": true,
   "attached_weight_snapshots_assembled": true,
+  "duplicate_vocoder_warnings_filtered_only": true,
   "native_tiny_pipeline": [
     {
       "mode": "t2v",
@@ -45,7 +46,7 @@
         40,
         9
       ],
-      "seconds": 0.032796750077977777
+      "seconds": 0.045544124906882644
     },
     {
       "mode": "i2v",
@@ -62,7 +63,7 @@
         40,
         9
       ],
-      "seconds": 0.025473374873399734
+      "seconds": 0.03127737483009696
     }
   ],
   "reference_shapes": [

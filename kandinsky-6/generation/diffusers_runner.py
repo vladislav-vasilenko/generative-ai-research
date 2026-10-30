@@ -1,9 +1,11 @@
 """Native Diffusers generation helpers; no ComfyUI imports or model loading at import time."""
 # %% Imports
+import ast
 import contextlib
 import gc
 import hashlib
 import json
+import logging
 import resource
 import shutil
 import subprocess
@@ -462,6 +464,30 @@ def compare_placements(results_dir):
     return rows
 
 # %% Decode the saved video and audio latents
+# The Lite checkpoint's audio_vae also stores a copy of the separate vocoder (HF discussion
+# kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers#2). Drop only those two known warnings.
+MMAUDIO_EXTRA_CONFIG = {'vocoder_config', 'mode', 'downsample_factor'}
+
+
+class MMAudioDuplicateVocoderFilter(logging.Filter):
+    def filter(self, record):
+        message = record.getMessage()
+        if 'were not used when initializing MMAudioVAE' in message:
+            keys = message[message.index('[')+1:message.rindex(']')].strip("'").split(', ')
+            return not all(key.startswith('vocoder.') for key in keys)
+        if 'were passed to MMAudioVAE, but are not expected' in message:
+            attributes = message[len('The config attributes '):message.index(' were passed to')]
+            try:
+                return not set(ast.literal_eval(attributes)) <= MMAUDIO_EXTRA_CONFIG
+            except (ValueError, SyntaxError):
+                return True
+        return True
+
+
+for _name in ('diffusers.configuration_utils', 'diffusers.models.modeling_utils'):
+    if not any(isinstance(f, MMAudioDuplicateVocoderFilter) for f in logging.getLogger(_name).filters):
+        logging.getLogger(_name).addFilter(MMAudioDuplicateVocoderFilter())
+
 @torch.inference_mode()
 def decode_video(cfg, latent_path, device='cuda:1'):
     source, kwargs = model_kwargs(cfg, cfg['media_cache'])

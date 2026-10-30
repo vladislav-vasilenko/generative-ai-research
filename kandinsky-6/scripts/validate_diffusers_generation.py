@@ -197,6 +197,21 @@ def check_weight_snapshots(runner,d):
         assert [k for k,f in parts.items() if f(path)]==[expected],path
     return True
 
+def check_mmaudio_warning_filter(runner):
+    import logging
+    keep=runner.MMAudioDuplicateVocoderFilter().filter
+    record=lambda msg:logging.LogRecord('diffusers','30',__file__,1,msg,None,None)
+    unused='Some weights of the model checkpoint at /x/audio_vae were not used when initializing MMAudioVAE: \n {}'
+    config='The config attributes {} were passed to MMAudioVAE, but are not expected and will be ignored.'
+    assert not keep(record(unused.format(["vocoder.ups.0.0.bias, vocoder.conv_post.weight"])))
+    assert keep(record(unused.format(["vocoder.ups.0.0.bias, encoder.conv_in.weight"])))
+    assert not keep(record(config.format({'downsample_factor':1024,'mode':'44k','vocoder_config':{'num_mels':128}})))
+    assert keep(record(config.format({'mode':'44k','latent_channels':40})))
+    assert keep(record('Some weights of the model checkpoint at /x were not used when initializing MMAudioVocoder: \n [\'a\']'))
+    for name in ('diffusers.configuration_utils','diffusers.models.modeling_utils'):
+        assert sum(isinstance(f,runner.MMAudioDuplicateVocoderFilter) for f in logging.getLogger(name).filters)==1
+    return True
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path);p.add_argument('--soundtrack',type=Path);args=p.parse_args()
     path=ROOT/'kandinsky-6/generation/diffusers_runner.py'
@@ -293,6 +308,7 @@ def main():
         nvidia_smi_trace=check_nvidia_smi_trace(runner,d)
         parallel_clips=check_parallel_clips(runner,d,presets)
         weight_snapshots=check_weight_snapshots(runner,d)
+        mmaudio_filter=check_mmaudio_warning_filter(runner)
         # Placement comparison reads only runs whose denoising actually ran.
         for name,sample in [('a',dict(cache_reused=False,dit_placement='balanced',denoise_seconds=13.4,
                                       stage=dict(gpu=[dict(allocated_peak_gib=3.0),dict(allocated_peak_gib=3.1)]),
@@ -344,6 +360,7 @@ def main():
         placement_measurement_mode_records_oom=True,
         parallel_clips_two_gpu_queues_overlap_and_oom=parallel_clips,
         attached_weight_snapshots_assembled=weight_snapshots,
+        duplicate_vocoder_warnings_filtered_only=mmaudio_filter,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
                       transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),
