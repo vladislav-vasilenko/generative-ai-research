@@ -113,8 +113,10 @@ text+='''## Промышленные семейства и архитектур�
 |---|---|---|
 | [Image IO без моделей](workflows/00_image_io_no_models.json) | LoadImage→SaveImage, known pixels | Static checked; запуск вручную |
 | [Hunyuan VAE reconstruction](workflows/04_hunyuan_vae_reconstruction.json) | Codec отдельно от DiT/text | Static checked; запуск вручную с имеющимся VAE |
-| [K6 Lite Smoke](../kandinsky-6/workflows/k6_lite_distill_smoke.json) | 432×240 / 33 frames / seed42 / 10 steps | Static checked; pretrained generation отложена |
-| [K6 Lite Baseline](../kandinsky-6/workflows/k6_lite_distill_baseline.json) | 864×480 / 121 frames / seed42 / 10 steps | Static checked; pretrained generation отложена |
+| [K6 Lite Smoke](../kandinsky-6/workflows/k6_lite_distill_smoke.json) | 432×256 / 33 frames / seed42 / 10 steps | Static checked; отдельный полный запуск Smoke не зафиксирован |
+| [K6 Lite Baseline](../kandinsky-6/workflows/k6_lite_distill_baseline.json) | 864×480 / 121 frames / seed42 / 10 steps | MPS: сохранён MP4 со звуком, [tiled decode validation](../kandinsky-6/reports/comfy-tiled-vae-validation.json) |
+| [K6 SR ×2](../kandinsky-6/workflows/k6_sr_standalone_2x.json) | Готовый MP4 → SR; расчёт 1728×960 для Baseline | Граф и CPU-контракты проверены; pretrained SR не запускался |
+| [K6 SR ×2,25](../kandinsky-6/workflows/k6_sr_standalone_2_25x.json) | Тот же источник → SR; расчёт 1952×1088 после grid alignment | Нужен отдельный SR bundle 17,45 GB; [инструкция](../kandinsky-6/SUPER_RESOLUTION_RU.md) |
 
 [Test chart](assets/curriculum_test_chart.png), [RGB comparison script](scripts/compare_images.py), [K6 stage measurement script](../kandinsky-6/scripts/measure_comfy.py). Во время CPU-лабораторных workflow не отправляются на выполнение.
 

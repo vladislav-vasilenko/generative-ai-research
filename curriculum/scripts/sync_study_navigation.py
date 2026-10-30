@@ -23,7 +23,7 @@ def insert(source,header):
 
 rows=[]
 mds=[ROOT/'README.md',*sorted(ROOT.glob('lecture_*/*.md')),*sorted((ROOT/'curriculum').glob('*.md')),
-     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/kaggle_runtime/README.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md',ROOT/'hunyuan-video/README.md',ROOT/'vae/README.md',ROOT/'vae/SOURCE_MAP.md',ROOT/'vae/MIT_LAB3_BRIDGE.md',ROOT/'dit/README.md',ROOT/'dit/MIT_BRIDGE.md',ROOT/'dit/SOURCE_MAP.md']
+     ROOT/'kandinsky-5/README.md',ROOT/'kandinsky-6/README.md',ROOT/'kandinsky-6/COMPONENT_GUIDE.md',ROOT/'kandinsky-6/kaggle_runtime/README.md',ROOT/'kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md',ROOT/'kandinsky-6/SUPER_RESOLUTION_RU.md',ROOT/'hunyuan-video/README.md',ROOT/'vae/README.md',ROOT/'vae/SOURCE_MAP.md',ROOT/'vae/MIT_LAB3_BRIDGE.md',ROOT/'dit/README.md',ROOT/'dit/MIT_BRIDGE.md',ROOT/'dit/SOURCE_MAP.md']
 for path in mds:
     match=re.match(r'lecture_(\d+)',path.parent.name)
     lectures=[int(match.group(1))] if match else []

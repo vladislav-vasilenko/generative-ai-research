@@ -1,0 +1,72 @@
+{
+  "comfyui_jobs_submitted": 0,
+  "weights_downloaded": false,
+  "sr_inference_run": false,
+  "mps_sr_inference_verified": false,
+  "checked_date_utc": "2026-10-29",
+  "workflows": [
+    {
+      "profile": "2x",
+      "path": "workflows/k6_sr_standalone_2x.json",
+      "sha256": "e2b282535b0df0d133d3a75a00511b5ad96f7777d94c8227a15e09a131851c58",
+      "nodes": 9,
+      "typed_links": 11,
+      "registered_execution_nodes": 8,
+      "frontend_notes": 1,
+      "source_video_exists": true,
+      "source_audio_connected": true
+    },
+    {
+      "profile": "2_25x",
+      "path": "workflows/k6_sr_standalone_2_25x.json",
+      "sha256": "321cc2c3ff601159fb9f4d1a5a597e83a7fa2ec54407d2d2ce2a935bb3322fc6",
+      "nodes": 9,
+      "typed_links": 11,
+      "registered_execution_nodes": 8,
+      "frontend_notes": 1,
+      "source_video_exists": true,
+      "source_audio_connected": true
+    }
+  ],
+  "bundle_revision": "3d6672923a4dfcd387961864654e123dd53b8ee4",
+  "bundle_bytes": 17451308451,
+  "missing_files": [
+    "latent_upscaler/config.json",
+    "latent_upscaler/diffusion_pytorch_model.safetensors",
+    "model_index.json",
+    "scheduler/scheduler_config.json",
+    "transformer/config.json",
+    "transformer/diffusion_pytorch_model.safetensors",
+    "vae/config.json",
+    "vae/diffusion_pytorch_model.safetensors"
+  ],
+  "all_component_files_present": false,
+  "native_cpu_contracts": {
+    "geometry": [
+      {
+        "scale": 2.0,
+        "raw_width": 1728,
+        "raw_height": 960,
+        "fullhd_fit_hw": null
+      },
+      {
+        "scale": 2.25,
+        "raw_width": 1952,
+        "raw_height": 1088,
+        "fullhd_fit_hw": [
+          1070,
+          1920
+        ]
+      }
+    ],
+    "source_frames_preserved": 121,
+    "source_fps_preserved": 24,
+    "audio_trim_samples": 222338,
+    "audio_prefix_unchanged": true,
+    "torch_version": "2.12.1",
+    "device": "cpu",
+    "distilled_nfe_per_tile_batch": 2,
+    "pretrained_models_loaded": false,
+    "sr_inference_run": false
+  }
+}

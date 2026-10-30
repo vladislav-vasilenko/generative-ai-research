@@ -167,8 +167,10 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 |---|---|---|
 | [Image IO без моделей](workflows/00_image_io_no_models.json) | LoadImage→SaveImage, known pixels | Static checked; запуск вручную |
 | [Hunyuan VAE reconstruction](workflows/04_hunyuan_vae_reconstruction.json) | Codec отдельно от DiT/text | Static checked; запуск вручную с имеющимся VAE |
-| [K6 Lite Smoke](../kandinsky-6/workflows/k6_lite_distill_smoke.json) | 432×240 / 33 frames / seed42 / 10 steps | Static checked; pretrained generation отложена |
-| [K6 Lite Baseline](../kandinsky-6/workflows/k6_lite_distill_baseline.json) | 864×480 / 121 frames / seed42 / 10 steps | Static checked; pretrained generation отложена |
+| [K6 Lite Smoke](../kandinsky-6/workflows/k6_lite_distill_smoke.json) | 432×256 / 33 frames / seed42 / 10 steps | Static checked; отдельный полный запуск Smoke не зафиксирован |
+| [K6 Lite Baseline](../kandinsky-6/workflows/k6_lite_distill_baseline.json) | 864×480 / 121 frames / seed42 / 10 steps | MPS: сохранён MP4 со звуком, [tiled decode validation](../kandinsky-6/reports/comfy-tiled-vae-validation.json) |
+| [K6 SR ×2](../kandinsky-6/workflows/k6_sr_standalone_2x.json) | Готовый MP4 → SR; расчёт 1728×960 для Baseline | Граф и CPU-контракты проверены; pretrained SR не запускался |
+| [K6 SR ×2,25](../kandinsky-6/workflows/k6_sr_standalone_2_25x.json) | Тот же источник → SR; расчёт 1952×1088 после grid alignment | Нужен отдельный SR bundle 17,45 GB; [инструкция](../kandinsky-6/SUPER_RESOLUTION_RU.md) |
 
 [Test chart](assets/curriculum_test_chart.png), [RGB comparison script](scripts/compare_images.py), [K6 stage measurement script](../kandinsky-6/scripts/measure_comfy.py). Во время CPU-лабораторных workflow не отправляются на выполнение.
 
@@ -214,6 +216,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [kandinsky-6/COMPONENT_GUIDE.md](../kandinsky-6/COMPONENT_GUIDE.md) — K6: карта архитектурных компонентов и оригинального кода.
 - [kandinsky-6/README.md](../kandinsky-6/README.md) — Kandinsky 6 Lite — по-компонентный учебный курс.
 - [kandinsky-6/STATUS.md](../kandinsky-6/STATUS.md) — Состояние эксперимента, 30 октября 2026.
+- [kandinsky-6/SUPER_RESOLUTION_RU.md](../kandinsky-6/SUPER_RESOLUTION_RU.md) — Kandinsky 6 SR: готовый Baseline MP4 → видео большего разрешения.
 - [kandinsky-6/THIRD_PARTY.md](../kandinsky-6/THIRD_PARTY.md) — Source provenance.
 - [kandinsky-6/kaggle_runtime/README.md](../kandinsky-6/kaggle_runtime/README.md) — Kandinsky 6 Lite: читаемый код Kaggle pipeline.
 - [kandinsky-6/reference/README.md](../kandinsky-6/reference/README.md) — Закреплённые сторонние исходники.
@@ -277,6 +280,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [build_component_notebooks.py](../kandinsky-6/scripts/build_component_notebooks.py) — Build the K6 component course. Only source generation, no network/weights.
 - [build_kaggle_notebook.py](../kandinsky-6/scripts/build_kaggle_notebook.py) — Build the standalone, staged Kaggle 2xT4 Kandinsky 6 Lite deployment notebook.
 - [build_manual_notebook.py](../kandinsky-6/scripts/build_manual_notebook.py) — Build the lightweight manual experiment notebook; no model downloads.
+- [build_sr_workflows.py](../kandinsky-6/scripts/build_sr_workflows.py) — Derive standalone x2/x2.25 Kandinsky SR workflows from an installed official template.
 - [extract_audio_local.py](../kandinsky-6/scripts/extract_audio_local.py) — Copy original audio tensor bytes from a local ComfyUI checkpoint.
 - [inspect_comfy_models.py](../kandinsky-6/scripts/inspect_comfy_models.py) — Read model paths and safetensors headers, without importing ComfyUI or loading weights.
 - [install_comfy_templates.py](../kandinsky-6/scripts/install_comfy_templates.py) — Install research templates locally; default is a dry run, no model download.
@@ -289,6 +293,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [validate_kaggle_notebook.py](../kandinsky-6/scripts/validate_kaggle_notebook.py) — Validate the Kaggle deployment notebook without model downloads; optional native CPU API checks.
 - [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route.
 - [validate_parallel_vae_tiles.py](../kandinsky-6/scripts/validate_parallel_vae_tiles.py) — Validate single-video tile dispatch/IPC against native ComfyUI on CPU, without downloads.
+- [validate_sr_workflows.py](../kandinsky-6/scripts/validate_sr_workflows.py) — Check standalone SR graphs against a running ComfyUI, without submitting a prompt or loading weights.
 
 ### `vae/scripts`
 
