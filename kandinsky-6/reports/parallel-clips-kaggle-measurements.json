@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-30",
+  "source": "Kaggle batch run, notebook 16 version 9 (PROFILE=baseline, PARALLEL_JOBS for smoke and baseline pairs)",
+  "url": "https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation",
+  "hardware": "2x Tesla T4, PCIe",
+  "torch": "2.11.0+cu128",
+  "packages": {
+    "diffusers": "0.42.1",
+    "transformers": "5.22.1",
+    "accelerate": "1.13.0"
+  },
+  "checkpoint": "kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers@4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81",
+  "seed": 42,
+  "steps": 10,
+  "guidance_scale": 1.0,
+  "sequential_reference": {
+    "run": "orbit_woman-baseline-6b15260c1a27",
+    "dit_placement": "cuda:0",
+    "stage_seconds": {
+      "text": 210.4,
+      "sample": 829.4,
+      "video": 693.6,
+      "audio": 2.5,
+      "export": 3.8
+    },
+    "denoise_seconds": 721.4,
+    "clip_seconds_without_text": 1529.3,
+    "clips_per_hour": 2.35,
+    "note": "video decode ran on cuda:1 while cuda:0 was idle"
+  },
+  "parallel": {
+    "smoke": {
+      "wall_seconds": 75.6,
+      "sum_of_clip_seconds": 147.8,
+      "clips": 2,
+      "clips_per_hour": 95.18,
+      "both_busy_fraction": 0.375,
+      "one_busy_fraction": 0.485,
+      "nvidia_smi_memory_used_peak_gib": [
+        8.52,
+        8.52
+      ],
+      "results": [
+        {
+          "run": "strange_tram-smoke-357240eb1369",
+          "gpu": 0,
+          "total_seconds": 72.1,
+          "sample_stage_seconds": 22.1,
+          "denoise_seconds": 11.9,
+          "decode_seconds": 49.6,
+          "allocated_peak_gib": 6.12,
+          "exported_frames": 24
+        },
+        {
+          "run": "mechanical_bloom-smoke-b48b97515bc9",
+          "gpu": 1,
+          "total_seconds": 75.6,
+          "sample_stage_seconds": 34.6,
+          "denoise_seconds": 15.6,
+          "decode_seconds": 40.8,
+          "allocated_peak_gib": 6.12,
+          "exported_frames": 24
+        }
+      ]
+    },
+    "baseline": {
+      "wall_seconds": 1509.7,
+      "sum_of_clip_seconds": 2941.2,
+      "clips": 2,
+      "clips_per_hour": 4.77,
+      "both_busy_fraction": 0.886,
+      "one_busy_fraction": 0.105,
+      "nvidia_smi_memory_used_peak_gib": [
+        9.49,
+        10.13
+      ],
+      "results": [
+        {
+          "run": "strange_tram-baseline-03bb774e90e9",
+          "gpu": 0,
+          "total_seconds": 1431.5,
+          "sample_stage_seconds": 724.3,
+          "denoise_seconds": 697.8,
+          "decode_seconds": 703.1,
+          "allocated_peak_gib": 8.59,
+          "exported_frames": 120
+        },
+        {
+          "run": "mechanical_bloom-baseline-64cd706a3acd",
+          "gpu": 1,
+          "total_seconds": 1509.7,
+          "sample_stage_seconds": 794.2,
+          "denoise_seconds": 779.5,
+          "decode_seconds": 712.2,
+          "allocated_peak_gib": 8.59,
+          "exported_frames": 120
+        }
+      ]
+    }
+  },
+  "baseline_throughput_ratio": 2.03,
+  "conclusions": [
+    "Baseline: two clips in parallel take 1509.7 s versus 1529.3 s for one sequential clip, so throughput goes from 2.35 to 4.77 clips per hour.",
+    "Per-clip time barely changes: denoise 698 and 780 s in parallel versus 721 s alone; video decode 703 and 712 s versus 694 s.",
+    "Both GPUs are busy at the same time in 88.6 % of nvidia-smi polls during the baseline pair.",
+    "Video VAE decode (fp32, tiled) takes about as long as denoising at full size and is the next target."
+  ],
+  "not_measured": [
+    "repeated runs/variance",
+    "prompt-to-prompt cost differences (the pair used other presets than the reference)",
+    "I2V",
+    "context parallelism"
+  ]
+}
