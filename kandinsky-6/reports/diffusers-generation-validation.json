@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-30",
+  "notebook": "kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb",
+  "notebook_sha256": "b24970ee38640980f6ea2a771e4857d8f9741de9cdfa93fd702470573df6cc40",
+  "runtime_sha256": "649365cdae12f997adcbc010b7b6ced829a2a1e84bcb9dee710ce7b0053db4b8",
+  "code_cells": 18,
+  "classic_python_cells": true,
+  "prompt_scenarios": 7,
+  "prompt_timelines": 14,
+  "profile_frame_contracts": true,
+  "cached_conditioning_padding_removed": true,
+  "nan_rejected": true,
+  "local_soundtrack_mix_and_offset": true,
+  "short_soundtrack_rejected": true,
+  "joint_latent_cache_reused_without_models": true,
+  "stale_latent_rejected": true,
+  "native_tiny_pipeline": [
+    {
+      "mode": "t2v",
+      "dit_nfe": 10,
+      "video_latent_shape": [
+        1,
+        16,
+        2,
+        8,
+        8
+      ],
+      "audio_latent_shape": [
+        1,
+        40,
+        9
+      ],
+      "seconds": 0.05087320785969496
+    },
+    {
+      "mode": "i2v",
+      "dit_nfe": 10,
+      "video_latent_shape": [
+        1,
+        16,
+        2,
+        8,
+        8
+      ],
+      "audio_latent_shape": [
+        1,
+        40,
+        9
+      ],
+      "seconds": 0.0327883749268949
+    }
+  ],
+  "reference_shapes": [
+    [
+      "mario_poster",
+      "smoke",
+      256,
+      432
+    ],
+    [
+      "mario_poster",
+      "baseline",
+      480,
+      864
+    ],
+    [
+      "mario_pipe_illustration",
+      "smoke",
+      320,
+      320
+    ],
+    [
+      "mario_pipe_illustration",
+      "baseline",
+      640,
+      640
+    ]
+  ],
+  "synthetic_mp4": {
+    "exported_frames": 24,
+    "fps": 24.0,
+    "seconds": 1.0,
+    "audio_sample_rate": 44100,
+    "decoded_audio_samples": 44100
+  },
+  "versions": {
+    "torch": "2.15.0",
+    "diffusers": "0.42.1",
+    "transformers": "5.22.1",
+    "accelerate": "1.13.0"
+  },
+  "pretrained_weights_downloaded": false,
+  "pretrained_models_loaded": false,
+  "two_gpu_cuda_tested": false,
+  "kaggle_inference_tested": false,
+  "boundary": "Real random-weight Diffusers DiT and Hunyuan VAE; audio codecs are config-only fixtures for latent output; no pretrained quality/performance claim"
+}

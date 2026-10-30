@@ -1,0 +1,526 @@
+{
+  "orbit_woman": {
+    "metadata": {
+      "prompt_name": "Woman / continuous camera orbit",
+      "mode": "t2v",
+      "base_style": "Cinematic live-action fashion film, natural skin texture, restrained color grading, realistic cloth physics."
+    },
+    "scene_setup": {
+      "room_description": "An adult woman, about 28 years old, stands in a circular stone courtyard. She wears a deep emerald coat and a cream silk scarf. Archways and foreground columns establish clear depth.",
+      "camera_setup": "One uninterrupted medium shot at eye level; a smooth camera orbit, no cuts, constant camera-to-subject distance.",
+      "lighting": "Warm late-afternoon side light; stable exposure and soft moving highlights."
+    },
+    "elements": {
+      "initial_state": [
+        "The woman faces the camera, both feet planted; hair tied loosely; scarf rests on her right shoulder."
+      ]
+    },
+    "reference_filename_hint": null,
+    "profiles": {
+      "smoke": {
+        "camera_setup": "The camera makes a small, smooth 15-degree clockwise arc; keep her face centered. Do not attempt a full circle in one second.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.35,
+            "action": "Start from a frontal three-quarter view. The camera begins its arc, a near column slides slowly across the background.",
+            "audio_cue": "Quiet courtyard air and a soft breeze."
+          },
+          {
+            "start": 0.35,
+            "end": 1,
+            "action": "Continue the arc smoothly. She turns her eyes toward the lens and the scarf lifts slightly, then begins to settle. Same face and outfit throughout.",
+            "audio_cue": "A brief silk rustle; no dialogue or music."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "The camera performs a smooth approximately 160-degree clockwise orbit from a front three-quarter view to a rear three-quarter view. Keep the woman centered at the same scale; archways pass with strong parallax.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 1,
+            "action": "Establish her face and emerald coat. The camera starts moving; a foreground column passes along the edge.",
+            "audio_cue": "Soft courtyard ambience."
+          },
+          {
+            "start": 1,
+            "end": 3.6,
+            "action": "The camera continues around her right side. She slowly turns her head to follow the lens, while a single gust pulls her scarf outward. Her body remains planted.",
+            "audio_cue": "One gentle gust, silk fluttering, distant birds."
+          },
+          {
+            "start": 3.6,
+            "end": 5,
+            "action": "Arrive at the rear three-quarter view. The scarf settles onto her shoulder and the camera eases to a stop; preserve her silhouette and clothing.",
+            "audio_cue": "The breeze fades; no speech or soundtrack."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "flicker",
+      "identity drift",
+      "extra limbs",
+      "warped hands",
+      "text overlays",
+      "watermarks"
+    ]
+  },
+  "strange_tram": {
+    "metadata": {
+      "prompt_name": "Retrofuturist tram / practical creature effects",
+      "mode": "t2v",
+      "base_style": "Surreal retrofuturist dark comedy, 1970s science-fiction cinema, tactile practical creature effects, worn brass, painted miniatures, muted teal and amber, subtle film grain."
+    },
+    "scene_setup": {
+      "room_description": "A rain-wet tram stop in an imaginary industrial city. An original pear-shaped, blue-skinned commuter with tiny spectacles and a tan raincoat waits beside a brass ticket machine. He has two arms and two legs.",
+      "camera_setup": "One continuous eye-level tracking shot; restrained handheld texture without sudden shaking.",
+      "lighting": "Overcast daylight mixed with warm tungsten light in the ticket machine."
+    },
+    "elements": {
+      "initial_state": [
+        "The commuter holds one paper ticket. The ticket slot is shut. Steam drifts behind the stop."
+      ]
+    },
+    "reference_filename_hint": null,
+    "profiles": {
+      "smoke": {
+        "camera_setup": "A short, slow push-in, without changing the view angle.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.4,
+            "action": "The brass ticket slot clicks open. The commuter freezes and raises one eyebrow.",
+            "audio_cue": "One dry metallic click over quiet rain."
+          },
+          {
+            "start": 0.4,
+            "end": 1,
+            "action": "A small mechanical tongue briefly taps the edge of his ticket, then retracts. The commuter blinks in deadpan disbelief.",
+            "audio_cue": "A soft rubbery squeak and a tiny bell; no speech."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "Track slowly left by about one metre as the action unfolds; preserve the same subject and scale.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 1,
+            "action": "The commuter inserts the ticket halfway into the slot.",
+            "audio_cue": "Rain, faint tram rails humming."
+          },
+          {
+            "start": 1,
+            "end": 2.8,
+            "action": "A small mechanical tongue takes the ticket, curls it into a neat tube, and pushes it back out. The creature watches without moving his feet.",
+            "audio_cue": "A wet rubber squeak followed by delicate brass clicks."
+          },
+          {
+            "start": 2.8,
+            "end": 4.2,
+            "action": "The commuter cautiously takes the rolled ticket with the same hand and tilts his head. A tram headlamp slides into the far background.",
+            "audio_cue": "A distant tram approaches and rings once."
+          },
+          {
+            "start": 4.2,
+            "end": 5,
+            "action": "Hold his puzzled expression as the slot closes with exaggerated politeness. Maintain tactile material detail and a coherent street.",
+            "audio_cue": "One final click; quiet rain, no narration."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "flicker",
+      "identity drift",
+      "extra limbs",
+      "warped hands",
+      "text overlays",
+      "watermarks"
+    ]
+  },
+  "mechanical_bloom": {
+    "metadata": {
+      "prompt_name": "Biomechanical greenhouse / unfolding flower",
+      "mode": "t2v",
+      "base_style": "Tactile miniature science-fiction film, stop-motion-inspired creature design with smooth motion, copper mechanisms and translucent botanical tissue, detailed macro photography."
+    },
+    "scene_setup": {
+      "room_description": "An original small flower made of copper ribs and translucent pale-blue petals grows from a cracked ceramic pot on a workbench. The background is an unfocused greenhouse.",
+      "camera_setup": "One continuous macro shot, shallow depth of field; focus remains on the flower head.",
+      "lighting": "Soft green backlight through glass with a warm practical lamp on the workbench."
+    },
+    "elements": {
+      "initial_state": [
+        "One closed flower bud; a drop of water hangs from a copper leaf."
+      ]
+    },
+    "reference_filename_hint": null,
+    "profiles": {
+      "smoke": {
+        "camera_setup": "A tiny sideways camera slide creating gentle foreground parallax.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.5,
+            "action": "The bud quivers and the first pair of petals separates.",
+            "audio_cue": "A quiet metallic tick."
+          },
+          {
+            "start": 0.5,
+            "end": 1,
+            "action": "The petals open a little farther and release one small puff of glowing pollen. The pot and bench stay fixed.",
+            "audio_cue": "A soft pneumatic puff and a delicate chime; no voice."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "A gentle 45-degree orbit around the flower at a fixed macro distance.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 1,
+            "action": "The closed bud slowly tilts toward the warm lamp.",
+            "audio_cue": "A faint mechanism starts ticking."
+          },
+          {
+            "start": 1,
+            "end": 3.4,
+            "action": "Six translucent petals unfold in a clear sequence as the copper ribs extend. One drop of water falls from the leaf.",
+            "audio_cue": "Delicate ratchet clicks, one water drop."
+          },
+          {
+            "start": 3.4,
+            "end": 4.4,
+            "action": "The flower opens fully, releasing a single drifting cloud of luminous pollen.",
+            "audio_cue": "A soft breath-like puff."
+          },
+          {
+            "start": 4.4,
+            "end": 5,
+            "action": "The flower settles and the camera eases to a stop. Keep the same pot, leaf and bench.",
+            "audio_cue": "The ticking subsides into greenhouse ambience."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "flicker",
+      "identity drift",
+      "extra limbs",
+      "warped hands",
+      "text overlays",
+      "watermarks"
+    ]
+  },
+  "room_assembly": {
+    "metadata": {
+      "prompt_name": "Scandinavian room / one bed assembly",
+      "mode": "t2v",
+      "base_style": "Photorealistic Scandinavian furniture commercial, clean geometric composition, natural materials, restrained palette."
+    },
+    "scene_setup": {
+      "room_description": "An empty sunlit room with white walls, a pale oak floor and one large window. The room is unoccupied.",
+      "camera_setup": "A single fixed wide shot for the entire clip, no camera movement, no cuts.",
+      "lighting": "Soft stable morning light from the left window."
+    },
+    "elements": {
+      "initial_state": [
+        "One unbranded flat-pack cardboard box in the center of the room. No other furniture."
+      ]
+    },
+    "reference_filename_hint": null,
+    "profiles": {
+      "smoke": {
+        "camera_setup": "Completely locked-off wide shot.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.3,
+            "action": "The sealed cardboard box begins to tremble gently.",
+            "audio_cue": "A low brief cardboard rattle."
+          },
+          {
+            "start": 0.3,
+            "end": 1,
+            "action": "Its top flaps pop open and the first pair of wooden bed rails rises a short distance above the box. The rest stays packed.",
+            "audio_cue": "A soft pop and two wooden clacks. The room is otherwise quiet."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "Completely static wide shot. Keep the window, walls and floor identical.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.6,
+            "action": "The box trembles and its top flaps open.",
+            "audio_cue": "Cardboard rustle and a small pop."
+          },
+          {
+            "start": 0.6,
+            "end": 2.5,
+            "action": "Four wooden rails and a few slats lift out, rotate into alignment and connect into one low minimalist bed frame.",
+            "audio_cue": "A short ordered sequence of wooden clicks."
+          },
+          {
+            "start": 2.5,
+            "end": 4,
+            "action": "One mattress lowers onto the frame. A white duvet unrolls across it; a single mustard-yellow throw lands at the foot. No other furniture appears.",
+            "audio_cue": "A cushioned thump and soft fabric rustling."
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "action": "Hold the completed bed in the otherwise uncluttered room. All pieces settle.",
+            "audio_cue": "A gentle warm ambient chord, no speech."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "flicker",
+      "identity drift",
+      "extra limbs",
+      "warped hands",
+      "text overlays",
+      "watermarks"
+    ]
+  },
+  "mario_poster": {
+    "metadata": {
+      "prompt_name": "Reference 1 / 3D poster character",
+      "mode": "i2v",
+      "base_style": "Preserve the reference: polished 3D cartoon rendering, rounded proportions, bright red clothing, crisp poster graphics."
+    },
+    "scene_setup": {
+      "room_description": "Use the supplied poster as the first frame and visual ground truth. Preserve the orange left half, blue right half, radial rays, two small upper stickers and the exact character design.",
+      "camera_setup": "Locked frontal view; preserve the full composition and all character proportions.",
+      "lighting": "Keep the original soft studio lighting and saturated orange-blue palette."
+    },
+    "elements": {
+      "initial_state": [
+        "The stocky Mario-like cartoon character wears red overalls, a red cap with its existing emblem, white gloves and brown shoes. Keep his identity and body shape."
+      ]
+    },
+    "reference_filename_hint": "images-4.jpeg",
+    "profiles": {
+      "smoke": {
+        "camera_setup": "Camera completely static; the two upper stickers and radial background remain motionless.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.4,
+            "action": "The main character blinks once and raises his eyebrows slightly.",
+            "audio_cue": "A tiny friendly cartoon exhale."
+          },
+          {
+            "start": 0.4,
+            "end": 1,
+            "action": "He makes a small cheerful nod; his cap and overall straps follow with a subtle secondary bounce, then settle. Keep both hands and shoes in their original positions.",
+            "audio_cue": "A soft fabric creak and a light comic pluck. No spoken words."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "A very slow approximately 3-percent push-in, no orbit; both upper stickers remain fixed graphic elements.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 1,
+            "action": "He notices the viewer and blinks, keeping the original body shape and stance.",
+            "audio_cue": "A short curious cartoon hum."
+          },
+          {
+            "start": 1,
+            "end": 2.7,
+            "action": "He lifts his right gloved hand, on the left side of the image, to the brim of his cap and tips it once. His other hand remains beside his body.",
+            "audio_cue": "A gentle cloth rustle and one cheerful comic pluck."
+          },
+          {
+            "start": 2.7,
+            "end": 4.2,
+            "action": "He lowers that hand and gives a small proud shoulder bounce. The red overalls react with subtle cloth motion; his shoes stay in place.",
+            "audio_cue": "A quiet breathy chuckle without intelligible speech."
+          },
+          {
+            "start": 4.2,
+            "end": 5,
+            "action": "Return to a relaxed near-original pose. The background, stickers and existing emblems stay unchanged, with no new lettering.",
+            "audio_cue": "A light settling sound and then quiet."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "flicker",
+      "identity drift",
+      "extra limbs",
+      "warped hands",
+      "text overlays",
+      "watermarks"
+    ]
+  },
+  "mario_pipe_illustration": {
+    "metadata": {
+      "prompt_name": "Reference 2 / drawn character on pipe",
+      "mode": "i2v",
+      "base_style": "Preserve the reference: warm paper background, hand-drawn ink outlines, muted colors, stippled shading and limited 2D cartoon animation. Keep it illustrated throughout."
+    },
+    "scene_setup": {
+      "room_description": "Use the supplied square drawing as the first frame. The heavy cartoon plumber sits on the same green pipe, holding the same red-and-white mushroom and yellow flower.",
+      "camera_setup": "Fixed frontal three-quarter view, no camera orbit, no change of framing.",
+      "lighting": "Keep the original flat warm illustration lighting and textured cream paper."
+    },
+    "elements": {
+      "initial_state": [
+        "Preserve the red cap, blue overalls, white gloves, moustache, heavy body proportions, mushroom, flower, pipe and floor cracks."
+      ]
+    },
+    "reference_filename_hint": "3ad019e7defdecd45abf8be97e287972.jpg",
+    "profiles": {
+      "smoke": {
+        "camera_setup": "Locked camera; paper texture and floor cracks remain stationary.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.4,
+            "action": "The character blinks and looks toward the mushroom in his raised hand.",
+            "audio_cue": "A tiny amused nasal hum."
+          },
+          {
+            "start": 0.4,
+            "end": 1,
+            "action": "The yellow flower nods gently once while his shoulders lift with a small silent chuckle. Preserve the ink outline and original objects.",
+            "audio_cue": "A soft cloth creak and a delicate spring sound; no speech."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "Camera completely fixed; preserve the square paper illustration and keep all props visible.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 1,
+            "action": "He glances from the mushroom to the yellow flower and lifts one eyebrow.",
+            "audio_cue": "A low curious cartoon hum."
+          },
+          {
+            "start": 1,
+            "end": 2.7,
+            "action": "His raised gloved hand tilts the mushroom toward his face without eating it; the flower bends playfully toward the mushroom. Keep the props in their original hands.",
+            "audio_cue": "A gentle springy boing and glove rustle."
+          },
+          {
+            "start": 2.7,
+            "end": 4.1,
+            "action": "He leans back slightly and chuckles; his shoulders and belly move together with one restrained squash-and-stretch bounce. The green pipe remains intact.",
+            "audio_cue": "A short warm comic chuckle; no words or music."
+          },
+          {
+            "start": 4.1,
+            "end": 5,
+            "action": "He settles toward the original seated pose and the flower makes one small final nod. Preserve the hand-drawn style and paper texture.",
+            "audio_cue": "A soft settling creak, then quiet."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "flicker",
+      "identity drift",
+      "extra limbs",
+      "warped hands",
+      "text overlays",
+      "watermarks"
+    ]
+  },
+  "mario_kandinsky_growth": {
+    "metadata": {
+      "prompt_name": "Mario / Kandinsky mushroom / growth gag",
+      "mode": "i2v",
+      "base_style": "Playful hand-drawn cartoon animation; preserve the supplied reference style, ink outlines, face, moustache and costume colors.",
+      "music_reference": "Talking Heads - Burning Down the House (Official Video)",
+      "reference_preparation": "Prepare a single PNG/JPEG first frame: same character, one large red mushroom already in his right glove, supplied Kandinsky SVG wordmark composited as a crisp mint-and-white decal on the cap. Do not pass the SVG as a second conditioning image.",
+      "reference_preparation_prompt": "Create a clean medium-wide first frame from the supplied Mario reference. Keep the same character identity, red cap, overalls, white gloves and warm illustrated finish. He holds one large red mushroom toward the viewer with the cap facing the camera. Place the exact supplied Kandinsky wordmark on the mushroom cap as a composited decal; do not redraw or invent the lettering. Leave generous empty space above his head and around his body for later growth. Keep the other hand empty and the background simple."
+    },
+    "reference_filename_hint": "mario_kandinsky_mushroom_prepared.png",
+    "scene_setup": {
+      "room_description": "Use the prepared reference as the first frame. One cartoon plumber holds one red mushroom whose cap already carries the supplied Kandinsky logo. Preserve the reference appearance and background.",
+      "camera_setup": "One uninterrupted shot. The camera smoothly dollies backward as the character grows, keeping his entire body visible.",
+      "lighting": "Stable warm cartoon lighting, unchanged colors and exposure."
+    },
+    "elements": {
+      "initial_state": [
+        "He holds the mushroom close to his mouth, its existing Kandinsky decal facing the camera. His free hand rests at his side. Plenty of headroom."
+      ]
+    },
+    "profiles": {
+      "smoke": {
+        "camera_setup": "Keep the camera nearly fixed; a tiny backward drift compensates for the beginning of growth.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 0.4,
+            "action": "The character takes one clear bite from the edge of the mushroom. Preserve the existing logo on the remaining visible cap; the glove stays attached to the same hand.",
+            "audio_cue": "One crisp cartoon crunch on an energetic drum accent."
+          },
+          {
+            "start": 0.4,
+            "end": 1,
+            "action": "A warm mint-colored pulse passes through him. His shoulders rise and his belly rounds slightly: only the start of the power-up. His face and costume stay recognizable.",
+            "audio_cue": "A short rising power-up tone over an original syncopated new-wave funk instrumental, dry drums, elastic bass and scratchy rhythm guitar; no vocals or quoted melody."
+          }
+        ]
+      },
+      "baseline": {
+        "camera_setup": "Begin in a medium-wide view. After the bite, dolly smoothly backward and tilt upward gently so the growing character remains fully inside the frame. No cuts.",
+        "timeline": [
+          {
+            "start": 0,
+            "end": 1,
+            "action": "He looks at the viewer, lifts the mushroom slightly and presents its existing Kandinsky decal toward the camera. Keep the lettering already in the reference.",
+            "audio_cue": "An original energetic early-1980s-style new-wave funk groove: dry punchy drums, elastic bass, clipped rhythm guitar and short bright synth accents; no vocals or familiar melody."
+          },
+          {
+            "start": 1,
+            "end": 1.8,
+            "action": "He takes one bite. A small piece is missing from the cap; his jaw closes naturally and he lowers the same hand.",
+            "audio_cue": "A satisfying crunchy bite aligned to the beat."
+          },
+          {
+            "start": 1.8,
+            "end": 3.8,
+            "action": "One mint-colored pulse triggers a continuous cartoon power-up. He grows roughly one-and-a-half times taller and becomes noticeably wider and rounder, with fuller cheeks, broader shoulders and a larger belly. His overalls stretch with him; preserve his face, moustache, cap, two arms and two legs. The camera pulls back steadily.",
+            "audio_cue": "A rising playful synth glissando and soft elastic fabric sounds over the steady funk groove."
+          },
+          {
+            "start": 3.8,
+            "end": 5,
+            "action": "Now oversized and comically plump, he plants his feet, gives one satisfied belly bounce and grins. Ease the camera to a stop. Keep the final larger body stable, with no extra objects or limbs.",
+            "audio_cue": "One low comic landing thump, then a confident instrumental accent. No spoken dialogue."
+          }
+        ]
+      }
+    },
+    "negative_prompts": [
+      "cuts",
+      "identity change",
+      "horror",
+      "body disintegration",
+      "extra limbs",
+      "detached gloves",
+      "new text",
+      "logo morphing",
+      "watermark"
+    ]
+  }
+}

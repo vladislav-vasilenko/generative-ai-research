@@ -107,6 +107,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 | [13_runtime_memory_and_mlx.ipynb](../kandinsky-6/notebooks/13_runtime_memory_and_mlx.ipynb) | 1. Offload, quantization и cache делают разные вещи; 2. Измеряем только то, что действительно запущено; 3. Parity gates: по слоям, затем по pipeline |
 | [14_comfyui_component_experiments.ipynb](../kandinsky-6/notebooks/14_comfyui_component_experiments.ipynb) | 1. UI показывает wiring, а не все внутренние слои; 2. Последовательность опытов и измерений; 3. Как перейти к исследованию голоса |
 | [15_kaggle_t4_lite_distill.ipynb](../kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb) | 1. Подготовка Kaggle и порядок запуска; 2. Почему память освобождается между стадиями; 3. Код и зависимости: отдельная среда, существующий CUDA PyTorch; 4. Все модели: точные файлы, revisions, размеры и контрольные суммы; 5. Настройки эксперимента и контракты тензоров; 6. Общая часть worker: ComfyUI loaders и безопасные промежуточные файлы |
+| [16_kaggle_diffusers_lite_generation.ipynb](../kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb) | 1. Среда; 2. Что генерировать; 3. Функции запуска; 4. Конфигурация, reference и prompt; 5. Текст и joint sampling; 6. Video / audio decode из сохранённых latents |
 
 ## VAE: MIT Lab 3 → HunyuanVideo → tiling
 
@@ -218,6 +219,8 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [kandinsky-6/STATUS.md](../kandinsky-6/STATUS.md) — Состояние эксперимента, 30 октября 2026.
 - [kandinsky-6/SUPER_RESOLUTION_RU.md](../kandinsky-6/SUPER_RESOLUTION_RU.md) — Kandinsky 6 SR: готовый Baseline MP4 → видео большего разрешения.
 - [kandinsky-6/THIRD_PARTY.md](../kandinsky-6/THIRD_PARTY.md) — Source provenance.
+- [kandinsky-6/generation/PROMPTS.md](../kandinsky-6/generation/PROMPTS.md) — Prompts: Kandinsky 6 Lite T2V / I2V.
+- [kandinsky-6/generation/README.md](../kandinsky-6/generation/README.md) — Kandinsky 6 Lite — генерация через Diffusers.
 - [kandinsky-6/kaggle_runtime/README.md](../kandinsky-6/kaggle_runtime/README.md) — Kandinsky 6 Lite: читаемый код Kaggle pipeline.
 - [kandinsky-6/reference/README.md](../kandinsky-6/reference/README.md) — Закреплённые сторонние исходники.
 - [kandinsky-6/reports/COMPONENT_VALIDATION.md](../kandinsky-6/reports/COMPONENT_VALIDATION.md) — K6 component labs: проверка 27 октября 2026.
@@ -278,6 +281,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [build_comfy_baselines.py](../kandinsky-6/scripts/build_comfy_baselines.py) — Derive minimal Lite workflows from the pinned official graph.
 - [build_component_guide.py](../kandinsky-6/scripts/build_component_guide.py) — Build README navigation and an AST-based component/source index.
 - [build_component_notebooks.py](../kandinsky-6/scripts/build_component_notebooks.py) — Build the K6 component course. Only source generation, no network/weights.
+- [build_diffusers_generation_notebook.py](../kandinsky-6/scripts/build_diffusers_generation_notebook.py) — Build the standalone classic-cell Kaggle Diffusers T2V/I2V runner; no lessons or code-string payloads.
 - [build_kaggle_notebook.py](../kandinsky-6/scripts/build_kaggle_notebook.py) — Build the standalone, staged Kaggle 2xT4 Kandinsky 6 Lite deployment notebook.
 - [build_manual_notebook.py](../kandinsky-6/scripts/build_manual_notebook.py) — Build the lightweight manual experiment notebook; no model downloads.
 - [build_sr_workflows.py](../kandinsky-6/scripts/build_sr_workflows.py) — Derive standalone x2/x2.25 Kandinsky SR workflows from an installed official template.
@@ -290,6 +294,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [summarize_components.py](../kandinsky-6/scripts/summarize_components.py) — Publish a concise evidence report and selected figures from successful local executions.
 - [torch_parity_reference.py](../kandinsky-6/scripts/torch_parity_reference.py) — Generate a PyTorch numerical reference; never label random fixtures pretrained.
 - [validate_component_notebooks.py](../kandinsky-6/scripts/validate_component_notebooks.py) — Validate K6 teaching labs; --execute uses fresh CPU kernels, no downloads.
+- [validate_diffusers_generation.py](../kandinsky-6/scripts/validate_diffusers_generation.py) — Validate classic Diffusers generation cells, presets and real tiny pipeline; no pretrained downloads.
 - [validate_kaggle_notebook.py](../kandinsky-6/scripts/validate_kaggle_notebook.py) — Validate the Kaggle deployment notebook without model downloads; optional native CPU API checks.
 - [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route.
 - [validate_parallel_vae_tiles.py](../kandinsky-6/scripts/validate_parallel_vae_tiles.py) — Validate single-video tile dispatch/IPC against native ComfyUI on CPU, without downloads.

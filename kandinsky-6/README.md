@@ -153,11 +153,16 @@ uv run --locked python curriculum/scripts/sync_study_navigation.py --check
 
 Сначала smoke 432×256 / 33 кадра; baseline 864×480 / 121 кадр включается после него отдельным флагом. Notebook пишет фактические timings, NFE, RAM/VRAM counters, logs и проверяет наличие декодируемых видео/аудио. [Проверки notebook/native CPU API](reports/kaggle-t4-validation.json) и [двухпроцессного VAE tiler](reports/parallel-vae-tiles-validation.json) прошли. [CPU integration с настоящим Hunyuan VAE](reports/parallel-vae-pretrained-cpu-validation.json): 2 процесса, 9 кадров 64×64, bitwise equality с native tiled decode на synthetic latent. [Пользовательские Kaggle логи](reports/kaggle-t4-user-smoke-stages.json) подтверждают Text (39,60 s, 11,66 GiB allocated) и Sample (44,70 s stage / 15,60 s sampling, 10 NFE, 6,19 GiB allocated); полный MP4 и ускорение two-GPU VAE ещё не подтверждены. Это deployment notebook, отдельный от 14 лёгких CPU-лабораторных; не запускайте его в основном локальном kernel через Run All.
 
+## Отдельный Diffusers Generation runner
+
+**[Notebook 16: Diffusers T2V / I2V](notebooks/16_kaggle_diffusers_lite_generation.ipynb)** · [Kaggle](https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation) · [14 готовых промптов](generation/PROMPTS.md) · [инструкция](generation/README.md). Практический вариант без учебных разделов: Smoke 1 s / Baseline 5 s, image reference, DiT blocks на двух T4, сохранение joint latents, VAE/audio decode, MP4 и опциональный пользовательский soundtrack. Использует официальный Diffusers API без ComfyUI. [Notebook 15](notebooks/15_kaggle_t4_lite_distill.ipynb) и его публичная ComfyUI-версия сохранены отдельно. [Tiny CPU API checks](reports/diffusers-generation-validation.json) не заменяют pretrained T4 прогон.
+
 ## Структура и источники
 
 ```text
 notebooks/          01–14 component labs, ручной журнал, 15 Kaggle deployment
-kaggle_runtime/     читаемые worker-модули notebook и two-GPU tile adapter
+kaggle_runtime/     читаемые ComfyUI worker-модули и two-GPU VAE tile adapter
+generation/         Diffusers T2V/I2V runner, 14 промптов, опциональный soundtrack
 labkit/             Native CPU adapter, учебные helpers, MLX audio prototype
 scripts/            Сборка notebooks, проверки, ComfyUI/VCTK/parity инструменты
 workflows/          Lite Smoke/Baseline JSON
