@@ -15,5 +15,8 @@
   "n_grid": 10,
   "model_weights_downloaded_locally": false,
   "user_images_in_repository": false,
-  "user_music_in_repository": false
+  "user_music_in_repository": false,
+  "compatibility_constraints": {
+    "pillow": ">=10.4,<13 (Gradio compatibility)"
+  }
 }

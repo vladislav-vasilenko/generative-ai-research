@@ -24,10 +24,15 @@ Smoke: 25 сгенерированных → 24 экспортированных
 [Diffusers API](https://huggingface.co/docs/diffusers/en/api/pipelines/kandinsky6) · [Lite checkpoint](https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers) · [README и presets](https://github.com/vladislav-vasilenko/generative-ai-research/tree/main/kandinsky-6/generation) · [Сохранённый вариант ComfyUI](https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill).
 
 Учебные материалы отдельно: [MIT 6.S184](https://diffusion.csail.mit.edu/2026/index.html) · [конспект](https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf) · [оглавление проекта](https://github.com/vladislav-vasilenko/generative-ai-research/blob/main/curriculum/CONTENTS.md).''')
-    md('## 1. Среда')
-    code('''import os, sys, subprocess
+    md('''## 1. Среда
+
+В редакторе Kaggle включите **Internet → On**. Если `pypi.org` не разрешается, проверьте переключатель; при уже включённом Internet возможен временный DNS-сбой. Ячейка проверяет доступ к PyPI до pip и пропускает установку, когда версии уже подходят. Pillow ограничен `<13` для совместимости с Gradio. При изменении уже импортированной библиотеки потребуется Restart Python kernel, затем повтор с первой ячейки.''')
+    code('''import os, sys, subprocess, socket
 from pathlib import Path
 from importlib.metadata import version, PackageNotFoundError
+from urllib.request import Request, urlopen
+from urllib.error import URLError, HTTPError
+from packaging.requirements import Requirement
 import torch
 
 if not Path('/kaggle/working').is_dir() or torch.cuda.device_count() < 2:
@@ -40,16 +45,73 @@ RESULTS=Path('/kaggle/working/k6-diffusers-results')
 SCRATCH.mkdir(parents=True,exist_ok=True);RESULTS.mkdir(parents=True,exist_ok=True)
 os.environ.update(HF_HUB_DISABLE_TELEMETRY='1',HF_HUB_DISABLE_XET='1',TOKENIZERS_PARALLELISM='false')
 pins={'diffusers':'0.42.1','transformers':'5.22.1','accelerate':'1.13.0'}
+
+
+def pending_dependencies(requirements, version_lookup=version):
+    missing = []
+    for item in requirements:
+        requirement = Requirement(item)
+        try:
+            installed = version_lookup(requirement.name)
+        except PackageNotFoundError:
+            missing.append(item)
+            continue
+        if installed not in requirement.specifier:
+            missing.append(item)
+    return missing
+
+
+def check_pypi_access():
+    url = 'https://pypi.org/simple/diffusers/'
+    try:
+        with urlopen(Request(url, method='HEAD'), timeout=10):
+            pass
+    except HTTPError as error:
+        raise RuntimeError(f'PyPI responds with HTTP {error.code}. Check Kaggle Internet access; pip has not started.') from error
+    except URLError as error:
+        cause = ('DNS cannot resolve pypi.org' if isinstance(error.reason, socket.gaierror)
+                 else f'HTTPS connection failed: {error.reason}')
+        raise RuntimeError(cause + '. In Kaggle editor set Internet to On, then retry this cell. '
+                           'If Internet is already On, retry after the temporary network outage. pip has not started.') from error
+    except (TimeoutError, OSError) as error:
+        raise RuntimeError('PyPI network probe timed out/failed. Check Kaggle Internet and retry this cell. pip has not started.') from error
+
+
+def check_loaded_dependency_versions():
+    # A pip upgrade cannot replace modules already imported by this Python kernel.
+    for distribution, module_name in [('pillow','PIL'),('diffusers','diffusers'),
+                                      ('transformers','transformers'),('accelerate','accelerate')]:
+        module = sys.modules.get(module_name)
+        active = getattr(module, '__version__', None)
+        if active is not None and str(active) != version(distribution):
+            raise RuntimeError(f'{distribution}: kernel has {active}, installed files are {version(distribution)}. '
+                               'Restart the Python kernel, then run this notebook again from cell 1.')
+
+
+def ensure_runtime_dependencies(requirements, constraint_file):
+    pending = pending_dependencies(requirements)
+    if pending:
+        print('Dependencies to install/update:', pending, flush=True)
+        check_pypi_access()
+        subprocess.run([sys.executable,'-m','pip','install','--disable-pip-version-check',
+            '--retries','1','--timeout','15','--upgrade-strategy','only-if-needed',
+            '-c',str(constraint_file),*requirements],check=True)
+    else:
+        print('Compatible dependencies already installed; skipping installation and PyPI probe.',flush=True)
+    check_loaded_dependency_versions()
+    return bool(pending)
+
+
+requirements = [name+'=='+v for name,v in pins.items()] + [
+    'av>=18.0.0,<19', 'safetensors>=0.8.0', 'pillow>=10.4,<13']
 constraints=[]
 for name in ['torch','torchvision','torchaudio']:
     try:constraints.append(name+'=='+version(name))
     except PackageNotFoundError:pass
 constraint_file=SCRATCH/'torch-constraints.txt'
 constraint_file.write_text('\\n'.join(constraints)+'\\n')
-subprocess.run([sys.executable,'-m','pip','install','--upgrade-strategy','only-if-needed',
-    '-c',str(constraint_file),*[name+'=='+v for name,v in pins.items()],
-    'av>=18.0.0,<19','safetensors>=0.8.0','pillow'],check=True)
-(RESULTS/'environment.txt').write_text(subprocess.check_output([sys.executable,'-m','pip','freeze'],text=True))
+ensure_runtime_dependencies(requirements,constraint_file)
+(RESULTS/'environment.txt').write_text(subprocess.check_output([sys.executable,'-m','pip','--disable-pip-version-check','freeze'],text=True))
 ''')
     md('''## 2. Что генерировать
 
@@ -65,7 +127,7 @@ IMAGE_PATH=None                # e.g. '/kaggle/input/my-references/images-4.jpeg
 ASPECT='auto'                  # auto / landscape / portrait / square
 LOCAL_MODEL_DIR=None           # optional '/kaggle/input/.../full-diffusers-snapshot'
 AUDIO_MODE='generated'          # 'music' or 'mix' to use your own audio file
-MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning-down-the-house.wav'
+MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning_down_the_house.aac'
 MUSIC_OFFSET_SECONDS=0.0
 MUSIC_GAIN=0.65
 MODEL_ID='kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers'
@@ -104,6 +166,16 @@ print('Qwen text phase needs about 18 GiB of free scratch unless weights come fr
 if REFERENCE is not None:
     from IPython.display import display
     display(REFERENCE)
+if AUDIO_MODE in ('music','mix'):
+    # Validate the uploaded track and preview the chosen excerpt before any model download.
+    if not MUSIC_PATH or not Path(MUSIC_PATH).is_file():
+        raise FileNotFoundError('Upload your AAC/audio file to Kaggle Input and set its actual MUSIC_PATH before generation.')
+    MUSIC_PREVIEW,MUSIC_SOURCE=soundtrack_audio(torch.zeros(1,CFG['seconds']*44100),44100,
+        MUSIC_PATH,MUSIC_OFFSET_SECONDS,'music',MUSIC_GAIN)
+    (RUN_DIR/'music-source.json').write_text(json.dumps(MUSIC_SOURCE,indent=2))
+    from IPython.display import Audio,display
+    display(Audio(MUSIC_PREVIEW.numpy(),rate=44100,normalize=False))
+    print('Soundtrack checked; preview uses the selected offset and gain.')
 ''')
     md('''## 5. Текст и joint sampling
 

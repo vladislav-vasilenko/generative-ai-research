@@ -12,13 +12,83 @@ import time
 from types import SimpleNamespace
 
 import torch
-from PIL import Image
+from PIL import Image, __version__ as pillow_version
 import numpy as np
 
 ROOT=Path(__file__).resolve().parents[2]
 
+def validate_bootstrap(nb):
+    import socket, sys
+    from importlib.metadata import version, PackageNotFoundError
+    from urllib.request import Request
+    from urllib.error import HTTPError, URLError
+    from unittest.mock import MagicMock
+    from packaging.requirements import Requirement
+    source=next(c['source'] for c in nb['cells'] if c['cell_type']=='code' and 'def ensure_runtime_dependencies(' in c['source'])
+    names={'pending_dependencies','check_pypi_access','check_loaded_dependency_versions','ensure_runtime_dependencies'}
+    nodes=[n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name in names]
+    assert len(nodes)==4
+    opener,run=MagicMock(),MagicMock()
+    namespace=dict(Requirement=Requirement,version=version,PackageNotFoundError=PackageNotFoundError,
+        socket=socket,Request=Request,HTTPError=HTTPError,URLError=URLError,urlopen=opener,
+        sys=SimpleNamespace(executable=sys.executable,modules={}),subprocess=SimpleNamespace(run=run))
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),'bootstrap-unit-check','exec'),namespace)
+    required=['diffusers==0.42.1','pillow>=10.4,<13']
+    installed={'diffusers':'0.42.1','pillow':'12.3.0'}
+    assert namespace['pending_dependencies'](required,installed.__getitem__)==[]
+    assert namespace['pending_dependencies'](required,lambda n:'13.0.0' if n=='pillow' else installed[n])==['pillow>=10.4,<13']
+    pending=MagicMock(return_value=[])
+    namespace['pending_dependencies']=pending
+    assert namespace['ensure_runtime_dependencies'](required,Path('constraints.txt')) is False
+    opener.assert_not_called();run.assert_not_called()
+    pending.return_value=['pillow>=10.4,<13']
+    for error,expected in [(URLError(socket.gaierror(-3,'Temporary failure in name resolution')),'DNS'),
+                           (HTTPError('https://pypi.org',403,'Forbidden',{},None),'HTTP 403'),
+                           (TimeoutError('fixture timeout'),'timed out')]:
+        opener.side_effect=error
+        try:namespace['ensure_runtime_dependencies'](required,Path('constraints.txt'))
+        except RuntimeError as caught:assert expected in str(caught)
+        else:raise AssertionError('Network error did not stop the installer')
+        run.assert_not_called()
+    opener.side_effect=None
+    assert namespace['ensure_runtime_dependencies'](required,Path('constraints.txt')) is True
+    command=run.call_args.args[0]
+    assert command[command.index('--retries')+1]=='1'
+    assert command[command.index('--timeout')+1]=='15'
+    assert '-c' in command and 'pillow>=10.4,<13' in command and '--trusted-host' not in command
+    request=opener.call_args.args[0]
+    assert request.full_url.startswith('https://pypi.org/') and opener.call_args.kwargs['timeout']==10
+    namespace['sys'].modules={'PIL':SimpleNamespace(__version__='13.0.0')}
+    namespace['version']=installed.__getitem__
+    pending.return_value=[]
+    try:namespace['ensure_runtime_dependencies'](required,Path('constraints.txt'))
+    except RuntimeError as error:assert 'Restart the Python kernel' in str(error)
+    else:raise AssertionError('Stale imported Pillow was accepted')
+    return dict(pillow_13_requires_downgrade=True,compatible_dependencies_skip_network_and_pip=True,
+        dns_http_timeout_stop_before_pip=True,limited_pip_retries_and_timeout=True,
+        tls_verification_preserved=True,stale_imported_pillow_requires_kernel_restart=True,
+        network_requests_during_tests=0,real_pip_installs_during_tests=0)
+
+
+def check_supplied_soundtrack(runner,path):
+    import av
+    with av.open(str(path)) as container:
+        stream=container.streams.audio[0]
+        codec=stream.codec_context.name
+        source_rate=stream.codec_context.sample_rate
+    clips=[]
+    for seconds in [1,5]:
+        mixed,info=runner.soundtrack_audio(torch.zeros(1,seconds*44100),44100,path,0.0,'mix',0.65)
+        assert mixed.shape==(1,seconds*44100) and torch.isfinite(mixed).all()
+        assert 0<float(mixed.abs().max())<=0.98
+        clips.append(dict(seconds=seconds,shape=list(mixed.shape),peak=float(mixed.abs().max()),rms=float(mixed.square().mean().sqrt())))
+    return dict(provenance='User-provided AAC; decoded locally, not uploaded to Kaggle or GitHub',
+        filename=path.name,bytes=path.stat().st_size,codec=codec,source_sample_rate=source_rate,
+        output_sample_rate=44100,verified_excerpts=clips,audio_file_published=False)
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--output',type=Path);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--output',type=Path);p.add_argument('--soundtrack',type=Path);args=p.parse_args()
     path=ROOT/'kandinsky-6/generation/diffusers_runner.py'
     spec=importlib.util.spec_from_file_location('k6_diffusers_generation',path)
     runner=importlib.util.module_from_spec(spec);spec.loader.exec_module(runner)
@@ -28,6 +98,7 @@ def main():
         if cell['cell_type']=='code':
             ast.parse(cell['source']);assert not cell['outputs'] and cell['execution_count'] is None
             assert not cell['source'].startswith('%%')
+    bootstrap=validate_bootstrap(nb)
     presets=json.loads((ROOT/'kandinsky-6/generation/prompt_presets.json').read_text())
     prompts=[runner.compile_prompt(preset,profile)[0] for preset in presets.values() for profile in runner.PROFILES]
     assert len(prompts)==14 and all('<AUDCAP>' in x and '<ENDAUDCAP>' in x for x in prompts)
@@ -107,6 +178,7 @@ def main():
     report=dict(date='2026-10-30',notebook=str(notebook.relative_to(ROOT)),
         notebook_sha256=hashlib.sha256(notebook.read_bytes()).hexdigest(),
         runtime_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+        bootstrap_checks=bootstrap,
         code_cells=sum(c['cell_type']=='code' for c in nb['cells']),classic_python_cells=True,
         prompt_scenarios=7,prompt_timelines=14,profile_frame_contracts=True,
         cached_conditioning_padding_removed=True,nan_rejected=True,
@@ -114,10 +186,12 @@ def main():
         joint_latent_cache_reused_without_models=True,stale_latent_rejected=True,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
-                      transformers=transformers.__version__,accelerate=accelerate.__version__),
+                      transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),
         pretrained_weights_downloaded=False,pretrained_models_loaded=False,
         two_gpu_cuda_tested=False,kaggle_inference_tested=False,
         boundary='Real random-weight Diffusers DiT and Hunyuan VAE; audio codecs are config-only fixtures for latent output; no pretrained quality/performance claim')
+    if args.soundtrack:
+        report['supplied_soundtrack']=check_supplied_soundtrack(runner,args.soundtrack)
     output=args.output or ROOT/'kandinsky-6/reports/diffusers-generation-validation.json'
     output.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))

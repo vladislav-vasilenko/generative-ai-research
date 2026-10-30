@@ -1,8 +1,18 @@
 {
   "date": "2026-10-30",
   "notebook": "kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb",
-  "notebook_sha256": "b24970ee38640980f6ea2a771e4857d8f9741de9cdfa93fd702470573df6cc40",
+  "notebook_sha256": "5a9eeda6444167d51759487caf72faf79bd521289ac1d6e48c2a0390cc62979b",
   "runtime_sha256": "649365cdae12f997adcbc010b7b6ced829a2a1e84bcb9dee710ce7b0053db4b8",
+  "bootstrap_checks": {
+    "pillow_13_requires_downgrade": true,
+    "compatible_dependencies_skip_network_and_pip": true,
+    "dns_http_timeout_stop_before_pip": true,
+    "limited_pip_retries_and_timeout": true,
+    "tls_verification_preserved": true,
+    "stale_imported_pillow_requires_kernel_restart": true,
+    "network_requests_during_tests": 0,
+    "real_pip_installs_during_tests": 0
+  },
   "code_cells": 18,
   "classic_python_cells": true,
   "prompt_scenarios": 7,
@@ -30,7 +40,7 @@
         40,
         9
       ],
-      "seconds": 0.05087320785969496
+      "seconds": 0.05310729192569852
     },
     {
       "mode": "i2v",
@@ -47,7 +57,7 @@
         40,
         9
       ],
-      "seconds": 0.0327883749268949
+      "seconds": 0.03455670806579292
     }
   ],
   "reference_shapes": [
@@ -87,11 +97,41 @@
     "torch": "2.15.0",
     "diffusers": "0.42.1",
     "transformers": "5.22.1",
-    "accelerate": "1.13.0"
+    "accelerate": "1.13.0",
+    "pillow": "12.3.0"
   },
   "pretrained_weights_downloaded": false,
   "pretrained_models_loaded": false,
   "two_gpu_cuda_tested": false,
   "kaggle_inference_tested": false,
-  "boundary": "Real random-weight Diffusers DiT and Hunyuan VAE; audio codecs are config-only fixtures for latent output; no pretrained quality/performance claim"
+  "boundary": "Real random-weight Diffusers DiT and Hunyuan VAE; audio codecs are config-only fixtures for latent output; no pretrained quality/performance claim",
+  "supplied_soundtrack": {
+    "provenance": "User-provided AAC; decoded locally, not uploaded to Kaggle or GitHub",
+    "filename": "Talking_Heads_-_Burning_Down_The_House_2005_Remastered_Version_(mp3.pm).aac",
+    "bytes": 7991499,
+    "codec": "aac",
+    "source_sample_rate": 44100,
+    "output_sample_rate": 44100,
+    "verified_excerpts": [
+      {
+        "seconds": 1,
+        "shape": [
+          1,
+          44100
+        ],
+        "peak": 0.004167576320469379,
+        "rms": 0.0007299630087800324
+      },
+      {
+        "seconds": 5,
+        "shape": [
+          1,
+          220500
+        ],
+        "peak": 0.017480483278632164,
+        "rms": 0.0020246373023837805
+      }
+    ],
+    "audio_file_published": false
+  }
 }
