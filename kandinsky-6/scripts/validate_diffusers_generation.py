@@ -164,6 +164,39 @@ def check_parallel_clips(runner,d,presets):
     assert all((r['run_dir']/'parallel.json').is_file() for r in runs)
     return True
 
+def check_weight_snapshots(runner,d):
+    revision='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
+    def part(root,name,files,rev=revision):
+        root.mkdir(parents=True)
+        for f in files:(root/f).parent.mkdir(parents=True,exist_ok=True);(root/f).write_text('{}')
+        (root/'weights-manifest.json').write_text(json.dumps(dict(part=name,revision=rev)))
+    inputs=d/'input'
+    part(inputs/'k6-lite-diffusers-weights-media'/'k6-lite-diffusers-media','media',
+         ['model_index.json','transformer/config.json','text_encoder_2/config.json'])
+    assert runner.assemble_local_snapshot(inputs,d/'snap-missing',revision) is None
+    part(inputs/'k6-lite-diffusers-weights-text'/'k6-lite-diffusers-text','text',['text_encoder/config.json'])
+    assert runner.assemble_local_snapshot(inputs,d/'snap-other',revision.replace('4','5')) is None
+    target=Path(runner.assemble_local_snapshot(inputs,d/'snap',revision))
+    assert sorted(p.name for p in target.iterdir())==['model_index.json','text_encoder','text_encoder_2','transformer']
+    assert (target/'transformer/config.json').read_text()=='{}' and (target/'text_encoder').is_symlink()
+    assert runner.assemble_local_snapshot(inputs,d/'snap',revision)==str(target)  # idempotent
+    # Weight notebooks: private, CPU-only, and the two parts partition the snapshot.
+    for name,number in [('media',17),('text',18)]:
+        meta=json.loads((ROOT/f'kandinsky-6/generation/weights/{name}/kernel-metadata.json').read_text())
+        assert meta['is_private'] and not meta['enable_gpu'] and meta['enable_internet']
+        nb=json.loads((ROOT/f'kandinsky-6/notebooks/{number}_kaggle_k6_weights_{name}.ipynb').read_text())
+        cells=[c['source'] for c in nb['cells'] if c['cell_type']=='code']
+        for cell in cells:ast.parse(cell)
+        assert f"PART={name!r}" in cells[0]
+        source=next(c for c in cells if 'PARTS = {' in c)
+        node=next(n for n in ast.parse(source).body if isinstance(n,ast.Assign) and n.targets[0].id=='PARTS')
+        parts=eval(compile(ast.Expression(node.value),'parts','eval'))
+    for path,expected in [('text_encoder/model-00001-of-00004.safetensors','text'),
+                          ('text_encoder_2/model.safetensors','media'),('transformer/config.json','media'),
+                          ('model_index.json','media')]:
+        assert [k for k,f in parts.items() if f(path)]==[expected],path
+    return True
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path);p.add_argument('--soundtrack',type=Path);args=p.parse_args()
     path=ROOT/'kandinsky-6/generation/diffusers_runner.py'
@@ -259,6 +292,7 @@ def main():
         else:raise AssertionError('Stale joint latent accepted')
         nvidia_smi_trace=check_nvidia_smi_trace(runner,d)
         parallel_clips=check_parallel_clips(runner,d,presets)
+        weight_snapshots=check_weight_snapshots(runner,d)
         # Placement comparison reads only runs whose denoising actually ran.
         for name,sample in [('a',dict(cache_reused=False,dit_placement='balanced',denoise_seconds=13.4,
                                       stage=dict(gpu=[dict(allocated_peak_gib=3.0),dict(allocated_peak_gib=3.1)]),
@@ -309,6 +343,7 @@ def main():
         dit_placement_options_and_comparison=True,
         placement_measurement_mode_records_oom=True,
         parallel_clips_two_gpu_queues_overlap_and_oom=parallel_clips,
+        attached_weight_snapshots_assembled=weight_snapshots,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
                       transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),

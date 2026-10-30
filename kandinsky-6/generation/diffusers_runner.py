@@ -122,6 +122,30 @@ def model_kwargs(cfg, cache_dir):
     return source, kwargs
 
 
+def assemble_local_snapshot(input_root, target, revision):
+    # Join the 'media' and 'text' weight snapshots (notebooks 17/18) attached as Kaggle inputs into one
+    # Diffusers layout of symlinks; inputs are read-only, so nothing is copied.
+    parts = {}
+    for depth in range(1, 5):
+        for manifest_path in Path(input_root).glob('/'.join(['*']*depth)+'/weights-manifest.json'):
+            manifest = json.loads(manifest_path.read_text())
+            if manifest.get('revision') == revision and manifest.get('part') in ('media', 'text'):
+                parts[manifest['part']] = manifest_path.parent
+    if set(parts) != {'media', 'text'}:
+        found = ', '.join(sorted(parts)) or 'none'
+        print(f'Weight inputs for revision {revision[:8]}: {found}; downloading from Hugging Face instead', flush=True)
+        return None
+    target = Path(target)
+    target.mkdir(parents=True, exist_ok=True)
+    for root in parts.values():
+        for entry in root.iterdir():
+            link = target/entry.name
+            if entry.name != 'weights-manifest.json' and not link.exists():
+                link.symlink_to(entry, target_is_directory=entry.is_dir())
+    print('Using attached weight inputs:', {part: str(root) for part, root in parts.items()}, flush=True)
+    return str(target)
+
+
 def text_key(prompt, cfg):
     return digest(dict(prompt=prompt, revision=cfg['revision'], model=cfg['model_id'],
                        dtype='float16', max_sequence_length=cfg['max_sequence_length'], packages=cfg['packages']))

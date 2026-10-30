@@ -1,0 +1,14 @@
+{
+  "id": "applehawk/k6-lite-diffusers-weights-text",
+  "title": "K6 Lite Diffusers Weights Text",
+  "code_file": "../../../notebooks/18_kaggle_k6_weights_text.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

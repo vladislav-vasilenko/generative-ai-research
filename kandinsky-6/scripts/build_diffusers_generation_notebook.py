@@ -115,7 +115,7 @@ ensure_runtime_dependencies(requirements,constraint_file)
 ''')
     md('''## 2. Что генерировать
 
-`orbit_woman`, `strange_tram`, `mechanical_bloom`, `room_assembly` — T2V. `mario_poster`, `mario_pipe_illustration`, `mario_kandinsky_growth` — I2V для приложенных reference. Сами картинки не опубликованы: загрузите их в Input и вставьте путь. `LOCAL_MODEL_DIR` принимает только полный **Diffusers layout**, не ComfyUI single-file checkpoint.
+`orbit_woman`, `strange_tram`, `mechanical_bloom`, `room_assembly` — T2V. `mario_poster`, `mario_pipe_illustration`, `mario_kandinsky_growth` — I2V для приложенных reference. Сами картинки не опубликованы: загрузите их в Input и вставьте путь. `LOCAL_MODEL_DIR` принимает только полный **Diffusers layout**, не ComfyUI single-file checkpoint. Чтобы не скачивать ~25 GB весов в каждой сессии, один раз запустите приватные notebooks 17 (`media`) и 18 (`text`) и добавьте их Output через **Add Input → Your Work**: при `AUTO_WEIGHT_INPUTS=True` ячейка конфигурации найдёт обе части сама.
 
 Для `mario_kandinsky_growth` сначала подготовьте один PNG/JPEG с логотипом уже на грибе: в metadata пресета есть отдельный prompt подготовки кадра. SVG не подаётся вторым reference. Точная песня берётся из вашего `MUSIC_PATH` при экспорте; модель генерирует оригинальный funk/new-wave фон.
 
@@ -126,6 +126,7 @@ SEED=42
 IMAGE_PATH=None                # e.g. '/kaggle/input/my-references/images-4.jpeg'
 ASPECT='auto'                  # auto / landscape / portrait / square
 LOCAL_MODEL_DIR=None           # optional '/kaggle/input/.../full-diffusers-snapshot'
+AUTO_WEIGHT_INPUTS=True        # use attached weight snapshots from notebooks 17 + 18 when both are found
 AUDIO_MODE='generated'          # 'music' or 'mix' to use your own audio file
 MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning_down_the_house.aac'
 MUSIC_OFFSET_SECONDS=0.0
@@ -147,7 +148,9 @@ MODEL_REVISION='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
         _,body=section.split('\n',1)
         code(body)
     md('## 4. Конфигурация, reference и prompt')
-    code('''preset=PRESETS[PRESET_NAME]
+    code('''if LOCAL_MODEL_DIR is None and AUTO_WEIGHT_INPUTS:
+    LOCAL_MODEL_DIR=assemble_local_snapshot('/kaggle/input',SCRATCH/'local-snapshot',MODEL_REVISION)
+preset=PRESETS[PRESET_NAME]
 PROMPTS={name:compile_prompt(preset,name)[0] for name in PROFILES}
 PROMPT,NEGATIVE=compile_prompt(preset,PROFILE)
 REFERENCE,REFERENCE_SHA,WIDTH,HEIGHT=reference_and_size(preset,PROFILE,IMAGE_PATH,ASPECT)
