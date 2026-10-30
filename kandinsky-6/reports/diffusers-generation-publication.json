@@ -1,11 +1,11 @@
 {
   "date": "2026-10-30",
   "url": "https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation",
-  "version": 6,
+  "version": 8,
   "method": "Kaggle CLI --no-run",
   "public": true,
   "accelerator": "NvidiaTeslaT4",
-  "source_sha256": "c6ad0bf79c21a400831057746528b5e59150b188949770e5de55746ee6b118e2",
+  "source_sha256": "559f87dc31b3fed28d4a7cc8c5d99f3d8f04cc982e722d195201028ef0cd2f67",
   "pretrained_generation_run": false,
   "old_comfyui_notebook_modified": false,
   "user_images_uploaded": false,
@@ -31,6 +31,14 @@
       "version": 5,
       "source_sha256": "3e30b2ca9cf62a8b606693a4d67fd89ecc1d9407e450e4f4b3bd816d56a7a897",
       "commit": "8eb4933"
+    },
+    {
+      "version": 6,
+      "source_sha256": "c6ad0bf79c21a400831057746528b5e59150b188949770e5de55746ee6b118e2"
+    },
+    {
+      "version": 7,
+      "note": "batch run with MEASURE_PLACEMENTS=[('smoke','cuda:0'),('baseline','balanced'),('baseline','cuda:0')]; results in reports/dit-placement-kaggle-measurements.json"
     }
   ],
   "bootstrap_network_diagnostics": true,
@@ -38,5 +46,7 @@
   "music_input_preview": true,
   "nvidia_smi_denoise_trace": true,
   "dit_placement_switch": true,
-  "all_33_cells_match": true
+  "all_35_cells_match": true,
+  "measurement_mode": true,
+  "note": "Version 8 restores the empty MEASURE_PLACEMENTS default after the version 7 measurement run."
 }
