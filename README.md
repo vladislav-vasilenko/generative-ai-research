@@ -10,6 +10,15 @@
 
 **Начните с [учебной карты](curriculum/README.md).** Она указывает страницы лекций, задания, эксперименты и критерии готовности. Для внешнего review сначала прочитайте этот README, затем [результаты проверок](curriculum/reports/VALIDATION.md) и [границы K6-эксперимента](kandinsky-6/STATUS.md).
 
+## Kaggle Notebooks
+
+| Notebook | Для чего использовать | Исходник и инструкция |
+|---|---|---|
+| **[K6 Lite — Diffusers T2V / I2V](https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation)** | Генерация по тексту или reference image без учебной части: Smoke 1 s / Baseline 5 s, 14 промптов и опциональная музыкальная дорожка | [Notebook 16](kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb) · [Инструкция](kandinsky-6/generation/README.md) |
+| **[K6 Lite — ComfyUI pipeline](https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill)** | Повтор ComfyUI workflow в Python: conditioning, sampling, video/audio decode, продолжение из сохранённых latents и измерения стадий | [Notebook 15](kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb) · [Инструкция](kandinsky-6/kaggle_runtime/README.md) |
+
+Для обоих вариантов: **GPU T4 ×2, 32 GB CPU RAM, Internet ON**. Начинайте со Smoke; полный pretrained прогон новых версий на двух T4 ещё требует проверки.
+
 ## Быстрый запуск без больших весов
 
 Нужны Python 3.12 и [uv](https://docs.astral.sh/uv/getting-started/installation/). Команды выполняются из корня checkout, содержащего `curriculum/`:
@@ -48,8 +57,8 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — отд
 
 - **[ComfyUI](curriculum/COMFYUI_LABS.md):** визуальные опыты, image IO без модели, отдельный VAE reconstruction, затем sampler/CFG/ресурсные эксперименты. JSON лежат в `curriculum/workflows/`.
 - **[Kandinsky 5 Lite](kandinsky-5/README.md):** 14 лабораторных по компонентам, Flow Matching и inference. У курса отдельные `pyproject.toml`, `uv.lock` и окружение.
-- **[Kandinsky 6 Lite](kandinsky-6/README.md):** 14 лабораторных по компонентам, отдельные DiT и Dual-stream Audio+Video CrossDiT, π-Flow, затем ручной voice-conditioning эксперимент и ComfyUI baseline. [Запустить на Kaggle: 2×T4 / 32 GB RAM](https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill) · [Исходник notebook](kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb).
-- **K6: генерация без учебной части:** [Diffusers T2V/I2V notebook](kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb) · [Kaggle](https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation) · [14 T2V/I2V промптов](kandinsky-6/generation/PROMPTS.md). Вариант с ComfyUI сохранён отдельно.
+- **[Kandinsky 6 Lite](kandinsky-6/README.md):** 14 лабораторных по компонентам, отдельные DiT и Dual-stream Audio+Video CrossDiT, π-Flow, затем ручной voice-conditioning эксперимент и ComfyUI baseline.
+- **[Генерация на Kaggle](#kaggle-notebooks):** отдельные варианты Diffusers T2V/I2V и ComfyUI; [14 готовых промптов](kandinsky-6/generation/PROMPTS.md).
 - **[DiT → CrossDiT → π-Flow](dit/README.md):** 11 углублённых labs: DiT primitives, K5/K6 streams, conditioning, visual references, native denoise loop, policy math и маленькое imitation-исследование; [точная связь с MIT](dit/MIT_BRIDGE.md).
 - **[VAE: MIT → HunyuanVideo](vae/README.md):** девять пошаговых labs по ELBO, causal Conv3D, архитектуре, spatial/temporal tiling и free-VRAM planner; CPU проверки, графики и отдельный ручной ComfyUI/pretrained протокол.
 - **[DDPM на CIFAR-10](Diffusion_DDPM_Research.ipynb):** дополнительный пример noise prediction. Для него: `uv sync --locked --extra ddpm`.
