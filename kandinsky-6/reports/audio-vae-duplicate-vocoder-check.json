@@ -44,5 +44,14 @@
     "note": "reference runs downloading from Hugging Face: text about 210 s, Smoke sample stage about 90 s"
   },
   "diffusers": "0.42.1",
-  "hub_pull_request": "not opened"
+  "hub_pull_request": {
+    "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/discussions/3",
+    "commit": "981f7a67",
+    "base_revision": "4c487e8b",
+    "files": {
+      "audio_vae/diffusion_pytorch_model.safetensors": 1222459368,
+      "audio_vae/config.json": 124
+    },
+    "status": "open"
+  }
 }
