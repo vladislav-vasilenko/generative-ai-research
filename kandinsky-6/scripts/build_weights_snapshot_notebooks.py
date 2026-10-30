@@ -40,7 +40,7 @@ MODEL_ID={MODEL_ID!r}
 MODEL_REVISION={MODEL_REVISION!r}
 OUTPUT_LIMIT_BYTES=19_500_000_000  # Kaggle keeps at most 20 GB of notebook output
 ''')
-    code('''import json, os, shutil, time
+    code('''import hashlib, json, os, shutil, time
 from pathlib import Path
 os.environ.update(HF_HUB_DISABLE_TELEMETRY='1', HF_HUB_DISABLE_XET='1')
 from huggingface_hub import HfApi, snapshot_download
@@ -67,9 +67,22 @@ shutil.rmtree(OUT/'.cache', ignore_errors=True)
 bad = [f.path for f in files if not (OUT/f.path).is_file() or (OUT/f.path).stat().st_size != f.size]
 if bad:
     raise RuntimeError(f'Missing or truncated files: {bad}')
+# Timed-out downloads are resumed by range requests, so the size alone does not prove the content.
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, 'rb') as handle:
+        for block in iter(lambda: handle.read(1 << 24), b''):
+            digest.update(block)
+    return digest.hexdigest()
+hash_start = time.perf_counter()
+mismatched = [f.path for f in files if getattr(f, 'lfs', None) and sha256(OUT/f.path) != f.lfs.sha256]
+if mismatched:
+    raise RuntimeError(f'SHA-256 differs from the Hub for: {mismatched}')
+print(f'SHA-256 matches the Hub for {sum(1 for f in files if getattr(f, "lfs", None))} LFS files '
+      f'({time.perf_counter()-hash_start:.0f} s)', flush=True)
 manifest = dict(model_id=MODEL_ID, revision=MODEL_REVISION, part=PART, total_bytes=need,
     download_seconds=round(download_seconds, 1), files={f.path: f.size for f in files},
-    lfs_sha256={f.path: f.lfs.sha256 for f in files if getattr(f, 'lfs', None)})
+    lfs_sha256={f.path: f.lfs.sha256 for f in files if getattr(f, 'lfs', None)}, lfs_sha256_verified=True)
 (OUT/'weights-manifest.json').write_text(json.dumps(manifest, indent=2)+'\\n')
 print(f'Saved {len(files)} files, {need/2**30:.2f} GiB in {download_seconds:.0f} s to {OUT}')
 ''')

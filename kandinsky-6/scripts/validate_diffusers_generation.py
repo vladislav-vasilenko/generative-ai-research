@@ -112,7 +112,7 @@ def check_nvidia_smi_trace(runner,d):
     saved=os.environ['PATH']
     try:
         os.environ['PATH']=str(fake.parent)+os.pathsep+saved
-        with runner.NvidiaSmiTrace(d/'live.csv') as trace:time.sleep(0.5)
+        with runner.NvidiaSmiTrace(d/'live.csv') as trace:time.sleep(1.5)
         assert trace.summary['samples']>=2 and trace.summary['one_busy_fraction']==1 and trace.process.poll() is not None
         os.environ['PATH']=str(d/'empty')
         with runner.NvidiaSmiTrace(d/'missing.csv') as trace:pass
@@ -139,7 +139,7 @@ def check_parallel_clips(runner,d,presets):
     def fake_sample(cfg,prompt,negative,conditioning_path,image,latent_path,trace_path=None):
         if cfg['run_name'].startswith('mechanical_bloom'):
             raise torch.cuda.OutOfMemoryError('CUDA out of memory. Tried to allocate 1.00 GiB')
-        start=time.perf_counter();time.sleep(0.3)
+        start=time.perf_counter();time.sleep(0.5)
         with lock:spans[cfg['run_name']]=(start,time.perf_counter())
         return dict(denoise_seconds=0.3,dit_placement=cfg['dit_placement'])
     for run in runs:run['cfg']['run_name']=run['run_dir'].name
@@ -160,7 +160,7 @@ def check_parallel_clips(runner,d,presets):
     assert [bool(r.get('oom')) for r in results]==[False,True,False]
     (a0,a1),(b0,b1)=spans[runs[0]['run_dir'].name],spans[runs[1]['run_dir'].name]
     assert max(a0,b0)<min(a1,b1), 'clips on the two GPUs did not overlap'
-    assert summary['clips_per_hour']>0 and summary['sum_of_clip_seconds']>=0.6
+    assert summary['clips_per_hour']>0 and summary['sum_of_clip_seconds']>=1.0
     assert all((r['run_dir']/'parallel.json').is_file() for r in runs)
     return True
 
