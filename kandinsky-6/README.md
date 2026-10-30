@@ -130,6 +130,8 @@ flowchart TB
 
 После разрешения пользователя 30 октября необходимые Lite веса установлены в Desktop. Untiled video decode baseline упал на MPS с буфером 75.16 GiB; графы переведены на **VAEDecodeTiled: 256 / 64 / 16 / 4**. [Проверка на MPS](reports/comfy-tiled-vae-validation.json): baseline 864×480 / 121 кадр успешно декодирован и сохранён со звуком. Продолжение заняло 563.51 s (~9 min 24 s), Sampler и audio decode взяты из cache; это время постобработки, не полной генерации. Ветка SR с KVAE и beautifier не нужны для Lite baseline. Учебные CPU проверки не отправляют ComfyUI prompts.
 
+**Отдельный SR после Baseline:** [пошаговая инструкция](SUPER_RESOLUTION_RU.md), [граф ×2](workflows/k6_sr_standalone_2x.json), [граф ×2,25](workflows/k6_sr_standalone_2_25x.json). На вход подаётся сохранённый MP4 со звуком; Lite Sampler повторно не нужен. Расчёт размеров: 864×480 → 1728×960 или 1952×1088 с выравниванием grid. Графы и CPU-контракты проверены, pretrained SR/MPS ещё не проверен; SR bundle требует дополнительно 17,45 GB. [Отчёт](reports/sr-workflows-validation.json).
+
 ## Что реально проверено
 
 [Отчёт component labs](reports/COMPONENT_VALIDATION.md) содержит measured shapes, errors, gradient controls и learning curves; [машиночитаемый отчёт](reports/component-validation.json) — результаты свежих CPU kernels. Native tiny DiT использует оригинальные class bodies через явный локальный SDPA adapter. Полный VAE не загружается: causal convolution проверяется отдельным оригинальным определением, VAE теория — маленьким учебным codec. В отдельных sampler/codec обвязках predictor/decoder test doubles подписаны явно.
