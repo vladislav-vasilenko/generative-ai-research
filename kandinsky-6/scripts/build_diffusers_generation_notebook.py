@@ -115,7 +115,7 @@ ensure_runtime_dependencies(requirements,constraint_file)
 ''')
     md('''## 2. Что генерировать
 
-`orbit_woman`, `strange_tram`, `mechanical_bloom`, `room_assembly` — T2V. `mario_poster`, `mario_pipe_illustration`, `mario_kandinsky_growth` — I2V для приложенных reference. Сами картинки не опубликованы: загрузите их в Input и вставьте путь. `LOCAL_MODEL_DIR` принимает только полный **Diffusers layout**, не ComfyUI single-file checkpoint. Чтобы не скачивать ~25 GB весов в каждой сессии, один раз запустите приватные notebooks 17 (`media`) и 18 (`text`) и добавьте их Output через **Add Input → Your Work**: при `AUTO_WEIGHT_INPUTS=True` ячейка конфигурации найдёт обе части сама.
+`orbit_woman`, `strange_tram`, `mechanical_bloom`, `room_assembly` — T2V. `mario_poster`, `mario_pipe_illustration`, `mario_kandinsky_growth` — I2V для приложенных reference. Сами картинки не опубликованы: загрузите их в Input и вставьте путь. `LOCAL_MODEL_DIR` принимает только полный **Diffusers layout**, не ComfyUI single-file checkpoint. Чтобы не скачивать ~25 GB весов в каждой сессии, можно сохранить веса приватными notebooks 17 (`media`) и 18 (`text`) и подключить их Output через **Add Input → Your Work** с `AUTO_WEIGHT_INPUTS=True`. По умолчанию это выключено: в замере загрузка весов из такого Input заняла около 1,9 часа против нескольких минут скачивания с Hugging Face.
 
 Для `mario_kandinsky_growth` сначала подготовьте один PNG/JPEG с логотипом уже на грибе: в metadata пресета есть отдельный prompt подготовки кадра. SVG не подаётся вторым reference. Точная песня берётся из вашего `MUSIC_PATH` при экспорте; модель генерирует оригинальный funk/new-wave фон.
 
@@ -126,7 +126,7 @@ SEED=42
 IMAGE_PATH=None                # e.g. '/kaggle/input/my-references/images-4.jpeg'
 ASPECT='auto'                  # auto / landscape / portrait / square
 LOCAL_MODEL_DIR=None           # optional '/kaggle/input/.../full-diffusers-snapshot'
-AUTO_WEIGHT_INPUTS=True        # use attached weight snapshots from notebooks 17 + 18 when both are found
+AUTO_WEIGHT_INPUTS=False       # True: load weights attached from notebooks 17 + 18 (measured slower than HF, see README)
 AUDIO_MODE='generated'          # 'music' or 'mix' to use your own audio file
 MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning_down_the_house.aac'
 MUSIC_OFFSET_SECONDS=0.0
