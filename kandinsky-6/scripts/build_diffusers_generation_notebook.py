@@ -130,8 +130,9 @@ AUDIO_MODE='generated'          # 'music' or 'mix' to use your own audio file
 MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning_down_the_house.aac'
 MUSIC_OFFSET_SECONDS=0.0
 MUSIC_GAIN=0.65
-DIT_PLACEMENT='balanced'        # 'balanced' (layer split over 2 GPUs), 'cuda:0' or 'cuda:1' (whole DiT on one T4)
+DIT_PLACEMENT='cuda:0'          # whole DiT on one T4; 'balanced' splits layers over 2 GPUs (measured: no speedup)
 MEASURE_PLACEMENTS=[]           # optional extra denoise-only runs, e.g. [('baseline','balanced'),('baseline','cuda:0')]
+PARALLEL_JOBS=[]                # optional clips, two at a time (one per GPU), e.g. [('orbit_woman','baseline'),('strange_tram','baseline')]
 MODEL_ID='kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers'
 MODEL_REVISION='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
 ''')
@@ -139,7 +140,7 @@ MODEL_REVISION='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
     code('PRESETS = '+pprint.pformat(json.loads((BASE/'generation/prompt_presets.json').read_text()),width=110,sort_dicts=False))
     md('''## 3. Функции запуска
 
-Обычные Python-ячейки. Qwen/CLIP кодируют оба сценария и выгружаются. По умолчанию (`DIT_PLACEMENT='balanced'`) DiT размещается блоками на двух GPU: это распределение памяти с передачей активаций, GPU работают поочерёдно, двукратного ускорения нет. `'cuda:0'`/`'cuda:1'` держит весь DiT на одной T4 для сравнения. Полный CPU-offload pipeline поверх этого device map не включается. Codecs используют FP32 и штатный Diffusers VAE tiling.''')
+Обычные Python-ячейки. Qwen/CLIP кодируют оба сценария и выгружаются. По умолчанию (`DIT_PLACEMENT='cuda:0'`) весь DiT стоит на одной T4: замер на Kaggle показал, что Lite Baseline помещается в одну карту (8,6 GiB), а разбиение `'balanced'` по слоям на две GPU не ускоряет ролик, потому что GPU работают поочерёдно. Вторая GPU полезна для второго ролика: раздел 8. Полный CPU-offload pipeline поверх этого device map не включается. Codecs используют FP32 и штатный Diffusers VAE tiling.''')
     source=(BASE/'generation/diffusers_runner.py').read_text()
     for section in source.split('# %% '):
         if section.startswith('"""'):continue
@@ -220,6 +221,28 @@ from IPython.display import Video,display
 display(Video(str(OUTPUT),embed=True))
 print(json.dumps(EXPORTED,indent=2))
 ''')
+    md('''## 8. Два ролика параллельно (необязательно)
+
+`PARALLEL_JOBS` — список пар `(preset, profile)`. Ролики одного profile идут парами: первый на `cuda:0`, второй на `cuda:1`, каждый целиком (denoising, video и audio decode, MP4) на своей GPU. Тексты кодируются один раз заранее, веса скачиваются до старта потоков, загрузка моделей идёт по очереди, вычисления — одновременно. Для I2V preset нужен `IMAGE_PATH`. Время одного ролика не уменьшается; выигрыш — число роликов в час. Нехватка памяти записывается в `parallel.json` как результат.''')
+    code('''if PARALLEL_JOBS:
+    PARALLEL_RUNS={}
+    for profile in dict.fromkeys(p for _,p in PARALLEL_JOBS):
+        PARALLEL_RUNS[profile]=[]
+        for i,name in enumerate(n for n,p in PARALLEL_JOBS if p==profile):
+            run=prepare_run(CFG,PRESETS[name],name,profile,f'cuda:{i%2}',IMAGE_PATH,ASPECT)
+            run['key']=name+'-'+profile
+            PARALLEL_RUNS[profile].append(run)
+    JOB_CONDITIONING=measured('text-parallel',lambda:encode_texts(
+        {r['key']:r['prompt'] for runs in PARALLEL_RUNS.values() for r in runs},CFG),REPORTS)
+    prefetch_media_weights(CFG)
+    PARALLEL={}
+    for profile,runs in PARALLEL_RUNS.items():
+        PARALLEL[profile]=run_parallel_clips(runs,JOB_CONDITIONING,
+            RESULTS/('nvidia-smi-parallel-'+profile+'-'+str(time.time_ns())+'.csv'))
+        print(profile,json.dumps({k:v for k,v in PARALLEL[profile].items() if k!='results'},default=str))
+    (RESULTS/('parallel-'+str(time.time_ns())+'.json')).write_text(json.dumps(PARALLEL,indent=2,default=str))
+else:
+    print('PARALLEL_JOBS is empty; no parallel clips.')''')
     md('''Сохраните MP4, `config.json`, `metrics.json` и `joint-latents.safetensors` через Kaggle Save Version / Output. Временная среда и media cache в `/kaggle/temp` не являются архивом. Source-level/CPU проверки находятся в GitHub; успешный Quick Save на Kaggle не доказывает pretrained inference.''')
     nb=dict(nbformat=4,nbformat_minor=5,cells=cells,metadata=dict(
         kernelspec=dict(display_name='Python 3',language='python',name='python3'),

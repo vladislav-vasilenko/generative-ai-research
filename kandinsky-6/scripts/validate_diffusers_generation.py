@@ -121,6 +121,49 @@ def check_nvidia_smi_trace(runner,d):
         os.environ['PATH']=saved
     return True
 
+def check_parallel_clips(runner,d,presets):
+    import threading
+    # Decoder defaults keep the single-clip layout: video on cuda:1, audio on cuda:0.
+    assert inspect.signature(runner.decode_video).parameters['device'].default=='cuda:1'
+    assert inspect.signature(runner.decode_audio).parameters['device'].default=='cuda:0'
+    assert isinstance(runner._LOAD_LOCK,type(threading.Lock()))
+    base=dict(model_id='m',revision='r',packages={},seed=42,results=str(d/'parallel'),local_model_dir=None,
+              media_cache=str(d/'cache'),profile='smoke',job_key='x',dit_placement='cuda:0')
+    (d/'parallel').mkdir()
+    runs=[]
+    for i,name in enumerate(['orbit_woman','strange_tram','mechanical_bloom']):
+        run=runner.prepare_run(base,presets[name],name,'smoke',f'cuda:{i%2}')
+        run['key']=name;runs.append(run)
+    assert len({r['cfg']['job_key'] for r in runs})==3 and runs[1]['cfg']['dit_placement']=='cuda:1'
+    spans,lock={},threading.Lock()
+    def fake_sample(cfg,prompt,negative,conditioning_path,image,latent_path,trace_path=None):
+        if cfg['run_name'].startswith('mechanical_bloom'):
+            raise torch.cuda.OutOfMemoryError('CUDA out of memory. Tried to allocate 1.00 GiB')
+        start=time.perf_counter();time.sleep(0.3)
+        with lock:spans[cfg['run_name']]=(start,time.perf_counter())
+        return dict(denoise_seconds=0.3,dit_placement=cfg['dit_placement'])
+    for run in runs:run['cfg']['run_name']=run['run_dir'].name
+    patched=dict(sample_joint=fake_sample,decode_video=lambda cfg,latents,device:np.zeros((24,8,8,3),np.float32),
+        decode_audio=lambda cfg,latents,device:(torch.zeros(1,44100),44100),
+        export_clip=lambda frames,waveform,rate,cfg,path:dict(mp4=str(path),exported_frames=len(frames)))
+    cuda=dict(set_device=lambda gpu:None,reset_peak_memory_stats=lambda gpu:None,max_memory_allocated=lambda gpu:2**30)
+    saved={k:getattr(runner,k) for k in patched};saved_cuda={k:getattr(torch.cuda,k) for k in cuda}
+    try:
+        for k,v in patched.items():setattr(runner,k,v)
+        for k,v in cuda.items():setattr(torch.cuda,k,v)
+        summary=runner.run_parallel_clips(runs,{r['key']:d/'unused' for r in runs},d/'parallel-trace.csv')
+    finally:
+        for k,v in saved.items():setattr(runner,k,v)
+        for k,v in saved_cuda.items():setattr(torch.cuda,k,v)
+    results=summary['results']
+    assert [r['gpu'] for r in results]==[0,0,1] and summary['clips']==2
+    assert [bool(r.get('oom')) for r in results]==[False,True,False]
+    (a0,a1),(b0,b1)=spans[runs[0]['run_dir'].name],spans[runs[1]['run_dir'].name]
+    assert max(a0,b0)<min(a1,b1), 'clips on the two GPUs did not overlap'
+    assert summary['clips_per_hour']>0 and summary['sum_of_clip_seconds']>=0.6
+    assert all((r['run_dir']/'parallel.json').is_file() for r in runs)
+    return True
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path);p.add_argument('--soundtrack',type=Path);args=p.parse_args()
     path=ROOT/'kandinsky-6/generation/diffusers_runner.py'
@@ -215,6 +258,7 @@ def main():
         except ValueError:pass
         else:raise AssertionError('Stale joint latent accepted')
         nvidia_smi_trace=check_nvidia_smi_trace(runner,d)
+        parallel_clips=check_parallel_clips(runner,d,presets)
         # Placement comparison reads only runs whose denoising actually ran.
         for name,sample in [('a',dict(cache_reused=False,dit_placement='balanced',denoise_seconds=13.4,
                                       stage=dict(gpu=[dict(allocated_peak_gib=3.0),dict(allocated_peak_gib=3.1)]),
@@ -264,6 +308,7 @@ def main():
         nvidia_smi_trace_summary_and_fallback=nvidia_smi_trace,
         dit_placement_options_and_comparison=True,
         placement_measurement_mode_records_oom=True,
+        parallel_clips_two_gpu_queues_overlap_and_oom=parallel_clips,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
                       transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),
