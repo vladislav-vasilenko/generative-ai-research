@@ -215,6 +215,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [kandinsky-6/README.md](../kandinsky-6/README.md) — Kandinsky 6 Lite — по-компонентный учебный курс.
 - [kandinsky-6/STATUS.md](../kandinsky-6/STATUS.md) — Состояние эксперимента, 30 октября 2026.
 - [kandinsky-6/THIRD_PARTY.md](../kandinsky-6/THIRD_PARTY.md) — Source provenance.
+- [kandinsky-6/kaggle_runtime/README.md](../kandinsky-6/kaggle_runtime/README.md) — Kandinsky 6 Lite: читаемый код Kaggle pipeline.
 - [kandinsky-6/reference/README.md](../kandinsky-6/reference/README.md) — Закреплённые сторонние исходники.
 - [kandinsky-6/reports/COMPONENT_VALIDATION.md](../kandinsky-6/reports/COMPONENT_VALIDATION.md) — K6 component labs: проверка 27 октября 2026.
 - [kandinsky-6/reports/VALIDATION.md](../kandinsky-6/reports/VALIDATION.md) — Проверка K6 материалов — 27 октября 2026.
@@ -287,6 +288,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [validate_component_notebooks.py](../kandinsky-6/scripts/validate_component_notebooks.py) — Validate K6 teaching labs; --execute uses fresh CPU kernels, no downloads.
 - [validate_kaggle_notebook.py](../kandinsky-6/scripts/validate_kaggle_notebook.py) — Validate the Kaggle deployment notebook without model downloads; optional native CPU API checks.
 - [validate_manual_notebook.py](../kandinsky-6/scripts/validate_manual_notebook.py) — Validate notebook cells; --execute runs only its default lightweight route.
+- [validate_parallel_vae_tiles.py](../kandinsky-6/scripts/validate_parallel_vae_tiles.py) — Validate single-video tile dispatch/IPC against native ComfyUI on CPU, without downloads.
 
 ### `vae/scripts`
 

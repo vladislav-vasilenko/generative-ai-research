@@ -138,16 +138,17 @@ uv run --locked python curriculum/scripts/sync_study_navigation.py --check
 
 ## Запуск pretrained Lite в Kaggle: 2 × T4 и 32 GB RAM
 
-[Самостоятельный notebook 15](notebooks/15_kaggle_t4_lite_distill.ipynb) воспроизводит ComfyUI Lite pipeline в коде: установка зависимостей в отдельную среду, точечная загрузка семи pinned файлов, Qwen/CLIP conditioning, joint DX π-Flow, video VAE, TOD-VAE + BigVGAN и MP4 со звуком. Импортируйте один `.ipynb` в Kaggle, выберите GPU T4 ×2, включите Internet и выполняйте ячейки по порядку.
+[Открыть публичный Kaggle notebook](https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill) · [Исходный notebook 15](notebooks/15_kaggle_t4_lite_distill.ipynb). Он воспроизводит ComfyUI Lite pipeline в коде: установка зависимостей в отдельную среду, точечная загрузка семи pinned файлов, Qwen/CLIP conditioning, joint DX π-Flow, video VAE, TOD-VAE + BigVGAN и MP4 со звуком. Импортируйте один `.ipynb` в Kaggle, выберите GPU T4 ×2, включите Internet и выполняйте ячейки по порядку.
 
-Две T4 не образуют одну GPU с 32 GB: text worker использует GPU 1 с CPU offload, остальные GPU-стадии — GPU 0. Процессы выполняются последовательно и освобождают память; промежуточные conditioning/latents сохраняются. Для T4 задан FP16 DiT, штатный ComfyUI text path (BF16 storage / FP32 forward) и FP32 tiled VAE; parity с BF16 DiT не заявляется. Поэтапная загрузка позволяет не держать одновременно все 25.4 GB весов на scratch-диске; Kaggle Input веса переиспользуются без копии.
+Две T4 не образуют одну GPU с 32 GB. Text worker использует GPU 1 с CPU offload, DiT — GPU 0. Для **одного ролика** video VAE распределяет чётные/нечётные тайлы между двумя GPU одновременно; native blending выполняется в прежнем порядке. При smoke это 3+3 тайла, при baseline — 75+75. Это VAE tile parallelism; tensor parallelism самого DiT не реализован. Исходник стадий виден в стандартных `%%writefile` ячейках без `*_CODE` строк; [runtime-модули](kaggle_runtime/README.md) совпадают с notebook. Для T4 задан FP16 DiT, штатный ComfyUI text path (BF16 storage / FP32 forward) и FP32 tiled VAE; parity с BF16 DiT не заявляется. Поэтапная загрузка позволяет не держать одновременно все 25.4 GB весов на scratch-диске; Kaggle Input веса переиспользуются без копии.
 
-Сначала smoke 432×256 / 33 кадра; baseline 864×480 / 121 кадр включается после него отдельным флагом. Notebook пишет фактические timings, NFE, RAM/VRAM counters, logs и проверяет наличие декодируемых видео/аудио. [Проверки кода и native CPU API](reports/kaggle-t4-validation.json) прошли; pretrained запуск на Kaggle T4 ещё не выполнен. Это deployment notebook, отдельный от 14 лёгких CPU-лабораторных; не запускайте его в основном локальном kernel через Run All.
+Сначала smoke 432×256 / 33 кадра; baseline 864×480 / 121 кадр включается после него отдельным флагом. Notebook пишет фактические timings, NFE, RAM/VRAM counters, logs и проверяет наличие декодируемых видео/аудио. [Проверки notebook/native CPU API](reports/kaggle-t4-validation.json) и [двухпроцессного VAE tiler](reports/parallel-vae-tiles-validation.json) прошли. [CPU integration с настоящим Hunyuan VAE](reports/parallel-vae-pretrained-cpu-validation.json): 2 процесса, 9 кадров 64×64, bitwise equality с native tiled decode на synthetic latent. [Пользовательские Kaggle логи](reports/kaggle-t4-user-smoke-stages.json) подтверждают Text (39,60 s, 11,66 GiB allocated) и Sample (44,70 s stage / 15,60 s sampling, 10 NFE, 6,19 GiB allocated); полный MP4 и ускорение two-GPU VAE ещё не подтверждены. Это deployment notebook, отдельный от 14 лёгких CPU-лабораторных; не запускайте его в основном локальном kernel через Run All.
 
 ## Структура и источники
 
 ```text
 notebooks/          01–14 component labs, ручной журнал, 15 Kaggle deployment
+kaggle_runtime/     читаемые worker-модули notebook и two-GPU tile adapter
 labkit/             Native CPU adapter, учебные helpers, MLX audio prototype
 scripts/            Сборка notebooks, проверки, ComfyUI/VCTK/parity инструменты
 workflows/          Lite Smoke/Baseline JSON
@@ -159,6 +160,14 @@ artifacts/          Локальные outputs/cache/data; ignored Git
 Исходники закреплены на `7ceeefad7fb625011f7db602c43893a989f19c15`, HF Lite Distill config — на `4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81`. [Manifest и SHA-256](reference/source-manifest.json), [атрибуция](THIRD_PARTY.md). Для пересборки: `build_component_notebooks.py`, `build_component_guide.py`, затем `sync_study_navigation.py --write`.
 
 Первичные статьи: [K6](https://huggingface.co/papers/2610.05608), [DiT](https://arxiv.org/abs/2212.09748), [K5](https://arxiv.org/abs/2511.14993), [Flow Matching](https://arxiv.org/abs/2210.02747), [π-Flow](https://arxiv.org/abs/2510.14974), [Ovi](https://arxiv.org/abs/2510.01284), [LTX-2](https://arxiv.org/abs/2601.03233), [MMAudio](https://arxiv.org/abs/2412.15322), [BigVGAN](https://arxiv.org/abs/2206.04658). Сравнения не означают, что разные архитектуры/кодеки взаимозаменяемы.
+
+## Углубление video VAE: HunyuanVideo
+
+[Курс 00–08 по HunyuanVideo VAE](../vae/README.md) расширяет component lab 03: от ELBO до оригинальных spatial/temporal tile loops и free-VRAM planner. [Карта исходников](../vae/SOURCE_MAP.md) указывает ограничения конкретной адаптации, posterior contract и различие CPU tiny / pretrained measurements.
+
+## Подробные labs по приложенным DiT / conditioning / sampler blocks
+
+[11 отдельных лабораторных](../dit/README.md): от DiT primitives и one-stream K5 до asymmetric dual AV CrossDiT K6, clean/visual conditioning, native denoise loop, всей математики DX и π sampler. Включены derivations, exact/native controls, gradients, plots и toy policy imitation с held-out metrics. [Связь с конкретными MIT questions](../dit/MIT_BRIDGE.md), [каждый source method](../dit/SOURCE_MAP.md), [результаты](../dit/reports/VALIDATION.md). Это углубление component labs05–12, а не переименование их paths.
 '''
 (ROOT/'README.md').write_text(readme)
 

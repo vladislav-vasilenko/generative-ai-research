@@ -136,7 +136,7 @@ text+='''## Промышленные семейства и архитектур�
 folders=[ROOT,ROOT/'curriculum',*sorted(ROOT.glob('lecture_*')),ROOT/'kandinsky-5',ROOT/'kandinsky-6',ROOT/'hunyuan-video',ROOT/'vae',ROOT/'dit']
 extra=[ROOT/'curriculum/references/README.md',ROOT/'curriculum/reports/VALIDATION.md',ROOT/'kandinsky-5/reference/course_materials/README.md',
        ROOT/'kandinsky-5/reports/VALIDATION.md',ROOT/'kandinsky-6/reports/VALIDATION.md',
-       ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',ROOT/'kandinsky-6/reference/README.md',ROOT/'vae/reports/VALIDATION.md',ROOT/'dit/reports/VALIDATION.md']
+       ROOT/'kandinsky-6/reports/COMPONENT_VALIDATION.md',ROOT/'kandinsky-6/reference/README.md',ROOT/'kandinsky-6/kaggle_runtime/README.md',ROOT/'vae/reports/VALIDATION.md',ROOT/'dit/reports/VALIDATION.md']
 paths=sorted({p for folder in folders for p in folder.glob('*.md')}|{p for p in extra if p.exists()})
 for p in paths:
     if p==OUT:continue

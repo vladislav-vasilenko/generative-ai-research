@@ -1,0 +1,31 @@
+{
+  "vae_sha256": "e8f8553275406d84ccf22e7a47601650d8f98bdb8aa9ccfdd6506b57a9701aed",
+  "comfy_revision": "086099f5d8886163ef77dc354f8382cb7431582a",
+  "pretrained_models_loaded": true,
+  "weights": "hunyuan_video_vae_bf16.safetensors",
+  "latent_shape": [
+    1,
+    16,
+    3,
+    8,
+    8
+  ],
+  "output_shape": [
+    9,
+    64,
+    64,
+    3
+  ],
+  "device": "cpu",
+  "processes": 2,
+  "tiles_per_process": [
+    1,
+    1
+  ],
+  "max_abs_error": 0.0,
+  "bitwise_equal": true,
+  "native_seconds": 0.7507700831629336,
+  "parallel_cpu_seconds": 3.601560957962647,
+  "cuda_two_gpu_execution": false,
+  "synthetic_latent": true
+}

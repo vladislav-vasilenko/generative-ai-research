@@ -7,6 +7,9 @@ import hashlib
 import json
 import re
 import shutil
+import shlex
+import io
+from contextlib import redirect_stdout
 import subprocess
 import tempfile
 import zipfile
@@ -27,6 +30,7 @@ worker_path, download_path, comfy_root, check_root = map(Path, sys.argv[1:])
 spec = importlib.util.spec_from_file_location("k6_worker_check", worker_path)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
+import k6_common as common
 cfg = dict(comfy_root=str(comfy_root), model_root=str(check_root / "worker-models"),
            output_root=str(check_root / "videos"), run_root=str(check_root / "run"),
            cpu_threads=2, width=64, height=64, frames=9, fps=24.0, run_name="synthetic-api-check")
@@ -41,7 +45,7 @@ for folder, name in path_fixtures.items():
     fixture = model_root / folder / name
     fixture.parent.mkdir(parents=True, exist_ok=True)
     fixture.write_bytes(b"path fixture only; never load")
-torch, nodes, mm = module.bootstrap(cfg, "check", cpu=True)
+torch, nodes, mm = common.bootstrap(cfg, "check", cpu=True)
 import folder_paths
 assert Path(folder_paths.models_dir).resolve() == model_root.resolve()
 for folder, name in path_fixtures.items():
@@ -60,23 +64,43 @@ source = [[torch.arange(24, dtype=torch.float32).reshape(1, 3, 8),
            {"pooled_output": torch.ones(1, 4), "attention_mask": torch.tensor([[True, True, False]]),
             "k6_audio_context": torch.arange(24).reshape(1, 3, 8).float(), "flag": None, "scale": 1.0}]]
 path = check_root / "condition.safetensors"
-module.save_conditioning(path, source, "prompt-A")
-result = module.load_conditioning(path, "prompt-A")
+common.save_conditioning(path, source, "prompt-A")
+result = common.load_conditioning(path, "prompt-A")
 assert torch.equal(result[0][0], source[0][0])
 assert torch.equal(result[0][1]["attention_mask"], source[0][1]["attention_mask"])
 assert result[0][1]["flag"] is None and result[0][1]["scale"] == 1.0
 try:
-    module.load_conditioning(path, "prompt-B")
+    common.load_conditioning(path, "prompt-B")
 except ValueError:
     pass
 else:
     raise AssertionError("Stale conditioning accepted")
 try:
-    module.finite(torch.tensor([float("nan")]), "negative control")
+    common.finite(torch.tensor([float("nan")]), "negative control")
 except FloatingPointError:
     pass
 else:
     raise AssertionError("NaN accepted")
+
+# Exercise the text worker function with controlled outputs: no encoder weights.
+# This catches import/placement/cache plumbing errors in the split module.
+import k6_text
+from types import SimpleNamespace
+from unittest.mock import patch
+clip = SimpleNamespace(patcher=SimpleNamespace(load_device=torch.device('cpu'), offload_device=torch.device('cpu')),
+                       cond_stage_model=SimpleNamespace(dtypes={torch.float32}))
+fake_nodes = SimpleNamespace(DualCLIPLoader=lambda: SimpleNamespace(load_clip=lambda *a, **k: (clip,)))
+encoder = SimpleNamespace(encode=lambda *a, **k: (source,))
+text_cfg = dict(cfg, text_device='default', video_caption='fixture', audio_caption='fixture',
+                negative_caption='fixture', text_cache_key='fixture-cache-key')
+text_report = {}
+with patch.object(k6_text, 'bootstrap', return_value=(torch, fake_nodes, mm)), \
+     patch('kandinsky6.nodes.Kandinsky6TextEncode', return_value=encoder):
+    k6_text.text_stage(text_cfg, text_report)
+assert text_report['text_load_device'] == 'cpu'
+assert text_report['text_offload_device'] == 'cpu'
+assert (Path(cfg['run_root'])/'positive.safetensors').is_file()
+assert (Path(cfg['run_root'])/'negative.safetensors').is_file()
 
 import numpy as np
 run = Path(cfg["run_root"])
@@ -120,7 +144,7 @@ settings.write_text(json.dumps(dict(model_root=str(model_root), input_model_dirs
 download.main()
 assert not owned.exists() and original.is_file()
 print("NATIVE_CPU_CHECKS_OK", json.dumps({"video_latent_shape": list(video.shape),
-      "audio_latent_shape": list(audio.shape), "conditioning_roundtrip": True,
+      "audio_latent_shape": list(audio.shape), "conditioning_roundtrip": True, "split_text_worker_mock_check": True,
       "stale_cache_rejected": True, "nan_rejected": True, "synthetic_mp4": metrics,
       "dataset_not_modified": True, "owned_temporary_cleanup": True,
       "external_model_root_resolved": True, "text_dit_video_audio_paths_resolved": True,
@@ -244,18 +268,25 @@ def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_
     path = root / "kandinsky-6/notebooks/15_kaggle_t4_lite_distill.ipynb"
     notebook = nbformat.read(path, as_version=4)
     nbformat.validate(notebook)
-    sources = {}
+    runtime_sources = {}
     models = None
+    writefile_cells = []
     for index, cell in enumerate(notebook.cells):
         if cell.cell_type == "code":
-            tree = ast.parse(cell.source, filename=f"{path.name}:cell-{index}")
             assert not cell.outputs and cell.execution_count is None, "Authored notebook must remain clean"
+            if cell.source.startswith("%%writefile"):
+                header, body = cell.source.split("\n", 1)
+                filename = Path(shlex.split(header)[1]).name
+                assert filename.endswith(".py")
+                runtime_sources[filename] = body
+                writefile_cells.append(cell.source)
+                tree = ast.parse(body, filename=filename)
+            else:
+                tree = ast.parse(cell.source, filename=f"{path.name}:cell-{index}")
             for node in tree.body:
                 if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
                     key = node.targets[0].id
-                    if key.endswith("_CODE"):
-                        sources[key] = ast.literal_eval(node.value)
-                        ast.parse(sources[key], filename=key)
+                    assert not key.endswith("_CODE"), "Quoted worker assembly leaked into the notebook"
                     if key == "MODELS":
                         models = ast.literal_eval(node.value)
         else:
@@ -264,9 +295,25 @@ def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_
                     continue
                 target = path.parent / unquote(link.split("#")[0])
                 assert target.exists(), f"Broken local link: {link}"
-    order = ["COMMON_CODE", "TEXT_CODE", "SAMPLE_CODE", "VIDEO_CODE", "AUDIO_CODE", "EXPORT_CODE", "ENTRY_CODE"]
-    worker = "\n\n".join(sources[name] for name in order)
-    ast.parse(worker)
+    expected = {"k6_common.py", "k6_text.py", "k6_sample.py", "k6_video.py", "k6_audio.py",
+                "k6_export.py", "run_stage.py", "download_models.py", "kaggle_parallel_vae_tiles.py"}
+    assert set(runtime_sources) == expected
+    manifest = json.loads((root / "kandinsky-6/kaggle_runtime/manifest.json").read_text())
+    for filename, source in runtime_sources.items():
+        assert (root / "kandinsky-6/kaggle_runtime" / filename).read_text() == source
+        assert hashlib.sha256(source.encode()).hexdigest() == manifest[filename]
+    from IPython.core.interactiveshell import InteractiveShell
+    from traitlets.config import Config
+    with tempfile.TemporaryDirectory(prefix="k6-writefile-check-") as folder:
+        scratch = Path(folder)
+        shell = InteractiveShell(config=Config({"HistoryManager": {"hist_file": ":memory:"}}), ipython_dir=str(scratch / "ipython"), user_ns={"SCRATCH": scratch})
+        with redirect_stdout(io.StringIO()):
+            for source in writefile_cells:
+                result = shell.run_cell(source, store_history=False)
+                assert result.error_before_exec is None and result.error_in_exec is None
+        for filename, source in runtime_sources.items():
+            assert (scratch / filename).read_text() == source
+    worker = "\n".join(filename + "\n" + runtime_sources[filename] for filename in sorted(runtime_sources))
     assert len(models) == 7
     assert sum(m["size"] for m in models) == 25416128714
     assert set(m["group"] for m in models) == {"text", "media"}
@@ -277,7 +324,8 @@ def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_
         assert not Path(item["path"]).is_absolute() and ".." not in Path(item["path"]).parts
     report = dict(notebook=str(path.relative_to(root)), source_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                   cells=len(notebook.cells), code_cells=sum(c.cell_type == "code" for c in notebook.cells),
-                  worker_sha256=hashlib.sha256(worker.encode()).hexdigest(), all_cells_and_embedded_scripts_parsed=True,
+                  worker_sha256=hashlib.sha256(worker.encode()).hexdigest(), all_cells_and_runtime_modules_parsed=True, classic_writefile_cells=len(writefile_cells),
+                  writefile_cells_executed_without_models=True, quoted_code_assembly=False,
                   local_links_checked=True, pinned_model_files=7, pinned_model_bytes=sum(m["size"] for m in models),
                   kaggle_execution=False, cuda_t4_inference=False, pretrained_downloads_during_validation=False,
                   pretrained_generation_during_validation=False, native_cpu_checks=False)
@@ -286,12 +334,12 @@ def validate(root: Path, comfy_root: Path | None, python: str | None, bootstrap_
     if comfy_root:
         with tempfile.TemporaryDirectory(prefix="k6-kaggle-check-") as temp:
             temp = Path(temp)
-            (temp / "worker.py").write_text(worker)
-            (temp / "download.py").write_text(sources["DOWNLOAD_CODE"])
+            for filename, source in runtime_sources.items():
+                (temp / filename).write_text(source)
             (temp / "check.py").write_text(CHECK)
             executable = python or str(comfy_root / ".venv/bin/python")
-            result = subprocess.run([executable, str(temp / "check.py"), str(temp / "worker.py"),
-                                     str(temp / "download.py"), str(comfy_root), str(temp)],
+            result = subprocess.run([executable, str(temp / "check.py"), str(temp / "run_stage.py"),
+                                     str(temp / "download_models.py"), str(comfy_root), str(temp)],
                                     cwd=comfy_root, text=True, capture_output=True, timeout=120)
             if result.returncode:
                 print(result.stdout)
