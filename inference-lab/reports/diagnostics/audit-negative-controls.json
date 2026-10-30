@@ -1,0 +1,25 @@
+{
+  "scope": "Audit negative controls on a temporary copy of measured pilot artifacts; no GPU inference",
+  "checks": [
+    {
+      "corruption": "actual_token_count",
+      "rejected": true,
+      "reason": "/vllm/r0-prefix/shared-c8/shared-000026"
+    },
+    {
+      "corruption": "duplicate_request_id",
+      "rejected": true,
+      "reason": "/vllm/r0-prefix/shared-c8"
+    },
+    {
+      "corruption": "wrong_throughput",
+      "rejected": true,
+      "reason": "/vllm/r0-prefix/shared-c8"
+    },
+    {
+      "corruption": "missing_warmup",
+      "rejected": true,
+      "reason": "/vllm/r0-prefix/shared-c8"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "engines": {
+    "vllm": "0.31.0",
+    "sglang": "0.5.22"
+  },
+  "requests": 32,
+  "repeats": 3,
+  "concurrency": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "seed": 42,
+  "tensor_parallel": 1,
+  "gpu_devices": "0",
+  "memory_fraction": 0.7,
+  "max_model_len": 4096,
+  "max_sequences": 32,
+  "arms": [
+    "baseline",
+    "chunked4096",
+    "chunked512",
+    "prefix"
+  ],
+  "slo": {
+    "ttft_ms": 1000,
+    "tpot_ms": 100,
+    "e2e_ms": 30000
+  },
+  "separate_kaggle_sessions": true,
+  "historical_error_records": [
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "chunked512",
+      "repeat": 0,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "chunked4096",
+      "repeat": 0,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "prefix",
+      "repeat": 0,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "baseline",
+      "repeat": 0,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "chunked512",
+      "repeat": 1,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "prefix",
+      "repeat": 1,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "chunked4096",
+      "repeat": 1,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "baseline",
+      "repeat": 1,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "chunked4096",
+      "repeat": 2,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "baseline",
+      "repeat": 2,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "chunked512",
+      "repeat": 2,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    },
+    {
+      "source_engine": "vllm",
+      "engine": "sglang",
+      "arm": "prefix",
+      "repeat": 2,
+      "stage": "serve/benchmark",
+      "error": "Server exited with code -9; inspect server.log"
+    }
+  ]
+}

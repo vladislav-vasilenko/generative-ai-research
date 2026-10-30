@@ -1,0 +1,92 @@
+[
+  {
+    "engine": "vllm",
+    "baseline": "baseline",
+    "arm": "chunked4096",
+    "workload": "mixed",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": -1.446867701867438,
+    "output_tps_change_range_pct": [
+      -1.9839160606006545,
+      0.7476140113325425
+    ],
+    "e2e_p95_change_pct": 1.3379122407527033,
+    "ttft_p50_change_pct": -1.7873964584381175
+  },
+  {
+    "engine": "vllm",
+    "baseline": "chunked4096",
+    "arm": "chunked512",
+    "workload": "mixed",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": 1.8604225754293546,
+    "output_tps_change_range_pct": [
+      1.4907017456564642,
+      4.648533724819792
+    ],
+    "e2e_p95_change_pct": -1.6185629104651822,
+    "ttft_p50_change_pct": 11.42382198357006
+  },
+  {
+    "engine": "vllm",
+    "baseline": "baseline",
+    "arm": "prefix",
+    "workload": "shared",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": 35.406299624322514,
+    "output_tps_change_range_pct": [
+      33.53788216971287,
+      39.72006094227773
+    ],
+    "e2e_p95_change_pct": -32.57772782394063,
+    "ttft_p50_change_pct": -89.6853115379013
+  },
+  {
+    "engine": "sglang",
+    "baseline": "baseline",
+    "arm": "chunked4096",
+    "workload": "mixed",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": -0.03200192610867125,
+    "output_tps_change_range_pct": [
+      -0.06672148006138245,
+      1.3436306155781397
+    ],
+    "e2e_p95_change_pct": -0.16619028329200036,
+    "ttft_p50_change_pct": -11.074627805647708
+  },
+  {
+    "engine": "sglang",
+    "baseline": "chunked4096",
+    "arm": "chunked512",
+    "workload": "mixed",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": 5.483672335554091,
+    "output_tps_change_range_pct": [
+      -6.108306409358022,
+      6.738008917740945
+    ],
+    "e2e_p95_change_pct": -6.548091413740432,
+    "ttft_p50_change_pct": -49.43245105868146
+  },
+  {
+    "engine": "sglang",
+    "baseline": "baseline",
+    "arm": "prefix",
+    "workload": "shared",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": 133.61196391391684,
+    "output_tps_change_range_pct": [
+      120.17726955017002,
+      134.30591176841625
+    ],
+    "e2e_p95_change_pct": -38.58205103508999,
+    "ttft_p50_change_pct": -91.08864164546499
+  }
+]

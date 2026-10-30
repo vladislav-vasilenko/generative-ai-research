@@ -1,0 +1,61 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "engines": {
+    "vllm": "0.31.0",
+    "sglang": "0.5.22"
+  },
+  "requests": 64,
+  "repeats": 3,
+  "concurrency": [
+    8
+  ],
+  "seed": 42,
+  "tensor_parallel": 1,
+  "gpu_devices": "0",
+  "memory_fraction": 0.7,
+  "max_model_len": 4096,
+  "max_sequences": 32,
+  "arms": [
+    "baseline",
+    "prefix"
+  ],
+  "slo": {
+    "ttft_ms": 1000,
+    "tpot_ms": 100,
+    "e2e_ms": 30000
+  },
+  "measurement_scope": "prefix_validation",
+  "abort_on_server_failure": true,
+  "cells": {
+    "baseline": [
+      [
+        "shared",
+        8
+      ]
+    ],
+    "prefix": [
+      [
+        "shared",
+        8
+      ]
+    ]
+  },
+  "warmup": {
+    "requests": 16,
+    "input_tokens": 2048,
+    "output_tokens": 256
+  },
+  "engine_constraints": {
+    "vllm": [
+      "torch==2.13.0",
+      "transformers==5.17.0",
+      "tokenizers==0.23.3"
+    ],
+    "sglang": [
+      "torch==2.14.1",
+      "transformers==5.19.0",
+      "tokenizers==0.23.2"
+    ]
+  }
+}

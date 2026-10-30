@@ -1,0 +1,52 @@
+[
+  {
+    "id": "semantic-smoke",
+    "workload": null,
+    "success": true,
+    "text": "Paris",
+    "expected_prompt_tokens": null,
+    "requested_output_tokens": 24,
+    "text_event_offsets_s": [],
+    "usage": {
+      "prompt_tokens": 43,
+      "total_tokens": 45,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "finish_reason": "stop",
+    "error": null,
+    "itl_ms": null,
+    "e2e_ms": 236.58232300022064,
+    "ttft_ms": null,
+    "tpot_ms": null,
+    "inter_chunk_ms": [],
+    "text_chunks": 0,
+    "streaming": false
+  },
+  {
+    "id": "semantic-smoke",
+    "workload": null,
+    "success": true,
+    "text": "Paris",
+    "expected_prompt_tokens": null,
+    "requested_output_tokens": 24,
+    "text_event_offsets_s": [
+      0.06789126799958467
+    ],
+    "usage": {
+      "prompt_tokens": 43,
+      "total_tokens": 45,
+      "completion_tokens": 2
+    },
+    "finish_reason": "stop",
+    "error": null,
+    "itl_ms": null,
+    "e2e_ms": 93.1214269994598,
+    "ttft_ms": 67.89126799958467,
+    "tpot_ms": null,
+    "inter_chunk_ms": [],
+    "text_chunks": 1,
+    "streaming": true
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "engine": "vllm",
+    "baseline": "baseline",
+    "arm": "prefix",
+    "workload": "shared",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": 38.16066607669766,
+    "output_tps_change_range_pct": [
+      33.61861840806162,
+      38.18293259594468
+    ],
+    "e2e_p95_change_pct": -29.16165273148359,
+    "ttft_p50_change_pct": -90.8112450136032
+  },
+  {
+    "engine": "sglang",
+    "baseline": "baseline",
+    "arm": "prefix",
+    "workload": "shared",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "output_tps_change_pct": 145.1463676992523,
+    "output_tps_change_range_pct": [
+      142.07142469257045,
+      148.7476014861488
+    ],
+    "e2e_p95_change_pct": -37.64372669691321,
+    "ttft_p50_change_pct": -91.06740736791751
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "base_url": "http://127.0.0.1:8000/v1",
+  "model": "qwen-lab",
+  "concurrency": 1,
+  "seed": 42,
+  "labels": {
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 0,
+    "workload": "long"
+  },
+  "slo": {
+    "ttft_ms": 1000,
+    "tpot_ms": 100,
+    "e2e_ms": 30000
+  },
+  "load_model": "closed_loop",
+  "streaming": true,
+  "generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "seed": 42,
+    "ignore_eos": true
+  }
+}

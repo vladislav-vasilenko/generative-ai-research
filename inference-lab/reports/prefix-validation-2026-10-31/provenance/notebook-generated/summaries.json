@@ -1,0 +1,434 @@
+[
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 172.83372814099994,
+    "error_rate": 0.0,
+    "request_throughput": 0.3702980933662901,
+    "output_tokens_per_second": 94.79631190177027,
+    "total_tokens_per_second": 853.1668071159324,
+    "goodput_requests_per_second": 0.0,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 9053.914930000019,
+      "p95": 14444.619814699938,
+      "p99": 14480.801215030111
+    },
+    "tpot_ms": {
+      "p50": 49.23802958823546,
+      "p95": 76.25778747196082,
+      "p99": 77.73168442980378
+    },
+    "e2e_ms": {
+      "p50": 21589.93997700003,
+      "p95": 21699.978994299887,
+      "p99": 21700.36509788001
+    },
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 0,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T21:54:50.523271+00:00",
+    "artifact": "sglang/r0-baseline/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 70.50225943099997,
+    "error_rate": 0.0,
+    "request_throughput": 0.907772325547046,
+    "output_tokens_per_second": 232.38971534004378,
+    "total_tokens_per_second": 2091.507438060394,
+    "goodput_requests_per_second": 0.7943007848536653,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 835.2403885000399,
+      "p95": 6183.183460200018,
+      "p99": 6187.504301149995
+    },
+    "tpot_ms": {
+      "p50": 28.51004935490174,
+      "p95": 31.092444986862933,
+      "p99": 36.99623332596076
+    },
+    "e2e_ms": {
+      "p50": 8145.873509500007,
+      "p95": 13428.955189649967,
+      "p99": 13430.139284679994
+    },
+    "engine": "sglang",
+    "arm": "prefix",
+    "repeat": 0,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T21:50:30.338801+00:00",
+    "artifact": "sglang/r0-prefix/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 171.92700531900005,
+    "error_rate": 0.0,
+    "request_throughput": 0.37225100199501476,
+    "output_tokens_per_second": 95.29625651072378,
+    "total_tokens_per_second": 857.666308596514,
+    "goodput_requests_per_second": 0.0,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 9053.850615500096,
+      "p95": 14443.547653149993,
+      "p99": 14472.791686730106
+    },
+    "tpot_ms": {
+      "p50": 48.809735070587934,
+      "p95": 76.0100157643135,
+      "p99": 77.1055597184309
+    },
+    "e2e_ms": {
+      "p50": 21497.315795000075,
+      "p95": 21523.605005850015,
+      "p99": 21525.126064799988
+    },
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 1,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:06:22.679643+00:00",
+    "artifact": "sglang/r1-baseline/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 71.02325503199995,
+    "error_rate": 0.0,
+    "request_throughput": 0.9011133039617012,
+    "output_tokens_per_second": 230.6850058141955,
+    "total_tokens_per_second": 2076.1650523277594,
+    "goodput_requests_per_second": 0.7884741409664886,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 808.7435929999174,
+      "p95": 7969.302919599907,
+      "p99": 8028.9432322600005
+    },
+    "tpot_ms": {
+      "p50": 28.11323883921503,
+      "p95": 30.911209519999737,
+      "p99": 44.313485860470834
+    },
+    "e2e_ms": {
+      "p50": 7996.448300999987,
+      "p95": 15151.270962700084,
+      "p99": 15153.71173532996
+    },
+    "engine": "sglang",
+    "arm": "prefix",
+    "repeat": 1,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:02:03.463855+00:00",
+    "artifact": "sglang/r1-prefix/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 172.34662196900035,
+    "error_rate": 0.0,
+    "request_throughput": 0.3713446731291986,
+    "output_tokens_per_second": 95.06423632107484,
+    "total_tokens_per_second": 855.5781268896736,
+    "goodput_requests_per_second": 0.0,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 9040.173113500032,
+      "p95": 14450.71597910005,
+      "p99": 14500.36670423001
+    },
+    "tpot_ms": {
+      "p50": 49.07633522156906,
+      "p95": 70.9833968550974,
+      "p99": 77.31042743333376
+    },
+    "e2e_ms": {
+      "p50": 21543.46030950023,
+      "p95": 21780.662515999982,
+      "p99": 21790.579181140027
+    },
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 2,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:18:46.631902+00:00",
+    "artifact": "sglang/r2-baseline/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 69.28574222999987,
+    "error_rate": 0.0,
+    "request_throughput": 0.9237109676554608,
+    "output_tokens_per_second": 236.47000771979796,
+    "total_tokens_per_second": 2128.2300694781816,
+    "goodput_requests_per_second": 0.8082470966985281,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 782.1139324998967,
+      "p95": 6347.538114300073,
+      "p99": 6350.162130539843
+    },
+    "tpot_ms": {
+      "p50": 28.242740719607873,
+      "p95": 30.676419401765372,
+      "p99": 36.02806350235233
+    },
+    "e2e_ms": {
+      "p50": 7963.235938499793,
+      "p95": 13581.609445699927,
+      "p99": 13583.983409339799
+    },
+    "engine": "sglang",
+    "arm": "prefix",
+    "repeat": 2,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:21:23.703285+00:00",
+    "artifact": "sglang/r2-prefix/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 77.65574795299995,
+    "error_rate": 0.0,
+    "request_throughput": 0.8241501973393535,
+    "output_tokens_per_second": 210.9824505188745,
+    "total_tokens_per_second": 1898.8420546698703,
+    "goodput_requests_per_second": 0.20603754933483837,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 1107.22268849986,
+      "p95": 1783.2315877500812,
+      "p99": 2708.828810500069
+    },
+    "tpot_ms": {
+      "p50": 33.68814813333364,
+      "p95": 36.35880279215674,
+      "p99": 36.674877266823366
+    },
+    "e2e_ms": {
+      "p50": 9664.424038499874,
+      "p95": 10373.349263050077,
+      "p99": 11314.768721040013
+    },
+    "engine": "vllm",
+    "arm": "baseline",
+    "repeat": 0,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T21:59:28.801405+00:00",
+    "artifact": "vllm/r0-baseline/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 58.117460634000054,
+    "error_rate": 0.0,
+    "request_throughput": 1.1012181072921574,
+    "output_tokens_per_second": 281.9118354667923,
+    "total_tokens_per_second": 2537.2065192011305,
+    "goodput_requests_per_second": 1.1012181072921574,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 101.73998000004758,
+      "p95": 452.48283630002106,
+      "p99": 461.26793044992604
+    },
+    "tpot_ms": {
+      "p50": 27.981547882353095,
+      "p95": 28.421080997843323,
+      "p99": 28.498415172470647
+    },
+    "e2e_ms": {
+      "p50": 7245.179852999968,
+      "p95": 7699.475783300068,
+      "p99": 7711.526321199872
+    },
+    "engine": "vllm",
+    "arm": "prefix",
+    "repeat": 0,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T21:57:16.263934+00:00",
+    "artifact": "vllm/r0-prefix/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 77.17382664300021,
+    "error_rate": 0.0,
+    "request_throughput": 0.8292967030915643,
+    "output_tokens_per_second": 212.29995599144047,
+    "total_tokens_per_second": 1910.6996039229641,
+    "goodput_requests_per_second": 0.20732417577289108,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 1105.7536770000524,
+      "p95": 1782.859304449992,
+      "p99": 2708.8942338799316
+    },
+    "tpot_ms": {
+      "p50": 33.47899941176472,
+      "p95": 36.203641420000515,
+      "p99": 36.41567349274482
+    },
+    "e2e_ms": {
+      "p50": 9640.854534999904,
+      "p95": 10263.299973799858,
+      "p99": 11196.85204016998
+    },
+    "engine": "vllm",
+    "arm": "baseline",
+    "repeat": 1,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:10:29.856091+00:00",
+    "artifact": "vllm/r1-baseline/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 55.8490293939999,
+    "error_rate": 0.0,
+    "request_throughput": 1.1459465042534078,
+    "output_tokens_per_second": 293.3623050888724,
+    "total_tokens_per_second": 2640.2607457998515,
+    "goodput_requests_per_second": 1.1459465042534078,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 110.70365000000493,
+      "p95": 460.6002793499101,
+      "p99": 461.7153459999031
+    },
+    "tpot_ms": {
+      "p50": 26.809767313725658,
+      "p95": 27.024703676077962,
+      "p99": 27.07184997517652
+    },
+    "e2e_ms": {
+      "p50": 6944.709012999965,
+      "p95": 7270.352076649897,
+      "p99": 7271.309792189977
+    },
+    "engine": "vllm",
+    "arm": "prefix",
+    "repeat": 1,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:08:18.077832+00:00",
+    "artifact": "vllm/r1-prefix/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 77.5610864260002,
+    "error_rate": 0.0,
+    "request_throughput": 0.8251560537520498,
+    "output_tokens_per_second": 211.23994976052475,
+    "total_tokens_per_second": 1901.1595478447227,
+    "goodput_requests_per_second": 0.20628901343801245,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 1106.053697499874,
+      "p95": 1787.4040258001949,
+      "p99": 2712.696717320072
+    },
+    "tpot_ms": {
+      "p50": 33.78285890588296,
+      "p95": 36.490751329215705,
+      "p99": 36.656660989373485
+    },
+    "e2e_ms": {
+      "p50": 9716.477027999872,
+      "p95": 10406.12367944991,
+      "p99": 11343.39897351026
+    },
+    "engine": "vllm",
+    "arm": "baseline",
+    "repeat": 2,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:12:42.233981+00:00",
+    "artifact": "vllm/r2-baseline/shared-c8/summary.json"
+  },
+  {
+    "attempted": 64,
+    "successful": 64,
+    "wall_seconds": 56.13832694100029,
+    "error_rate": 0.0,
+    "request_throughput": 1.1400411000360253,
+    "output_tokens_per_second": 291.8505216092225,
+    "total_tokens_per_second": 2626.654694483002,
+    "goodput_requests_per_second": 1.1400411000360253,
+    "actual_prompt_tokens": 131072,
+    "actual_output_tokens": 16384,
+    "p99_small_sample": true,
+    "token_itl_available": false,
+    "ttft_ms": {
+      "p50": 95.94980599990777,
+      "p95": 434.4324509499984,
+      "p99": 470.2779197297241
+    },
+    "tpot_ms": {
+      "p50": 26.98115135294043,
+      "p95": 27.26720543156832,
+      "p99": 27.29776370741133
+    },
+    "e2e_ms": {
+      "p50": 7009.023415999991,
+      "p95": 7235.8398447503305,
+      "p99": 7264.863295099813
+    },
+    "engine": "vllm",
+    "arm": "prefix",
+    "repeat": 2,
+    "workload": "shared",
+    "concurrency": 8,
+    "timestamp_utc": "2026-10-30T22:14:33.252720+00:00",
+    "artifact": "vllm/r2-prefix/shared-c8/summary.json"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "engine": "vllm",
+    "requests": 2208,
+    "success": 2208,
+    "output_tokens": 356352
+  },
+  {
+    "engine": "vllm",
+    "repeat": 0,
+    "compared": 32,
+    "exact_text_matches": 14
+  },
+  {
+    "engine": "vllm",
+    "repeat": 1,
+    "compared": 32,
+    "exact_text_matches": 14
+  },
+  {
+    "engine": "vllm",
+    "repeat": 2,
+    "compared": 32,
+    "exact_text_matches": 15
+  },
+  {
+    "engine": "sglang",
+    "requests": 2208,
+    "success": 2208,
+    "output_tokens": 356352
+  },
+  {
+    "engine": "sglang",
+    "repeat": 0,
+    "compared": 32,
+    "exact_text_matches": 9
+  },
+  {
+    "engine": "sglang",
+    "repeat": 1,
+    "compared": 32,
+    "exact_text_matches": 9
+  },
+  {
+    "engine": "sglang",
+    "repeat": 2,
+    "compared": 32,
+    "exact_text_matches": 9
+  }
+]

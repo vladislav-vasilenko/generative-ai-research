@@ -1,0 +1,221 @@
+{
+  "status": "VALIDATED",
+  "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "measured_cells": 12,
+  "timed_requests": 768,
+  "output_tokens": 196608,
+  "excluded_warmup_requests": 192,
+  "cells": [
+    {
+      "path": "vllm/r0-baseline/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-prefix/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": 127936.0,
+        "cached_fraction": 0.97607421875,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-prefix/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": 127936.0,
+        "cached_fraction": 0.97607421875,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-prefix/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": 127936.0,
+        "cached_fraction": 0.97607421875,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-prefix/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": 124019.0,
+        "cached_fraction": 0.9461898803710938,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-prefix/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": 122012.0,
+        "cached_fraction": 0.930877685546875,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-prefix/shared-c8",
+      "requests": 64,
+      "warmup_requests": 16,
+      "prompt_tokens": 131072,
+      "output_tokens": 16384,
+      "cache": {
+        "queried_prompt_tokens": 131072.0,
+        "cached_prompt_tokens": 124018.0,
+        "cached_fraction": 0.9461822509765625,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    }
+  ],
+  "decoded_text_agreement": [
+    {
+      "engine": "vllm",
+      "repeat": 0,
+      "pairs": 64,
+      "exact_text_matches": 32
+    },
+    {
+      "engine": "vllm",
+      "repeat": 1,
+      "pairs": 64,
+      "exact_text_matches": 27
+    },
+    {
+      "engine": "vllm",
+      "repeat": 2,
+      "pairs": 64,
+      "exact_text_matches": 26
+    },
+    {
+      "engine": "sglang",
+      "repeat": 0,
+      "pairs": 64,
+      "exact_text_matches": 10
+    },
+    {
+      "engine": "sglang",
+      "repeat": 1,
+      "pairs": 64,
+      "exact_text_matches": 8
+    },
+    {
+      "engine": "sglang",
+      "repeat": 2,
+      "pairs": 64,
+      "exact_text_matches": 13
+    }
+  ],
+  "quality_parity_established": false,
+  "evidence_sha256": {
+    "campaign.json": "2469590ff58e1c2a3248b4b6e711e2d0b4e4ca5f7765723b1e5d77bee8e13bee",
+    "workloads/model.json": "b76dba47c57da7ddc0a8925ebac1e54db1a8e544caa13e2b2a1b417e67bf3d67",
+    "sglang/r0-baseline/shared-c8/summary.json": "1229e6e258636b2bc4b4875e49bf0858a41414d5095a2e27a2707b1af32379f6",
+    "sglang/r0-prefix/shared-c8/summary.json": "2b80406f734b77a32806f613e50312109aebb4c6b0e16f4a32d826a59939af3e",
+    "sglang/r1-baseline/shared-c8/summary.json": "9d66dab005fcc8c0c8bfe915e1daf4276a146f7869dbde7cd539daecc927d0b3",
+    "sglang/r1-prefix/shared-c8/summary.json": "f9f8356e5a1b969a9a19edfa58dd35131d16bc10e925a400e81e723c7a2ef15b",
+    "sglang/r2-baseline/shared-c8/summary.json": "f70ae6781a49c10cb243d04c20903aab0b6016c9552b9c5914feb362118f74ec",
+    "sglang/r2-prefix/shared-c8/summary.json": "3e49ad4e7d286a2edea1235a10565b3621e1217d3f56e4e14f724a9246f656ce",
+    "vllm/r0-baseline/shared-c8/summary.json": "c043a8e3644a30c9a8ebacfe1b81826e71fc44921b9dde37187599672f1950c4",
+    "vllm/r0-prefix/shared-c8/summary.json": "9f4d959d4c6f3701b8fd3d6abd7427cfd892060cfde4ffa0216ee691cd6248cd",
+    "vllm/r1-baseline/shared-c8/summary.json": "d2ff958b2011c6e55f6441352aefcb821bbe4d8caf4bd69016053b74b8d4e6a0",
+    "vllm/r1-prefix/shared-c8/summary.json": "ad252f437566fae1848b738db75f7754867d28842de1067b3b0926b3d86d5470",
+    "vllm/r2-baseline/shared-c8/summary.json": "989be04790c320a24be8d6233c97537b14d2a10b4a705cd2213a890262310a81",
+    "vllm/r2-prefix/shared-c8/summary.json": "b0848483982aa1c5f2a816b7eec3a787ba4b7e38c2e6bf8d60aafcb908aafc74"
+  }
+}

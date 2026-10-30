@@ -1,0 +1,1985 @@
+{
+  "status": "VALIDATED",
+  "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "measured_cells": 138,
+  "timed_requests": 4416,
+  "output_tokens": 712704,
+  "excluded_warmup_requests": 552,
+  "cells": [
+    {
+      "path": "vllm/r0-baseline/short-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/short-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/short-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/short-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/short-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/standard-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/standard-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/standard-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/standard-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/standard-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/long-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/long-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/long-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/long-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/long-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-baseline/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-chunked4096/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-chunked4096/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-chunked512/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-chunked512/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r0-prefix/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": 62960.0,
+        "cached_fraction": 0.960693359375,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/short-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/short-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/short-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/short-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/short-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/standard-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/standard-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/standard-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/standard-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/standard-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/long-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/long-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/long-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/long-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/long-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-baseline/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-chunked4096/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-chunked4096/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-chunked512/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-chunked512/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r1-prefix/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": 62960.0,
+        "cached_fraction": 0.960693359375,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/short-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/short-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/short-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/short-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/short-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/standard-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/standard-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/standard-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/standard-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/standard-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/long-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/long-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/long-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/long-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/long-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-baseline/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-chunked4096/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-chunked4096/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-chunked512/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-chunked512/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 0.0,
+        "cached_prompt_tokens": 0.0,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "vllm/r2-prefix/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": 62960.0,
+        "cached_fraction": 0.960693359375,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/short-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/short-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/short-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/short-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/short-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/standard-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/standard-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/standard-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/standard-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/standard-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/long-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/long-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/long-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/long-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/long-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-baseline/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-chunked4096/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-chunked4096/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-chunked512/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-chunked512/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r0-prefix/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": 58996.0,
+        "cached_fraction": 0.90020751953125,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/short-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/short-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/short-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/short-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/short-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/standard-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/standard-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/standard-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/standard-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/standard-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/long-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/long-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/long-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/long-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/long-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-baseline/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-chunked4096/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-chunked4096/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-chunked512/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-chunked512/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r1-prefix/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": 56990.0,
+        "cached_fraction": 0.869598388671875,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/short-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/short-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/short-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/short-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/short-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 4096,
+      "output_tokens": 2048,
+      "cache": {
+        "queried_prompt_tokens": 4096.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/standard-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/standard-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/standard-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/standard-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/standard-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 16384,
+      "output_tokens": 4096,
+      "cache": {
+        "queried_prompt_tokens": 16384.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/long-c1",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/long-c2",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/long-c4",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/long-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/long-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-baseline/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-chunked4096/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-chunked4096/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-chunked512/mixed-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-chunked512/mixed-c16",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 34816,
+      "output_tokens": 5120,
+      "cache": {
+        "queried_prompt_tokens": 34816.0,
+        "cached_prompt_tokens": null,
+        "cached_fraction": null,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    },
+    {
+      "path": "sglang/r2-prefix/shared-c8",
+      "requests": 32,
+      "warmup_requests": 4,
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "cache": {
+        "queried_prompt_tokens": 65536.0,
+        "cached_prompt_tokens": 58996.0,
+        "cached_fraction": 0.90020751953125,
+        "semantics": "engine-specific counters; endpoint snapshots, not peak occupancy"
+      }
+    }
+  ],
+  "decoded_text_agreement": [
+    {
+      "engine": "vllm",
+      "repeat": 0,
+      "pairs": 32,
+      "exact_text_matches": 14
+    },
+    {
+      "engine": "vllm",
+      "repeat": 1,
+      "pairs": 32,
+      "exact_text_matches": 14
+    },
+    {
+      "engine": "vllm",
+      "repeat": 2,
+      "pairs": 32,
+      "exact_text_matches": 15
+    },
+    {
+      "engine": "sglang",
+      "repeat": 0,
+      "pairs": 32,
+      "exact_text_matches": 9
+    },
+    {
+      "engine": "sglang",
+      "repeat": 1,
+      "pairs": 32,
+      "exact_text_matches": 9
+    },
+    {
+      "engine": "sglang",
+      "repeat": 2,
+      "pairs": 32,
+      "exact_text_matches": 9
+    }
+  ],
+  "quality_parity_established": false,
+  "evidence_sha256": {
+    "campaign.json": "6d9acdb8f08dc111f4b098b8b4e9acd597ebdd6f0555e0dc64ab1f326996ca3a",
+    "workloads/model.json": "b76dba47c57da7ddc0a8925ebac1e54db1a8e544caa13e2b2a1b417e67bf3d67",
+    "sglang/r0-baseline/long-c1/summary.json": "eebd0df41ed78810a9d573fdc4903437b0d77757c49ff5a13fd05a87a9337ed3",
+    "sglang/r0-baseline/long-c16/summary.json": "4afbb739fcf26fe7e97fe409580a54f2299bf0fadc14d0aa709987dd66616b3a",
+    "sglang/r0-baseline/long-c2/summary.json": "726957525b62303289a8e9d3c14f39ed791b10ff595ba8628edd8448ef0128ce",
+    "sglang/r0-baseline/long-c4/summary.json": "a9eceec2b5a8a09f062b2b5f2a9076c4e14f098f51ba73863fdaecb4e8ee7e77",
+    "sglang/r0-baseline/long-c8/summary.json": "b31c91f47a69c90ca3f433b273900dcc15bd38fad60243839e045c52b2cd551c",
+    "sglang/r0-baseline/mixed-c16/summary.json": "8bb64427c548dcb074c655151a595548cd860e99c40b7047be6eada427861566",
+    "sglang/r0-baseline/mixed-c8/summary.json": "1b8986390ab27ca386114d3aa0077d8dc5c89816b6778c10ae2ec3651a60fc76",
+    "sglang/r0-baseline/shared-c8/summary.json": "d420dfc76b2d9f3e4982ed9a76a4af9e33587748007543a428c1b5634612de16",
+    "sglang/r0-baseline/short-c1/summary.json": "35e3ef05f42309b76969571e4a96511dfdc4c797ce534551fa670066c972f4fd",
+    "sglang/r0-baseline/short-c16/summary.json": "7ac1cd57079fc1e6fe7af2fecb80bbc48e1322d4cb4800c22866108844ed8218",
+    "sglang/r0-baseline/short-c2/summary.json": "59c419a841d8364f7538a62636edd7e05ba70ed0df7154fe9d6c99a08327cded",
+    "sglang/r0-baseline/short-c4/summary.json": "a019ca0b48fe3eaae7dcf4a1702dc6bf0346af71ab1f5d650a18fe31c19a6d4e",
+    "sglang/r0-baseline/short-c8/summary.json": "514c262aa0d8b1a85acdef50cdb6deaf86b910d0718c13f3846514d7470e14b9",
+    "sglang/r0-baseline/standard-c1/summary.json": "69f7acdf1619d64a13a1007cd5ebee40d896a18b41497e4253c8ab5832569b7b",
+    "sglang/r0-baseline/standard-c16/summary.json": "b818d99b655838384617a881f1d414163cac32c25efb0832a12be7c112c126b7",
+    "sglang/r0-baseline/standard-c2/summary.json": "1bf637d3a7dbd3b79821496175b131be6f73ac2b4c1723bc9dd0effe95dbef60",
+    "sglang/r0-baseline/standard-c4/summary.json": "4f059b934f53fc0e6a80da06a3c561bde0e488acb76adf0e03f0dccd430bea34",
+    "sglang/r0-baseline/standard-c8/summary.json": "d09d1737781feb646522a90585fa90dd961d6efb5f05d8c17d7f3b85c933aadb",
+    "sglang/r0-chunked4096/mixed-c16/summary.json": "cce6be4e85504a76b0a1cc91c7ceda0e5ca4630ea5cf891c2e53cd16b3622d60",
+    "sglang/r0-chunked4096/mixed-c8/summary.json": "f7357ac274ff83b40d95f737a13013fe97c76f9e8bd74b4df2b2e11b4a4369d1",
+    "sglang/r0-chunked512/mixed-c16/summary.json": "6748bdcfbf474938b64880a950d5e527850501391230138485fbd6a522b526bb",
+    "sglang/r0-chunked512/mixed-c8/summary.json": "d2ce35c028196f575a48b6b30d2d003f580b35d2c2eb98eb1c87f0d1a1779ddd",
+    "sglang/r0-prefix/shared-c8/summary.json": "1fa338257aa5b08c7248f660143510577f711ce17fa1e757c1d3a307e1a99c43",
+    "sglang/r1-baseline/long-c1/summary.json": "833de91afcf4427c0b9970de83cf23cb351f6200b751f2a2033794dbbe5636a7",
+    "sglang/r1-baseline/long-c16/summary.json": "4d4ab4e50b43f67ab49b82056e4e6df7b62deceabe8ee9f8e5788cc197df465c",
+    "sglang/r1-baseline/long-c2/summary.json": "cf9913221b1aa79acea1b7bbef223eaea86cbf0a789e6bc7b86417d2450d358d",
+    "sglang/r1-baseline/long-c4/summary.json": "ea3b7fbfcc1e29f40eadb338c291de6617e347a257388178ef650582f5746653",
+    "sglang/r1-baseline/long-c8/summary.json": "c09da5200733d73ffe458a2dc8cefd022682f6f7e220bbc6d5d62d8519803c9b",
+    "sglang/r1-baseline/mixed-c16/summary.json": "fbbf11023ffee2e5cf40862bd808e5665a202be40d62013ab083bb20829a63b7",
+    "sglang/r1-baseline/mixed-c8/summary.json": "5b9495a204d527a4c15309c36b08f9ed6bc6769ba78e3033e336d05174bbd708",
+    "sglang/r1-baseline/shared-c8/summary.json": "4bcb2a8d56afb32838d159559d5eb6420fca36b2df561f5e23e0e3fe277f8e2e",
+    "sglang/r1-baseline/short-c1/summary.json": "849ff9b2d00c30941f26fabdc0b5c2c366c9d1a249a846d2041b453c76d53046",
+    "sglang/r1-baseline/short-c16/summary.json": "aaadc0d43ea60e2c24099388f6bfee0956605ac74e8970cecee73058ac4f784a",
+    "sglang/r1-baseline/short-c2/summary.json": "4ad40aa6f98c4e8340ddaba5e15caddebd164a5282426e83ca96eb9ba81eb78a",
+    "sglang/r1-baseline/short-c4/summary.json": "a345ed6e5c90e253a2ad3740123bc67d2fe3aa99551089fdd8470cac443abde5",
+    "sglang/r1-baseline/short-c8/summary.json": "704a9a3788e1f1c192f5a3443d1249c8657661637b49d450b1821a8865b1d21d",
+    "sglang/r1-baseline/standard-c1/summary.json": "169bf37742d1162f0bcdea68b7cd9979b99ae3d70246d70a7b92fc513e7266df",
+    "sglang/r1-baseline/standard-c16/summary.json": "fb05e7e572d3bdd7cb22dcf2e2c8d5f03ae73d9aa7c853a5b25cbaa58d17a0f3",
+    "sglang/r1-baseline/standard-c2/summary.json": "03088f168ffc6e887a8dc5b0212e69aa1adbd806bb1f1a306508b885b569b711",
+    "sglang/r1-baseline/standard-c4/summary.json": "b2124d29033db871ce99d44bc96ac1813919a25b8e9ef77fcc44a28121fcc39b",
+    "sglang/r1-baseline/standard-c8/summary.json": "a64e7db473645c8d002fe717de80e2aaacadbdcbb6d96596c47f13c24414d82b",
+    "sglang/r1-chunked4096/mixed-c16/summary.json": "3a3a38d7d742bf063556b592d463d7e5dc80151c111b499b09e0152648f4fa90",
+    "sglang/r1-chunked4096/mixed-c8/summary.json": "6b50cc48a8006b47a65c4eae75c168da756e7ebb5d1cc527585443857d59501d",
+    "sglang/r1-chunked512/mixed-c16/summary.json": "34d3fb1bd79f97174b00f46b2e02f155afb79af100acb84bea4675ad3998f5ae",
+    "sglang/r1-chunked512/mixed-c8/summary.json": "887710f8a85bae53fbbfcf669f22affbf68550e010391a27586c19f381358a4c",
+    "sglang/r1-prefix/shared-c8/summary.json": "b8546186cc356fe9522eee47be4e3bccbc1d86f3dd5208feb78bda80530bce29",
+    "sglang/r2-baseline/long-c1/summary.json": "1b0b8ace2eebabc5f3afc069b16d79fafcc9924be42710cada02c9f5e57e5b6e",
+    "sglang/r2-baseline/long-c16/summary.json": "2428a45f58c966dde18bf3cec3bcb1fe77dce065e9cf125679a1bde651d68506",
+    "sglang/r2-baseline/long-c2/summary.json": "f9c9378415e784f98c8a19cf7b62ee9ceec6a43586aa3b2400cef78f024db1aa",
+    "sglang/r2-baseline/long-c4/summary.json": "21ece8aae4cdd26ab7033bcdc6725117639b5d962c37f25c8f6acce2d1468ee2",
+    "sglang/r2-baseline/long-c8/summary.json": "4ce31b20c65ada9ed54050deec5c19b4b8ee08b151cfa7bbcb4747bb4b173cc9",
+    "sglang/r2-baseline/mixed-c16/summary.json": "d8594be9cc6017fd928f22a171ac93b1c4dfc48b01bf724859d2d2f25560b2fd",
+    "sglang/r2-baseline/mixed-c8/summary.json": "4b893946efa746aff9395fcd0fe26fa78ad8782093ee3cf92f769930947337a8",
+    "sglang/r2-baseline/shared-c8/summary.json": "91f625c83e3f248eadbeb63d043cf75c4746826ef8eb9712df1000493016d6d8",
+    "sglang/r2-baseline/short-c1/summary.json": "2d49fc96ade1f2fbf8b9becc54ad0dc0bbdefe53af46abbaae1fa31ea4297f8b",
+    "sglang/r2-baseline/short-c16/summary.json": "dcad4e404b6f279ee0c485b96f8315110f22aac933de1fef5f64389d2d5faf81",
+    "sglang/r2-baseline/short-c2/summary.json": "7f23b90547211e2c22ca8d0c4251a2953f66f348af85b115c15873bc8f17dce1",
+    "sglang/r2-baseline/short-c4/summary.json": "920a9b2ce45863702c650ad8afd7ec1861a3fb3b7c281b69c083044817ff743c",
+    "sglang/r2-baseline/short-c8/summary.json": "33a90ac40aa52e2cc22fce491a1123974ac6401d9b08aedb0770e8f7b58ea7fc",
+    "sglang/r2-baseline/standard-c1/summary.json": "d8a196d61e4a339fc5704bc03f573912ece46eb365c97eba48a4701bc154fcf7",
+    "sglang/r2-baseline/standard-c16/summary.json": "1dd7d9e11a6849d01f4f5dc70f80880ca69edfd4137a4bc228e16ddb1f8e449e",
+    "sglang/r2-baseline/standard-c2/summary.json": "e3af6ca613f0969e01252f492914759bb8d9f9719d830cff1187206816381ef4",
+    "sglang/r2-baseline/standard-c4/summary.json": "648b58e3c7313192e0209e30327da25d2b8ab3f635525a370e744bc2c2c1561c",
+    "sglang/r2-baseline/standard-c8/summary.json": "0a61c7981876688b2181c6c14937129dc0206b0ffce822c39c5e7eebe3cb05f9",
+    "sglang/r2-chunked4096/mixed-c16/summary.json": "e3351f861403cafc62aa060aab387666948a5a9d25b5dce166c2a51715f73ce1",
+    "sglang/r2-chunked4096/mixed-c8/summary.json": "6860114bfb784edaa7f2cb5c598987a6248311e0607ae84caf4759231b944d7c",
+    "sglang/r2-chunked512/mixed-c16/summary.json": "cccc48a4c5193aae7d39cdc57e7fa94820ff11ded3c75bf6d7982b373822690b",
+    "sglang/r2-chunked512/mixed-c8/summary.json": "71d69a84c5143a437850c713061cec8e940b8e539333c7e2f7ddb34da84ea8fd",
+    "sglang/r2-prefix/shared-c8/summary.json": "1fc4ece280737112ade448f96e5142eb49ed4929d7ab92e85ee203f933fa4531",
+    "vllm/r0-baseline/long-c1/summary.json": "3bce508a772dc3b1ff192e8ace03fc4338448b357092405bf369348eaf405713",
+    "vllm/r0-baseline/long-c16/summary.json": "52e685bcd624293a4fa1d9152e929a139f4cd81abd540e151999fb8b6a0c89cf",
+    "vllm/r0-baseline/long-c2/summary.json": "dbb10899d712708536ce2501a1a32ff4b39eefd9003f933a8097f21d862409d5",
+    "vllm/r0-baseline/long-c4/summary.json": "928a38110fe14ac4a2885bcbeea0cec76e1ca9b5b653b7d9bceda839762d70f3",
+    "vllm/r0-baseline/long-c8/summary.json": "8d065dc820aebefe3b043d16d3478cf4b403b3ffbe6f49e5e16d222a7bceffc1",
+    "vllm/r0-baseline/mixed-c16/summary.json": "dab4f2a10aa8254478238aadcd481efa75da740a35e7f976c715438c8f66d53a",
+    "vllm/r0-baseline/mixed-c8/summary.json": "e11963555ab38b1d706d70e7254293b15488657c7d0dbbe9b0219c44a441093f",
+    "vllm/r0-baseline/shared-c8/summary.json": "49352588ae553c98f8e5d1638afaa6d9c30762fea41260df6ffbdbd14500d250",
+    "vllm/r0-baseline/short-c1/summary.json": "580f6c38a0def67da5f40ccbba1509a07084c497dc7f62c6919e051defbda2ae",
+    "vllm/r0-baseline/short-c16/summary.json": "d1dc9f5598c710d94bb6d67c329c57af63d5b904b4a503be9c2410492416bc45",
+    "vllm/r0-baseline/short-c2/summary.json": "93b4dc264bdfe37d59a83d15d9bceac9aa94c798cb9fa73562803234e09edcdc",
+    "vllm/r0-baseline/short-c4/summary.json": "2c0964acf18bc73976c39b184ad61516a5599b499bb5efe6433849ad04d6785c",
+    "vllm/r0-baseline/short-c8/summary.json": "5240fb482d3ae1dfb399158e70841cd08b9543f5d0144d93fe4d3c1d5a47e42d",
+    "vllm/r0-baseline/standard-c1/summary.json": "01d83995695327edf764115b5fa52e5a96bd3b5c99744fe7a17ded20d54497ee",
+    "vllm/r0-baseline/standard-c16/summary.json": "1a91e38da096fd882252e5278b912fecb97bda7074d34c391742f2fd9ab9140a",
+    "vllm/r0-baseline/standard-c2/summary.json": "8d46ad887619216a829948130d810c6e3686c6ba08963d877c748eb0a0a18500",
+    "vllm/r0-baseline/standard-c4/summary.json": "2b9789c65d0cda6da5e194fa3a4a7747d093dfd7a83025c9e5d87b99323e98e5",
+    "vllm/r0-baseline/standard-c8/summary.json": "91e7bec2bb680dc4304582326a0e63cb21eb66a6dee8ec75252c21377822b2e6",
+    "vllm/r0-chunked4096/mixed-c16/summary.json": "f61664246dcde35b1497548f9df1e4c03badb962858a605dd2dfd7c08c5cab25",
+    "vllm/r0-chunked4096/mixed-c8/summary.json": "209323b92979604d17d4652fbf1bc55ac11ceceb76448e094a859f3521c8913d",
+    "vllm/r0-chunked512/mixed-c16/summary.json": "771760359365cf983fad46188094a1088e37bc75be5817f3e04cb75f3b149817",
+    "vllm/r0-chunked512/mixed-c8/summary.json": "b0b6902d5b394f6b4309eafd17d486046db0aa0bba38d2635662a1323c94b505",
+    "vllm/r0-prefix/shared-c8/summary.json": "4b586b8ed7f794b48739def0bcee6fbac8707e608028d6d4c169a53b30d2ab92",
+    "vllm/r1-baseline/long-c1/summary.json": "76e5aa25130dd3e91c2ada899760a6569a1e6fbc5ec2c1e5edcc601ee1e93ba1",
+    "vllm/r1-baseline/long-c16/summary.json": "cee2b57ba071c424f4fcc3d92de80a31136e567fa084e77212fe19d453f4729c",
+    "vllm/r1-baseline/long-c2/summary.json": "fc405c646eb1afebc857b842a20f3f54de13a9dbb8cb67bbd5baeba1a6dafc1d",
+    "vllm/r1-baseline/long-c4/summary.json": "435c0cbdd2306950c37cad29c8bc973c6c883f73a735a22567914e1be638359a",
+    "vllm/r1-baseline/long-c8/summary.json": "4d54949d33d37bd8239d1133e54bcd04a4f1c59da6e1a2f6f3ab7e17ceb083bb",
+    "vllm/r1-baseline/mixed-c16/summary.json": "160902fd072bd487c1037051c7ac21a981df7338a9e0441edf542ecc76c9035a",
+    "vllm/r1-baseline/mixed-c8/summary.json": "ba0003706e08e2f585ef5fd0a37ee645e72c9d06e1e193a404d00baabb2535c7",
+    "vllm/r1-baseline/shared-c8/summary.json": "a3ad89a779afb46e540ff92bd8d01c65ee744749e63f4f55cfeef9177e9ca939",
+    "vllm/r1-baseline/short-c1/summary.json": "a90b37be3291babeafebcb06433410bc0ed7f833ccbddec345bf13d4f0833e0f",
+    "vllm/r1-baseline/short-c16/summary.json": "891cb02c092ceed12e9e083692e6e424eb9ee6a736349a9b22f0b59a0ac056f8",
+    "vllm/r1-baseline/short-c2/summary.json": "1a7b1ba2069182f756a06961ae391b6401fe6a9d3dbf6d9b62ec5b7be35b89da",
+    "vllm/r1-baseline/short-c4/summary.json": "098c0b514c9f1604dbeed521a703454d9438bdfed64311e50fab80e172ec0784",
+    "vllm/r1-baseline/short-c8/summary.json": "a32266264cddf58c1bf8f16fafd50de89fd31003731711b8c3c04fd92f0f14f2",
+    "vllm/r1-baseline/standard-c1/summary.json": "a574fb0c4d1d8660bd587c6ef2b596d07742a13b174bdeb3b73b122ca96ec7ab",
+    "vllm/r1-baseline/standard-c16/summary.json": "237b6e9142d1068d50caa21eb85dc2c2745c0d94631258a4eebfea5943e4c70f",
+    "vllm/r1-baseline/standard-c2/summary.json": "cd3ea6d56d8c764493d16ac8f8efdfa58609d46e7f48ee023cab00ba1b0c8837",
+    "vllm/r1-baseline/standard-c4/summary.json": "24a73f829ee454f1dae138c4f1175f3ef48f029fa48ef4aec516a859c62aea35",
+    "vllm/r1-baseline/standard-c8/summary.json": "a59ec50b2a7a91b98f6775942a5f2418b8e550edeb89c5cd493f233cb7450c83",
+    "vllm/r1-chunked4096/mixed-c16/summary.json": "84c37b43f2423a6e574972898acf34a8d1f446a387b8e99f36b28d407a8a4c0b",
+    "vllm/r1-chunked4096/mixed-c8/summary.json": "95dcf6c71ce9bf95b7fb381312a5d35f927ec283ccdc2d1eb526107085e15210",
+    "vllm/r1-chunked512/mixed-c16/summary.json": "2e238975e47ea9dc642e10e2f09d23f627eb9c2d19385cfb428d3054e4acf712",
+    "vllm/r1-chunked512/mixed-c8/summary.json": "eb20b5623b974c3d75458f3de95a57de079cb80762185ba16061446016f1ade8",
+    "vllm/r1-prefix/shared-c8/summary.json": "ab5eaf21ba621ccb0ff8aaae36c51a3a4dff239a246dd33b7a0b33ac3e1f9445",
+    "vllm/r2-baseline/long-c1/summary.json": "55b8691aa583c2dd91f1fac7d76c975ab56424ec4e2faf8ddf22991f04238f21",
+    "vllm/r2-baseline/long-c16/summary.json": "ccd7c7e2504c7d526f787359e534fde6c4a5e54235ba5350377cb2b2135b65f3",
+    "vllm/r2-baseline/long-c2/summary.json": "fdc1e44edc600fe82e77dcf3653a3114d352d493f59376b709c375bc802be882",
+    "vllm/r2-baseline/long-c4/summary.json": "9bb0a87703576e9cee3c8c0200390b52020a7259e1e22afbffdffd0799efd30d",
+    "vllm/r2-baseline/long-c8/summary.json": "eea7b24515ce8e75bb162cbb4f3bd927f226277d5f4c608fe405baca9744525a",
+    "vllm/r2-baseline/mixed-c16/summary.json": "1bd5ec006550f516561a36e96b0213388234956a97d30a5446ec42cf63e8a4d0",
+    "vllm/r2-baseline/mixed-c8/summary.json": "d6e8db449ad8152d7a382c8dda68e5be50bcc592c0a7cac1a301cdfe61961cb8",
+    "vllm/r2-baseline/shared-c8/summary.json": "24836da7fa65cbea6f471626d975bc2c1ef8688bcefbaa281e59e09c16ec6d31",
+    "vllm/r2-baseline/short-c1/summary.json": "2ee35c888ef6f02e079284bd48cef785d7b15b9a8694a45e8a5e491c75c75d9e",
+    "vllm/r2-baseline/short-c16/summary.json": "dc35d50a0f889355f9f02734802735dbf0377edcbdd1579d3de27a366c5f6915",
+    "vllm/r2-baseline/short-c2/summary.json": "41c09ebf457567a14c1c862b52d06384804f5c472892ac203b1f4798c0576a8b",
+    "vllm/r2-baseline/short-c4/summary.json": "ef4fdb9a4ddb47f12d9b798e2a39f338036ef808fce56ccd44ca2b02393f3291",
+    "vllm/r2-baseline/short-c8/summary.json": "8fa473195a8c88cacf24b03fae8b2a3874322c86eba037ac7356e2aa0ee85614",
+    "vllm/r2-baseline/standard-c1/summary.json": "91ccb91c559a986b43f2ee22c9a6f788faee852a3cbbee35dae8c09d7c354dcf",
+    "vllm/r2-baseline/standard-c16/summary.json": "c018db5e71d800537b992a4f1b34811093056b8553f1ad623f9a05339d7ae6a2",
+    "vllm/r2-baseline/standard-c2/summary.json": "c7d9d57ff31b42e092da6574e812dea7a31d45016edcb36715d8ea99d62082ab",
+    "vllm/r2-baseline/standard-c4/summary.json": "b9fe9441fe819870ef105f6c6f380a72890d17e56539d88a99f1f6e1fbfde204",
+    "vllm/r2-baseline/standard-c8/summary.json": "b1891698bf161c4f18767578a4fa0e8adf752c4a3b7b55f371ace2fe2a0e8d71",
+    "vllm/r2-chunked4096/mixed-c16/summary.json": "c03970eb397cf10e800cafa26303633c35a3fbb069d8fcb60ac6a3ffc3543dbc",
+    "vllm/r2-chunked4096/mixed-c8/summary.json": "355c4982db4d33c0b39360467c02adb25da5a97589eee7b40d245b4a1d697e61",
+    "vllm/r2-chunked512/mixed-c16/summary.json": "db1c85f0b7cd1235d478db5e7cf220d490ce587a297bd86915b41954437ec87e",
+    "vllm/r2-chunked512/mixed-c8/summary.json": "26b6d5d3ef411ce36ca4ac63005922aed5c56dd505f0178c81e7715c4988aa9d",
+    "vllm/r2-prefix/shared-c8/summary.json": "7b2de7984d244c1d2c88f313f172bb7ac09b387709f8c378871d8a1cd3a2bb19"
+  }
+}

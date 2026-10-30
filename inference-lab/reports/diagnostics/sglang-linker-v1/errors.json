@@ -1,0 +1,9 @@
+[
+  {
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 0,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  }
+]

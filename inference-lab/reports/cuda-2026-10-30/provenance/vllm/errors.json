@@ -1,0 +1,86 @@
+[
+  {
+    "engine": "sglang",
+    "arm": "chunked512",
+    "repeat": 0,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "chunked4096",
+    "repeat": 0,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "prefix",
+    "repeat": 0,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 0,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "chunked512",
+    "repeat": 1,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "prefix",
+    "repeat": 1,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "chunked4096",
+    "repeat": 1,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 1,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "chunked4096",
+    "repeat": 2,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "baseline",
+    "repeat": 2,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "chunked512",
+    "repeat": 2,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  },
+  {
+    "engine": "sglang",
+    "arm": "prefix",
+    "repeat": 2,
+    "stage": "serve/benchmark",
+    "error": "Server exited with code -9; inspect server.log"
+  }
+]

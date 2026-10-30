@@ -1,0 +1,3 @@
+  File "/kaggle/temp/inference-lab-source/prepare_workloads.py", line 24
+    кор            messages = [{"role": "user", "content": prefix + " data" * max(0, padding) + suffix}]
+IndentationError: expected an indented block after 'for' statement on line 23

@@ -1,0 +1,106 @@
+[
+  {
+    "engine": "vllm",
+    "baseline": "baseline",
+    "arm": "chunked4096",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": -0.4388406215492635,
+    "ttft_change_range_pct": [
+      -63.459259373406574,
+      2.1038800975986094
+    ]
+  },
+  {
+    "engine": "vllm",
+    "baseline": "baseline",
+    "arm": "chunked4096",
+    "concurrency": 16,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": 29.697688048147786,
+    "ttft_change_range_pct": [
+      -8.091884333520882,
+      36.049779675934346
+    ]
+  },
+  {
+    "engine": "vllm",
+    "baseline": "chunked4096",
+    "arm": "chunked512",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": -0.07096111362867585,
+    "ttft_change_range_pct": [
+      -65.49899550293743,
+      123.31950085151573
+    ]
+  },
+  {
+    "engine": "vllm",
+    "baseline": "chunked4096",
+    "arm": "chunked512",
+    "concurrency": 16,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": -21.63097305288668,
+    "ttft_change_range_pct": [
+      -29.559886857123917,
+      7.016075370599495
+    ]
+  },
+  {
+    "engine": "sglang",
+    "baseline": "baseline",
+    "arm": "chunked4096",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": 0.6979081096456063,
+    "ttft_change_range_pct": [
+      -32.579030133936214,
+      38.32661096979704
+    ]
+  },
+  {
+    "engine": "sglang",
+    "baseline": "baseline",
+    "arm": "chunked4096",
+    "concurrency": 16,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": -9.66676763279467,
+    "ttft_change_range_pct": [
+      -13.891957943885346,
+      -8.858227794899742
+    ]
+  },
+  {
+    "engine": "sglang",
+    "baseline": "chunked4096",
+    "arm": "chunked512",
+    "concurrency": 8,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": -94.46701852679914,
+    "ttft_change_range_pct": [
+      -95.86896179808791,
+      -94.16185273253915
+    ]
+  },
+  {
+    "engine": "sglang",
+    "baseline": "chunked4096",
+    "arm": "chunked512",
+    "concurrency": 16,
+    "paired_repeats": 3,
+    "case": "short requests inside mixed load",
+    "ttft_p50_change_pct": -45.8571933339007,
+    "ttft_change_range_pct": [
+      -65.31220441690377,
+      0.12086060757039441
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "timestamp_utc": "2026-10-30T16:43:08.362275+00:00",
+  "system": "Darwin",
+  "release": "27.0.0",
+  "architecture": "arm64",
+  "python": "3.12.14",
+  "disk_free_gib": 16.98,
+  "packages": {
+    "torch": "2.14.1",
+    "mlx": null,
+    "mlx-lm": null,
+    "vllm": null,
+    "vllm-metal": null,
+    "sglang": null,
+    "transformers": null,
+    "psutil": "7.2.2"
+  },
+  "hardware": {
+    "chip_type": "Apple M3 Max",
+    "physical_memory": "48 GB",
+    "number_processors": "proc 16:0:12:4"
+  },
+  "display": {
+    "returncode": 0,
+    "stdout": "Graphics/Displays:\n\n    Apple M3 Max:\n\n      Chipset Model: Apple M3 Max\n      Type: GPU\n      Bus: Built-In\n      Total Number of Cores: 40\n      Vendor: Apple (0x106b)\n      Metal: Supported",
+    "stderr": ""
+  },
+  "macos": "27.0.1",
+  "torch_devices": {
+    "cuda": false,
+    "cuda_runtime": null,
+    "mps_built": true,
+    "mps_available_in_this_process": false
+  }
+}

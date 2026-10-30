@@ -1,0 +1,6 @@
+[
+  {
+    "stage": "prepare",
+    "error": "Command failed (1); /kaggle/working/inference-results-20261030T165100Z/prepare.log\n  File \"/kaggle/temp/inference-lab-source/prepare_workloads.py\", line 24\n    \u043a\u043e\u0440            messages = [{\"role\": \"user\", \"content\": prefix + \" data\" * max(0, padding) + suffix}]\nIndentationError: expected an indented block after 'for' statement on line 23\n"
+  }
+]

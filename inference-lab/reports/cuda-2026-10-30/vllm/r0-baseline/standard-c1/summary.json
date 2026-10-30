@@ -1,0 +1,35 @@
+{
+  "attempted": 32,
+  "successful": 32,
+  "wall_seconds": 101.90967559699993,
+  "error_rate": 0.0,
+  "request_throughput": 0.31400355081634695,
+  "output_tokens_per_second": 40.19245450449241,
+  "total_tokens_per_second": 200.96227252246203,
+  "goodput_requests_per_second": 0.31400355081634695,
+  "actual_prompt_tokens": 16384,
+  "actual_output_tokens": 4096,
+  "p99_small_sample": true,
+  "token_itl_available": false,
+  "ttft_ms": {
+    "p50": 83.61893300002521,
+    "p95": 89.18107049997843,
+    "p99": 90.47516881995534
+  },
+  "tpot_ms": {
+    "p50": 24.40222870078774,
+    "p95": 24.95478581771674,
+    "p99": 25.22003670047251
+  },
+  "e2e_ms": {
+    "p50": 3181.9110395000507,
+    "p95": 3256.4007228000037,
+    "p99": 3289.3322072499063
+  },
+  "engine": "vllm",
+  "arm": "baseline",
+  "repeat": 0,
+  "workload": "standard",
+  "concurrency": 1,
+  "timestamp_utc": "2026-10-30T17:13:30.389938+00:00"
+}

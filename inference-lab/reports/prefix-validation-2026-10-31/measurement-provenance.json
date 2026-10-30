@@ -1,0 +1,28 @@
+{
+  "kernel": "applehawk/llm-inference-prefix-cache-validation-t4",
+  "version": 1,
+  "status": "COMPLETE",
+  "url": "https://www.kaggle.com/code/applehawk/llm-inference-prefix-cache-validation-t4",
+  "run_started_utc": "2026-10-30T21:38:31Z",
+  "report_local_date": "2026-10-31",
+  "same_kaggle_session": true,
+  "physical_gpu_index": 0,
+  "tensor_parallel": 1,
+  "cache_flag_only_change": true,
+  "critical_package_versions_verified": true,
+  "model_files_match_pilot": true,
+  "harness_matches_pilot_and_current_source": true,
+  "source_sha256": {
+    "harness.py": "6cfa58795d4ac87c6122d9c6da14c4af87a7c3217f8fbb686465e1d470a087f2",
+    "summarize.py": "8d094116b8d8a9afd0c014ae28b1a401a069999af9b5d77d0ab8ec20bea59a65",
+    "run_kaggle.py": "521fea2f9723b8b9b293dc3a0ec1d15741531644decda8ffb0b3e3473adacaec",
+    "prepare_workloads.py": "0ed2e32f06c72ba04c63d27d320d3b09b03fe333eff58bfe86eb6560c2213985",
+    "discover_hardware.py": "6e0ca2ef7ebb0e06e57f00255c5ba72dfc9109570e81d30ef66c095dd33d745c"
+  },
+  "analysis_source_sha256": {
+    "audit_measurements.py": "687401b2f69d5c9a508b73817f2d07149ec647e2eb038b18f1b338501ca5d083",
+    "summarize.py": "647eeb9f595b36880af98a8519e7f2c8f17f877cbf18e3d8ca0f6bca2b84b773",
+    "run_kaggle.py": "521fea2f9723b8b9b293dc3a0ec1d15741531644decda8ffb0b3e3473adacaec"
+  },
+  "note": "Original launched source and notebook-generated reports preserved; local analysis changes report prose and plot formatting only."
+}

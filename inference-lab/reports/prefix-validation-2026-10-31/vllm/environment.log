@@ -1,0 +1,42 @@
+{
+  "timestamp_utc": "2026-10-30T21:44:27.348887+00:00",
+  "system": "Linux",
+  "release": "6.18.55+",
+  "architecture": "x86_64",
+  "python": "3.12.3",
+  "disk_free_gib": 19.5,
+  "packages": {
+    "torch": "2.13.0",
+    "mlx": null,
+    "mlx-lm": null,
+    "vllm": "0.31.0",
+    "vllm-metal": null,
+    "sglang": null,
+    "transformers": "5.17.0",
+    "psutil": "7.2.2"
+  },
+  "cpu_count": 4,
+  "physical_ram_bytes": 33658163200,
+  "cgroup": {
+    "memory.max": "32212254720",
+    "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.peak": "16948277248"
+  },
+  "nvidia": {
+    "returncode": 0,
+    "stdout": "0, Tesla T4, 15360, 580.178.04, 7.5\n1, Tesla T4, 15360, 580.178.04, 7.5",
+    "stderr": ""
+  },
+  "topology": {
+    "returncode": 0,
+    "stdout": "\u001b[4mGPU0\tGPU1\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\t0-3\t0\t\tN/A\nGPU1\tPHB\t X \t0-3\t0\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks",
+    "stderr": ""
+  },
+  "torch_devices": {
+    "cuda": true,
+    "cuda_runtime": "13.0",
+    "mps_built": false,
+    "mps_available_in_this_process": false
+  }
+}
+

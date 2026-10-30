@@ -1,0 +1,24 @@
+{
+  "validated_fields": [
+    "model",
+    "revision",
+    "requests",
+    "repeats",
+    "concurrency",
+    "seed",
+    "tensor_parallel",
+    "gpu_devices",
+    "memory_fraction",
+    "max_model_len",
+    "max_sequences",
+    "arms",
+    "slo",
+    "cells",
+    "warmup",
+    "measurement_scope"
+  ],
+  "harness_sha256": "6cfa58795d4ac87c6122d9c6da14c4af87a7c3217f8fbb686465e1d470a087f2",
+  "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "complete_request_validation": true,
+  "separate_sessions": true
+}

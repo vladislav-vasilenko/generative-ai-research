@@ -1,0 +1,11 @@
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 10 files:  20%|██        | 2/10 [00:00<00:00, 16.99it/s]Fetching 10 files:  90%|█████████ | 9/10 [00:00<00:00, 38.62it/s]Fetching 10 files: 100%|██████████| 10/10 [00:09<00:00,  1.08it/s]
+Traceback (most recent call last):
+  File "/kaggle/temp/inference-lab-source/prepare_workloads.py", line 66, in <module>
+    prepare_workloads(args.model, args.revision, args.cache, args.output, args.requests)
+  File "/kaggle/temp/inference-lab-source/prepare_workloads.py", line 34, in prepare_workloads
+    workloads[kind] = [item(kind, i, length, generated) for i in range(requests)]
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/inference-lab-source/prepare_workloads.py", line 30, in item
+    raise RuntimeError(f"Cannot construct exact {target}-token chat input: got {len(ids)}")
+RuntimeError: Cannot construct exact 128-token chat input: got 2

@@ -1,0 +1,6 @@
+{
+  "driver": "/usr/local/nvidia/lib64/libcuda.so.580.178.04",
+  "link": "/kaggle/temp/inference-lab/cuda-driver-link/libcuda.so",
+  "library_path": "/kaggle/temp/inference-lab/cuda-driver-link:/usr/local/cuda/lib64/stubs",
+  "changes_system_libraries": false
+}

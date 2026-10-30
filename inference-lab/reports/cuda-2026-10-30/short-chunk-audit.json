@@ -1,0 +1,86 @@
+{
+  "scope": "Exploratory N32 pilot subgroup, SGLang mixed C8, 16 short128->64 +16 long2048->256 per arm",
+  "pairs": [
+    {
+      "repeat": 0,
+      "short_requests_per_arm": 16,
+      "matched_ids": [
+        "mixed-000000",
+        "mixed-000002",
+        "mixed-000004",
+        "mixed-000006",
+        "mixed-000008",
+        "mixed-000010",
+        "mixed-000012",
+        "mixed-000014",
+        "mixed-000016",
+        "mixed-000018",
+        "mixed-000020",
+        "mixed-000022",
+        "mixed-000024",
+        "mixed-000026",
+        "mixed-000028",
+        "mixed-000030"
+      ],
+      "before_ttft_p50_ms": 1858.3204010000145,
+      "after_ttft_p50_ms": 102.82052350004278,
+      "change_pct": -94.46701852679914
+    },
+    {
+      "repeat": 1,
+      "short_requests_per_arm": 16,
+      "matched_ids": [
+        "mixed-000000",
+        "mixed-000002",
+        "mixed-000004",
+        "mixed-000006",
+        "mixed-000008",
+        "mixed-000010",
+        "mixed-000012",
+        "mixed-000014",
+        "mixed-000016",
+        "mixed-000018",
+        "mixed-000020",
+        "mixed-000022",
+        "mixed-000024",
+        "mixed-000026",
+        "mixed-000028",
+        "mixed-000030"
+      ],
+      "before_ttft_p50_ms": 2561.467137999898,
+      "after_ttft_p50_ms": 105.8151860001999,
+      "change_pct": -95.86896179808791
+    },
+    {
+      "repeat": 2,
+      "short_requests_per_arm": 16,
+      "matched_ids": [
+        "mixed-000000",
+        "mixed-000002",
+        "mixed-000004",
+        "mixed-000006",
+        "mixed-000008",
+        "mixed-000010",
+        "mixed-000012",
+        "mixed-000014",
+        "mixed-000016",
+        "mixed-000018",
+        "mixed-000020",
+        "mixed-000022",
+        "mixed-000024",
+        "mixed-000026",
+        "mixed-000028",
+        "mixed-000030"
+      ],
+      "before_ttft_p50_ms": 1862.8200355001354,
+      "after_ttft_p50_ms": 108.75417700026446,
+      "change_pct": -94.16185273253915
+    }
+  ],
+  "median_paired_change_pct": -94.46701852679914,
+  "range_pct": [
+    -95.86896179808791,
+    -94.16185273253915
+  ],
+  "limitations": "Four 512->64 warmups per cell; subgroup analysis; no production claim and not part of the N64 cache validation"
+}
