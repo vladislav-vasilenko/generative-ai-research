@@ -17,6 +17,6 @@
   "user_images_in_repository": false,
   "user_music_in_repository": false,
   "compatibility_constraints": {
-    "pillow": ">=10.4,<13 (Gradio compatibility)"
+    "pillow": ">=10.4 (image Pillow 13 kept; unused Gradio may warn about pillow<13)"
   }
 }

@@ -33,15 +33,18 @@ def validate_bootstrap(nb):
         socket=socket,Request=Request,HTTPError=HTTPError,URLError=URLError,urlopen=opener,
         sys=SimpleNamespace(executable=sys.executable,modules={}),subprocess=SimpleNamespace(run=run))
     exec(compile(ast.Module(body=nodes,type_ignores=[]),'bootstrap-unit-check','exec'),namespace)
-    required=['diffusers==0.42.1','pillow>=10.4,<13']
-    installed={'diffusers':'0.42.1','pillow':'12.3.0'}
+    required=['diffusers==0.42.1','pillow>=10.4']
+    assert required[1] in source and 'pillow>=10.4,<13' not in source
+    installed={'diffusers':'0.42.1','pillow':'13.0.0'}
+    # Kaggle preloads PIL from its image; Pillow 13 must not trigger a downgrade and a kernel restart.
     assert namespace['pending_dependencies'](required,installed.__getitem__)==[]
-    assert namespace['pending_dependencies'](required,lambda n:'13.0.0' if n=='pillow' else installed[n])==['pillow>=10.4,<13']
+    assert namespace['pending_dependencies'](required,lambda n:'12.3.0' if n=='pillow' else installed[n])==[]
+    assert namespace['pending_dependencies'](required,lambda n:'0.41.0' if n=='diffusers' else installed[n])==['diffusers==0.42.1']
     pending=MagicMock(return_value=[])
     namespace['pending_dependencies']=pending
     assert namespace['ensure_runtime_dependencies'](required,Path('constraints.txt')) is False
     opener.assert_not_called();run.assert_not_called()
-    pending.return_value=['pillow>=10.4,<13']
+    pending.return_value=['diffusers==0.42.1']
     for error,expected in [(URLError(socket.gaierror(-3,'Temporary failure in name resolution')),'DNS'),
                            (HTTPError('https://pypi.org',403,'Forbidden',{},None),'HTTP 403'),
                            (TimeoutError('fixture timeout'),'timed out')]:
@@ -55,18 +58,20 @@ def validate_bootstrap(nb):
     command=run.call_args.args[0]
     assert command[command.index('--retries')+1]=='1'
     assert command[command.index('--timeout')+1]=='15'
-    assert '-c' in command and 'pillow>=10.4,<13' in command and '--trusted-host' not in command
+    assert '-c' in command and 'diffusers==0.42.1' in command and '--trusted-host' not in command
     request=opener.call_args.args[0]
     assert request.full_url.startswith('https://pypi.org/') and opener.call_args.kwargs['timeout']==10
-    namespace['sys'].modules={'PIL':SimpleNamespace(__version__='13.0.0')}
     namespace['version']=installed.__getitem__
     pending.return_value=[]
+    namespace['sys'].modules={'PIL':SimpleNamespace(__version__='13.0.0')}
+    assert namespace['ensure_runtime_dependencies'](required,Path('constraints.txt')) is False
+    namespace['sys'].modules={'diffusers':SimpleNamespace(__version__='0.41.0')}
     try:namespace['ensure_runtime_dependencies'](required,Path('constraints.txt'))
     except RuntimeError as error:assert 'Restart the Python kernel' in str(error)
-    else:raise AssertionError('Stale imported Pillow was accepted')
-    return dict(pillow_13_requires_downgrade=True,compatible_dependencies_skip_network_and_pip=True,
+    else:raise AssertionError('Stale imported diffusers was accepted')
+    return dict(preloaded_pillow_13_kept_without_restart=True,compatible_dependencies_skip_network_and_pip=True,
         dns_http_timeout_stop_before_pip=True,limited_pip_retries_and_timeout=True,
-        tls_verification_preserved=True,stale_imported_pillow_requires_kernel_restart=True,
+        tls_verification_preserved=True,stale_imported_module_requires_kernel_restart=True,
         network_requests_during_tests=0,real_pip_installs_during_tests=0)
 
 
@@ -86,6 +91,126 @@ def check_supplied_soundtrack(runner,path):
         filename=path.name,bytes=path.stat().st_size,codec=codec,source_sample_rate=source_rate,
         output_sample_rate=44100,verified_excerpts=clips,audio_file_published=False)
 
+
+def check_nvidia_smi_trace(runner,d):
+    import os
+    import matplotlib
+    matplotlib.use('Agg')
+    # Three polling ticks: GPU 0 busy, GPU 1 busy, then both busy.
+    csv=d/'trace.csv'
+    csv.write_text(''.join(f'2026/10/30 12:00:0{t}.000, {i}, {u}, {m}, [N/A]\n'
+        for t,ticks in enumerate([(97,3),(2,96),(80,70)]) for i,(u,m) in enumerate(zip(ticks,(9000,8000)))))
+    summary=runner.summarize_nvidia_smi(csv,200)
+    assert summary['samples']==3 and [g['busy_fraction'] for g in summary['gpu']]==[2/3,2/3]
+    assert summary['all_busy_fraction']==1/3 and summary['one_busy_fraction']==2/3 and summary['none_busy_fraction']==0
+    runner.plot_nvidia_smi(csv,d/'trace.png');assert (d/'trace.png').stat().st_size>0
+    # A fake nvidia-smi exercises the real Popen/terminate path on a machine without NVIDIA GPUs.
+    fake=d/'bin'/'nvidia-smi';fake.parent.mkdir()
+    fake.write_text('#!/bin/sh\nwhile true; do\n echo "2026/10/30 12:00:00.000, 0, 99, 9000, 60.0"\n'
+                    ' echo "2026/10/30 12:00:00.000, 1, 1, 8000, [N/A]"\n /bin/sleep 0.05\ndone\n')
+    fake.chmod(0o755)
+    saved=os.environ['PATH']
+    try:
+        os.environ['PATH']=str(fake.parent)+os.pathsep+saved
+        with runner.NvidiaSmiTrace(d/'live.csv') as trace:time.sleep(1.5)
+        assert trace.summary['samples']>=2 and trace.summary['one_busy_fraction']==1 and trace.process.poll() is not None
+        os.environ['PATH']=str(d/'empty')
+        with runner.NvidiaSmiTrace(d/'missing.csv') as trace:pass
+        assert trace.summary==dict(available=False)
+    finally:
+        os.environ['PATH']=saved
+    return True
+
+def check_parallel_clips(runner,d,presets):
+    import threading
+    # Decoder defaults keep the single-clip layout: video on cuda:1, audio on cuda:0.
+    assert inspect.signature(runner.decode_video).parameters['device'].default=='cuda:1'
+    assert inspect.signature(runner.decode_audio).parameters['device'].default=='cuda:0'
+    assert isinstance(runner._LOAD_LOCK,type(threading.Lock()))
+    base=dict(model_id='m',revision='r',packages={},seed=42,results=str(d/'parallel'),local_model_dir=None,
+              media_cache=str(d/'cache'),profile='smoke',job_key='x',dit_placement='cuda:0')
+    (d/'parallel').mkdir()
+    runs=[]
+    for i,name in enumerate(['orbit_woman','strange_tram','mechanical_bloom']):
+        run=runner.prepare_run(base,presets[name],name,'smoke',f'cuda:{i%2}')
+        run['key']=name;runs.append(run)
+    assert len({r['cfg']['job_key'] for r in runs})==3 and runs[1]['cfg']['dit_placement']=='cuda:1'
+    spans,lock={},threading.Lock()
+    def fake_sample(cfg,prompt,negative,conditioning_path,image,latent_path,trace_path=None):
+        if cfg['run_name'].startswith('mechanical_bloom'):
+            raise torch.cuda.OutOfMemoryError('CUDA out of memory. Tried to allocate 1.00 GiB')
+        start=time.perf_counter();time.sleep(0.5)
+        with lock:spans[cfg['run_name']]=(start,time.perf_counter())
+        return dict(denoise_seconds=0.3,dit_placement=cfg['dit_placement'])
+    for run in runs:run['cfg']['run_name']=run['run_dir'].name
+    patched=dict(sample_joint=fake_sample,decode_video=lambda cfg,latents,device:np.zeros((24,8,8,3),np.float32),
+        decode_audio=lambda cfg,latents,device:(torch.zeros(1,44100),44100),
+        export_clip=lambda frames,waveform,rate,cfg,path:dict(mp4=str(path),exported_frames=len(frames)))
+    cuda=dict(set_device=lambda gpu:None,reset_peak_memory_stats=lambda gpu:None,max_memory_allocated=lambda gpu:2**30)
+    saved={k:getattr(runner,k) for k in patched};saved_cuda={k:getattr(torch.cuda,k) for k in cuda}
+    try:
+        for k,v in patched.items():setattr(runner,k,v)
+        for k,v in cuda.items():setattr(torch.cuda,k,v)
+        summary=runner.run_parallel_clips(runs,{r['key']:d/'unused' for r in runs},d/'parallel-trace.csv')
+    finally:
+        for k,v in saved.items():setattr(runner,k,v)
+        for k,v in saved_cuda.items():setattr(torch.cuda,k,v)
+    results=summary['results']
+    assert [r['gpu'] for r in results]==[0,0,1] and summary['clips']==2
+    assert [bool(r.get('oom')) for r in results]==[False,True,False]
+    (a0,a1),(b0,b1)=spans[runs[0]['run_dir'].name],spans[runs[1]['run_dir'].name]
+    assert max(a0,b0)<min(a1,b1), 'clips on the two GPUs did not overlap'
+    assert summary['clips_per_hour']>0 and summary['sum_of_clip_seconds']>=1.0
+    assert all((r['run_dir']/'parallel.json').is_file() for r in runs)
+    return True
+
+def check_weight_snapshots(runner,d):
+    revision='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
+    def part(root,name,files,rev=revision):
+        root.mkdir(parents=True)
+        for f in files:(root/f).parent.mkdir(parents=True,exist_ok=True);(root/f).write_text('{}')
+        (root/'weights-manifest.json').write_text(json.dumps(dict(part=name,revision=rev)))
+    inputs=d/'input'
+    part(inputs/'k6-lite-diffusers-weights-media'/'k6-lite-diffusers-media','media',
+         ['model_index.json','transformer/config.json','text_encoder_2/config.json'])
+    assert runner.assemble_local_snapshot(inputs,d/'snap-missing',revision) is None
+    part(inputs/'k6-lite-diffusers-weights-text'/'k6-lite-diffusers-text','text',['text_encoder/config.json'])
+    assert runner.assemble_local_snapshot(inputs,d/'snap-other',revision.replace('4','5')) is None
+    target=Path(runner.assemble_local_snapshot(inputs,d/'snap',revision))
+    assert sorted(p.name for p in target.iterdir())==['model_index.json','text_encoder','text_encoder_2','transformer']
+    assert (target/'transformer/config.json').read_text()=='{}' and (target/'text_encoder').is_symlink()
+    assert runner.assemble_local_snapshot(inputs,d/'snap',revision)==str(target)  # idempotent
+    # Weight notebooks: private, CPU-only, and the two parts partition the snapshot.
+    for name,number in [('media',17),('text',18)]:
+        meta=json.loads((ROOT/f'kandinsky-6/generation/weights/{name}/kernel-metadata.json').read_text())
+        assert meta['is_private'] and not meta['enable_gpu'] and meta['enable_internet']
+        nb=json.loads((ROOT/f'kandinsky-6/notebooks/{number}_kaggle_k6_weights_{name}.ipynb').read_text())
+        cells=[c['source'] for c in nb['cells'] if c['cell_type']=='code']
+        for cell in cells:ast.parse(cell)
+        assert f"PART={name!r}" in cells[0]
+        source=next(c for c in cells if 'PARTS = {' in c)
+        node=next(n for n in ast.parse(source).body if isinstance(n,ast.Assign) and n.targets[0].id=='PARTS')
+        parts=eval(compile(ast.Expression(node.value),'parts','eval'))
+    for path,expected in [('text_encoder/model-00001-of-00004.safetensors','text'),
+                          ('text_encoder_2/model.safetensors','media'),('transformer/config.json','media'),
+                          ('model_index.json','media')]:
+        assert [k for k,f in parts.items() if f(path)]==[expected],path
+    return True
+
+def check_mmaudio_warning_filter(runner):
+    import logging
+    keep=runner.MMAudioDuplicateVocoderFilter().filter
+    record=lambda msg:logging.LogRecord('diffusers','30',__file__,1,msg,None,None)
+    unused='Some weights of the model checkpoint at /x/audio_vae were not used when initializing MMAudioVAE: \n {}'
+    config='The config attributes {} were passed to MMAudioVAE, but are not expected and will be ignored.'
+    assert not keep(record(unused.format(["vocoder.ups.0.0.bias, vocoder.conv_post.weight"])))
+    assert keep(record(unused.format(["vocoder.ups.0.0.bias, encoder.conv_in.weight"])))
+    assert not keep(record(config.format({'downsample_factor':1024,'mode':'44k','vocoder_config':{'num_mels':128}})))
+    assert keep(record(config.format({'mode':'44k','latent_channels':40})))
+    assert keep(record('Some weights of the model checkpoint at /x were not used when initializing MMAudioVocoder: \n [\'a\']'))
+    for name in ('diffusers.configuration_utils','diffusers.models.modeling_utils'):
+        assert sum(isinstance(f,runner.MMAudioDuplicateVocoderFilter) for f in logging.getLogger(name).filters)==1
+    return True
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path);p.add_argument('--soundtrack',type=Path);args=p.parse_args()
@@ -110,6 +235,12 @@ def main():
     compact=runner.compact_conditioning((tokens,torch.ones(1,3),mask))
     assert torch.equal(compact['prompt_embeds'],tokens[:,[0,2]])
     assert runner.mapped_gpu_indices({'blocks.0':0,'blocks.1':'cuda:1'})=={0,1}
+    assert runner.dit_load_options('balanced')==(dict(device_map='balanced',max_memory={0:'10GiB',1:'10GiB'}),{0,1})
+    assert runner.dit_load_options('cuda:1')==(dict(device_map='cuda:1'),{1})
+    assert runner.mapped_gpu_indices({'':str(torch.device('cuda:1'))})=={1}
+    try:runner.dit_load_options('auto')
+    except ValueError:pass
+    else:raise AssertionError('Unsupported DiT placement accepted')
     try:runner.compact_conditioning((torch.full((1,1,4),float('nan')),torch.ones(1,3),None))
     except FloatingPointError:pass
     else:raise AssertionError('NaN conditioning accepted')
@@ -174,6 +305,46 @@ def main():
         try:runner.sample_joint({'job_key':'stale'},'', '',d/'unused.safetensors',None,checkpoint)
         except ValueError:pass
         else:raise AssertionError('Stale joint latent accepted')
+        nvidia_smi_trace=check_nvidia_smi_trace(runner,d)
+        parallel_clips=check_parallel_clips(runner,d,presets)
+        weight_snapshots=check_weight_snapshots(runner,d)
+        mmaudio_filter=check_mmaudio_warning_filter(runner)
+        # Placement comparison reads only runs whose denoising actually ran.
+        for name,sample in [('a',dict(cache_reused=False,dit_placement='balanced',denoise_seconds=13.4,
+                                      stage=dict(gpu=[dict(allocated_peak_gib=3.0),dict(allocated_peak_gib=3.1)]),
+                                      nvidia_smi=dict(all_busy_fraction=0.03,one_busy_fraction=0.9))),
+                            ('b',dict(cache_reused=True))]:
+            (d/'runs'/name).mkdir(parents=True)
+            (d/'runs'/name/'sample.json').write_text(json.dumps(sample))
+            (d/'runs'/name/'config.json').write_text(json.dumps(dict(width=432,height=256,num_frames=25)))
+        rows=runner.compare_placements(d/'runs')
+        assert rows==[dict(run='a',placement='balanced',size='432x256x25',denoise_s=13.4,
+                           peak_alloc_gib=[3.0,3.1],all_busy=0.03,one_busy=0.9)]
+        # Existing cache keys must not change when the key is built by job_key_for.
+        base=dict(model_id='m',revision='r',packages={'diffusers':'0.42.1'},seed=42,width=432,height=256,
+                  num_frames=25,dit_placement='balanced')
+        assert runner.job_key_for(base,'p',None)==runner.digest(dict(model='m',revision='r',
+            packages={'diffusers':'0.42.1'},prompt='p',seed=42,width=432,height=256,num_frames=25,image=None,
+            steps=10,cfg=1.0,dtype='float16',placement='balanced-two-gpu'))
+        assert runner.job_key_for(dict(base,dit_placement='cuda:0'),'p',None)!=runner.job_key_for(base,'p',None)
+        # Measurement mode: one pair succeeds, the other runs out of memory and is recorded, not raised.
+        saved_sample_joint=runner.sample_joint
+        def fake_sample_joint(cfg,prompt,negative,conditioning_path,image,latent_path,trace_path=None):
+            if cfg['profile']=='baseline':
+                raise torch.cuda.OutOfMemoryError('CUDA out of memory. Tried to allocate 2.00 GiB')
+            return dict(dit_placement=cfg['dit_placement'],denoise_seconds=1.5,cache_reused=False,
+                        nvidia_smi=dict(all_busy_fraction=0.0,one_busy_fraction=1.0))
+        try:
+            runner.sample_joint=fake_sample_joint
+            (d/'measure').mkdir()
+            measured_rows=runner.measure_placements(dict(base,results=str(d/'measure'),profile='smoke',job_key='x'),
+                presets['orbit_woman'],'orbit_woman',[('smoke','cuda:0'),('baseline','cuda:0')],
+                {'smoke':d/'unused.safetensors','baseline':d/'unused.safetensors'})
+        finally:
+            runner.sample_joint=saved_sample_joint
+        assert [r.get('oom',False) for r in measured_rows]==[False,True]
+        table=runner.compare_placements(d/'measure')
+        assert sorted((r['size'],r.get('oom',False)) for r in table)==[('432x256x25',False),('864x480x121',True)]
     import diffusers,transformers,accelerate
     report=dict(date='2026-10-30',notebook=str(notebook.relative_to(ROOT)),
         notebook_sha256=hashlib.sha256(notebook.read_bytes()).hexdigest(),
@@ -184,6 +355,12 @@ def main():
         cached_conditioning_padding_removed=True,nan_rejected=True,
         local_soundtrack_mix_and_offset=True,short_soundtrack_rejected=True,
         joint_latent_cache_reused_without_models=True,stale_latent_rejected=True,
+        nvidia_smi_trace_summary_and_fallback=nvidia_smi_trace,
+        dit_placement_options_and_comparison=True,
+        placement_measurement_mode_records_oom=True,
+        parallel_clips_two_gpu_queues_overlap_and_oom=parallel_clips,
+        attached_weight_snapshots_assembled=weight_snapshots,
+        duplicate_vocoder_warnings_filtered_only=mmaudio_filter,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
                       transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),

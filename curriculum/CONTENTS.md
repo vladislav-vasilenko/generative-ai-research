@@ -215,6 +215,7 @@ Lab 2 связывает Lecture 2–3, Lab 3 — Lecture 3–4. CTMC — сам
 - [kandinsky-5/reports/VALIDATION.md](../kandinsky-5/reports/VALIDATION.md) — Статус проверки KandinskyLab.
 - [kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md](../kandinsky-6/COMFYUI_AND_EXPERIMENT_RU.md) — Kandinsky 6: ручной запуск и протокол исследования.
 - [kandinsky-6/COMPONENT_GUIDE.md](../kandinsky-6/COMPONENT_GUIDE.md) — K6: карта архитектурных компонентов и оригинального кода.
+- [kandinsky-6/CONTEXT_PARALLEL_RU.md](../kandinsky-6/CONTEXT_PARALLEL_RU.md) — Kandinsky 6 и context parallelism: сравнение с LTX-2 и Wan в Diffusers 0.42.1.
 - [kandinsky-6/README.md](../kandinsky-6/README.md) — Kandinsky 6 Lite — по-компонентный учебный курс.
 - [kandinsky-6/STATUS.md](../kandinsky-6/STATUS.md) — Состояние эксперимента, 30 октября 2026.
 - [kandinsky-6/SUPER_RESOLUTION_RU.md](../kandinsky-6/SUPER_RESOLUTION_RU.md) — Kandinsky 6 SR: готовый Baseline MP4 → видео большего разрешения.

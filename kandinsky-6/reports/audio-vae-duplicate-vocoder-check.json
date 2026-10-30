@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-30",
+  "checkpoint": "kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers@4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81",
+  "issue": {
+    "huggingface": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/discussions/2",
+    "github": "https://github.com/kandinskylab/kandinsky-6/issues/23"
+  },
+  "embedded_vocoder": {
+    "tensors": 667,
+    "bit_identical_to_vocoder_dir": true,
+    "max_abs_difference": 0.0
+  },
+  "patched_audio_vae": {
+    "tensors_before": 726,
+    "tensors_after": 59,
+    "bytes_before": 1711158920,
+    "bytes_after": 1222459368,
+    "removed_config_keys": [
+      "downsample_factor",
+      "mode",
+      "vocoder_config"
+    ],
+    "vae_weights_identical": true,
+    "decode_identical_cpu": true,
+    "warnings_loading_original": 2,
+    "warnings_loading_patched": 0
+  },
+  "end_to_end_smoke_kaggle_t4": {
+    "source": "private copy of notebook 16, orbit_woman Smoke, weights from attached notebook outputs",
+    "waveform_identical": true,
+    "max_abs_difference": 0.0,
+    "waveform_shape": [
+      1,
+      44100
+    ],
+    "mp4_exported_frames": 24,
+    "decoded_audio_samples": 45056
+  },
+  "weights_from_attached_inputs_timing": {
+    "text_stage_seconds": 5096.3,
+    "sample_stage_seconds": 1618.7,
+    "denoise_seconds": 11.7,
+    "video_stage_seconds": 42.1,
+    "note": "reference runs downloading from Hugging Face: text about 210 s, Smoke sample stage about 90 s"
+  },
+  "diffusers": "0.42.1",
+  "hub_pull_request": {
+    "url": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/discussions/3",
+    "commit": "981f7a67",
+    "base_revision": "4c487e8b",
+    "files": {
+      "audio_vae/diffusion_pytorch_model.safetensors": 1222459368,
+      "audio_vae/config.json": 124
+    },
+    "status": "open"
+  }
+}

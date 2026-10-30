@@ -1,13 +1,19 @@
 """Native Diffusers generation helpers; no ComfyUI imports or model loading at import time."""
 # %% Imports
+import ast
+import contextlib
 import gc
 import hashlib
 import json
+import logging
 import resource
 import shutil
+import subprocess
 import sys
 import tempfile
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import torch
@@ -118,6 +124,30 @@ def model_kwargs(cfg, cache_dir):
     return source, kwargs
 
 
+def assemble_local_snapshot(input_root, target, revision):
+    # Join the 'media' and 'text' weight snapshots (notebooks 17/18) attached as Kaggle inputs into one
+    # Diffusers layout of symlinks; inputs are read-only, so nothing is copied.
+    parts = {}
+    for depth in range(1, 5):
+        for manifest_path in Path(input_root).glob('/'.join(['*']*depth)+'/weights-manifest.json'):
+            manifest = json.loads(manifest_path.read_text())
+            if manifest.get('revision') == revision and manifest.get('part') in ('media', 'text'):
+                parts[manifest['part']] = manifest_path.parent
+    if set(parts) != {'media', 'text'}:
+        found = ', '.join(sorted(parts)) or 'none'
+        print(f'Weight inputs for revision {revision[:8]}: {found}; downloading from Hugging Face instead', flush=True)
+        return None
+    target = Path(target)
+    target.mkdir(parents=True, exist_ok=True)
+    for root in parts.values():
+        for entry in root.iterdir():
+            link = target/entry.name
+            if entry.name != 'weights-manifest.json' and not link.exists():
+                link.symlink_to(entry, target_is_directory=entry.is_dir())
+    print('Using attached weight inputs:', {part: str(root) for part, root in parts.items()}, flush=True)
+    return str(target)
+
+
 def text_key(prompt, cfg):
     return digest(dict(prompt=prompt, revision=cfg['revision'], model=cfg['model_id'],
                        dtype='float16', max_sequence_length=cfg['max_sequence_length'], packages=cfg['packages']))
@@ -135,6 +165,87 @@ def compact_conditioning(encoded):
     finite(pooled, 'CLIP conditioning')
     return {'prompt_embeds': tokens.detach().cpu().contiguous().clone(),
             'pooled_prompt_embeds': pooled.detach().cpu().contiguous().clone()}
+
+# %% Background nvidia-smi utilization trace
+NVIDIA_SMI_FIELDS = ('timestamp', 'index', 'utilization.gpu', 'memory.used', 'power.draw')
+
+
+def summarize_nvidia_smi(path, interval_ms, busy_percent=50):
+    # nvidia-smi prints one row per GPU in index order for every polling tick.
+    samples, current = [], {}
+    for line in Path(path).read_text().splitlines():
+        parts = [part.strip() for part in line.split(',')]
+        if len(parts) != len(NVIDIA_SMI_FIELDS):
+            continue
+        try:
+            index, util, memory = int(parts[1]), float(parts[2]), float(parts[3])
+        except ValueError:
+            continue
+        if index in current:
+            samples.append(current)
+            current = {}
+        current[index] = (util, memory)
+    if current:
+        samples.append(current)
+    gpus = sorted({index for sample in samples for index in sample})
+    samples = [sample for sample in samples if len(sample) == len(gpus)]
+    if not samples:
+        return dict(available=True, samples=0, interval_ms=interval_ms)
+    busy_counts = [sum(sample[i][0] >= busy_percent for i in gpus) for sample in samples]
+    share = lambda count: sum(c == count for c in busy_counts)/len(samples)
+    return dict(available=True, samples=len(samples), interval_ms=interval_ms, busy_percent=busy_percent,
+        gpu=[dict(index=i,
+                  mean_util_percent=sum(s[i][0] for s in samples)/len(samples),
+                  max_util_percent=max(s[i][0] for s in samples),
+                  busy_fraction=sum(s[i][0] >= busy_percent for s in samples)/len(samples),
+                  max_memory_used_mib=max(s[i][1] for s in samples)) for i in gpus],
+        all_busy_fraction=share(len(gpus)), one_busy_fraction=share(1), none_busy_fraction=share(0))
+
+
+class NvidiaSmiTrace:
+    """Poll per-GPU utilization in a child nvidia-smi process while the wrapped block runs."""
+
+    def __init__(self, path, interval_ms=200):
+        self.path, self.interval_ms = Path(path), interval_ms
+        self.process, self.summary = None, dict(available=False)
+
+    def __enter__(self):
+        self.file = self.path.open('w')
+        try:
+            self.process = subprocess.Popen(['nvidia-smi', '--query-gpu='+','.join(NVIDIA_SMI_FIELDS),
+                '--format=csv,noheader,nounits', '-lms', str(self.interval_ms)],
+                stdout=self.file, stderr=subprocess.DEVNULL)
+        except FileNotFoundError:
+            print('nvidia-smi not found; GPU utilization is not traced', flush=True)
+        return self
+
+    def __exit__(self, *exc):
+        if self.process is not None:
+            self.process.terminate()
+            self.process.wait(timeout=10)
+        self.file.close()
+        if self.process is not None:
+            self.summary = summarize_nvidia_smi(self.path, self.interval_ms)
+        return False
+
+
+def plot_nvidia_smi(path, output_path, interval_ms=200):
+    import matplotlib.pyplot as plt
+    series = {}
+    for line in Path(path).read_text().splitlines():
+        parts = [part.strip() for part in line.split(',')]
+        try:
+            series.setdefault(int(parts[1]), []).append(float(parts[2]))
+        except (IndexError, ValueError):
+            continue
+    figure, axis = plt.subplots(figsize=(10, 3))
+    for index, values in sorted(series.items()):
+        axis.plot([k*interval_ms/1000 for k in range(len(values))], values, label=f'cuda:{index}')
+    axis.set(xlabel='seconds since denoising start', ylabel='GPU utilization, %', ylim=(0, 105))
+    axis.legend(loc='upper right')
+    figure.tight_layout()
+    figure.savefig(output_path, dpi=120)
+    return figure
 
 # %% Qwen + CLIP, then unload before loading the DiT
 @torch.inference_mode()
@@ -176,7 +287,20 @@ def encode_texts(prompts, cfg):
             release_memory()
     return paths
 
-# %% Two-GPU DiT placement
+# %% DiT placement: two-GPU layer split or one whole GPU
+DIT_PLACEMENTS = ('balanced', 'cuda:0', 'cuda:1')
+# accelerate's low_cpu_mem_usage loading patches nn.Module globally, so two threads must not load at once.
+_LOAD_LOCK = threading.Lock()
+
+
+def dit_load_options(placement):
+    # 'balanced' splits blocks for memory; a single device keeps the whole DiT on one T4.
+    if placement == 'balanced':
+        return dict(device_map='balanced', max_memory={0:'10GiB',1:'10GiB'}), {0,1}
+    if placement in DIT_PLACEMENTS:
+        return dict(device_map=placement), {int(placement.split(':')[1])}
+    raise ValueError(f'DIT_PLACEMENT must be one of {DIT_PLACEMENTS}, got {placement!r}')
+
 
 def mapped_gpu_indices(device_map):
     devices = set()
@@ -192,30 +316,35 @@ def mapped_gpu_indices(device_map):
 
 def load_sampling_pipeline(cfg, has_image):
     source, kwargs = model_kwargs(cfg, cfg['media_cache'])
-    transformer = Kandinsky6Transformer3DModel.from_pretrained(source, subfolder='transformer',
-        torch_dtype=torch.float16, device_map='balanced', max_memory={0:'10GiB',1:'10GiB'},
-        low_cpu_mem_usage=True, **kwargs)
+    placement = cfg['dit_placement']
+    options, expected = dit_load_options(placement)
+    with _LOAD_LOCK:
+        transformer = Kandinsky6Transformer3DModel.from_pretrained(source, subfolder='transformer',
+            torch_dtype=torch.float16, low_cpu_mem_usage=True, **options, **kwargs)
     if transformer.config.model_dim != 1792 or transformer.config.num_visual_blocks != 32:
         raise ValueError('Expected the Lite architecture, not Pro')
-    device_map = transformer.hf_device_map
-    if mapped_gpu_indices(device_map) != {0,1} or any(str(v) in ('cpu','disk') for v in device_map.values()):
-        raise RuntimeError(f'Expected DiT blocks on both GPUs, no CPU/disk: {device_map}')
+    # A single-device load may skip accelerate dispatch and leave no hf_device_map.
+    device_map = getattr(transformer, 'hf_device_map', None) or {'': str(transformer.device)}
+    if mapped_gpu_indices(device_map) != expected or any(str(v) in ('cpu','disk') for v in device_map.values()):
+        raise RuntimeError(f'Expected DiT on GPU(s) {sorted(expected)}, no CPU/disk: {device_map}')
     print('DiT device map:', json.dumps(device_map, default=str), flush=True)
     # Encoder overrides prevent the pipeline from downloading Qwen a second time.
-    pipe = Kandinsky6TI2VAPipeline.from_pretrained(source, transformer=transformer,
-        text_encoder=None, text_encoder_2=None, tokenizer=None, tokenizer_2=None,
-        torch_dtype={'default':torch.float32}, **kwargs)
+    with _LOAD_LOCK:
+        pipe = Kandinsky6TI2VAPipeline.from_pretrained(source, transformer=transformer,
+            text_encoder=None, text_encoder_2=None, tokenizer=None, tokenizer_2=None,
+            torch_dtype={'default':torch.float32}, **kwargs)
     if not isinstance(pipe.scheduler, PiflowScheduler) or pipe.scheduler.config.n_grid != 10:
         raise ValueError('Expected the Lite distilled PiFlow scheduler with n_grid=10')
     pipe.vae.enable_tiling()
     if has_image:
-        pipe.vae.to('cuda:0')  # One reference-frame encode; DiT blocks keep their device map.
+        # One reference-frame encode next to the first DiT block; DiT blocks keep their device map.
+        pipe.vae.to('cuda:0' if placement == 'balanced' else placement)
     # Do not call pipe.to(...) or enable_model_cpu_offload() over a sharded transformer.
     return pipe, device_map
 
 # %% Joint generation and a reusable latent checkpoint
 @torch.inference_mode()
-def sample_joint(cfg, prompt, negative, conditioning_path, image, latent_path):
+def sample_joint(cfg, prompt, negative, conditioning_path, image, latent_path, trace_path=None):
     if latent_path.exists():
         with safe_open(str(latent_path), framework='pt') as f:
             if f.metadata().get('job_key') != cfg['job_key']:
@@ -235,20 +364,33 @@ def sample_joint(cfg, prompt, negative, conditioning_path, image, latent_path):
         print(f'DiT {step+1}/10, timestep={float(timestep):.2f}', flush=True)
         return tensors
     hook = pipe.transformer.register_forward_pre_hook(count_call)
+    # The trace covers only the denoising call, not weight loading or latent saving.
+    trace = NvidiaSmiTrace(trace_path) if trace_path else None
+    gpus = sorted(mapped_gpu_indices(device_map))
     try:
-        output = pipe(image=image, negative_prompt=negative,
-            height=cfg['height'], width=cfg['width'], num_frames=cfg['num_frames'], frame_rate=24,
-            num_inference_steps=10, guidance_scale=1.0, sample_audio=True, expand_prompts=False,
-            generator=torch.Generator(device='cpu').manual_seed(cfg['seed']),
-            output_type='latent', callback_on_step_end=progress, **conditioning)
+        with trace or contextlib.nullcontext():
+            for i in gpus:
+                torch.cuda.synchronize(i)
+            start = time.perf_counter()
+            output = pipe(image=image, negative_prompt=negative,
+                height=cfg['height'], width=cfg['width'], num_frames=cfg['num_frames'], frame_rate=24,
+                num_inference_steps=10, guidance_scale=1.0, sample_audio=True, expand_prompts=False,
+                generator=torch.Generator(device='cpu').manual_seed(cfg['seed']),
+                output_type='latent', callback_on_step_end=progress, **conditioning)
+            for i in gpus:
+                torch.cuda.synchronize(i)
+            denoise_seconds = time.perf_counter()-start
         finite(output.frames, 'sampled video'); finite(output.audio, 'sampled audio')
         if calls[0] != 10:
             raise AssertionError(f'Expected 10 measured DiT calls, got {calls[0]}')
         save_file({'video':output.frames.detach().cpu().contiguous(),
                    'audio':output.audio.detach().cpu().contiguous()}, str(latent_path),
                   metadata={'job_key':cfg['job_key']})
-        result = dict(dit_nfe=calls[0], device_map=device_map, cache_reused=False,
+        result = dict(dit_nfe=calls[0], dit_placement=cfg['dit_placement'], device_map=device_map,
+                      denoise_seconds=denoise_seconds, cache_reused=False,
                       video_shape=list(output.frames.shape), audio_shape=list(output.audio.shape))
+        if trace is not None:
+            result['nvidia_smi'] = trace.summary
         del output
         return result
     finally:
@@ -256,16 +398,107 @@ def sample_joint(cfg, prompt, negative, conditioning_path, image, latent_path):
         del pipe
         release_memory()
 
+
+def job_key_for(cfg, prompt, image_sha):
+    # Placement is part of the key, so a new placement re-runs denoising instead of reusing latents.
+    return digest(dict(model=cfg['model_id'], revision=cfg['revision'], packages=cfg['packages'], prompt=prompt,
+        seed=cfg['seed'], width=cfg['width'], height=cfg['height'], num_frames=cfg['num_frames'], image=image_sha,
+        steps=10, cfg=1.0, dtype='float16',
+        placement='balanced-two-gpu' if cfg['dit_placement'] == 'balanced' else cfg['dit_placement']))
+
+
+def prepare_run(base_cfg, preset, preset_name, profile, placement, image_path=None, aspect='auto'):
+    # Per-run config, job key and output directory, as the configuration cell builds them for one clip.
+    prompt, negative = compile_prompt(preset, profile)
+    image, image_sha, width, height = reference_and_size(preset, profile, image_path, aspect)
+    cfg = dict(base_cfg, profile=profile, dit_placement=placement, width=width, height=height, **PROFILES[profile])
+    cfg['job_key'] = job_key_for(cfg, prompt, image_sha)
+    run_dir = Path(cfg['results'])/(preset_name+'-'+profile+'-'+cfg['job_key'][:12])
+    run_dir.mkdir(exist_ok=True)
+    (run_dir/'config.json').write_text(json.dumps(dict(cfg, prompt=prompt, negative_prompt=negative,
+        reference_sha256=image_sha), indent=2))
+    return dict(cfg=cfg, prompt=prompt, negative=negative, image=image, run_dir=run_dir)
+
+
+def measure_placements(base_cfg, preset, preset_name, combos, conditioning, image_path=None, aspect='auto'):
+    # Denoise-only runs for (profile, placement) pairs; an out-of-memory error is recorded as a result.
+    rows = []
+    for profile, placement in combos:
+        run = prepare_run(base_cfg, preset, preset_name, profile, placement, image_path, aspect)
+        cfg, prompt, negative, image, run_dir = (run[k] for k in ('cfg', 'prompt', 'negative', 'image', 'run_dir'))
+        trace_path = run_dir/('nvidia-smi-denoise-'+str(time.time_ns())+'.csv')
+        reports = {}
+        print(f'== Measure {profile} / {placement}', flush=True)
+        try:
+            sample = measured('sample', lambda: sample_joint(cfg, prompt, negative, conditioning[profile], image,
+                run_dir/'joint-latents.safetensors', trace_path), reports)
+            sample = dict(sample, stage=reports['sample'])
+        except torch.cuda.OutOfMemoryError as error:
+            sample = dict(oom=True, dit_placement=placement, error=str(error).splitlines()[0][:300])
+            print('Out of memory:', sample['error'], flush=True)
+        release_memory()
+        (run_dir/'sample.json').write_text(json.dumps(sample, indent=2, default=str))
+        rows.append(dict(sample, run=run_dir.name))
+    return rows
+
+
+def compare_placements(results_dir):
+    # One row per run directory whose sampling actually ran (not a reused latent cache).
+    rows = []
+    for sample_path in sorted(Path(results_dir).glob('*/sample.json')):
+        sample = json.loads(sample_path.read_text())
+        config = json.loads((sample_path.parent/'config.json').read_text())
+        size = f"{config['width']}x{config['height']}x{config['num_frames']}"
+        if sample.get('oom'):
+            rows.append(dict(run=sample_path.parent.name, placement=sample['dit_placement'], size=size,
+                             oom=True, error=sample['error']))
+            continue
+        if sample.get('cache_reused') or 'denoise_seconds' not in sample:
+            continue
+        trace = sample.get('nvidia_smi', {})
+        stage = sample.get('stage', {})
+        rows.append(dict(run=sample_path.parent.name, placement=sample['dit_placement'], size=size,
+            denoise_s=round(sample['denoise_seconds'], 2),
+            peak_alloc_gib=[round(g['allocated_peak_gib'], 2) for g in stage.get('gpu', [])],
+            all_busy=trace.get('all_busy_fraction'), one_busy=trace.get('one_busy_fraction')))
+    return rows
+
 # %% Decode the saved video and audio latents
+# The Lite checkpoint's audio_vae also stores a copy of the separate vocoder (HF discussion
+# kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers#2). Drop only those two known warnings.
+MMAUDIO_EXTRA_CONFIG = {'vocoder_config', 'mode', 'downsample_factor'}
+
+
+class MMAudioDuplicateVocoderFilter(logging.Filter):
+    def filter(self, record):
+        message = record.getMessage()
+        if 'were not used when initializing MMAudioVAE' in message:
+            keys = message[message.index('[')+1:message.rindex(']')].strip("'").split(', ')
+            return not all(key.startswith('vocoder.') for key in keys)
+        if 'were passed to MMAudioVAE, but are not expected' in message:
+            attributes = message[len('The config attributes '):message.index(' were passed to')]
+            try:
+                return not set(ast.literal_eval(attributes)) <= MMAUDIO_EXTRA_CONFIG
+            except (ValueError, SyntaxError):
+                return True
+        return True
+
+
+for _name in ('diffusers.configuration_utils', 'diffusers.models.modeling_utils'):
+    if not any(isinstance(f, MMAudioDuplicateVocoderFilter) for f in logging.getLogger(_name).filters):
+        logging.getLogger(_name).addFilter(MMAudioDuplicateVocoderFilter())
+
 @torch.inference_mode()
-def decode_video(cfg, latent_path):
+def decode_video(cfg, latent_path, device='cuda:1'):
     source, kwargs = model_kwargs(cfg, cfg['media_cache'])
-    vae = AutoencoderKLHunyuanVideo.from_pretrained(source, subfolder='vae', torch_dtype=torch.float32, **kwargs).to('cuda:1')
+    with _LOAD_LOCK:
+        vae = AutoencoderKLHunyuanVideo.from_pretrained(source, subfolder='vae', torch_dtype=torch.float32, **kwargs)
+    vae.to(device)
     vae.enable_tiling(tile_sample_min_height=256, tile_sample_min_width=256,
         tile_sample_min_num_frames=16, tile_sample_stride_height=192,
         tile_sample_stride_width=192, tile_sample_stride_num_frames=12)
     try:
-        z = load_file(str(latent_path))['video'].to('cuda:1',dtype=vae.dtype)
+        z = load_file(str(latent_path))['video'].to(device, dtype=vae.dtype)
         decoded = vae.decode(z/vae.config.scaling_factor, return_dict=False)[0]
         finite(decoded, 'decoded video')
         frames = VideoProcessor(vae_scale_factor=8).postprocess_video(decoded, output_type='np')[0]
@@ -278,12 +511,14 @@ def decode_video(cfg, latent_path):
 
 
 @torch.inference_mode()
-def decode_audio(cfg, latent_path):
+def decode_audio(cfg, latent_path, device='cuda:0'):
     source, kwargs = model_kwargs(cfg, cfg['media_cache'])
-    vae = MMAudioVAE.from_pretrained(source, subfolder='audio_vae', torch_dtype=torch.float32, **kwargs).to('cuda:0')
-    vocoder = MMAudioVocoder.from_pretrained(source, subfolder='vocoder', torch_dtype=torch.float32, **kwargs).to('cuda:0')
+    with _LOAD_LOCK:
+        vae = MMAudioVAE.from_pretrained(source, subfolder='audio_vae', torch_dtype=torch.float32, **kwargs)
+        vocoder = MMAudioVocoder.from_pretrained(source, subfolder='vocoder', torch_dtype=torch.float32, **kwargs)
+    vae.to(device); vocoder.to(device)
     try:
-        z = load_file(str(latent_path))['audio'].to('cuda:0',dtype=vae.dtype)
+        z = load_file(str(latent_path))['audio'].to(device, dtype=vae.dtype)
         mel = vae.decode(z/vae.config.scaling_factor, return_dict=False)[0]
         waveform = vocoder(mel.to(vocoder.dtype), return_dict=False)[0][0,0].float().cpu()[None]
         finite(waveform, 'waveform')
@@ -353,3 +588,55 @@ def soundtrack_audio(generated, rate, music_path=None, offset_seconds=0.0, mode=
     mixed[:,-n:]*=torch.linspace(1,0,n)
     return mixed.contiguous(),{'source':mode,'filename':Path(music_path).name,
                               'offset_seconds':offset_seconds,'gain':gain,'mono':True}
+
+# %% Two clips in parallel: one whole pipeline per GPU
+
+def prefetch_media_weights(cfg):
+    # Download once before the threads start; the text encoders are not needed for sampling or decoding.
+    if cfg['local_model_dir']:
+        return
+    from huggingface_hub import snapshot_download
+    snapshot_download(cfg['model_id'], revision=cfg['revision'], cache_dir=cfg['media_cache'],
+        allow_patterns=['model_index.json', 'scheduler/*', 'tokenizer/*', 'tokenizer_2/*',
+                        'transformer/*', 'vae/*', 'audio_vae/*', 'vocoder/*'])
+
+
+def generate_clip(run, conditioning_path, gpu):
+    # Denoise, decode and export one clip with every model on one GPU.
+    cfg, run_dir, device = run['cfg'], run['run_dir'], f'cuda:{gpu}'
+    latents = run_dir/'joint-latents.safetensors'
+    torch.cuda.set_device(gpu)
+    torch.cuda.reset_peak_memory_stats(gpu)
+    start = time.perf_counter()
+    result = dict(run=run_dir.name, gpu=gpu)
+    try:
+        result['sample'] = sample_joint(cfg, run['prompt'], run['negative'], conditioning_path, run['image'], latents)
+        sampled = time.perf_counter()
+        frames = decode_video(cfg, latents, device)
+        waveform, rate = decode_audio(cfg, latents, device)
+        decoded = time.perf_counter()
+        result['export'] = export_clip(frames, waveform, rate, cfg, run_dir/('clip-'+str(time.time_ns())+'.mp4'))
+        result.update(sample_stage_seconds=sampled-start, decode_seconds=decoded-sampled)
+    except torch.cuda.OutOfMemoryError as error:
+        result.update(oom=True, error=str(error).splitlines()[0][:300])
+    result.update(total_seconds=time.perf_counter()-start,
+                  allocated_peak_gib=torch.cuda.max_memory_allocated(gpu)/2**30)
+    (run_dir/'parallel.json').write_text(json.dumps(result, indent=2, default=str))
+    print(f"cuda:{gpu} finished {run_dir.name} in {result['total_seconds']:.1f} s", flush=True)
+    return result
+
+
+def run_parallel_clips(runs, conditioning, trace_path, num_gpus=2):
+    # Run i goes to GPU i % num_gpus; each GPU works through its own queue, the queues run concurrently.
+    queues = [[(run, i % num_gpus) for i, run in enumerate(runs) if i % num_gpus == gpu] for gpu in range(num_gpus)]
+    def work(queue):
+        return [generate_clip(run, conditioning[run['key']], gpu) for run, gpu in queue]
+    with NvidiaSmiTrace(trace_path) as trace:
+        start = time.perf_counter()
+        with ThreadPoolExecutor(max_workers=num_gpus) as pool:
+            results = [clip for queue in pool.map(work, queues) for clip in queue]
+        wall = time.perf_counter() - start
+    finished = [clip for clip in results if not clip.get('oom')]
+    return dict(wall_seconds=wall, clips=len(finished),
+                sum_of_clip_seconds=sum(clip['total_seconds'] for clip in results),
+                clips_per_hour=3600*len(finished)/wall, nvidia_smi=trace.summary, results=results)
