@@ -1,0 +1,217 @@
+{
+  "date": "2026-10-30",
+  "source": "Kaggle batch run, notebook 16 version 7 (MEASURE_PLACEMENTS enabled)",
+  "url": "https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation",
+  "hardware": "2x Tesla T4 (14.56 GiB visible each), PCIe",
+  "torch": "2.11.0+cu128",
+  "packages": {
+    "diffusers": "0.42.1",
+    "transformers": "5.22.1",
+    "accelerate": "1.13.0"
+  },
+  "checkpoint": "kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers@4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81",
+  "preset": "orbit_woman",
+  "mode": "t2v",
+  "seed": 42,
+  "steps": 10,
+  "guidance_scale": 1.0,
+  "method": {
+    "denoise_seconds": "pipe(...) call only, CUDA synchronized before and after",
+    "sample_stage": "includes DiT/pipeline loading from the local media cache",
+    "nvidia_smi": "200 ms polling during the pipe(...) call; busy means utilization.gpu >= 50 %"
+  },
+  "runs": [
+    {
+      "run": "orbit_woman-smoke-d7e03aee4607",
+      "profile": "smoke",
+      "dit_placement": "balanced",
+      "width": 432,
+      "height": 256,
+      "num_frames": 25,
+      "video_latent_shape": [
+        1,
+        16,
+        7,
+        32,
+        54
+      ],
+      "audio_latent_shape": [
+        1,
+        40,
+        45
+      ],
+      "denoise_seconds": 12.53,
+      "sample_stage_seconds": 92.7,
+      "torch_allocated_peak_gib": [
+        3.09,
+        3.19
+      ],
+      "torch_reserved_peak_gib": [
+        3.24,
+        3.29
+      ],
+      "nvidia_smi_memory_used_peak_gib": [
+        3.37,
+        3.42
+      ],
+      "nvidia_smi_mean_util_percent": [
+        49.0,
+        46.0
+      ],
+      "both_busy_fraction": 0.067,
+      "one_busy_fraction": 0.833,
+      "none_busy_fraction": 0.1,
+      "nvidia_smi_samples": 60
+    },
+    {
+      "run": "orbit_woman-smoke-9cdc5bf29bd0",
+      "profile": "smoke",
+      "dit_placement": "cuda:0",
+      "width": 432,
+      "height": 256,
+      "num_frames": 25,
+      "video_latent_shape": [
+        1,
+        16,
+        7,
+        32,
+        54
+      ],
+      "audio_latent_shape": [
+        1,
+        40,
+        45
+      ],
+      "denoise_seconds": 13.37,
+      "sample_stage_seconds": 18.2,
+      "torch_allocated_peak_gib": [
+        6.11,
+        0.01
+      ],
+      "torch_reserved_peak_gib": [
+        6.3,
+        0.02
+      ],
+      "nvidia_smi_memory_used_peak_gib": [
+        6.43,
+        0.15
+      ],
+      "nvidia_smi_mean_util_percent": [
+        96.9,
+        0.0
+      ],
+      "both_busy_fraction": 0.0,
+      "one_busy_fraction": 0.969,
+      "none_busy_fraction": 0.031,
+      "nvidia_smi_samples": 64
+    },
+    {
+      "run": "orbit_woman-baseline-e913ad688ddd",
+      "profile": "baseline",
+      "dit_placement": "balanced",
+      "width": 864,
+      "height": 480,
+      "num_frames": 121,
+      "video_latent_shape": [
+        1,
+        16,
+        31,
+        60,
+        108
+      ],
+      "audio_latent_shape": [
+        1,
+        40,
+        218
+      ],
+      "denoise_seconds": 746.47,
+      "sample_stage_seconds": 752.0,
+      "torch_allocated_peak_gib": [
+        5.56,
+        5.58
+      ],
+      "torch_reserved_peak_gib": [
+        6.27,
+        6.31
+      ],
+      "nvidia_smi_memory_used_peak_gib": [
+        6.4,
+        6.44
+      ],
+      "nvidia_smi_mean_util_percent": [
+        48.5,
+        51.4
+      ],
+      "both_busy_fraction": 0.0,
+      "one_busy_fraction": 0.998,
+      "none_busy_fraction": 0.002,
+      "nvidia_smi_samples": 3542
+    },
+    {
+      "run": "orbit_woman-baseline-6b15260c1a27",
+      "profile": "baseline",
+      "dit_placement": "cuda:0",
+      "width": 864,
+      "height": 480,
+      "num_frames": 121,
+      "video_latent_shape": [
+        1,
+        16,
+        31,
+        60,
+        108
+      ],
+      "audio_latent_shape": [
+        1,
+        40,
+        218
+      ],
+      "denoise_seconds": 761.52,
+      "sample_stage_seconds": 766.2,
+      "torch_allocated_peak_gib": [
+        8.58,
+        0.01
+      ],
+      "torch_reserved_peak_gib": [
+        9.35,
+        0.02
+      ],
+      "nvidia_smi_memory_used_peak_gib": [
+        9.48,
+        0.15
+      ],
+      "nvidia_smi_mean_util_percent": [
+        99.9,
+        0.0
+      ],
+      "both_busy_fraction": 0.0,
+      "one_busy_fraction": 0.999,
+      "none_busy_fraction": 0.001,
+      "nvidia_smi_samples": 3620
+    }
+  ],
+  "smoke_main_run_stage_seconds": {
+    "text": 214.1,
+    "sample": 92.7,
+    "video": 28.0,
+    "audio": 1.7,
+    "export": 0.6
+  },
+  "earlier_interactive_smoke": {
+    "balanced_denoise_seconds": 11.15,
+    "cuda0_denoise_seconds": 11.16,
+    "note": "user interactive session on version 6, same settings"
+  },
+  "conclusions": [
+    "Baseline (121 frames, 864x480) fits on one T4: 8.58 GiB allocated, 9.48 GiB nvidia-smi peak of 14.56 GiB.",
+    "The two-GPU layer split does not reduce per-clip latency: Smoke 12.53 vs 13.37 s here and 11.15 vs 11.16 s interactively; Baseline 746.5 vs 761.5 s. One run per variant; differences are within run-to-run variation.",
+    "With device_map balanced both GPUs are busy at the same time in 0 % (Baseline) to 6.7 % (Smoke) of polls.",
+    "Baseline has 16.6x the video tokens of Smoke but takes about 60x longer to denoise, so attention dominates at full size."
+  ],
+  "not_measured": [
+    "repeated runs/variance",
+    "two pipelines in parallel (one per GPU)",
+    "context parallelism",
+    "I2V"
+  ]
+}

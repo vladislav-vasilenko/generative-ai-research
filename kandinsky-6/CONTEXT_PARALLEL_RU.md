@@ -6,7 +6,7 @@
 
 [K6](README.md) · [Diffusers runner](generation/README.md) · [Notebook 16](notebooks/16_kaggle_diffusers_lite_generation.ipynb) · [diffusers#15156](https://github.com/huggingface/diffusers/issues/15156) · [kandinskylab/kandinsky-6#22](https://github.com/kandinskylab/kandinsky-6/issues/22).
 
-**Статус на 30 октября 2026:** это разбор исходного кода, а не реализация. Источник — установленный `diffusers==0.42.1` и `transformer/config.json` Lite-чекпойнта на ревизии `4c487e8b`. Ни один `_cp_plan` для Kandinsky 6 не запускался; выводы о корректности ниже — рассуждение по коду, которое нужно подтвердить численным тестом на двух GPU.
+**Статус на 30 октября 2026:** это разбор исходного кода, а не реализация. Замеры текущего размещения без CP — в §6 и [отчёте Kaggle](reports/dit-placement-kaggle-measurements.json). Источник — установленный `diffusers==0.42.1` и `transformer/config.json` Lite-чекпойнта на ревизии `4c487e8b`. Ни один `_cp_plan` для Kandinsky 6 не запускался; выводы о корректности ниже — рассуждение по коду, которое нужно подтвердить численным тестом на двух GPU.
 
 ## 1. Зачем это нужно
 
@@ -110,7 +110,16 @@ _cp_plan = {
 | Ring attention | требует LSE, а `NATIVE` его не возвращает (`attention_dispatch.py:876`) | на T4 практически только **Ulysses** |
 | Связь между GPU | PCIe, без NVLink | all-to-all в каждом attention; на Smoke выигрыш может быть около нуля, смысл — Baseline |
 
-Число токенов посчитано по формулам runner и VAE (масштаб 4×8×8, patch `1×2×2`), а не по реальному запуску.
+Формы латентов подтверждены прогоном на Kaggle: Smoke `[1,16,7,32,54]` и аудио `[1,40,45]`, Baseline `[1,16,31,60,108]` и `[1,40,218]`.
+
+**Замер без CP (Kaggle 2×T4, version 7, по одному прогону):**
+
+| Профиль | `balanced` (2 GPU) | `cuda:0` (1 GPU) | Обе GPU заняты одновременно (`balanced`) |
+|---|---|---|---|
+| Smoke, 3024 видео-токена | 12,5 s, 3,1 + 3,2 GiB | 13,4 s, 6,1 GiB | 6,7 % |
+| Baseline, 50 220 видео-токенов | 746 s, 5,6 + 5,6 GiB | 762 s, 8,6 GiB | 0 % |
+
+Split не ускоряет ролик, и Baseline помещается на одну T4, так что CP для Lite нужен только ради latency, а не памяти. У Baseline в 16,6 раза больше токенов, но denoising дольше примерно в 60 раз: на полном размере доминирует attention. Именно здесь Ulysses мог бы окупить обмен по PCIe; оценка ускорения требует реализации и замера.
 
 ## 7. План работ и проверки
 
