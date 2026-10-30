@@ -1,8 +1,8 @@
 {
   "date": "2026-10-30",
   "notebook": "kandinsky-6/notebooks/16_kaggle_diffusers_lite_generation.ipynb",
-  "notebook_sha256": "c6ad0bf79c21a400831057746528b5e59150b188949770e5de55746ee6b118e2",
-  "runtime_sha256": "ad32bb4b7a47b884b1f6abed387f808ec770691a7bf5a09502563d71b4e3cbeb",
+  "notebook_sha256": "559f87dc31b3fed28d4a7cc8c5d99f3d8f04cc982e722d195201028ef0cd2f67",
+  "runtime_sha256": "cf9a42ef4cb200823454d88ab2d259fc286003131f6206701d1d66d42aa6f645",
   "bootstrap_checks": {
     "preloaded_pillow_13_kept_without_restart": true,
     "compatible_dependencies_skip_network_and_pip": true,
@@ -13,7 +13,7 @@
     "network_requests_during_tests": 0,
     "real_pip_installs_during_tests": 0
   },
-  "code_cells": 21,
+  "code_cells": 22,
   "classic_python_cells": true,
   "prompt_scenarios": 7,
   "prompt_timelines": 14,
@@ -26,6 +26,7 @@
   "stale_latent_rejected": true,
   "nvidia_smi_trace_summary_and_fallback": true,
   "dit_placement_options_and_comparison": true,
+  "placement_measurement_mode_records_oom": true,
   "native_tiny_pipeline": [
     {
       "mode": "t2v",
@@ -42,7 +43,7 @@
         40,
         9
       ],
-      "seconds": 0.03802008298225701
+      "seconds": 0.04869754193350673
     },
     {
       "mode": "i2v",
@@ -59,7 +60,7 @@
         40,
         9
       ],
-      "seconds": 0.03015479096211493
+      "seconds": 0.031988791888579726
     }
   ],
   "reference_shapes": [

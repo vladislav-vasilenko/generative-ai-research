@@ -226,6 +226,31 @@ def main():
         rows=runner.compare_placements(d/'runs')
         assert rows==[dict(run='a',placement='balanced',size='432x256x25',denoise_s=13.4,
                            peak_alloc_gib=[3.0,3.1],all_busy=0.03,one_busy=0.9)]
+        # Existing cache keys must not change when the key is built by job_key_for.
+        base=dict(model_id='m',revision='r',packages={'diffusers':'0.42.1'},seed=42,width=432,height=256,
+                  num_frames=25,dit_placement='balanced')
+        assert runner.job_key_for(base,'p',None)==runner.digest(dict(model='m',revision='r',
+            packages={'diffusers':'0.42.1'},prompt='p',seed=42,width=432,height=256,num_frames=25,image=None,
+            steps=10,cfg=1.0,dtype='float16',placement='balanced-two-gpu'))
+        assert runner.job_key_for(dict(base,dit_placement='cuda:0'),'p',None)!=runner.job_key_for(base,'p',None)
+        # Measurement mode: one pair succeeds, the other runs out of memory and is recorded, not raised.
+        saved_sample_joint=runner.sample_joint
+        def fake_sample_joint(cfg,prompt,negative,conditioning_path,image,latent_path,trace_path=None):
+            if cfg['profile']=='baseline':
+                raise torch.cuda.OutOfMemoryError('CUDA out of memory. Tried to allocate 2.00 GiB')
+            return dict(dit_placement=cfg['dit_placement'],denoise_seconds=1.5,cache_reused=False,
+                        nvidia_smi=dict(all_busy_fraction=0.0,one_busy_fraction=1.0))
+        try:
+            runner.sample_joint=fake_sample_joint
+            (d/'measure').mkdir()
+            measured_rows=runner.measure_placements(dict(base,results=str(d/'measure'),profile='smoke',job_key='x'),
+                presets['orbit_woman'],'orbit_woman',[('smoke','cuda:0'),('baseline','cuda:0')],
+                {'smoke':d/'unused.safetensors','baseline':d/'unused.safetensors'})
+        finally:
+            runner.sample_joint=saved_sample_joint
+        assert [r.get('oom',False) for r in measured_rows]==[False,True]
+        table=runner.compare_placements(d/'measure')
+        assert sorted((r['size'],r.get('oom',False)) for r in table)==[('432x256x25',False),('864x480x121',True)]
     import diffusers,transformers,accelerate
     report=dict(date='2026-10-30',notebook=str(notebook.relative_to(ROOT)),
         notebook_sha256=hashlib.sha256(notebook.read_bytes()).hexdigest(),
@@ -238,6 +263,7 @@ def main():
         joint_latent_cache_reused_without_models=True,stale_latent_rejected=True,
         nvidia_smi_trace_summary_and_fallback=nvidia_smi_trace,
         dit_placement_options_and_comparison=True,
+        placement_measurement_mode_records_oom=True,
         native_tiny_pipeline=native,reference_shapes=portraits,synthetic_mp4=media,
         versions=dict(torch=torch.__version__,diffusers=diffusers.__version__,
                       transformers=transformers.__version__,accelerate=accelerate.__version__,pillow=pillow_version),

@@ -367,18 +367,58 @@ def sample_joint(cfg, prompt, negative, conditioning_path, image, latent_path, t
         release_memory()
 
 
+def job_key_for(cfg, prompt, image_sha):
+    # Placement is part of the key, so a new placement re-runs denoising instead of reusing latents.
+    return digest(dict(model=cfg['model_id'], revision=cfg['revision'], packages=cfg['packages'], prompt=prompt,
+        seed=cfg['seed'], width=cfg['width'], height=cfg['height'], num_frames=cfg['num_frames'], image=image_sha,
+        steps=10, cfg=1.0, dtype='float16',
+        placement='balanced-two-gpu' if cfg['dit_placement'] == 'balanced' else cfg['dit_placement']))
+
+
+def measure_placements(base_cfg, preset, preset_name, combos, conditioning, image_path=None, aspect='auto'):
+    # Denoise-only runs for (profile, placement) pairs; an out-of-memory error is recorded as a result.
+    rows = []
+    for profile, placement in combos:
+        prompt, negative = compile_prompt(preset, profile)
+        image, image_sha, width, height = reference_and_size(preset, profile, image_path, aspect)
+        cfg = dict(base_cfg, profile=profile, dit_placement=placement, width=width, height=height, **PROFILES[profile])
+        cfg['job_key'] = job_key_for(cfg, prompt, image_sha)
+        run_dir = Path(cfg['results'])/(preset_name+'-'+profile+'-'+cfg['job_key'][:12])
+        run_dir.mkdir(exist_ok=True)
+        (run_dir/'config.json').write_text(json.dumps(dict(cfg, prompt=prompt, negative_prompt=negative,
+            reference_sha256=image_sha), indent=2))
+        trace_path = run_dir/('nvidia-smi-denoise-'+str(time.time_ns())+'.csv')
+        reports = {}
+        print(f'== Measure {profile} / {placement}', flush=True)
+        try:
+            sample = measured('sample', lambda: sample_joint(cfg, prompt, negative, conditioning[profile], image,
+                run_dir/'joint-latents.safetensors', trace_path), reports)
+            sample = dict(sample, stage=reports['sample'])
+        except torch.cuda.OutOfMemoryError as error:
+            sample = dict(oom=True, dit_placement=placement, error=str(error).splitlines()[0][:300])
+            print('Out of memory:', sample['error'], flush=True)
+        release_memory()
+        (run_dir/'sample.json').write_text(json.dumps(sample, indent=2, default=str))
+        rows.append(dict(sample, run=run_dir.name))
+    return rows
+
+
 def compare_placements(results_dir):
     # One row per run directory whose sampling actually ran (not a reused latent cache).
     rows = []
     for sample_path in sorted(Path(results_dir).glob('*/sample.json')):
         sample = json.loads(sample_path.read_text())
+        config = json.loads((sample_path.parent/'config.json').read_text())
+        size = f"{config['width']}x{config['height']}x{config['num_frames']}"
+        if sample.get('oom'):
+            rows.append(dict(run=sample_path.parent.name, placement=sample['dit_placement'], size=size,
+                             oom=True, error=sample['error']))
+            continue
         if sample.get('cache_reused') or 'denoise_seconds' not in sample:
             continue
-        config = json.loads((sample_path.parent/'config.json').read_text())
         trace = sample.get('nvidia_smi', {})
         stage = sample.get('stage', {})
-        rows.append(dict(run=sample_path.parent.name, placement=sample['dit_placement'],
-            size=f"{config['width']}x{config['height']}x{config['num_frames']}",
+        rows.append(dict(run=sample_path.parent.name, placement=sample['dit_placement'], size=size,
             denoise_s=round(sample['denoise_seconds'], 2),
             peak_alloc_gib=[round(g['allocated_peak_gib'], 2) for g in stage.get('gpu', [])],
             all_busy=trace.get('all_busy_fraction'), one_busy=trace.get('one_busy_fraction')))

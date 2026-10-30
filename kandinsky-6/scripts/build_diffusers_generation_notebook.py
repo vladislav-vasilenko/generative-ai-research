@@ -131,6 +131,7 @@ MUSIC_PATH=None                 # e.g. '/kaggle/input/my-audio/burning_down_the_
 MUSIC_OFFSET_SECONDS=0.0
 MUSIC_GAIN=0.65
 DIT_PLACEMENT='balanced'        # 'balanced' (layer split over 2 GPUs), 'cuda:0' or 'cuda:1' (whole DiT on one T4)
+MEASURE_PLACEMENTS=[]           # optional extra denoise-only runs, e.g. [('baseline','balanced'),('baseline','cuda:0')]
 MODEL_ID='kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers'
 MODEL_REVISION='4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81'
 ''')
@@ -153,10 +154,7 @@ CFG=dict(model_id=MODEL_ID,revision=MODEL_REVISION,local_model_dir=LOCAL_MODEL_D
     scratch=str(SCRATCH),results=str(RESULTS),media_cache=str(SCRATCH/'media-cache'),
     packages=pins,max_sequence_length=1024,seed=SEED,profile=PROFILE,dit_placement=DIT_PLACEMENT,
     width=WIDTH,height=HEIGHT,**PROFILES[PROFILE])
-CFG['job_key']=digest(dict(model=MODEL_ID,revision=MODEL_REVISION,packages=pins,prompt=PROMPT,
-    seed=SEED,width=WIDTH,height=HEIGHT,num_frames=CFG['num_frames'],image=REFERENCE_SHA,
-    steps=10,cfg=1.0,dtype='float16',
-    placement='balanced-two-gpu' if DIT_PLACEMENT=='balanced' else DIT_PLACEMENT))
+CFG['job_key']=job_key_for(CFG,PROMPT,REFERENCE_SHA)
 RUN_DIR=RESULTS/(PRESET_NAME+'-'+PROFILE+'-'+CFG['job_key'][:12])
 RUN_DIR.mkdir(exist_ok=True)
 LATENTS=RUN_DIR/'joint-latents.safetensors'
@@ -195,6 +193,13 @@ if AUDIO_MODE in ('music','mix'):
     print(json.dumps(SAMPLE['nvidia_smi'],indent=2))
 else:
     print('No nvidia-smi samples:',SAMPLE.get('nvidia_smi','latents reused, denoising skipped'))''')
+    md('''### Дополнительные замеры размещений (необязательно)
+
+Если `MEASURE_PLACEMENTS` не пуст, ячейка по очереди выполняет только denoising для каждой пары `(profile, placement)` того же preset и seed, с трассой `nvidia-smi`. Декодирование и MP4 для них не делаются. Нехватка памяти (OOM) записывается в `sample.json` как результат и не останавливает notebook. Подходит для «Save & Run All»: все варианты попадают в одну таблицу ниже.''')
+    code('''if MEASURE_PLACEMENTS:
+    MEASUREMENTS=measure_placements(CFG,preset,PRESET_NAME,MEASURE_PLACEMENTS,CONDITIONING,IMAGE_PATH,ASPECT)
+else:
+    print('MEASURE_PLACEMENTS is empty; no extra measurements.')''')
     md('''### Сравнение размещений DiT
 
 Запустите разделы 4–5 с `DIT_PLACEMENT='balanced'`, затем с `'cuda:0'` при том же preset, profile и seed: placement входит в `job_key`, поэтому второй прогон заново выполняет denoising, а не берёт latents из кэша. `denoise_s` измеряет только вызов pipeline после синхронизации CUDA; `peak_alloc_gib` — пик PyTorch allocator за всю стадию sample, включая загрузку. Один прогон на вариант — ориентир, не статистика.''')
