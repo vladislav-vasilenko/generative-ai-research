@@ -1,0 +1,19 @@
+{
+  "checked_date": "2026-10-30",
+  "model_id": "kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers",
+  "model_revision": "4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81",
+  "packages": {
+    "diffusers": "0.42.1",
+    "transformers": "5.22.1",
+    "accelerate": "1.13.0"
+  },
+  "api": "https://huggingface.co/docs/diffusers/en/api/pipelines/kandinsky6",
+  "inspected_diffusers_main_revision": "d8c1b13c756df0059bcdb6e477a1eafcd502098d",
+  "model_index": "https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers/blob/4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81/model_index.json",
+  "pipeline_class": "Kandinsky6TI2VAPipeline",
+  "scheduler": "PiflowScheduler",
+  "n_grid": 10,
+  "model_weights_downloaded_locally": false,
+  "user_images_in_repository": false,
+  "user_music_in_repository": false
+}

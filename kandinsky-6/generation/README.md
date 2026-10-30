@@ -1,0 +1,75 @@
+# Kandinsky 6 Lite — генерация через Diffusers
+
+[Главная](../../README.md) · [K6](../README.md) · [Все 14 промптов](PROMPTS.md) · [JSON presets](prompt_presets.json) · [Notebook 16](../notebooks/16_kaggle_diffusers_lite_generation.ipynb).
+
+Отдельный runner для T2V/I2V, без учебных выводов, упражнений и ComfyUI. Использует официальный [Kandinsky6TI2VAPipeline](https://huggingface.co/docs/diffusers/en/api/pipelines/kandinsky6) и **Lite Distill 5s**, FP16 DiT, CFG=1, 10 NFE, FP32 codecs. Подготовлен для Kaggle **2×T4 / 32 GB CPU RAM**. Pretrained запуск на этих двух GPU пока не проверен; tiny CPU API tests не являются замером качества/скорости модели.
+
+| Вариант | Notebook / Kaggle | Назначение |
+|---|---|---|
+| ComfyUI deployment | [Notebook 15](../notebooks/15_kaggle_t4_lite_distill.ipynb) · [Kaggle](https://www.kaggle.com/code/applehawk/15-kaggle-t4-lite-distill) | Сохранённый программный повтор существующего ComfyUI workflow, распределение VAE tiles |
+| Diffusers Generation | [Notebook 16](../notebooks/16_kaggle_diffusers_lite_generation.ipynb) · [Kaggle](https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation) | Новый T2V/I2V runner с preset-подборкой и распределением блоков DiT |
+
+Имена файлов и URL старого варианта сохранены для существующих ссылок. В навигации backend явно подписан. Дистиллированная модель не требует ComfyUI и не требует переобучения для обычного инференса через Diffusers. Single-file ComfyUI weights и исходный Diffusers layout — разные форматы загрузки; автоматической конвертации здесь нет.
+
+## Запуск
+
+1. Откройте notebook 16 в Kaggle, выберите GPU T4 ×2 и Internet ON. Первая ячейка проверяет устройства до установок/загрузок. Зависимости закреплены, preinstalled PyTorch защищён constraints.
+2. В конфигурации задайте `PRESET_NAME`, `PROFILE='smoke'` и `SEED`. Для I2V загрузите reference в Kaggle Input и задайте `IMAGE_PATH`. `ASPECT='auto'` выбирает portrait/square/landscape по reference; resize/padding сохраняет всю композицию.
+3. Выполняйте обычные Python-ячейки. `PRESETS` можно редактировать прямо в notebook. JSON timeline преобразуется в текстовый prompt и `<AUDCAP>`; это пожелания о порядке событий, не гарантированные keyframes.
+4. Посмотрите Smoke. Измените `PROFILE='baseline'`, повторите конфигурацию, text cache lookup, sampling и codecs/export. Оба prompt-cache подготовлены при первой загрузке Qwen.
+5. Сохраните MP4 и отчёты из Output. Для повторного decoder достаточно `CFG` и сохранённых latents: Qwen/DiT не нужны. Чтобы восстановить после потери kernel, сначала восстановите определения функций и прежнюю конфигурацию; файлы `/kaggle/temp` не переживают новую сессию.
+
+| Режим | Native generated frames | Export frames / 24 FPS | Landscape | Portrait | Square |
+|---|---|---|---|---|---|
+| Smoke | 25 (`4k+1`) | 24 / 1.00 s | 432×256 | 256×432 | 320×320 |
+| Baseline | 121 (`4k+1`) | 120 / 5.00 s | 864×480 | 480×864 | 640×640 |
+
+Последний кадр обрезается только при экспорте; waveform также обрезается до 1/5 секунд. Проверяется фактическое декодирование video/audio streams. AAC padding может добавить небольшую погрешность длительности аудиопотока.
+
+## Presets
+
+| Ключ | Задача | Smoke | Baseline |
+|---|---|---|---|
+| `orbit_woman` | T2V: взрослая женщина в каменном дворе | Облёт около 15°, движение шарфа | Непрерывный облёт около 160°, ткань и parallax |
+| `strange_tram` | T2V: сюрреалистическая retrofuturist комедия | Автомат высовывает механический язычок | Работа автомата, реакция существа, подъезд трамвая |
+| `mechanical_bloom` | T2V: биомеханический цветок | Начало раскрытия и пыльца | Последовательное раскрытие с небольшим orbit |
+| `room_assembly` | T2V: Scandinavian furniture ad | Открытие коробки, первые рейки | Сборка одной кровати и финальный hold |
+| `mario_poster` | I2V: первая картинка | Blink, nod, secondary motion | Жест с кепкой, плечи, возвращение к позе |
+| `mario_pipe_illustration` | I2V: второй рисунок | Blink и кивок цветка | Реакция на гриб, squash-and-stretch, settle |
+| `mario_kandinsky_growth` | I2V: подготовленный кадр с логотипом на грибе | Укус и начало роста | Укус → рост вверх/вширь → финальный bounce |
+
+Retrofuturist presets описывают общие визуальные признаки: practical effects, странные существа, старые промышленные декорации, muted teal/amber и film grain. Это оригинальные сцены, без заявления о точном повторе работ Gossip Goblin. Градусы orbit и тайминги — цели режиссуры, не измеренный результат. В односекундном Smoke полный круг и многоступенчатая сборка намеренно не запрашиваются.
+
+## Логотип Kandinsky и Talking Heads
+
+Для `mario_kandinsky_growth` нужен **один подготовленный reference**, где логотип из вашего SVG уже нанесён на шляпку гриба. В JSON/PROMPTS.md есть `reference_preparation_prompt` для image editor. Исходные картинки и SVG не копируются в репозиторий. Сам pipeline получает PNG/JPEG/PIL image, не SVG и не пару независимых reference; список images означает batch, а не второй logo-condition. Полное длинное начертание на маленьком грибе может быть нечитаемо на Smoke resolution; для него лучше крупный передний план. Даже с reference сохранение букв в движении требует визуальной проверки.
+
+Звук генератора описан как оригинальный энергичный new-wave/funk instrumental. Чтобы в MP4 звучала именно **Talking Heads — Burning Down the House**, подключите ваш аудиофайл как Input и выберите:
+
+```python
+AUDIO_MODE = 'mix'      # generated effects + supplied recording; 'music' replaces generated audio
+MUSIC_PATH = '/kaggle/input/my-audio/burning-down-the-house.wav'
+MUSIC_OFFSET_SECONDS = 0.0
+MUSIC_GAIN = 0.65
+```
+
+Функция читает нужный фрагмент, переводит его в mono, обрезает до длительности клипа, смешивает с эффектами и предотвращает clipping. Существующая запись не скачивается и не имитируется моделью. Офсет выбирается вручную; автоматического beat sync нет.
+
+## Память и две GPU
+
+Qwen/CLIP сначала кодируют оба prompt и полностью выгружаются. При удалённой загрузке text weights лежат в приватном временном каталоге, который очищается после encoding; нужно примерно 18 GiB свободного scratch. Media cache сохраняется отдельно. Полный read-only Diffusers snapshot из Input задаётся `LOCAL_MODEL_DIR` и не изменяется.
+
+DiT загружается через `device_map='balanced'`, budget 10 GiB на каждую T4. Runner требует фактические размещения на обеих GPU и печатает карту модулей; CPU/disk spill для DiT останавливает запуск. Это model sharding для **одного ролика**, не две независимые генерации и не sequence parallelism. Передача activations добавляет накладные расходы; ускорение не обещается. `pipe.to(...)` и full-pipeline `enable_model_cpu_offload()` поверх карты не вызываются. Для I2V video VAE кодирует reference на GPU 0; после sampling весь pipeline освобождается. Video decode затем работает на GPU 1, audio decode на GPU 0.
+
+## Исходники и проверка
+
+`diffusers_runner.py` — обычные функции без загрузки моделей при импорте. [Генератор](../scripts/build_diffusers_generation_notebook.py) переносит их в классические notebook cells; внешние `.py`, `CODE='...'`, ComfyUI или checkout репозитория для запуска `.ipynb` не требуются. `PROMPTS.md` строится из того же JSON и compiler. [Source manifest](source_manifest.json), [CPU API report](../reports/diffusers-generation-validation.json).
+
+```bash
+python kandinsky-6/scripts/build_diffusers_generation_notebook.py
+python kandinsky-6/scripts/validate_diffusers_generation.py
+# Publish a code-only version; this does not start generation:
+kaggle kernels push -p kandinsky-6/generation --no-run
+```
+
+Для CPU validator нужны закреплённые Diffusers/Transformers/Accelerate и PyTorch; запуск не скачивает веса. Исходные API: [Diffusers](https://huggingface.co/docs/diffusers/en/api/pipelines/kandinsky6), [Lite](https://huggingface.co/kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers). Учебные объяснения остаются в [MIT route](../../curriculum/README.md) и component labs.
