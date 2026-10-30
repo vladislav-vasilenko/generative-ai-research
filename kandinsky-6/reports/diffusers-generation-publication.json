@@ -1,14 +1,23 @@
 {
   "date": "2026-10-30",
   "url": "https://www.kaggle.com/code/applehawk/kandinsky-6-lite-diffusers-generation",
-  "version": 1,
+  "version": 2,
   "method": "Kaggle CLI --no-run",
   "public": true,
   "accelerator": "NvidiaTeslaT4",
   "all_28_cells_match": true,
-  "source_sha256": "b24970ee38640980f6ea2a771e4857d8f9741de9cdfa93fd702470573df6cc40",
+  "source_sha256": "5a9eeda6444167d51759487caf72faf79bd521289ac1d6e48c2a0390cc62979b",
   "pretrained_generation_run": false,
   "old_comfyui_notebook_modified": false,
   "user_images_uploaded": false,
-  "user_music_uploaded": false
+  "user_music_uploaded": false,
+  "previous_publications": [
+    {
+      "version": 1,
+      "source_sha256": "b24970ee38640980f6ea2a771e4857d8f9741de9cdfa93fd702470573df6cc40"
+    }
+  ],
+  "bootstrap_network_diagnostics": true,
+  "pillow_constraint": ">=10.4,<13",
+  "music_input_preview": true
 }
